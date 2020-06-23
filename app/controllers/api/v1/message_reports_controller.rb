@@ -134,7 +134,7 @@ module Api
       private
 
       def apply_filters
-        message_reports = MessageReport.includes([{message: :room}, :person]).where('rooms.product_id = ?', ActsAsTenant.current_tenant.id).references(:rooms).order(created_at: :desc)
+        message_reports = MessageReport.includes([{ message: :room }, :person]).where('rooms.product_id = ?', ActsAsTenant.current_tenant.id).references(:rooms).order(created_at: :desc)
         params.each do |p, v|
           if p.end_with?('_filter') && MessageReport.respond_to?(p)
             message_reports = message_reports.send(p, v)

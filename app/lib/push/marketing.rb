@@ -80,15 +80,15 @@ module Push
             send_filtered_notification(person_ids)
           end
         when 'active_48h'
-           person_ids = Person.active_48h.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+          person_ids = Person.active_48h.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
         when 'active_7days'
-           person_ids = Person.active_7days.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+          person_ids = Person.active_7days.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
         when 'active_30days'
-           person_ids = Person.active_30days.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+          person_ids = Person.active_30days.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
       end
@@ -96,24 +96,24 @@ module Push
 
     private
 
-      def send_filtered_notification(person_ids)
-        @target_people_ids = person_ids
-        ios_token_notification_push(
-          @notification.title,
-          @notification.body,
-          nil,
-          @notification.ttl_hours * 3600,
-          context: 'marketing',
-          deep_link: @notification.deep_link
-        )
-        android_token_notification_push(
-          @notification.ttl_hours * 3600,
-          context: 'marketing',
-          title: @notification.title,
-          message_short: @notification.body,
-          deep_link: @notification.deep_link,
-          type: 'user'
-        )
-      end
+    def send_filtered_notification(person_ids)
+      @target_people_ids = person_ids
+      ios_token_notification_push(
+        @notification.title,
+        @notification.body,
+        nil,
+        @notification.ttl_hours * 3600,
+        context: 'marketing',
+        deep_link: @notification.deep_link
+      )
+      android_token_notification_push(
+        @notification.ttl_hours * 3600,
+        context: 'marketing',
+        title: @notification.title,
+        message_short: @notification.body,
+        deep_link: @notification.deep_link,
+        type: 'user'
+      )
+    end
   end
 end

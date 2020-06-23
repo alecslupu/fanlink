@@ -27,7 +27,7 @@ class Reward < ApplicationRecord
   enum reward_type: %i[badge url coupon]
   enum status: %i[active inactive]
 
-  scope :for_product, -> (product) { where( rewards: { product_id: product.id } ) }
+  scope :for_product, -> (product) { where(rewards: { product_id: product.id }) }
 
   acts_as_tenant(:product)
 
@@ -57,13 +57,13 @@ class Reward < ApplicationRecord
   normalize_attributes :series
 
   validates :internal_name,
-      presence: { message: _('Internal name is required.') },
-      format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _('Internal name can only contain lowercase letters, numbers and underscores.') } },
-      length: { in: 3..26, message: _('Internal name must be between 3 and 26 characters.') },
-      uniqueness: { scope: :product_id, message: _('There is already a reward with that internal name.') }
+            presence: { message: _('Internal name is required.') },
+            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _('Internal name can only contain lowercase letters, numbers and underscores.') } },
+            length: { in: 3..26, message: _('Internal name must be between 3 and 26 characters.') },
+            uniqueness: { scope: :product_id, message: _('There is already a reward with that internal name.') }
   validates :series,
-      format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _('Series can only contain lowercase letters, numbers and underscores.') } },
-      length: { in: 3..26, message: _('Series must be between 3 and 26 characters.') },
-      allow_blank: true
+            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _('Series can only contain lowercase letters, numbers and underscores.') } },
+            length: { in: 3..26, message: _('Series must be between 3 and 26 characters.') },
+            allow_blank: true
   validates_uniqueness_of :reward_type_id, scope: :reward_type, message: _('A reward with that reward_type and reward_type_id already exists.')
 end

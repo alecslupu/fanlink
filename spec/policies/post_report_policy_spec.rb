@@ -78,17 +78,17 @@ RSpec.describe PostReportPolicy, type: :policy do
 
   context 'logged in admin with hide permission' do
     permission_list = {
-        index: false,
-        show: false,
-        create: false,
-        new: false,
-        update: false,
-        edit: false,
-        destroy: false,
-        export: false,
-        history: false,
-        show_in_app: false,
-        select_product: false
+      index: false,
+      show: false,
+      create: false,
+      new: false,
+      update: false,
+      edit: false,
+      destroy: false,
+      export: false,
+      history: false,
+      show_in_app: false,
+      select_product: false
     }
     before :each do
       allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(post_hide: true))
@@ -112,17 +112,17 @@ RSpec.describe PostReportPolicy, type: :policy do
   end
   context 'logged in admin with ignore permission' do
     permission_list = {
-        index: false,
-        show: false,
-        create: false,
-        new: false,
-        update: false,
-        edit: false,
-        destroy: false,
-        export: false,
-        history: false,
-        show_in_app: false,
-        select_product: false
+      index: false,
+      show: false,
+      create: false,
+      new: false,
+      update: false,
+      edit: false,
+      destroy: false,
+      export: false,
+      history: false,
+      show_in_app: false,
+      select_product: false
     }
     before :each do
       allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(post_ignore: true))

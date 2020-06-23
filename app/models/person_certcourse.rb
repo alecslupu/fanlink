@@ -21,6 +21,6 @@ class PersonCertcourse < ApplicationRecord
   validates_uniqueness_of :certcourse_id, scope: :person_id
 
   scope :for_person, -> (person) { where(person_id: person.id) }
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id } ) }
+  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
 
 end

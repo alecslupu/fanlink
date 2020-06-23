@@ -29,7 +29,6 @@ RSpec.describe 'Api::V4::BadgesController', type: :request, swagger_doc: 'v4/swa
           let(:person_id) { award.person_id }
           run_test!
         end
-
       end
       response '401', 'Unauthorized' do
         run_test!

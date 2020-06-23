@@ -14,6 +14,7 @@ module Api
           render_422 _('Parameter tag_name is required.')
         end
       end
+
       protected
 
       def tpl_handler

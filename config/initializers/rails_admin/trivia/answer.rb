@@ -9,6 +9,5 @@ RailsAdmin.config do |config|
     edit do
       exclude_fields :product
     end
-
   end
 end

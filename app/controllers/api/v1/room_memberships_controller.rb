@@ -31,7 +31,7 @@ module Api
           if mem.valid?
             render body: nil, status: :ok
           else
-            render json: {errors: mem.errors}, status: :unprocessable_entity
+            render json: { errors: mem.errors }, status: :unprocessable_entity
           end
         else
           render_not_found

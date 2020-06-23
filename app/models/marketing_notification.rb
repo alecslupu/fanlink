@@ -90,7 +90,7 @@ class MarketingNotification < ApplicationRecord
 
   validates :body, presence: true
   validates :title, presence: true
-  validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 672 }
+  validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 672 }
   validates :person_filter, presence: true
   validates :date, presence: true
   validates :timezone, presence: true
@@ -103,35 +103,35 @@ class MarketingNotification < ApplicationRecord
     date = self.date.asctime.in_time_zone('UTC')
     get_utc_datetime(date, self.timezone)
   end
-  
+
   private
 
-    def set_person_id
-      if Person.current_user.product_id == ActsAsTenant.current_tenant.id
-        self.person_id = Person.current_user.id
-      else
-        self.person_id = ActsAsTenant.current_tenant.people.where(product_account: true).first.id
-      end
+  def set_person_id
+    if Person.current_user.product_id == ActsAsTenant.current_tenant.id
+      self.person_id = Person.current_user.id
+    else
+      self.person_id = ActsAsTenant.current_tenant.people.where(product_account: true).first.id
+    end
+  end
+
+  def enqueue_delayed_job
+    MarketingNotificationPushJob.set(wait_until: run_at).perform_later(id, run_at.to_s)
+  end
+
+  def date_not_in_the_past
+    errors.add(:date, "can't be in the past") if get_utc_datetime(date, timezone) < Time.zone.now
+  end
+
+  def get_utc_datetime(date, timezone)
+    case timezone[4]
+    when '-'
+      datetime = date + timezone[5..6].to_i.hour + timezone[8..9].to_i.minute
+    when '+'
+      datetime = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
+    else
+      datetime = date
     end
 
-    def enqueue_delayed_job
-      MarketingNotificationPushJob.set(wait_until: run_at).perform_later(id, run_at.to_s)
-    end
-
-    def date_not_in_the_past
-      errors.add(:date, "can't be in the past") if get_utc_datetime(date, timezone) < Time.zone.now
-    end
-
-    def get_utc_datetime(date, timezone)
-      case timezone[4]
-      when '-'
-        datetime = date + timezone[5..6].to_i.hour + timezone[8..9].to_i.minute
-      when '+'
-        datetime = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
-      else
-        datetime = date
-      end
-
-      return datetime
-    end
+    return datetime
+  end
 end

@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Badge, type: :model do
-
   context 'Validation' do
     it { expect(build(:badge)).to be_valid }
   end
@@ -187,11 +186,11 @@ RSpec.describe Badge, type: :model do
 
   describe 'creation of badge' do
     it 'creates a reward' do
-      expect{ create(:badge) }.to change { Reward.count }.by(1)
+      expect { create(:badge) }.to change { Reward.count }.by(1)
     end
 
     it 'creates an assigned reward' do
-      expect{ create(:badge) }.to change { AssignedReward.count }.by(1)
+      expect { create(:badge) }.to change { AssignedReward.count }.by(1)
     end
   end
 

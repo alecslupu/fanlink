@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::PostReportsController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/post_comment_reports' do
     post '' do
       security [Bearer: []]
@@ -32,7 +31,7 @@ RSpec.describe 'Api::V4::PostReportsController', type: :request, swagger_doc: 'v
       end
       response '404', '' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        let(:"post_comment_report[post_comment_id]") {Time.zone.now.to_i}
+        let(:"post_comment_report[post_comment_id]") { Time.zone.now.to_i }
         run_test!
       end
       response 500, 'Internal server error' do
@@ -65,5 +64,4 @@ RSpec.describe 'Api::V4::PostReportsController', type: :request, swagger_doc: 'v
       end
     end
   end
-
 end

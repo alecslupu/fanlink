@@ -13,7 +13,7 @@ RSpec.describe Api::V4::ProductsController, type: :controller do
       expect(response).to be_successful
       expect(json['products'].size).to eq(3)
       json['products'].each do |product|
-       expect(product['logo_file_size']).not_to be_nil
+        expect(product['logo_file_size']).not_to be_nil
       end
     end
   end

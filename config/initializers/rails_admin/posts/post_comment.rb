@@ -9,5 +9,4 @@ RailsAdmin.config do |config|
       scopes [nil, :reported, :not_reported]
     end
   end
-
 end

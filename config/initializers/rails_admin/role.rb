@@ -39,6 +39,5 @@ RailsAdmin.config do |config|
              :interest,
              :root
     end
-
   end
 end

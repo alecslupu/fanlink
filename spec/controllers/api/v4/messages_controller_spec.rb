@@ -24,11 +24,11 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         )
 
         get :index,
-          params: {
-            room_id: private_room.id,
-            from_date: from,
-            to_date: to
-          }
+            params: {
+              room_id: private_room.id,
+              from_date: from,
+              to_date: to
+            }
         expect(response).to be_successful
         expect(json['messages'].size).to eq(3)
         json['messages'].each do |message|
@@ -75,11 +75,11 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
           picture: fixture_file_upload('images/better.png', 'image/png')
         )
         get :index,
-          params: {
-            room_id: private_room.id,
-            from_date: from,
-            to_date: to
-          }
+            params: {
+              room_id: private_room.id,
+              from_date: from,
+              to_date: to
+            }
         expect(response).to be_successful
         expect(json['messages'].size).to eq(3)
         json['messages'].each do |message|
@@ -99,11 +99,11 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         msg4 = create(:message, room_id: room.id, created_at: msg2.created_at + 2)
 
         get :index,
-          params: {
-            room_id: room.id,
-            message_id: msg2.id,
-            chronologically: 'after'
-        }
+            params: {
+              room_id: room.id,
+              message_id: msg2.id,
+              chronologically: 'after'
+            }
 
         expect(response).to be_successful
         expect(json['messages'].size).to eq(2)
@@ -122,11 +122,11 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         msg4 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
 
         get :index,
-          params: {
-            room_id: room.id,
-            message_id: msg3.id,
-            chronologically: 'before'
-        }
+            params: {
+              room_id: room.id,
+              message_id: msg3.id,
+              chronologically: 'before'
+            }
 
         expect(response).to be_successful
         expect(json['messages'].size).to eq(2)
@@ -146,12 +146,12 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         msg5 = create(:message, room_id: room.id, created_at: msg2.created_at + 3)
 
         get :index,
-          params: {
-            room_id: room.id,
-            message_id: msg2.id,
-            chronologically: 'after',
-            pinned: 'yes'
-        }
+            params: {
+              room_id: room.id,
+              message_id: msg2.id,
+              chronologically: 'after',
+              pinned: 'yes'
+            }
 
         expect(response).to be_successful
         expect(json['messages'].size).to eq(2)
@@ -171,12 +171,12 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         msg5 = create(:message, room_id: room.id)
 
         get :index,
-          params: {
-            room_id: room.id,
-            message_id: msg3.id,
-            chronologically: 'before',
-            pinned: 'yes'
-        }
+            params: {
+              room_id: room.id,
+              message_id: msg3.id,
+              chronologically: 'before',
+              pinned: 'yes'
+            }
 
         expect(response).to be_successful
         expect(json['messages'].size).to eq(2)
@@ -193,10 +193,10 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
 
         get :index,
-          params: {
-            room_id: room.id,
-            after_message: false
-        }
+            params: {
+              room_id: room.id,
+              after_message: false
+            }
 
         expect(response).to be_successful
         expect(json['messages'].size).to eq(2)
@@ -212,10 +212,10 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
 
         get :index,
-          params: {
-            room_id: room.id,
-            message_id: msg2.id
-        }
+            params: {
+              room_id: room.id,
+              message_id: msg2.id
+            }
 
         expect(response).to be_successful
         expect(json['messages'].size).to eq(2)
@@ -231,11 +231,11 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
 
         get :index,
-          params: {
-            room_id: room.id,
-            message_id: msg2.id,
-            chronologically: 'wrong'
-        }
+            params: {
+              room_id: room.id,
+              message_id: msg2.id,
+              chronologically: 'wrong'
+            }
 
         expect(response).to be_successful
         expect(json['messages'].size).to eq(2)
@@ -279,7 +279,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         room = create(:room, public: true, status: :active)
         timestamp = DateTime.now.to_i
 
-        post :create, params: { room_id: room.id,  message: { body: body } }
+        post :create, params: { room_id: room.id, message: { body: body } }
 
         expect(response).to be_successful
 
@@ -321,16 +321,16 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         body = 'Do you like my body?'
-        room = create(:public_active_room, )
+        room = create(:public_active_room,)
 
         post :create,
-        params: {
-          room_id: room.id,
-          message: {
-            body: body,
-            picture: fixture_file_upload('images/better.png', 'image/png')
-          }
-        }
+             params: {
+               room_id: room.id,
+               message: {
+                 body: body,
+                 picture: fixture_file_upload('images/better.png', 'image/png')
+               }
+             }
         expect(response).to be_successful
         expect(json['message']['picture_url']).not_to eq(nil)
         expect(Message.last.picture.exists?).to be_truthy
@@ -342,15 +342,15 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         body = 'Do you like my body?'
-        room = create(:public_active_room, )
+        room = create(:public_active_room,)
         post :create,
-        params: {
-          room_id: room.id,
-          message: {
-            body: body,
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-          }
-        }
+             params: {
+               room_id: room.id,
+               message: {
+                 body: body,
+                 audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+               }
+             }
         expect(response).to be_successful
         expect(json['message']['audio_url']).not_to eq(nil)
         expect(Message.last.audio.exists?).to be_truthy
@@ -396,19 +396,19 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       end
     end
 
-   it' should not return the message from a blocked person' do
-    person = create(:person)
-    ActsAsTenant.with_tenant(person.product) do
-      room = create(:room, public: true, status: :active)
-      login_as(person)
-      blocked = create(:person)
-      person.block(blocked)
-      blocked_msg = create(:message, person: blocked, room_id: room.id)
-      get :show, params: { room_id: room.id, id: blocked_msg.id }
-      expect(response).to have_http_status(404)
-      expect(response.body).to include('Not found')
+    it ' should not return the message from a blocked person' do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        room = create(:room, public: true, status: :active)
+        login_as(person)
+        blocked = create(:person)
+        person.block(blocked)
+        blocked_msg = create(:message, person: blocked, room_id: room.id)
+        get :show, params: { room_id: room.id, id: blocked_msg.id }
+        expect(response).to have_http_status(404)
+        expect(response.body).to include('Not found')
+      end
     end
-   end
   end
 
   # TODO: auto-generated
@@ -439,12 +439,12 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         private_room.members << person << private_room.created_by
 
         allow(subject).to receive(:apply_filters).and_return build_list(
-                                                               :message,
-                                                               3,
-                                                               room: private_room,
-                                                               body: 'this is my body',
-                                                               audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-                                                             )
+          :message,
+          3,
+          room: private_room,
+          body: 'this is my body',
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+        )
 
         get :list
 
@@ -464,13 +464,13 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
         allow(subject).to receive(:apply_filters).and_return build_list(
-                                                               :message,
-                                                               3,
-                                                               created_at: to,
-                                                               room: private_room,
-                                                               body: 'this is my body sss',
-                                                               picture: fixture_file_upload('images/better.png', 'image/png')
-                                                             )
+          :message,
+          3,
+          created_at: to,
+          room: private_room,
+          body: 'this is my body sss',
+          picture: fixture_file_upload('images/better.png', 'image/png')
+        )
 
         get :list
 
@@ -481,7 +481,6 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         end
       end
     end
-
   end
 
   # TODO: auto-generated

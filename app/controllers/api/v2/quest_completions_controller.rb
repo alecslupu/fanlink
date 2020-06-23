@@ -125,7 +125,7 @@ module Api
           broadcast(:completion_created, current_user, @completion)
           return_the @completion
         else
-          render json: {errors: @completion.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @completion.errors.messages }, status: :unprocessable_entity
         end
       end
 

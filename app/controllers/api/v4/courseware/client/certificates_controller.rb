@@ -26,7 +26,7 @@ module Api
           def send_email
             if @person_certificate.issued_certificate_pdf.present?
               current_user.send_assignee_certificate_email(@person_certificate, params[:person_id], params[:email])
-              render json: {message: _('Email sent')}
+              render json: { message: _('Email sent') }
             else
               render_422 _('This user does not have a pdf file attached to this certificate.')
             end

@@ -113,15 +113,15 @@ class Person < ApplicationRecord
 
   has_many :relationships, ->(person) { unscope(:where).where('requested_by_id = :id OR requested_to_id = :id', id: person.id) }
 
-  has_many :blocks_by,  class_name: 'Block', foreign_key: 'blocker_id', dependent: :destroy
+  has_many :blocks_by, class_name: 'Block', foreign_key: 'blocker_id', dependent: :destroy
   has_many :blocks_on, class_name: 'Block', foreign_key: 'blocked_id', dependent: :destroy
 
   has_many :blocked_people, through: :blocks_by, source: :blocked
   has_many :blocked_by_people, through: :blocks_on, source: :blocker
 
-  has_many :active_followings, class_name:  'Following', foreign_key: 'follower_id', dependent: :destroy
+  has_many :active_followings, class_name: 'Following', foreign_key: 'follower_id', dependent: :destroy
 
-  has_many :passive_followings, class_name:  'Following', foreign_key: 'followed_id', dependent: :destroy
+  has_many :passive_followings, class_name: 'Following', foreign_key: 'followed_id', dependent: :destroy
 
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
@@ -175,7 +175,7 @@ class Person < ApplicationRecord
   scope :has_followings, -> { joins('JOIN followings ON followings.follower_id = people.id').having('COUNT(followings.id) > 1').group(:id) }
   scope :has_no_followings, -> { joins('JOIN followings ON followings.follower_id = people.id').having('COUNT(followings.id) = 1').group(:id) }
   scope :has_posts, -> { joins(:posts).group(:id) }
-  scope :has_no_posts, -> {joins('LEFT JOIN posts ON posts.person_id = people.id').where('posts.id is NULL') }
+  scope :has_no_posts, -> { joins('LEFT JOIN posts ON posts.person_id = people.id').where('posts.id is NULL') }
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
   scope :has_created_acc_past_24h, -> { where('created_at >= ?',Time.zone.now - 1.day) }
   scope :has_created_acc_past_7days, -> { where('created_at >= ?',Time.zone.now - 7.day) }
@@ -271,11 +271,11 @@ class Person < ApplicationRecord
 
   def send_assignee_certificate_email(person_certificate, assignee_id, email)
     PersonMailer.with({
-      person: self.id,
-      assignee: assignee_id,
-      person_certificate: person_certificate.id,
-      email: email
-    }).send_assignee_certificate.deliver_later
+                        person: self.id,
+                        assignee: assignee_id,
+                        person_certificate: person_certificate.id,
+                        email: email
+                      }).send_assignee_certificate.deliver_later
   end
 
   def send_course_attachment_email(certcourse_page)
@@ -524,11 +524,11 @@ class Person < ApplicationRecord
 
   def self.with_matched_interests(interest_ids, person_id)
     self.select('people.*, array_agg(DISTINCT person_interests.interest_id) as matched_ids')
-      .joins(:person_interests).where('person_interests.interest_id in (?)', interest_ids)
-      .where('person_interests.person_id != (?)', person_id)
-      .where('people.product_account = false')
-      .group('people.id')
-      .order(Arel.sql('count(person_interests.*) DESC'))
+        .joins(:person_interests).where('person_interests.interest_id in (?)', interest_ids)
+        .where('person_interests.person_id != (?)', person_id)
+        .where('people.product_account = false')
+        .group('people.id')
+        .order(Arel.sql('count(person_interests.*) DESC'))
   end
 
   private
@@ -583,6 +583,7 @@ class Person < ApplicationRecord
   def read_only_username
     return if new_record?
     return if self.trigger_admin.present?
+
     errors.add(:username_error, 'The username cannot be changed after creation') if username_changed?
   end
 

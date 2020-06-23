@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples 'enforces the permissions' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
 
@@ -51,11 +50,9 @@ RSpec.shared_examples 'enforces the permissions' do |klass, module_name|
       it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-
 end
 
 RSpec.shared_examples 'enforces the history permission' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
   context 'logged in admin with history permission' do
@@ -94,7 +91,6 @@ RSpec.shared_examples 'enforces the history permission' do |klass, module_name|
 end
 
 RSpec.shared_examples 'enforces the export permission' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
   context 'logged in admin with export permission' do
@@ -171,7 +167,6 @@ RSpec.shared_examples 'enforces the read permission' do |klass, module_name|
 end
 
 RSpec.shared_examples 'enforces the update permission' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
   context 'logged in admin with update permission' do
@@ -210,7 +205,6 @@ RSpec.shared_examples 'enforces the update permission' do |klass, module_name|
 end
 
 RSpec.shared_examples 'enforces the delete permission' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
   context 'logged in admin with delete permission' do

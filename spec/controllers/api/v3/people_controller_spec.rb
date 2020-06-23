@@ -91,8 +91,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
               city: 'Las Vegas',
               country_code: 'us',
               picture: fixture_file_upload('images/better.png', 'image/png')
-            }
-          }
+            } }
         expect(response).to be_successful
         expect(json['person']['picture_url']).to_not eq(nil)
         expect(Person.last.picture.exists?).to be_truthy

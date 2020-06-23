@@ -5,20 +5,19 @@ require 'rails_helper'
 RSpec.describe Api::V3::RoomsController, type: :controller do
   # TODO: auto-generated
   describe 'POST create' do
-
     it 'shold attach picture to public rooms when provided' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
         post :create,
-          params: {
-            room: {
-              name: 'name',
-              public: true,
-              picture: fixture_file_upload('images/better.png', 'image/png')
-            }
-          }
+             params: {
+               room: {
+                 name: 'name',
+                 public: true,
+                 picture: fixture_file_upload('images/better.png', 'image/png')
+               }
+             }
         expect(response).to be_successful
         expect(json['room']['picture_url']).not_to eq(nil)
         expect(Room.last.picture).not_to eq(nil)

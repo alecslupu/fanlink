@@ -26,15 +26,15 @@ class PostQueueListenerJob < ApplicationJob
 
   private
 
-    def should_keep_trying?
-      @attempts < 30
-    end
+  def should_keep_trying?
+    @attempts < 30
+  end
 
-    def try_again
-      PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(@job_id, @attempts + 1)
-    end
+  def try_again
+    PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(@job_id, @attempts + 1)
+  end
 
-    def give_up
-      raise "Cannot find #{self.job_id} in SQS and I tried really really hard."
-    end
+  def give_up
+    raise "Cannot find #{self.job_id} in SQS and I tried really really hard."
+  end
 end
