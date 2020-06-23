@@ -20,7 +20,6 @@ RSpec.describe ApplicationPolicy, type: :policy do
     select_product: false
   }
 
-
   describe 'defined policies' do
     subject { described_class.new(build(:super_admin), nil) }
 

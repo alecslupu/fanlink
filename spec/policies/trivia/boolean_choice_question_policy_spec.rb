@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Trivia::BooleanChoiceQuestionPolicy, type: :policy do
-  args = [ Trivia::BooleanChoiceQuestion, 'trivia' ]
+  args = [Trivia::BooleanChoiceQuestion, 'trivia']
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

@@ -2,7 +2,6 @@
 
 require 'swagger_helper'
 
-
 RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swagger.json' do
   path '/people' do
     get '' do
@@ -126,7 +125,6 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
 
-
       parameter name: :id, in: :path, type: :string
       let(:person) { create(:person) }
       let(:other_person) { create(:person)}
@@ -141,7 +139,6 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
       parameter name: :"person[birthdate]", in: :formData, type: :string
       parameter name: :"person[city]", in: :formData, type: :string
       parameter name: :"person[country_code]", in: :formData, type: :string
-
 
       let('person[city]') { Faker::Address.city }
       let('person[country_code]') { Faker::Address.country_code }

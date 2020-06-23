@@ -33,7 +33,6 @@ RSpec.describe 'Api::V4::NotificationDeviceIdsController', type: :request, swagg
         run_test!
       end
 
-
       response 500, 'Internal server error' do
         let(:Authorization) { '' }
         let(:device_id) { Faker::Crypto.sha1 }

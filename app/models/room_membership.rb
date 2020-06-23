@@ -22,7 +22,6 @@ class RoomMembership < ApplicationRecord
 
   before_destroy :check_created_by
 
-
   private
 
   def check_created_by

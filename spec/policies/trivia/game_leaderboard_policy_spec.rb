@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Trivia::GameLeaderboardPolicy, type: :policy do
-  args = [ Trivia::GameLeaderboard, 'trivia' ]
+  args = [Trivia::GameLeaderboard, 'trivia']
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   # include_examples 'enforces the update permission', args
@@ -72,7 +72,6 @@ RSpec.describe Trivia::GameLeaderboardPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-
 
   context 'Scope' do
     it 'should only return the person quiz in current product' do

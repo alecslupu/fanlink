@@ -25,13 +25,13 @@ RailsAdmin.config do |config|
     list do
       field :id
       field :name do
-        searchable [{merchandise_translations: :name } ]
+        searchable [{merchandise_translations: :name }]
         queryable true
         filterable true
       end
       field :description do
         visible false
-        searchable [{merchandise_translations: :description } ]
+        searchable [{merchandise_translations: :description }]
         queryable true
         filterable true
       end

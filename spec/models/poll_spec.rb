@@ -23,7 +23,6 @@ RSpec.describe Poll, type: :model do
     pending
   end
 
-
   context 'Valid factory' do
     it { expect(build(:poll)).to be_valid }
   end

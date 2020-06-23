@@ -57,7 +57,6 @@ class Post < ApplicationRecord
     DeletePostJob.perform_later(self.id, version)
   end
 
-
   def post(version = 0)
     PostPostJob.perform_later(self.id, version)
     if person.followers.count > 0
@@ -116,7 +115,6 @@ class Post < ApplicationRecord
           where('posts.created_at >= ? and posts.created_at <= ?',
                 start_date.beginning_of_day, end_date.end_of_day)
         }
-  scope :for_tag, -> (tag) { joins(:old_tags).where('lower(old_tags.name) = ?', tag.downcase) }
 
   scope :for_category, -> (categories) { joins(:category).where('categories.name IN (?)', categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
@@ -125,7 +123,6 @@ class Post < ApplicationRecord
                           Time.zone.now, Time.zone.now)
         }
   scope :not_promoted, -> { left_joins(:poll).where('poll_type_id IS NULL or end_date < NOW()') }
-
 
   scope :reported, -> { joins(:post_reports) }
   scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }

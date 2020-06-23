@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 RSpec.describe Api::V2::MessagesController, type: :controller do
 
   describe 'create' do

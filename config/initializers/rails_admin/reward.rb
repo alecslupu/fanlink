@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RailsAdmin.config do |config|
   config.included_models.push('Reward')
 
@@ -29,7 +31,7 @@ RailsAdmin.config do |config|
 
       field :name do
         visible false
-        searchable [{reward_translations: :name } ]
+        searchable [{reward_translations: :name }]
         queryable true
         filterable true
       end

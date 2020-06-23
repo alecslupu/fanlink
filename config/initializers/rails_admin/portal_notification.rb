@@ -23,7 +23,7 @@ RailsAdmin.config do |config|
 
     list do
       field :body do
-        searchable [{portal_notification_translations: :body } ]
+        searchable [{portal_notification_translations: :body }]
         queryable true
         filterable true
       end

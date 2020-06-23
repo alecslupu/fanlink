@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-
 RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :controller do
   describe 'GET index' do
     it 'return error code 401 for a non client user' do

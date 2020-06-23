@@ -10,7 +10,6 @@ RSpec.describe Trivia::PictureQuestion, type: :model do
       end
     end
 
-
     describe 'copy_to_new' do
       it 'has the method' do
         expect(Trivia::PictureQuestion.new.respond_to?(:copy_to_new)).to eq(true)

@@ -22,7 +22,6 @@ module Push
         type: 'user'
       )
 
-
       ios_token_notification_push(
         person.username,
         message_body,
