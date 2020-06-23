@@ -38,7 +38,7 @@ class CertcoursePage < ApplicationRecord
   scope :images, -> { joins(:image_page) }
   scope :download_files, -> { joins(:download_file_page) }
   scope :ordered, -> { order(:certcourse_page_order) }
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
   # validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
   validates :duration, numericality: { greater_than: 0 }
@@ -89,6 +89,7 @@ class CertcoursePage < ApplicationRecord
   end
 
   protected
+
   def single_child_validator
     errors.add(:base, _('You cannot add a question and a video or imaage on the same certcourse')) if quiz? && (download? || video? || image?)
     errors.add(:base, _('You cannot add an image and a video or question on the same certcourse')) if image? && (download? || quiz? || video?)

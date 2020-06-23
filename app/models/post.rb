@@ -41,13 +41,13 @@ class Post < ApplicationRecord
   include AttachmentSupport
   # include Post::PortalFilters
 
-  scope :id_filter, -> (query) { where(id: query.to_i) }
-  scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
-  scope :person_filter, -> (query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
-  scope :body_filter, -> (query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
-  scope :posted_after_filter, -> (query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
-  scope :posted_before_filter, -> (query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
-  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :id_filter, ->(query) { where(id: query.to_i) }
+  scope :person_id_filter, ->(query) { where(person_id: query.to_i) }
+  scope :person_filter, ->(query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
+  scope :body_filter, ->(query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
+  scope :posted_after_filter, ->(query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
+  scope :posted_before_filter, ->(query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
+  scope :status_filter, ->(query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { where("posts.created_at #{sign} ? AND posts.id #{sign} ?", created_at, id) }
   # include Post::PortalFilters
 
@@ -103,22 +103,22 @@ class Post < ApplicationRecord
   after_save :expire_cache
   before_destroy :expire_cache, prepend: true
 
-  scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
+  scope :following_and_own, ->(follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
                      left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
                    }
 
-  scope :for_person, -> (person) { includes(:person).where(person: person) }
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
-  scope :in_date_range, -> (start_date, end_date) {
+  scope :for_person, ->(person) { includes(:person).where(person: person) }
+  scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
+  scope :in_date_range, ->(start_date, end_date) {
                           where('posts.created_at >= ? and posts.created_at <= ?',
                                 start_date.beginning_of_day, end_date.end_of_day)
                         }
-  scope :for_tag, -> (tag) { joins(:old_tags).where('lower(old_tags.name) = ?', tag.downcase) }
+  scope :for_tag, ->(tag) { joins(:old_tags).where('lower(old_tags.name) = ?', tag.downcase) }
 
-  scope :for_category, -> (categories) { joins(:category).where('categories.name IN (?)', categories) }
-  scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
+  scope :for_category, ->(categories) { joins(:category).where('categories.name IN (?)', categories) }
+  scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
                     published.where('(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)',
                                     Time.zone.now, Time.zone.now)
@@ -251,8 +251,8 @@ class Post < ApplicationRecord
   end
 
   def merge_new_videos(new_videos)
-    by_src = -> (e) { e[:src] }
-    by_m3u8 = -> (e) { e[:src].to_s.end_with?('v.m3u8') }
+    by_src = ->(e) { e[:src] }
+    by_m3u8 = ->(e) { e[:src].to_s.end_with?('v.m3u8') }
 
     m3u8, the_rest = (self.video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
     m3u8 + the_rest.sort_by(&by_src)

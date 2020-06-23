@@ -72,6 +72,7 @@ class Poll < ApplicationRecord
   end
 
   private
+
   def add_end_date
     if duration.zero?
       self.duration = end_date.to_datetime.to_i - start_date.to_datetime.to_i

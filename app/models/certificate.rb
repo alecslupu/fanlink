@@ -61,7 +61,7 @@ class Certificate < ApplicationRecord
   # validate :certificate_order_validation, if: :certificate_order_changed?
 
   scope :live_status, -> { where(status: 'live') }
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
   def title
     short_name
@@ -80,6 +80,7 @@ class Certificate < ApplicationRecord
   end
 
   private
+
   def certificate_order_validation
     errors.add(:certificate_order, _('The certificate order must be greater than %{size}. Got %{value}' % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
   end

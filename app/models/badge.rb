@@ -34,7 +34,7 @@ class Badge < ApplicationRecord
   has_one :reward, -> { where('rewards.reward_type = ?', Reward.reward_types['badge']) }, foreign_key: 'reward_type_id', dependent: :destroy
   has_many :assigned_rewards, through: :reward
 
-  scope :for_product, -> (product) { where(badges: { product_id: product.id }) }
+  scope :for_product, ->(product) { where(badges: { product_id: product.id }) }
 
   has_paper_trail
   acts_as_tenant(:product)

@@ -30,7 +30,9 @@ RailsAdmin.config do |config|
           PortalAccess.new.as_flag_collection(column).collect(&:first).each do |flag|
             field flag, :boolean do
               visible do
-                (bindings[:view]._current_user.full_permission_list.include?(flag) || bindings[:view]._current_user.root?)
+                has_permission = bindings[:view]._current_user.full_permission_list.include?(flag)
+                is_root = bindings[:view]._current_user.root?
+                (has_permission || is_root)
               end
             end
           end

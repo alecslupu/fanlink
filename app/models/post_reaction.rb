@@ -25,6 +25,7 @@ class PostReaction < ApplicationRecord
       PostReaction.where(post_id: post.id).group(:reaction).size
     }
   end
+
   private
 
   def check_emoji

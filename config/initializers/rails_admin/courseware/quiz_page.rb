@@ -25,7 +25,7 @@ RailsAdmin.config do |config|
         pretty_value do
           v = bindings[:view]
           [value].flatten.select(&:present?).collect do |associated|
-            amc = polymorphic? ? RailsAdmin.config(associated) : associated_model_config # perf optimization for non-polymorphic associations
+            amc = polymorphic? ? RailsAdmin.config(associated) : associated_model_config
             am = amc.abstract_model
 
             icon = case associated.is_correct?
@@ -38,7 +38,8 @@ RailsAdmin.config do |config|
                    end
             wording = associated.send(amc.object_label_method)
             can_see = !am.embedded? && (show_action = v.action(:show, am, associated))
-            link = v.link_to(wording, v.url_for(action: show_action.action_name, model_name: am.to_param, id: associated.id), class: 'pjax')
+            v_url_for = v.url_for(action: show_action.action_name, model_name: am.to_param, id: associated.id)
+            link = v.link_to(wording, v_url_for, class: 'pjax')
             [can_see ? link : ERB::Util.html_escape(wording), icon].join
           end.to_sentence.html_safe
         end

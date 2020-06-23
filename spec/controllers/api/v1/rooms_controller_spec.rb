@@ -151,7 +151,8 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        create_list(:room, 3, public: true, status: :active, picture: fixture_file_upload('images/better.png', 'image/png'))
+        fixture_file = fixture_file_upload('images/better.png', 'image/png')
+        create_list(:room, 3, public: true, status: :active, picture: fixture_file)
         get :index
 
         expect(response).to be_successful

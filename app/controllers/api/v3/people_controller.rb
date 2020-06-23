@@ -280,7 +280,7 @@ module Api
 
       def person_params
         params.require(:person).permit(%i[email facebook_auth_token name gender birthdate biography city country_code
-                                      username password picture product current_password new_password do_not_message_me ] +
+                                          username password picture product current_password new_password do_not_message_me ] +
                                          ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[recommended pin_messages_from auto_follow] : []) +
                                          ((current_user.present? && some_admin?) ? %i[chat_banned role tester product_account designation terminated terminated_reason] : []))
       end

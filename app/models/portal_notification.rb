@@ -21,6 +21,7 @@ class PortalNotification < ApplicationRecord
   }.freeze
 
   attr_accessor :trigger_admin_notification
+
   after_commit -> { enqueue_push }, on: :create, if: proc { |record| record.trigger_admin_notification }
   after_commit -> { enqueue_push }, on: :update, if: proc { |record|
     record.trigger_admin_notification == true && record.previous_changes.keys.include?('send_me_at')
@@ -43,7 +44,7 @@ class PortalNotification < ApplicationRecord
 
   validate :sensible_send_time
 
-  scope :for_product, -> (product) { where(portal_notifications: { product_id: product.id }) }
+  scope :for_product, ->(product) { where(portal_notifications: { product_id: product.id }) }
 
   def ignore_translation_lang?(field, lang)
     IGNORE_TRANSLATION_LANGS.has_key?(field) && IGNORE_TRANSLATION_LANGS[field].include?(lang)
@@ -68,6 +69,7 @@ class PortalNotification < ApplicationRecord
   end
 
   private
+
   def sensible_send_time
     unless persisted?
       if send_me_at.present? && send_me_at < Time.zone.now

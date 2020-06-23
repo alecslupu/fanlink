@@ -26,7 +26,7 @@
 module Trivia
   class Game < ApplicationRecord
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
 
     has_paper_trail
     include AttachmentSupport
@@ -92,7 +92,11 @@ module Trivia
 
     scope :enabled, -> { where(status: [:published, :locked, :running, :closed]) }
     scope :completed, -> { where(status: [:closed]).order(end_date: :desc).where('end_date < ?', DateTime.now.to_i) }
-    scope :upcomming, -> { where(status: [:published, :locked, :running]).order(:start_date).where('end_date > ?', DateTime.now.to_i) }
+    scope :upcomming, -> {
+      where(status: [:published, :locked, :running])
+        .order(:start_date)
+        .where('end_date > ?', DateTime.now.to_i)
+    }
 
     after_save :handle_status_changes
 
