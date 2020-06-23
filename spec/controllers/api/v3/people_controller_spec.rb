@@ -91,8 +91,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
               city: 'Las Vegas',
               country_code: 'us',
               picture: fixture_file_upload('images/better.png', 'image/png')
-            }
-          }
+            } }
         expect(response).to be_successful
         expect(json['person']['picture_url']).to_not eq(nil)
         expect(Person.last.picture.exists?).to be_truthy
@@ -111,7 +110,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
         get :index
 
         expect(response).to be_successful
-        expect(json['people'].count).to eq(3) #current user is not included
+        expect(json['people'].count).to eq(3) # current user is not included
         json['people'].each do |person|
           expect(person['picture_url']).to_not eq(nil)
         end
@@ -124,10 +123,10 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
     it 'should return the people object with their attached picture' do
       person = create(:person, picture: fixture_file_upload('images/better.png', 'image/png'))
       ActsAsTenant.with_tenant(person.product) do
-        create_list(:person,3, picture: fixture_file_upload('images/better.png', 'image/png'))
+        create_list(:person, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
 
         login_as(person)
-        get :show ,params: { id: person.id }
+        get :show, params: { id: person.id }
 
         expect(response).to be_successful
         expect(json['person']['picture_url']).to_not eq(nil)

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 json = {
-    id: event_checkin.id,
-    checkin_at: event_checkin.created_at.to_s
+  id: event_checkin.id,
+  checkin_at: event_checkin.created_at.to_s
 }
 json[:person] = render partial: 'api/v3/people/person_mini', locals: { person: event_checkin.person, lang: @lang }
 json

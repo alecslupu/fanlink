@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Certcourse, type: :model do
-
   context 'Valid factory' do
     it { expect(create(:certcourse)).to be_valid }
   end

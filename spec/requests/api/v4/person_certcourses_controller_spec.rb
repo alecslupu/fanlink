@@ -16,7 +16,7 @@ RSpec.describe 'Api::V4::PersonCertcoursesController', type: :request, swagger_d
 
       parameter name: :page_id, in: :formData, type: :string, required: false
       let(:certcourse_page) { create(:certcourse_page, certcourse: person_certcourse.certcourse) }
-      let(:download_file_page) { create(:download_file_page, certcourse_page: certcourse_page)}
+      let(:download_file_page) { create(:download_file_page, certcourse_page: certcourse_page) }
       let(:page_id) { download_file_page.certcourse_page.id }
       let!(:static_system_email) { create(:static_system_email, name: 'document-download') }
 
@@ -60,7 +60,6 @@ RSpec.describe 'Api::V4::PersonCertcoursesController', type: :request, swagger_d
 
       response '200', 'HTTP/1.1 200 Ok' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person_certcourse.person.id)}" }
-        #
         schema "$ref": '#/definitions/PersonCertcourseCreateJson'
         run_test!
       end

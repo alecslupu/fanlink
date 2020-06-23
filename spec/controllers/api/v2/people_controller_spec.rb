@@ -74,8 +74,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
 
         post :create, params:
           { product: product.internal_name,
-           person: { username: username, email: email, password: 'secret', gender: 'male',
-                    birthdate: '2000-01-02', city: 'Shambala', country_code: 'us' } }
+            person: { username: username, email: email, password: 'secret', gender: 'male',
+                      birthdate: '2000-01-02', city: 'Shambala', country_code: 'us' } }
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -155,7 +155,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
 
         expect {
           post :create, params: { product: person.product.internal_name, person: { email: 'nobodyimportant@example.com',
-                                                                                 username: username, password: 'anything' } }
+                                                                                   username: username, password: 'anything' } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('The username has already been taken.')
@@ -170,7 +170,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
 
         expect {
           post :create, params: { product: person.product.internal_name, person: { email: email,
-                                                                                 username: 'anything', password: 'anything' } }
+                                                                                   username: 'anything', password: 'anything' } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('A user has already signed up with that email address.')
@@ -314,8 +314,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
               city: 'Las Vegas',
               country_code: 'us',
               picture: fixture_file_upload('images/better.png', 'image/png')
-            }
-          }
+            } }
         expect(response).to be_successful
         expect(json['person']['picture_url']).to_not eq(nil)
         expect(Person.last.picture.exists?).to be_truthy
@@ -571,10 +570,10 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it 'should return the people object with their attached picture' do
       person = create(:person, picture: fixture_file_upload('images/better.png', 'image/png'))
       ActsAsTenant.with_tenant(person.product) do
-        create_list(:person,3, picture: fixture_file_upload('images/better.png', 'image/png'))
+        create_list(:person, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
 
         login_as(person)
-        get :show ,params: { id: person.id }
+        get :show, params: { id: person.id }
 
         expect(response).to be_successful
         expect(json['person']['picture_url']).to_not eq(nil)
@@ -591,7 +590,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         new_email = 'fooism@example.com'
         new_name = 'Joe Foo'
         patch :update, params: { id: person.id, person: { email: new_email, name: new_name, username: new_username,
-                                                        gender: 'female', birthdate: '1999-03-03', city: 'FooismTown', country_code: 'fr' } }
+                                                          gender: 'female', birthdate: '1999-03-03', city: 'FooismTown', country_code: 'fr' } }
         expect(response).to be_successful
         per = person.reload
         expect(per.username).to eq(new_username)

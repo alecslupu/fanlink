@@ -4,7 +4,7 @@ json = {}
 
 json[:posts] = @posts.map do |post|
   next if post.deleted? && current_user&.app != 'portal'
-  render partial:  'post', locals: { post: post, lang: @lang, post_reaction: @post_reactions[post.id] }, handlers: 'jb'
+  render partial: 'post', locals: { post: post, lang: @lang, post_reaction: @post_reactions[post.id] }, handlers: 'jb'
 end
 
 json

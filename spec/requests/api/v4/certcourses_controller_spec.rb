@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/certificates/{certificate_id}/certcourses' do
     get '' do
       security [Bearer: []]
@@ -29,7 +28,7 @@ RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v
       response '404', '' do
         let(:certificate_id) { Time.zone.now.to_i }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        let(:certificate_id) { Time.now.to_i}
+        let(:certificate_id) { Time.now.to_i }
         run_test!
       end
       response 500, 'Internal server error' do
@@ -54,20 +53,21 @@ RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v
 
       response '200', 'HTTP/1.1 200 Ok' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person_certcourse.person.id)}" }
+        let(:certcourse_page) { create(:certcourse_page, certcourse: person_certcourse.certcourse) }
 
         let!(:image_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
-            create(:image_page, certcourse_page: create(:certcourse_page, certcourse: person_certcourse.certcourse ) )
+            create(:image_page, certcourse_page: certcourse_page)
           }
         }
         let!(:video_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
-            create(:video_page, certcourse_page: create(:certcourse_page, certcourse: person_certcourse.certcourse ) )
+            create(:video_page, certcourse_page: certcourse_page)
           }
         }
         let!(:download_file_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
-            create(:download_file_page, certcourse_page: create(:certcourse_page, certcourse: person_certcourse.certcourse ) )
+            create(:download_file_page, certcourse_page: certcourse_page)
           }
         }
 

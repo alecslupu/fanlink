@@ -9,6 +9,13 @@ RSpec.describe Api::V4::Trivia::RoundsController, type: :controller do
   end
 
   describe 'POST change_status' do
+    let(:token) {
+      %w(
+        eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
+        eyJhdXRob3JpemF0aW9uIjoiRVJjRVQzenAifQ
+        XvEudHy8vLVuZc5MlPfo8NmeSTSmhuynxXQT7PE2rBM
+      ).join(".")
+    }
     it 'can be called being unauthorized' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -25,8 +32,12 @@ RSpec.describe Api::V4::Trivia::RoundsController, type: :controller do
         game = create(:trivia_game, with_leaderboard: false)
         round = create(:trivia_round, with_leaderboard: false, status: :published, game: game)
 
-        post :change_status, params: { game_id: game.id, round_id: round.id, product: person.product.internal_name, token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpemF0aW9uIjoiRVJjRVQzenAifQ.XvEudHy8vLVuZc5MlPfo8NmeSTSmhuynxXQT7PE2rBM',
-                                       status: :locked
+        post :change_status, params: {
+          game_id: game.id,
+          round_id: round.id,
+          product: person.product.internal_name,
+          token: token,
+          status: :locked
         }
         expect(response.body).to eq('')
         expect(response.status).to eq(200)
@@ -38,10 +49,11 @@ RSpec.describe Api::V4::Trivia::RoundsController, type: :controller do
         game = create(:trivia_game, with_leaderboard: false)
         round = create(:trivia_round, with_leaderboard: false, status: :published, game: game)
 
-        post :change_status, params: { game_id: game.id, round_id: round.id,
-                                       product: person.product.internal_name, token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpemF0aW9uIjoiRVJjRVQzenAifQ.XvEudHy8vLVuZc5MlPfo8NmeSTSmhuynxXQT7PE2rBM',
-                                       status: :locked
-        }
+        post :change_status, params: { game_id: game.id,
+                                       round_id: round.id,
+                                       product: person.product.internal_name,
+                                       token: token,
+                                       status: :locked }
 
         expect(round.reload.status).to eq('locked')
         expect(response.status).to eq(200)

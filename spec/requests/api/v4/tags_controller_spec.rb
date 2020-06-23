@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::TagsController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/posts/tags' do
     get '' do
       security [Bearer: []]
@@ -11,9 +10,12 @@ RSpec.describe 'Api::V4::TagsController', type: :request, swagger_doc: 'v4/swagg
 
       produces 'application/vnd.api.v4+json'
 
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
-      parameter name: :tag_name, in: :query, type: :string, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :tag_name,
+                in: :query, type: :string, required: false, description: ' Lorem ipsum', default: 25
 
       let(:Authorization) { '' }
       let(:person) { create(:person) }

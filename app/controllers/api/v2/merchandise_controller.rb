@@ -11,7 +11,7 @@ module Api
           broadcast(:merchandise_created, current_user, @merchandise)
           return_the @merchandise
         else
-          render json: {errors: @merchandise.errors.messages.flatten}, status: :unprocessable_entity
+          render json: { errors: @merchandise.errors.messages.flatten }, status: :unprocessable_entity
         end
       end
 
@@ -20,7 +20,7 @@ module Api
           broadcast(:merchandise_updated, current_user, @merchandise)
           return_the @merchandise
         else
-          render json: {errors: @merchandise.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @merchandise.errors.messages }, status: :unprocessable_entity
         end
       end
 

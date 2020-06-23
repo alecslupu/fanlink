@@ -5,7 +5,6 @@ require 'swagger_helper'
 RSpec.describe 'Api::V4::BlocksController', type: :request, swagger_doc: 'v4/swagger.json' do
   path '/blocks' do
     post '' do
-
       security [Bearer: []]
       let(:Authorization) { '' }
       produces 'application/vnd.api.v4+json'
@@ -29,7 +28,7 @@ RSpec.describe 'Api::V4::BlocksController', type: :request, swagger_doc: 'v4/swa
 
       response '422', '' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: blocker_id)}" }
-        let!(:block) { create(:block, blocker_id: blocker_id, blocked_id: blocked.id)}
+        let!(:block) { create(:block, blocker_id: blocker_id, blocked_id: blocked.id) }
         run_test!
       end
       response '404', '' do
@@ -44,5 +43,4 @@ RSpec.describe 'Api::V4::BlocksController', type: :request, swagger_doc: 'v4/swa
       #    tags ["relation", 'android-old']
     end
   end
-
 end

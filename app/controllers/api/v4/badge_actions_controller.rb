@@ -25,7 +25,7 @@ module Api
                   return_the @progress, handler: tpl_handler
                 else
                   if @progress.blank?
-                    render json: {errors: {base: _('Reward does not exist for that action type.')}}, status: :not_found
+                    render json: { errors: { base: _('Reward does not exist for that action type.') } }, status: :not_found
                   else
                     render_422(@progress.errors)
                   end
@@ -38,7 +38,7 @@ module Api
             end
           end
         else
-          render json: {errors: {base: _('Reward does not exist for that action type.')}}, status: :not_found
+          render json: { errors: { base: _('Reward does not exist for that action type.') } }, status: :not_found
         end
       end
 

@@ -17,7 +17,6 @@
 #
 
 class Poll < ApplicationRecord
-
   # after_initialize do
   #   self.end_date = Time.zone.now + 1.month
   # end
@@ -73,11 +72,11 @@ class Poll < ApplicationRecord
   end
 
   private
-    def add_end_date
-      if duration.zero?
-        self.duration = end_date.to_datetime.to_i - start_date.to_datetime.to_i
-      else
-        self.end_date = start_date.to_datetime + duration.seconds
-      end
+  def add_end_date
+    if duration.zero?
+      self.duration = end_date.to_datetime.to_i - start_date.to_datetime.to_i
+    else
+      self.end_date = start_date.to_datetime + duration.seconds
     end
+  end
 end

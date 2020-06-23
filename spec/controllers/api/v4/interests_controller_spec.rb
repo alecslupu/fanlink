@@ -19,7 +19,7 @@ RSpec.describe Api::V4::InterestsController, type: :controller do
   end
 
   describe 'GET match' do
-    it 'gets all the people that have at least one of the given interests, except current user, in no of interests desc order' do
+    it 'gets all the people that have at least one of the given interests, except current user' do
       current_user = create(:person)
       ActsAsTenant.with_tenant(current_user.product) do
         login_as(current_user)

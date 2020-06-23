@@ -17,27 +17,30 @@ RSpec.describe Person, type: :model do
 
   context 'Validation for normal user' do
     describe '#presence' do
-      it { should validate_presence_of(:username).with_message(_('Username is required.'))}
+      it { should validate_presence_of(:username).with_message(_('Username is required.')) }
       it { should validate_presence_of(:password).with_message(_('Password is required.')) }
     end
     describe '#length' do
       it "should raise an error if username's length is not between 5 and 25 characters" do
         subject = Person.new(username: 'as')
         subject.valid?
-        expect(subject.errors.messages[:username_error].first).to include('Username must be 5 to 25 characters with no special characters or spaces')
+        message = 'Username must be 5 to 25 characters with no special characters or spaces'
+        expect(subject.errors.messages[:username_error].first).to include(message)
 
         subject = Person.new(username: 'ThisIsLongerThan25Characters')
         subject.valid?
-        expect(subject.errors.messages[:username_error].first).to include('Username must be 5 to 25 characters with no special characters or spaces')
+        expect(subject.errors.messages[:username_error].first).to include(message)
       end
 
       it 'should raise an error if the username contains special characters' do
         subject = Person.new(username: 'username&')
         subject.valid?
-        expect(subject.errors.messages[:username_error].first).to include('Username must be 5 to 25 characters with no special characters or spaces')
+        message = 'Username must be 5 to 25 characters with no special characters or spaces'
+        expect(subject.errors.messages[:username_error].first).to include(message)
       end
       it "should validate password's length" do
-        should validate_length_of(:password).is_at_least(6).with_message(_('Password must be at least 6 characters in length.'))
+        message = _('Password must be at least 6 characters in length.')
+        should validate_length_of(:password).is_at_least(6).with_message(message)
       end
     end
 
@@ -52,8 +55,9 @@ RSpec.describe Person, type: :model do
 
       it 'should not allow duplicate emails and usernames for same product' do
         product = create(:product)
-        person1 = create(:person, product: product, username: 'Person1', password: 'testpassword', email: 'person1@example.com')
-        person2 = build(:person, product: product, username: 'Person1', password: 'testpassword', email: 'person1@example.com')
+        attr_hash = { product: product, username: 'Person1', password: 'testpassword', email: 'person1@example.com' }
+        person1 = create(:person, attr_hash)
+        person2 = build(:person, attr_hash)
 
         expect(person1).to be_valid
         expect(person2).not_to be_valid
@@ -179,7 +183,6 @@ RSpec.describe Person, type: :model do
       it 'should verify associations' do
         should have_one(:portal_access)
         should have_one(:client_info)
-
       end
     end
 
@@ -193,68 +196,68 @@ RSpec.describe Person, type: :model do
 
   context 'scopes' do
     describe '#username_filter' do
-      it { expect(Person).to respond_to(:username_filter)}
+      it { expect(Person).to respond_to(:username_filter) }
     end
     describe 'product_account_filter' do
-      it { expect(Person).to respond_to(:product_account_filter)}
+      it { expect(Person).to respond_to(:product_account_filter) }
     end
     describe '#email_filter' do
-      it { expect(Person).to respond_to(:email_filter)}
+      it { expect(Person).to respond_to(:email_filter) }
     end
     describe '#requested_friendships' do
-      it { expect(Person).to respond_to(:requested_friendships)}
+      it { expect(Person).to respond_to(:requested_friendships) }
     end
     describe 'received_friendships' do
-      it { expect(Person).to respond_to(:received_friendships)}
+      it { expect(Person).to respond_to(:received_friendships) }
     end
     describe '#with_friendships' do
-      it { expect(Person).to respond_to(:with_friendships)}
+      it { expect(Person).to respond_to(:with_friendships) }
     end
     describe '#without_friendships' do
-      it { expect(Person).to respond_to(:without_friendships)}
+      it { expect(Person).to respond_to(:without_friendships) }
     end
     describe 'has_interests' do
-      it { expect(Person).to respond_to(:has_interests)}
+      it { expect(Person).to respond_to(:has_interests) }
     end
 
     describe 'has_no_interests' do
-      it { expect(Person).to respond_to(:has_no_interests)}
+      it { expect(Person).to respond_to(:has_no_interests) }
     end
     describe '#has_followings' do
-      it { expect(Person).to respond_to(:has_followings)}
+      it { expect(Person).to respond_to(:has_followings) }
     end
     describe '#has_no_followings' do
-      it { expect(Person).to respond_to(:has_no_followings)}
+      it { expect(Person).to respond_to(:has_no_followings) }
     end
     describe '#has_posts' do
-      it { expect(Person).to respond_to(:has_posts)}
+      it { expect(Person).to respond_to(:has_posts) }
     end
     describe '#has_no_posts' do
-      it { expect(Person).to respond_to(:has_no_posts)}
+      it { expect(Person).to respond_to(:has_no_posts) }
     end
     describe 'has_facebook_id' do
-      it { expect(Person).to respond_to(:has_facebook_id)}
+      it { expect(Person).to respond_to(:has_facebook_id) }
     end
     describe '#has_created_acc_past_24h' do
-      it { expect(Person).to respond_to(:has_created_acc_past_24h)}
+      it { expect(Person).to respond_to(:has_created_acc_past_24h) }
     end
     describe '#has_created_acc_past_7days' do
-      it { expect(Person).to respond_to(:has_created_acc_past_7days)}
+      it { expect(Person).to respond_to(:has_created_acc_past_7days) }
     end
     describe 'has_free_certificates_enrolled' do
-      it { expect(Person).to respond_to(:has_no_free_certificates_enrolled)}
+      it { expect(Person).to respond_to(:has_no_free_certificates_enrolled) }
     end
     describe '#has_free_certificates_enrolled' do
-      it { expect(Person).to respond_to(:has_free_certificates_enrolled)}
+      it { expect(Person).to respond_to(:has_free_certificates_enrolled) }
     end
     describe '#has_certificates_generated' do
-      it { expect(Person).to respond_to(:has_certificates_generated)}
+      it { expect(Person).to respond_to(:has_certificates_generated) }
     end
     describe '#has_paid_certificates' do
-      it { expect(Person).to respond_to(:has_paid_certificates)}
+      it { expect(Person).to respond_to(:has_paid_certificates) }
     end
     describe '#has_no_paid_certificates' do
-      it { expect(Person).to respond_to(:has_no_paid_certificates)}
+      it { expect(Person).to respond_to(:has_no_paid_certificates) }
     end
   end
 
@@ -513,7 +516,7 @@ RSpec.describe Person, type: :model do
     end
     it 'should ignore accents, case, and punctuation when using for_username' do
       examples = ['Whére.Ïs.Pañçâkè.HOUSE', 'where.is.pancake.house',
-                   'whereispancakehouse', 'where-is_pancake.house', 'where@is_pancakehouse']
+                  'whereispancakehouse', 'where-is_pancake.house', 'where@is_pancakehouse']
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end
@@ -728,8 +731,9 @@ RSpec.describe Person, type: :model do
         pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
       }.to have_enqueued_job.on_queue('mailers').with(
         'PersonMailer', 'send_certificate', 'deliver_now', {
-        id: pc.person_id, person_certificate: pc.id, email: pc.person.email
-      })
+          id: pc.person_id, person_certificate: pc.id, email: pc.person.email
+        }
+      )
     end
   end
 
@@ -771,11 +775,9 @@ RSpec.describe Person, type: :model do
       expect(to_test.full_permission_list).to include(:reward_read)
       expect(to_test.full_permission_list).to include(:post_update)
     end
-
   end
 
   describe 'individual_access' do
-
     it 'has association' do
       should have_one(:portal_access)
     end
@@ -818,8 +820,9 @@ RSpec.describe Person, type: :model do
         pc.person.send_assignee_certificate_email(pc, pc.person_id, pc.person.email)
       }.to have_enqueued_job.on_queue('mailers').with(
         'PersonMailer', 'send_assignee_certificate', 'deliver_now', {
-        person: pc.person_id, assignee: pc.person_id, person_certificate: pc.id, email: pc.person.email
-      })
+          person: pc.person_id, assignee: pc.person_id, person_certificate: pc.id, email: pc.person.email
+        }
+      )
     end
   end
 

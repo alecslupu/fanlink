@@ -87,7 +87,7 @@ module Flaws
     to_output_name = output_name_for(filename)
 
     if (width < SIZER[:w] && height < SIZER[:h])
-      s3_client.delete_object(bucket: bucket,  key: to_output_name[SIZER])
+      s3_client.delete_object(bucket: bucket, key: to_output_name[SIZER])
     else
       data = data.merge('presets' => SIZER[:id])
     end

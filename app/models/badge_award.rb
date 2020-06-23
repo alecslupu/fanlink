@@ -46,9 +46,9 @@ class BadgeAward < ApplicationRecord
 
   private
 
-    def product_match
-      if badge.product_id != person.product_id
-        errors.add(:base, :product_mismatch, message: _('Product mismatch!'))
-      end
+  def product_match
+    if badge.product_id != person.product_id
+      errors.add(:base, :product_mismatch, message: _('Product mismatch!'))
     end
+  end
 end

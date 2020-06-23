@@ -28,14 +28,14 @@ class Interest < ApplicationRecord
 
   accepts_nested_attributes_for :children, allow_destroy: true
 
-  scope :for_product, -> (product) { where( interests: { product_id: product.id } ) }
+  scope :for_product, -> (product) { where(interests: { product_id: product.id }) }
 
   validate :title_not_empty
 
-  scope :interests, -> (product) { for_product(product).where( parent_id: nil).order(order: :desc) }
+  scope :interests, -> (product) { for_product(product).where(parent_id: nil).order(order: :desc) }
 
   protected
   def title_not_empty
-    errors.add(:title, _("can't be empty.")) if  self.title.blank?
+    errors.add(:title, _("can't be empty.")) if self.title.blank?
   end
 end

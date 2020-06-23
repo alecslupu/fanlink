@@ -7,5 +7,4 @@ json.post do
     json.username @post.person.username
     json.picture_url @post.person.picture_url
   end
-
 end

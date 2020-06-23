@@ -25,7 +25,6 @@
 
 module Trivia
   class Game < ApplicationRecord
-
     acts_as_tenant(:product)
     scope :for_product, -> (product) { where(product_id: product.id) }
 
@@ -123,7 +122,5 @@ module Trivia
         ::Trivia::GameStatus::PublishJob.perform_later(self.id)
       end
     end
-
   end
 end
-

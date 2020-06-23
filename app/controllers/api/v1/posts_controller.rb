@@ -93,7 +93,7 @@ module Api
           broadcast(:post_created, current_user, @post, @api_version)
           return_the @post
         else
-          render json: {errors: @post.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @post.errors.messages }, status: :unprocessable_entity
         end
       end
 
@@ -164,7 +164,7 @@ module Api
 
       def index
         if !check_dates(true)
-          render json: {errors: 'Missing or invalid date(s)'}, status: :unprocessable_entity
+          render json: { errors: 'Missing or invalid date(s)' }, status: :unprocessable_entity
         else
           l = params[:limit].to_i
           l = nil if l == 0

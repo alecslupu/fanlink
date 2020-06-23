@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe PostReport, type: :model do
-
   before(:each) do
     @product = create(:product)
     ActsAsTenant.current_tenant = @product
@@ -15,14 +14,12 @@ RSpec.describe PostReport, type: :model do
   end
 
   context 'Scopes' do
-
     describe '.status_filter' do
       it do
         expect(PostReport).to respond_to(:status_filter)
       end
       pending
     end
-
   end
 
   describe '#create' do

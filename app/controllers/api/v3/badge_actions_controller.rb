@@ -64,7 +64,7 @@ module Api
                   return_the @progress
                 else
                   if @progress.blank?
-                    render json: {errors: {base: _('Reward does not exist for that action type.')}}, status: :not_found
+                    render json: { errors: { base: _('Reward does not exist for that action type.') } }, status: :not_found
                   else
                     render_422(@progress.errors)
                   end
@@ -106,7 +106,7 @@ module Api
               action_type_id: @action_type.id,
               identifier: params[:badge_action][:identifier]
             )
-            @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: {assigned_type: 'ActionType', assigned_id: @action_type.id}).order(completion_requirement: :asc)
+            @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: 'ActionType', assigned_id: @action_type.id }).order(completion_requirement: :asc)
           else
             render_422(_('Action type is invalid.'))
           end

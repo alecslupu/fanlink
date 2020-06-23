@@ -21,7 +21,7 @@ class PostComment < ApplicationRecord
   # include PostComment::RealTime
 
   scope :reported, -> { joins(:post_comment_reports) }
-  scope :not_reported, -> { left_joins(:post_comment_reports).where(post_comment_reports: { id: nil } ) }
+  scope :not_reported, -> { left_joins(:post_comment_reports).where(post_comment_reports: { id: nil }) }
 
   belongs_to :person, touch: true
   belongs_to :post, touch: true, counter_cache: true

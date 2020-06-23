@@ -110,7 +110,7 @@ class Post < ApplicationRecord
         }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
-  scope :for_product, -> (product) { joins(:person).where( people: { product_id: product.id } ) }
+  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
   scope :in_date_range, -> (start_date, end_date) {
           where('posts.created_at >= ? and posts.created_at <= ?',
                 start_date.beginning_of_day, end_date.end_of_day)
@@ -126,7 +126,7 @@ class Post < ApplicationRecord
   scope :not_promoted, -> { left_joins(:poll).where('poll_type_id IS NULL or end_date < NOW()') }
 
   scope :reported, -> { joins(:post_reports) }
-  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }
+  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil }) }
 
   def cache_key
     [super, person.cache_key].join('/')

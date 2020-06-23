@@ -13,7 +13,6 @@ module RailsAdmin
           register_instance_option :export_value do
             formatted_value.html_safe
           end
-
         end
       end
     end

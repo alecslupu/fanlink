@@ -14,9 +14,9 @@ RailsAdmin.config do |config|
 
       fields :created_at,
              :person,
-              :room,
-              :id,
-              :body
+             :room,
+             :id,
+             :body
       field :reported do
         pretty_value do
           bindings[:object].reported?

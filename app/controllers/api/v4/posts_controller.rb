@@ -93,7 +93,7 @@ module Api
 
       def create
         if current_user.chat_banned?
-          render json: {errors: 'You are banned.'}, status: :unprocessable_entity
+          render json: { errors: 'You are banned.' }, status: :unprocessable_entity
         else
           @post = Post.create(post_params.merge(person_id: current_user.id))
           if @post.valid?

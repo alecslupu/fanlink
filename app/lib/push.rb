@@ -150,7 +150,7 @@ module Push
   end
   module_function :push_client
 
-  #moved
+  # moved
   def disconnect
     @fbcm = nil
   end

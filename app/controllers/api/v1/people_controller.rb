@@ -116,7 +116,7 @@ module Api
           if params[:facebook_auth_token].present?
             @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
             if @person.nil?
-              (render json: {errors: 'There was a problem contacting Facebook'}, status: :service_unavailable) && return
+              (render json: { errors: 'There was a problem contacting Facebook' }, status: :service_unavailable) && return
             end
           else
             @person = Person.create(person_params)

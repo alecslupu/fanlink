@@ -14,7 +14,6 @@
 #
 
 class PortalNotification < ApplicationRecord
-
   LANGS = {
     'en' => 'English*',
     'es' => 'Spanish',
@@ -44,7 +43,7 @@ class PortalNotification < ApplicationRecord
 
   validate :sensible_send_time
 
-  scope :for_product, -> (product) { where(portal_notifications: { product_id: product.id } ) }
+  scope :for_product, -> (product) { where(portal_notifications: { product_id: product.id }) }
 
   def ignore_translation_lang?(field, lang)
     IGNORE_TRANSLATION_LANGS.has_key?(field) && IGNORE_TRANSLATION_LANGS[field].include?(lang)
@@ -64,7 +63,7 @@ class PortalNotification < ApplicationRecord
 
   def enqueue_push
     if pending? && future_send_date?
-      PortalNotificationPushJob.set(wait_until:  self.send_me_at + 1.second).perform_later(self.id)
+      PortalNotificationPushJob.set(wait_until: self.send_me_at + 1.second).perform_later(self.id)
     end
   end
 

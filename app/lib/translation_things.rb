@@ -8,16 +8,16 @@ module TranslationThings
   end
 
   LANGS = {
-      'un' => 'Language Unspecified',
-      'en' => 'English*',
+    'un' => 'Language Unspecified',
+    'en' => 'English*',
       # 'ar' => 'Arabic',
       # 'de' => 'German',
-      'es' => 'Spanish',
+    'es' => 'Spanish',
       #  'fr' => 'French',
       #  'it' => 'Italian',
       #  'ko' => 'Korean',
       #  'pt' => 'Portuguese',
-      'ro' => 'Romanian',
+    'ro' => 'Romanian',
   }.freeze
 
   DEFAULT_LANG = 'en'

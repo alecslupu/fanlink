@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::RelationshipsController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/relationships' do
     post '' do
       security [Bearer: []]
@@ -138,12 +137,11 @@ RSpec.describe 'Api::V4::RelationshipsController', type: :request, swagger_doc: 
 
       let(:relation) { create(:relationship, status: 'friended') }
       let(:id) { relation.id }
-      let('relationship[status]') {  }
+      let('relationship[status]') {}
 
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
       context 'denied' do
-
         response '200', 'HTTP/1.1 200 Ok' do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: relation.requested_to.id)}" }
           let(:relation) { create(:relationship, status: 'requested') }
@@ -168,7 +166,6 @@ RSpec.describe 'Api::V4::RelationshipsController', type: :request, swagger_doc: 
         end
       end
       context 'friended' do
-
         response '200', 'HTTP/1.1 200 Ok' do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: relation.requested_to.id)}" }
           let(:relation) { create(:relationship, status: 'requested') }
@@ -195,7 +192,6 @@ RSpec.describe 'Api::V4::RelationshipsController', type: :request, swagger_doc: 
         end
       end
       context 'withdrawn' do
-
         response '200', 'HTTP/1.1 200 Ok' do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: relation.requested_by.id)}" }
           let(:relation) { create(:relationship, status: 'requested') }
@@ -223,5 +219,4 @@ RSpec.describe 'Api::V4::RelationshipsController', type: :request, swagger_doc: 
       end
     end
   end
-
 end

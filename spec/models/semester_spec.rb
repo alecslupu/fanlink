@@ -22,15 +22,18 @@ RSpec.describe Semester, type: :model do
 
     describe 'should validate presense of' do
       it '#name' do
-        should validate_presence_of(:name).with_message(_('A name is required.'))
+        should validate_presence_of(:name)
+          .with_message(_('A name is required.'))
       end
 
       it '#description' do
-        should validate_presence_of(:description).with_message(_('A description is required.'))
+        should validate_presence_of(:description)
+          .with_message(_('A description is required.'))
       end
 
       it '#start_date' do
-        should validate_presence_of(:start_date).with_message(_('A start date is required.'))
+        should validate_presence_of(:start_date)
+          .with_message(_('A start date is required.'))
       end
     end
 
@@ -38,11 +41,17 @@ RSpec.describe Semester, type: :model do
       subject { build(:semester) }
 
       it '#name' do
-        should validate_length_of(:name).is_at_least(3).is_at_most(26).with_message(_('Name must be between 3 and 26 characters.'))
+        should validate_length_of(:name)
+          .is_at_least(3)
+          .is_at_most(26)
+          .with_message(_('Name must be between 3 and 26 characters.'))
       end
 
       it '#description' do
-        should validate_length_of(:description).is_at_least(3).is_at_most(500).with_message(_('Description must be between 3 and 500 characters.'))
+        should validate_length_of(:description)
+          .is_at_least(3)
+          .is_at_most(500)
+          .with_message(_('Description must be between 3 and 500 characters.'))
       end
     end
 

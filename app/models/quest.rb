@@ -46,7 +46,7 @@ class Quest < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-  scope :for_product, -> (product) { where( quests: { product_id: product.id } ) }
+  scope :for_product, -> (product) { where(quests: { product_id: product.id }) }
 
   has_image_called :picture
 
@@ -76,7 +76,7 @@ class Quest < ApplicationRecord
 
   scope :in_date_range, ->(start_date, end_date) {
       where('quests.starts_at >= ? and quests.ends_at <= ?',
-        start_date.beginning_of_day, end_date.end_of_day)
+            start_date.beginning_of_day, end_date.end_of_day)
     }
 
   scope :for_product, ->(product) { includes(:product).where(product: product) }

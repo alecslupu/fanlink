@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe BadgeAction, type: :model do
-  subject { FactoryBot.create(:badge_action, action_type_id: FactoryBot.create(:action_type).id, person_id: FactoryBot.create(:person).id, identifier: 'myaction') }
+  subject {
+    create(:badge_action,
+           action_type_id: create(:action_type).id,
+           person_id: create(:person).id,
+           identifier: 'myaction')
+  }
 
   context 'Valid factory' do
     it { expect(build(:badge_action)).to be_valid }
@@ -14,7 +19,11 @@ RSpec.describe BadgeAction, type: :model do
   end
   context 'Validations' do
     describe 'Uniqueness' do
-      it { should validate_uniqueness_of(:identifier).scoped_to(%i[person_id action_type_id]).allow_nil.with_message(_('Sorry, you cannot get credit for that action again.')) }
+      it {
+        should validate_uniqueness_of(:identifier)
+        .scoped_to(%i[person_id action_type_id])
+        .allow_nil
+        .with_message(_('Sorry, you cannot get credit for that action again.')) }
     end
   end
   describe '#identifier' do

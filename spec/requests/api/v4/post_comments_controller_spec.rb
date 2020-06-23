@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::PostCommentsController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/posts/{id}/comments' do
     get '' do
       security [Bearer: []]

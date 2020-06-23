@@ -243,7 +243,7 @@ module Api
       def step_params
         params.require(:step).permit(:unlocks, :display, :initial_status, :delay_unlock, :reward_id, :uuid,
                                      quest_activities_attributes: [:id, :description, :hint, :picture,
-                                                                   activity_types_attributes: [:id, :atype, {value: [:id, :description]}
+                                                                   activity_types_attributes: [:id, :atype, { value: [:id, :description] }
                                                                    ]
                                      ]
         )

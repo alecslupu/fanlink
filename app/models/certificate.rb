@@ -80,7 +80,7 @@ class Certificate < ApplicationRecord
   end
 
   private
-    def certificate_order_validation
-      errors.add(:certificate_order, _('The certificate order must be greater than %{size}. Got %{value}' % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
-    end
+  def certificate_order_validation
+    errors.add(:certificate_order, _('The certificate order must be greater than %{size}. Got %{value}' % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
+  end
 end

@@ -1,62 +1,71 @@
-rubocop:Layout_EmptyLineAfterMagicComment:
+rubocop:Layout:
   extends: .base
   stage: rubocop
   allow_failure: false
   dependencies:
     - test:rubocop
   script:
-    - bundle exec rubocop --only Layout/EmptyLineAfterMagicComment app config spec lib
+    - bundle exec rubocop --only Layout app config spec lib
 
-rubocop:Layout_SpaceInsidePercentLiteralDelimiters:
+rubocop:Bundler:
   extends: .base
   stage: rubocop
-  allow_failure: false
+  allow_failure: true
   dependencies:
     - test:rubocop
   script:
-    - bundle exec rubocop --only Layout/SpaceInsidePercentLiteralDelimiters app config spec lib
-rubocop:Layout_SpaceInsideArrayLiteralBrackets:
-  extends: .base
-  stage: rubocop
-  allow_failure: false
-  dependencies:
-    - test:rubocop
-  script:
-    - bundle exec rubocop --only Layout/SpaceInsideArrayLiteralBrackets app config spec lib
+    - bundle exec rubocop --only Bundler app config spec lib
 
-rubocop:Layout_AccessModifierIndentation:
+rubocop:Gemspec:
   extends: .base
   stage: rubocop
-  allow_failure: false
+  allow_failure: true
   dependencies:
     - test:rubocop
   script:
-    - bundle exec rubocop --only Layout/AccessModifierIndentation app config spec lib
+    - bundle exec rubocop --only Gemspec app config spec lib
 
-rubocop:Style_StringLiterals:
+rubocop:Lint:
   extends: .base
   stage: rubocop
-  allow_failure: false
+  allow_failure: true
   dependencies:
     - test:rubocop
   script:
-    - bundle exec rubocop --only Style/StringLiterals app config spec lib
+    - bundle exec rubocop --only Lint app config spec lib
 
-
-rubocop:Style_ClassAndModuleChildren:
+rubocop:Metrics_and_Migration:
   extends: .base
   stage: rubocop
-  allow_failure: false
+  allow_failure: true
   dependencies:
     - test:rubocop
   script:
-    - bundle exec rubocop --only Style/ClassAndModuleChildren app config spec lib
+    - bundle exec rubocop --only Metrics,Migration app config spec lib
 
-rubocop:Layout_EmptyLines:
+rubocop:Naming:
   extends: .base
   stage: rubocop
-  allow_failure: false
+  allow_failure: true
   dependencies:
     - test:rubocop
   script:
-    - bundle exec rubocop --only Layout/EmptyLines app config spec lib
+    - bundle exec rubocop --only Naming app config spec lib
+
+rubocop:Security:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Security app config spec lib
+
+rubocop:Style:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Style app config spec lib

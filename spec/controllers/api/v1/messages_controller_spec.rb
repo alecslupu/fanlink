@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe Api::V1::MessagesController, type: :controller do
   before(:each) do
     stub_wisper_publisher('MentionPushNotification',
-                         :execute, :message_created)
+                          :execute, :message_created)
   end
   describe '#create' do
     before :each do
@@ -41,12 +41,12 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         login_as(person)
         body = 'Do you like my body?'
         post :create, params: { room_id: room.id, message: { body: body,
-                                                           mentions: [{ person_id: mentioned1.id,
-                                                                       location: 11,
-                                                                       length: 8 },
-                                                                      { person_id: mentioned2.id,
-                                                                       location: 14,
-                                                                       length: 4 },] } }
+                                                             mentions: [{ person_id: mentioned1.id,
+                                                                          location: 11,
+                                                                          length: 8 },
+                                                                        { person_id: mentioned2.id,
+                                                                          location: 14,
+                                                                          length: 4 },] } }
         expect(response).to be_successful
         msg = Message.last
         expect(msg.mentions.count).to eq(2)
@@ -66,9 +66,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         body = 'Do you like my body?'
         expect {
           post :create, params: { room_id: room.id, message: { body: body,
-                                                             mentions: [{ location: 4, length: 11 },
-                                                                        { person_id: mentioned2.id,
-                                                                         location: 5, length: 1 },] } }
+                                                               mentions: [{ location: 4, length: 11 },
+                                                                          { person_id: mentioned2.id,
+                                                                            location: 5, length: 1 },] } }
         }.to change { Message.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).not_to be_empty
@@ -110,9 +110,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         mentioned1 = create(:person)
         body = 'Do you like my body?'
         post :create, params: { room_id: room.id,
-                               message: { body: body, mentions: [{ person_id: mentioned1.id,
-                                                                 location: 14,
-                                                                 length: 4 }] } }
+                                message: { body: body, mentions: [{ person_id: mentioned1.id,
+                                                                    location: 14,
+                                                                    length: 4 }] } }
         expect(response).to be_successful
         msg = Message.last
         expect(msg.mentions.count).to eq(1)
@@ -186,15 +186,15 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         body = 'Do you like my body?'
-        room = create(:public_active_room, )
+        room = create(:public_active_room,)
         post :create,
-        params: {
-          room_id: room.id,
-          message: {
-            body: body,
-            picture: fixture_file_upload('images/better.png', 'image/png')
-          }
-        }
+             params: {
+               room_id: room.id,
+               message: {
+                 body: body,
+                 picture: fixture_file_upload('images/better.png', 'image/png')
+               }
+             }
         expect(response).to be_successful
         expect(json['message']['picture_url']).not_to eq(nil)
         expect(Message.last.picture.exists?).to be_truthy
@@ -206,15 +206,15 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         body = 'Do you like my body?'
-        room = create(:public_active_room, )
+        room = create(:public_active_room,)
         post :create,
-        params: {
-          room_id: room.id,
-          message: {
-            body: body,
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-          }
-        }
+             params: {
+               room_id: room.id,
+               message: {
+                 body: body,
+                 audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+               }
+             }
         expect(response).to be_successful
         expect(json['message']['audio_url']).not_to eq(nil)
         expect(Message.last.audio.exists?).to be_truthy
@@ -453,11 +453,11 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
             picture: fixture_file_upload('images/better.png', 'image/png')
           )
           get :index,
-            params: {
-              room_id: private_room.id,
-              from_date: from,
-              to_date: to
-            }
+              params: {
+                room_id: private_room.id,
+                from_date: from,
+                to_date: to
+              }
 
           expect(response).to be_successful
           expect(json['messages'].size).to eq(3)
@@ -484,11 +484,11 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
           )
 
           get :index,
-            params: {
-              room_id: private_room.id,
-              from_date: from,
-              to_date: to
-            }
+              params: {
+                room_id: private_room.id,
+                from_date: from,
+                to_date: to
+              }
 
           expect(response).to be_successful
           expect(json['messages'].size).to eq(3)

@@ -2,7 +2,6 @@
 
 module Push
   class PostCommentMention < BasePush
-
     def push(post_comment, mentioned_person)
       @target_person = mentioned_person
 

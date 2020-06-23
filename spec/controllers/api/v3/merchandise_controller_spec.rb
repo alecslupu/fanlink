@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V3::MerchandiseController, type: :controller do
-
   describe 'GET index' do
     it 'returns all merchandises with their attached image' do
       person = create(:admin_user)

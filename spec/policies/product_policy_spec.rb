@@ -39,4 +39,3 @@ RSpec.describe ProductPolicy, type: :policy do
     end
   end
 end
-

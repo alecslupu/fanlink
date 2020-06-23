@@ -4,7 +4,6 @@ module PermissionMatrix
   extend ActiveSupport::Concern
 
   included do
-
     include FlagShihTzu
     %w[event merchandise user badge reward quest beacon reporting interest root portal_notification marketing_notification automated_notification].each do |field|
       has_flags 1 => "#{field}_read".to_sym,
@@ -66,6 +65,5 @@ module PermissionMatrix
       end
       perms
     end
-
   end
 end

@@ -28,13 +28,13 @@ RailsAdmin.config do |config|
 
       field :name do
         visible false
-        searchable [{badge_translations: :name }]
+        searchable [{ badge_translations: :name }]
         queryable true
         filterable true
       end
       field :description do
         visible false
-        searchable [{badge_translations: :description }]
+        searchable [{ badge_translations: :description }]
         queryable true
         filterable true
       end
