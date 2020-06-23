@@ -8,6 +8,7 @@ module Routing
       end
 
       protected
+
       def self.api_version(version)
         'application/vnd.api.' + version + '+json'
       end

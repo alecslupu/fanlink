@@ -118,7 +118,7 @@ class Post < ApplicationRecord
     where('posts.created_at >= ? and posts.created_at <= ?',
           start_date.beginning_of_day, end_date.end_of_day)
   }
-  scope :for_product, -> (product) { joins(:person).where( people: { product_id: product.id } ) }
+  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
   scope :for_person, -> (person) { includes(:person).where(person: person) }
   scope :for_category, -> (categories) { joins(:category).where('categories.name IN (?)', categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }

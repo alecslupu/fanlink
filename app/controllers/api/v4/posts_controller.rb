@@ -128,10 +128,10 @@ module Api
           time = 1
         end
         @posts = Post
-                   .where('created_at >= ?', time.day.ago)
-                   .order(Arel.sql('DATE(created_at) ASC'))
-                   .group(Arel.sql('Date(created_at)'))
-                   .count
+                 .where('created_at >= ?', time.day.ago)
+                 .order(Arel.sql('DATE(created_at) ASC'))
+                 .group(Arel.sql('Date(created_at)'))
+                 .count
         return_the @posts, handler: tpl_handler
       end
 
