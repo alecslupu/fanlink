@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::QuestsController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/quests' do
     get '' do
       tags :quests

@@ -45,7 +45,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
-        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id )
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
         certificate = create(:certificate)
         person1.certificates << certificate
 
@@ -60,7 +60,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
 
         expect(response).to be_successful
         expect(json['certcourses'].count).to eq(2)
-        expect(json['certcourses'].map { |cert| cert['id']}.sort).to eq (certcourses.first(2).map(&:id))
+        expect(json['certcourses'].map { |cert| cert['id'] }.sort).to eq (certcourses.first(2).map(&:id))
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
-        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id )
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
         certificate = create(:certificate)
         certificate2 = create(:certificate)
         certificate3 = create(:certificate)
@@ -92,7 +92,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         get :index, params: { person_id: person1.id, certificate_id: certificate.id }
         expect(response).to be_successful
         expect(json['certcourses'].count).to eq(2)
-        expect(json['certcourses'].map { |cert| cert['id']}.sort).to eq (certcourses.first(2).map(&:id))
+        expect(json['certcourses'].map { |cert| cert['id'] }.sort).to eq (certcourses.first(2).map(&:id))
       end
     end
   end

@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::SessionController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/steps/{step_id}/completions' do
     post '' do
       security [Bearer: []]
@@ -51,7 +50,6 @@ RSpec.describe 'Api::V4::SessionController', type: :request, swagger_doc: 'v4/sw
         document_response_without_test!
       end
       #    tags ["config", 'kotlin']
-
     end
   end
   path '/people/person/{username}' do
@@ -60,7 +58,7 @@ RSpec.describe 'Api::V4::SessionController', type: :request, swagger_doc: 'v4/sw
       let(:Authorization) { '' }
       parameter name: :username, in: :path, type: :string
 
-      let(:username) { 'username'}
+      let(:username) { 'username' }
 
       produces 'application/vnd.api.v4+json'
       response '200', 'HTTP/1.1 200 Ok' do
@@ -76,7 +74,6 @@ RSpec.describe 'Api::V4::SessionController', type: :request, swagger_doc: 'v4/sw
         document_response_without_test!
       end
       #    tags ["user", 'kotlin']
-
     end
   end
   path '/people/recommended' do

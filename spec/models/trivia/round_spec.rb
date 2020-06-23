@@ -156,22 +156,22 @@ RSpec.describe Trivia::Round, type: :model do
       end
       it 'does not save the round when status is locked' do
         @round.status = 'locked'
-        expect{ @round.save }.not_to change{ Trivia::Round.count }
+        expect { @round.save }.not_to change { Trivia::Round.count }
       end
 
       it 'does not save the round when status is published' do
         @round.status = 'published'
-        expect{ @round.save }.not_to change{ Trivia::Round.count }
+        expect { @round.save }.not_to change { Trivia::Round.count }
         # expect{ @round.save }.not_to change{ Trivia::Round.count }
       end
 
       it 'does not save the round when status is running' do
         @round.status = 'running'
-        expect{ @round.save }.not_to change{ Trivia::Round.count }
+        expect { @round.save }.not_to change { Trivia::Round.count }
       end
 
       it 'saves the round when status is draft' do
-        expect{ @round.save }.to change{ Trivia::Round.count }.by(1)
+        expect { @round.save }.to change { Trivia::Round.count }.by(1)
       end
     end
 

@@ -9,7 +9,6 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
     it { expect(build(:trivia_picture_available_question)).to be_valid }
     it { expect(build(:trivia_boolean_choice_available_question)).to be_valid }
     it { expect(build(:trivia_hangman_available_question)).to be_valid }
-
   end
   context 'Associations' do
     describe "should verify associations haven't changed for" do
@@ -66,7 +65,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
         end
 
         it 'does not save the question' do
-          expect { @available_question.save }.not_to change{ Trivia::HangmanAvailableQuestion.count }
+          expect { @available_question.save }.not_to change { Trivia::HangmanAvailableQuestion.count }
         end
 
         it 'throws an error with a message' do
@@ -81,7 +80,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
           @available_question.available_answers.first.update(is_correct: false)
         end
         it 'does not save the question' do
-          expect { @available_question.save }.not_to change{ Trivia::HangmanAvailableQuestion.count }
+          expect { @available_question.save }.not_to change { Trivia::HangmanAvailableQuestion.count }
         end
 
         it 'throws an error with a message' do
@@ -97,7 +96,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
       end
 
       it 'does not save the record' do
-        expect { @available_question.save }.not_to change{ Trivia::AvailableQuestion.count }
+        expect { @available_question.save }.not_to change { Trivia::AvailableQuestion.count }
       end
 
       it 'throws an error with a message' do

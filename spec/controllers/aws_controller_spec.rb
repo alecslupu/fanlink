@@ -24,9 +24,9 @@ To confirm the subscription, visit the SubscribeURL included in this message.",
       }.to_json
 
       request.headers.merge!({
-        'x-amz-sns-message-type' => 'SubscriptionConfirmation',
-        'x-amz-sns-topic-arn' => arn
-      })
+                               'x-amz-sns-message-type' => 'SubscriptionConfirmation',
+                               'x-amz-sns-topic-arn' => arn
+                             })
       post :video_transcoded, body: data
     end
     it 'SubscriptionConfirmation' do
@@ -66,9 +66,9 @@ To confirm the subscription, visit the SubscribeURL included in this message.",
         UnsubscribeURL: 'https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:390209539631:fanlink-staging-video:1ad3650a-6a92-4726-a348-134913df6abb'
       }
       request.headers.merge!({
-        'x-amz-sns-message-type' => 'notification',
-        'x-amz-sns-topic-arn' => arn
-      })
+                               'x-amz-sns-message-type' => 'notification',
+                               'x-amz-sns-topic-arn' => arn
+                             })
       post :video_transcoded, body: data.to_json
     end
   end

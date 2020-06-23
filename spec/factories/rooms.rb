@@ -29,12 +29,14 @@ FactoryBot.define do
     created_by_id { create(:person).id }
 
     factory :private_active_room do
-      public { false }
+      sequence(:public) { false }
+
       status { :active }
     end
 
     factory :public_active_room do
-      public { true }
+      sequence(:public) { true }
+
       status { :active }
     end
   end

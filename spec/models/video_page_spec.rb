@@ -12,7 +12,6 @@ RSpec.describe VideoPage, type: :model do
     let(:certcourse_page) { create(:certcourse_page, duration: duration + 1) }
 
     it "changes the duration of the certcourse's page" do
-
       allow_any_instance_of(described_class).to receive(:duration) { duration }
 
       ActsAsTenant.with_tenant(certcourse_page.product) do

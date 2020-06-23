@@ -8,7 +8,7 @@ module RailsAdmin
           RailsAdmin::Config::Fields::Types.register(self)
 
           def initialize(parent, name, properties)
-            properties = parent.abstract_model.associations.detect {|p| name == p.name}
+            properties = parent.abstract_model.associations.detect { |p| name == p.name }
             super
           end
 

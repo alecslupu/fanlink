@@ -43,7 +43,6 @@ FactoryBot.define do
         create_list :correct_trivia_available_answer, 2, question: question
         create_list :wrong_trivia_available_answer, 3, question: question
       end
-
     end
     factory :trivia_multiple_choice_available_question, class: 'Trivia::MultipleChoiceAvailableQuestion' do
       transient do

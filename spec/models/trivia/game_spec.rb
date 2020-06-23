@@ -40,7 +40,7 @@ RSpec.describe Trivia::Game, type: :model do
   end
 
   context 'State Machine' do
-    subject{ Trivia::Game.find(create(:full_short_trivia_game, start_date: (Time.zone.now + 1.day).to_i, end_date: (Time.zone.now + 2.day).to_i).id) }
+    subject { Trivia::Game.find(create(:full_short_trivia_game, start_date: (Time.zone.now + 1.day).to_i, end_date: (Time.zone.now + 2.day).to_i).id) }
     it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
     it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
     it { expect(subject).to transition_from(:locked).to(:running).on_event(:running) }
@@ -156,7 +156,6 @@ RSpec.describe Trivia::Game, type: :model do
   context 'validations' do
     describe '#start_date' do
       describe 'when is smaller than current date' do
-
         before(:each) do
           @game = create(:full_trivia_game, start_date:(Time.zone.now - 1.day).to_i, status: :draft)
           @game.publish!
@@ -175,12 +174,12 @@ RSpec.describe Trivia::Game, type: :model do
     describe '#check_rounds_start_time' do
       describe 'when trying to publish a game with at least one round with the start date in the past'
       before(:each) do
-         @game = create(:full_trivia_game, start_date:(Time.zone.now + 1.day).to_i)
-         # if in the future the factory won't create rounds in the past
-         # @game.rounds.each do |round|
-         #   round.update(start_date: (Time.zone.now + 1.day).to_i)
-         # end
-         @game.publish!
+        @game = create(:full_trivia_game, start_date:(Time.zone.now + 1.day).to_i)
+        # if in the future the factory won't create rounds in the past
+        # @game.rounds.each do |round|
+        #   round.update(start_date: (Time.zone.now + 1.day).to_i)
+        # end
+        @game.publish!
       end
 
       it 'does not publish the game' do

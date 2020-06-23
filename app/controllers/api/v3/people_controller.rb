@@ -73,7 +73,7 @@ module Api
           if params[:facebook_auth_token].present?
             @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
             if @person.nil?
-              (render json: {errors: _('There was a problem contacting Facebook.')}, status: :service_unavailable) && return
+              (render json: { errors: _('There was a problem contacting Facebook.') }, status: :service_unavailable) && return
             end
           else
             @person = Person.create(person_params)
@@ -240,6 +240,7 @@ module Api
               if person_params.has_key?(:terminated) && @person.some_admin?
                 return render_422 _('You cannot ban administative accounts.')
               end
+
               @person.trigger_admin = true
               @person.update(person_params)
               if @person.terminated && @person == current_user

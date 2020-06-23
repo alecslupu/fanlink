@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Api::V4::QuestsController, type: :controller do
-
   describe 'GET index' do
     it 'returns all quests with their attached image' do
       person = create(:admin_user)
@@ -15,7 +14,7 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
         expect(response).to be_successful
         expect(json['quests'].size).to eq(3)
         json['quests'].each do |quest|
-         expect(quest['picture_url']).not_to eq(nil)
+          expect(quest['picture_url']).not_to eq(nil)
         end
       end
     end
@@ -55,7 +54,6 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
         expect(response).to be_successful
         expect(Quest.last.picture.attached?).to be_truthy
         expect(json['quest']['picture_url']).to be_present
-
       end
     end
   end

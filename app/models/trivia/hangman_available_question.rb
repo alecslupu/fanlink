@@ -57,13 +57,13 @@ module Trivia
         transitions from: :locked, to: :closed
       end
     end
+
     protected
 
     def hangman_answer
       available_answers_correctness = available_answers.collect(&:is_correct)
-      errors.add( :avalaible_answers,
-                  'count must be equal to one for fill in the blank questions and that answer must be correct.'
-      ) unless available_answers_correctness.length == 1 && available_answers_correctness.first == true
+      errors.add(:avalaible_answers,
+                 'count must be equal to one for fill in the blank questions and that answer must be correct.') unless available_answers_correctness.length == 1 && available_answers_correctness.first == true
 
       available_answer = available_answers.first
       errors.add(

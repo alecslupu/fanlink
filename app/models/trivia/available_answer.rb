@@ -67,19 +67,19 @@ module Trivia
 
     private
 
-      # an answer which is assigned to a published available question
-      # cannot be unpublished
-      def available_question_status?
-        if question.published?
-          errors.add(:status, 'unable to unpublish answer if assigned available question is still published')
-          false
-        else
-          true
-        end
+    # an answer which is assigned to a published available question
+    # cannot be unpublished
+    def available_question_status?
+      if question.published?
+        errors.add(:status, 'unable to unpublish answer if assigned available question is still published')
+        false
+      else
+        true
       end
+    end
 
-      # def assigned_available_question_status
+    # def assigned_available_question_status
 
-      # end
+    # end
   end
 end

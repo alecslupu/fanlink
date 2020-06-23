@@ -37,7 +37,6 @@ RailsAdmin.config do |config|
       # field :type, :enum do
       #   read_only { bindings[:object].persisted? }
       # end
-
     end
   end
 end

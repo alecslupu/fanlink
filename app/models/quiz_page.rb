@@ -30,7 +30,7 @@ class QuizPage < ApplicationRecord
   validate :just_me
   validates :quiz_text, presence: true
 
-  validate :mandatory_checks,  unless: Proc.new { |page| page.is_optional }
+  validate :mandatory_checks, unless: Proc.new { |page| page.is_optional }
   validate :answer_checks, unless: Proc.new { |page| page.is_survey }
 
   validates :is_optional, presence: { message: 'You have set the quiz survey, you must choose to be optional as well' }, if: :is_survey?
@@ -57,6 +57,7 @@ class QuizPage < ApplicationRecord
   def content_type
     :quiz
   end
+
   private
 
   def just_me
@@ -70,7 +71,7 @@ class QuizPage < ApplicationRecord
   end
 
   def answer_checks
-    correct_answers = answers.reject{|answer| !answer.is_correct}.size
+    correct_answers = answers.reject { |answer| !answer.is_correct }.size
     errors.add(:base, _('You need at least one correct answer. The changes have not been saved. Please refresh and try again')) if correct_answers.zero?
     # FLAPI-875 [RailsAdmin] o add validation for mandatory quizzes to not be able to have more than one correct answer
     errors.add(:base, _('Mandatory quizzes should have ONLY ONE correct answer')) if correct_answers > 1 && is_mandatory?
@@ -83,8 +84,9 @@ class QuizPage < ApplicationRecord
       wrong_page = CertcoursePage.where(id: wrong_answer_page_id).first
       errors.add(:wrong_answer_page_id, _('Could not find the specified Wrong page id')) if wrong_page.blank?
       if wrong_page.present? && wrong_page.certcourse_page_order >= certcourse_page.certcourse_page_order
-        errors.add(:wrong_answer_page_id,  _('Wrong page needs to come before this page.'))
+        errors.add(:wrong_answer_page_id, _('Wrong page needs to come before this page.'))
       end
     end
   end
+
 end

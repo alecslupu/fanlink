@@ -6,7 +6,6 @@ RailsAdmin.config do |config|
     parent 'Post'
 
     configure :post_body do
-
     end
     list do
       scopes [:pending, nil, :post_hidden, :no_action_needed]

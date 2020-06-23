@@ -58,7 +58,7 @@ RSpec.describe Poll, type: :model do
 
     describe '#duration' do
       it 'should be invalid when equal to 0' do
-        subject.end_date = subject.start_date   # to make duration 0, can't be done directly
+        subject.end_date = subject.start_date # to make duration 0, can't be done directly
         subject.valid?
         expect(subject.errors[:duration].first).to include('Duration cannot be 0, please specify duration or end date of the poll')
       end

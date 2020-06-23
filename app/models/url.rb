@@ -12,7 +12,7 @@
 #
 
 class Url < ApplicationRecord
-  has_paper_trail 
+  has_paper_trail
   acts_as_tenant(:product)
   belongs_to :product
 

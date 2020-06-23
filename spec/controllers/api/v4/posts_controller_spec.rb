@@ -18,20 +18,20 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         person.follow(person2)
         person2.follow(person)
         create_list(
-            :published_post,
-            3,
-            person: person2,
-            body: 'this is my body',
-            picture: fixture_file_upload('images/better.png', 'image/png'),
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
-            video: fixture_file_upload('videos/short_video.mp4', 'video/mp4'),
-            created_at: to
+          :published_post,
+          3,
+          person: person2,
+          body: 'this is my body',
+          picture: fixture_file_upload('images/better.png', 'image/png'),
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
+          video: fixture_file_upload('videos/short_video.mp4', 'video/mp4'),
+          created_at: to
         )
         get :index,
-          params: {
-            from_date: from,
-            to_date: to
-          }
+            params: {
+              from_date: from,
+              to_date: to
+            }
         expect(response).to be_successful
         expect(json['posts'].size).to eq(3)
         json['posts'].each do |post|
@@ -74,8 +74,8 @@ RSpec.describe Api::V4::PostsController, type: :controller do
 
         get :index,
             params: {
-                post_id: post2.id,
-                chronologically: 'after'
+              post_id: post2.id,
+              chronologically: 'after'
             }
         expect(response).to be_successful
         expect(json['posts'].size).to eq(2)
@@ -247,14 +247,14 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         person.follow(person2)
         person2.follow(person)
         create_list(
-            :published_post,
-            3,
-            person: person2,
-            body: 'this is my body',
-            picture: fixture_file_upload('images/better.png', 'image/png'),
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
-            video: fixture_file_upload('videos/short_video.mp4', 'video/mp4'),
-            created_at: to
+          :published_post,
+          3,
+          person: person2,
+          body: 'this is my body',
+          picture: fixture_file_upload('images/better.png', 'image/png'),
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
+          video: fixture_file_upload('videos/short_video.mp4', 'video/mp4'),
+          created_at: to
         )
         get :list
 
@@ -291,10 +291,8 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         expect(json['post']['poll']['end_date']).not_to eq(nil)
         expect(json['post']['poll']['create_time']).not_to eq(nil)
         expect(json['post']['poll']['closed']).not_to eq(nil)
-
       end
     end
-
   end
 
   # TODO: auto-generated
@@ -308,11 +306,11 @@ RSpec.describe Api::V4::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post = create(
-            :published_post,
-            body: 'this is my body',
-            picture: fixture_file_upload('images/better.png', 'image/png'),
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
-            video: fixture_file_upload('videos/short_video.mp4', 'video/mp4')
+          :published_post,
+          body: 'this is my body',
+          picture: fixture_file_upload('images/better.png', 'image/png'),
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
+          video: fixture_file_upload('videos/short_video.mp4', 'video/mp4')
         )
         get :show, params: { id: post.id }
 
@@ -358,10 +356,10 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         person.follow(person2)
         person2.follow(person)
         post = create(
-            :published_post,
-            body: 'this is my body',
-            picture: fixture_file_upload('images/better.png', 'image/png'),
-            )
+          :published_post,
+          body: 'this is my body',
+          picture: fixture_file_upload('images/better.png', 'image/png'),
+        )
 
         get :share, params: { post_id: post.id, product: person.product.internal_name }
 
@@ -379,12 +377,12 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         login_as(person)
 
         post :create, params: {
-            post: {
-                body: 'Body',
-                picture: fixture_file_upload('images/better.png', 'image/png'),
-                audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
-                video: fixture_file_upload('videos/short_video.mp4', 'video/mp4')
-            }
+          post: {
+            body: 'Body',
+            picture: fixture_file_upload('images/better.png', 'image/png'),
+            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
+            video: fixture_file_upload('videos/short_video.mp4', 'video/mp4')
+          }
         }
 
         expect(response).to be_successful
@@ -408,12 +406,12 @@ RSpec.describe Api::V4::PostsController, type: :controller do
 
         put :update,
             params: {
-                id: post.id,
-                post: {
-                    picture: fixture_file_upload('images/better.png', 'image/png'),
-                    audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
-                    video: fixture_file_upload('videos/short_video.mp4', 'video/mp4')
-                }
+              id: post.id,
+              post: {
+                picture: fixture_file_upload('images/better.png', 'image/png'),
+                audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
+                video: fixture_file_upload('videos/short_video.mp4', 'video/mp4')
+              }
             }
 
         expect(response).to be_successful
@@ -437,7 +435,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         post = poll.post
         post.update(person_id: person2.id, status: :published)
 
-        get :show, params: { id: post.id }
+        patch :update, params: { id: post.id, post: { recommended: true } }
 
         expect(response).to be_successful
         poll = json['post']['poll']
@@ -451,7 +449,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         expect(poll['end_date']).not_to eq(nil)
         expect(poll['create_time']).not_to eq(nil)
         expect(poll['closed']).not_to eq(nil)
-
       end
     end
   end

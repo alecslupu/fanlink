@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::PollOptionsController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/posts/{id}/polls/{poll_id}/poll_options/{poll_option_id}/cast_vote' do
     post '' do
       security [Bearer: []]

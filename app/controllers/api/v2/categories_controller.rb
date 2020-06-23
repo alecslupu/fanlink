@@ -103,7 +103,7 @@ module Api
         if @category.valid?
           return_the @category
         else
-          render json: {errors: @category.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @category.errors.messages }, status: :unprocessable_entity
         end
       end
 
@@ -137,7 +137,7 @@ module Api
           broadcast(:category_updated, current_user, @category)
           return_the @category
         else
-          render json: {errors: @category.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @category.errors.messages }, status: :unprocessable_entity
         end
       end
 

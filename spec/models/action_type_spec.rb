@@ -42,7 +42,6 @@ RSpec.describe ActionType, type: :model do
   end
   context 'Methods' do
     describe '#destroy' do
-
       subject { create(:action_type) }
       it 'should not let you destroy an action type that has been used in a badge' do
         create(:badge, action_type: subject)

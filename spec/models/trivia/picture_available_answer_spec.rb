@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Trivia::PictureAvailableAnswer, type: :model do
-
   context 'status' do
     subject { Trivia::PictureAvailableAnswer.new }
     it { expect(subject).to respond_to(:draft?) }

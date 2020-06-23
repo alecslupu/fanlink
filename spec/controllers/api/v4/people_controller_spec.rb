@@ -27,7 +27,7 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
         get :index
 
         expect(response).to be_successful
-        expect(json['people'].count).to eq(3)  #current user is not included
+        expect(json['people'].count).to eq(3) #current user is not included
         json['people'].each do |person|
           expect(person['picture_url']).to_not eq(nil)
         end
@@ -72,8 +72,7 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
               city: 'Las Vegas',
               country_code: 'us',
               picture: fixture_file_upload('images/better.png', 'image/png')
-            }
-          }
+            } }
         expect(response).to be_successful
         expect(json['person']).to_not eq(nil)
         expect(Person.last.picture.attached?).to eq(true)

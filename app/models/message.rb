@@ -25,8 +25,8 @@
 class Message < ApplicationRecord
   # include Message::FilterrificImpl
 
-  scope :person_name_query, ->(query)  { joins(:person).where('people.name ilike ?', "%#{query}%") }
-  scope :person_username_query, ->(query)  { joins(:person).where('people.username_canonical ilike ?', "%#{query}%") }
+  scope :person_name_query, ->(query) { joins(:person).where('people.name ilike ?', "%#{query}%") }
+  scope :person_username_query, ->(query) { joins(:person).where('people.username_canonical ilike ?', "%#{query}%") }
   scope :room_query,   ->(query)  { joins(:room).where("rooms.name->>'en' ilike ? or rooms.name->>'un' ilike ?", "%#{query}%", "%#{query}%") }
   scope :id_query,     ->(query)  { where(id: query.to_i) }
   scope :body_query,   ->(query)  { where('messages.body ilike ?', "%#{query}%") }
@@ -119,25 +119,25 @@ class Message < ApplicationRecord
 
   has_one_attached :picture
 
-  validates :picture, size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png]}
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
 
   def picture_optimal_url
-    opts = { resize: '1000', auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
   has_one_attached :audio
 
-  validates :audio, size: {less_than: 10.megabytes},
-            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+  validates :audio, size: { less_than: 10.megabytes },
+                    content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
 
   def audio_url
-    audio.attached? ? [Rails.application.secrets.cloudfront_url, audio.key].join('/')  : nil
+    audio.attached? ? [Rails.application.secrets.cloudfront_url, audio.key].join('/') : nil
   end
 
   has_many :message_mentions, dependent: :destroy
@@ -147,13 +147,13 @@ class Message < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
   scope :for_date_range, ->(room, from, to, limit = nil) {
-          where(room: room).where('created_at >= ?', from.beginning_of_day).
-            where('created_at <= ?', to.end_of_day).order(created_at: :desc).limit(limit)
-        }
-  scope :for_product, ->(product) { joins(:room).where( rooms: { product_id: product.id }) }
-  scope :pinned, ->(param) { joins(:person).where( people: { pin_messages_from: (param.downcase == 'yes') } ) }
-  scope :publics, -> { joins(:room).where( rooms: { public: true } ) }
-  scope :reported_action_needed, -> { joins(:message_reports).where( message_reports: { status: MessageReport.statuses[:pending] } ) }
+                           where(room: room).where('created_at >= ?', from.beginning_of_day).
+                             where('created_at <= ?', to.end_of_day).order(created_at: :desc).limit(limit)
+                         }
+  scope :for_product, ->(product) { joins(:room).where(rooms: { product_id: product.id }) }
+  scope :pinned, ->(param) { joins(:person).where(people: { pin_messages_from: (param.downcase == 'yes') }) }
+  scope :publics, -> { joins(:room).where(rooms: { public: true }) }
+  scope :reported_action_needed, -> { joins(:message_reports).where(message_reports: { status: MessageReport.statuses[:pending] }) }
   scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
 
   scope :not_reported_by_user, -> (person_id) {
@@ -171,12 +171,12 @@ class Message < ApplicationRecord
   scope :before_message, ->(created_at, id) { where('messages.created_at < ? AND messages.id < ?', created_at, id) }
 
   scope :reported, -> { joins(:message_reports) }
-  scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil } ) }
+  scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil }) }
 
   def as_json
     super(only: %i[id body picture_id], methods: %i[create_time picture_url pinned],
           include: { message_mentions: { except: %i[message_id] },
-                    person: { only: %i[ id username name designation product_account chat_banned badge_points
+                     person: { only: %i[ id username name designation product_account chat_banned badge_points
                                        level do_not_message_me pin_messages_from ], methods: %i[level picture_url] } })
   end
 

@@ -41,7 +41,8 @@ RSpec.describe Trivia::HangmanAvailableQuestion, type: :model do
 
         it 'throws an error with a message' do
           @available_question.save
-          expect(@available_question.errors.messages[:avalaible_answers]).to include('count must be equal to one for fill in the blank questions and that answer must be correct.')
+          message = 'count must be equal to one for fill in the blank questions and that answer must be correct.'
+          expect(@available_question.errors.messages[:avalaible_answers]).to include(message)
         end
       end
 
@@ -57,7 +58,8 @@ RSpec.describe Trivia::HangmanAvailableQuestion, type: :model do
 
         it 'throws an error with a message' do
           @available_question.save
-          expect(@available_question.errors.messages[:avalaible_answers]).to include('count must be equal to one for fill in the blank questions and that answer must be correct.')
+          message = 'count must be equal to one for fill in the blank questions and that answer must be correct.'
+          expect(@available_question.errors.messages[:avalaible_answers]).to include(message)
         end
       end
 
@@ -73,7 +75,8 @@ RSpec.describe Trivia::HangmanAvailableQuestion, type: :model do
 
         it 'throws an error with a message' do
           @available_question.save
-          expect(@available_question.errors.messages[:avalaible_answers]).to include("available answer's name must be the same length as the hint.")
+          message = "available answer's name must be the same length as the hint."
+          expect(@available_question.errors.messages[:avalaible_answers]).to include(message)
         end
       end
     end

@@ -45,19 +45,19 @@ class Quest < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-  scope :for_product, -> (product) { where( quests: { product_id: product.id } ) }
+  scope :for_product, -> (product) { where(quests: { product_id: product.id }) }
 
   has_one_attached :picture
 
-  validates :picture, size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png]}
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
 
   def picture_optimal_url
-    opts = { resize: '1000', auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -94,11 +94,11 @@ class Quest < ApplicationRecord
   validates :starts_at, presence: { message: _('Starting date and time is required.') }
 
   scope :in_date_range, ->(start_date, end_date) {
-      where('quests.starts_at >= ? and quests.ends_at <= ?',
-        start_date.beginning_of_day, end_date.end_of_day)
-    }
+                          where('quests.starts_at >= ? and quests.ends_at <= ?',
+                                start_date.beginning_of_day, end_date.end_of_day)
+                        }
   scope :ordered, -> { includes(:quest_activities).order('quest_activities.created_at DESC') }
-  scope :for_product, ->(product) { includes(:product).where(product: product) }
+  scope :for_product, -> (product) { includes(:product).where(product: product) }
   scope :in_testing, -> { where(status: [:enabled, :active]) }
   scope :running, -> { where('quests.starts_at >= ? AND quests.ends_at <= ?', Time.zone.now, Time.zone.now) }
 

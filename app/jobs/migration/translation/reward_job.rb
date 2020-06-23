@@ -21,6 +21,7 @@ module Migration
         unless Reward.with_translations('en').where(id: reward.id).first.present?
           return if reward.untranslated_name['un'].nil?
           return if reward.untranslated_name['un'].empty?
+
           I18n.locale = 'en'
           reward.name = reward.untranslated_name['un']
           reward.save

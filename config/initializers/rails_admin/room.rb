@@ -27,18 +27,18 @@ RailsAdmin.config do |config|
       scopes [:publics, nil, :privates]
       field :id
       field :name do
-        searchable [{room_translations: :name }]
+        searchable [{ room_translations: :name }]
         queryable true
         filterable true
       end
       field :description do
         visible false
-        searchable [{room_translations: :description }]
+        searchable [{ room_translations: :description }]
         queryable true
         filterable true
       end
 
-      fields  :picture,
+      fields :picture,
              :status
       field :subscribers do
       end
@@ -66,7 +66,6 @@ RailsAdmin.config do |config|
           bindings[:object].private?
         end
       end
-
     end
     show do
       fields :id,

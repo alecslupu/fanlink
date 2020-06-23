@@ -69,7 +69,7 @@ RailsAdmin.config do |config|
         column_width 100
       end
       field :is_paid, :boolean do
-       column_width 100
+        column_width 100
       end
       field :status do
         column_width 100
@@ -81,7 +81,6 @@ RailsAdmin.config do |config|
         pretty_value do
           bindings[:object].is_paid?
         end
-
       end
     end
   end

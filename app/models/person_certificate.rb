@@ -38,20 +38,20 @@ class PersonCertificate < ApplicationRecord
 
   has_one_attached :issued_certificate_image
 
-  validates :issued_certificate_image,  size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg]}
+  validates :issued_certificate_image, size: { less_than: 5.megabytes },
+                                       content_type: { in: %w[image/jpeg] }
 
   def issued_certificate_image_url
-    issued_certificate_image.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_image.key].join('/')  : nil
+    issued_certificate_image.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_image.key].join('/') : nil
   end
 
   has_one_attached :issued_certificate_pdf
   validates :issued_certificate_pdf,
-            size: {less_than: 5.megabytes},
-            content_type: {in: %w[application/pdf]}
+            size: { less_than: 5.megabytes },
+            content_type: { in: %w[application/pdf] }
 
   def issued_certificate_pdf_url
-    issued_certificate_pdf.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_pdf.key].join('/')  : nil
+    issued_certificate_pdf.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_pdf.key].join('/') : nil
   end
 
   belongs_to :person, touch: true
@@ -65,10 +65,10 @@ class PersonCertificate < ApplicationRecord
   scope :for_person, -> (person) { where(person_id: person.id) }
   scope :for_android, -> (person) { where(person_id: person.id, purchased_platform: 'android') }
   scope :for_ios, -> (person) { where(person_id: person.id, purchased_platform: 'ios') }
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id } ) }
+  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
 
-  scope :free, -> { joins(:certificate).where(certificates: { is_free: true } ) }
-  scope :paid, -> { joins(:certificate).where(certificates: { is_free: false } ) }
+  scope :free, -> { joins(:certificate).where(certificates: { is_free: true }) }
+  scope :paid, -> { joins(:certificate).where(certificates: { is_free: false }) }
 
   def product
     person.product
@@ -85,8 +85,9 @@ class PersonCertificate < ApplicationRecord
     # TODO move it in a job
     where(person_id: user_id, certificate_id: certificate_ids).find_each do |person_certificate|
       next if person_certificate.is_completed?
+
       certcouse_ids = person_certificate.certificate.certcourses.live_status.pluck(:id)
-      person_certcourses = PersonCertcourse.where(person_id: user_id, certcourse_id: certcouse_ids ).pluck(:is_completed)
+      person_certcourses = PersonCertcourse.where(person_id: user_id, certcourse_id: certcouse_ids).pluck(:is_completed)
       # raise ({c_size: c.certificate.certcourse_ids.size, p_size: person_certcourses.size, pc: person_certcourses}).inspect
       person_certificate.is_completed = (certcouse_ids.size == person_certcourses.size) && person_certcourses.inject(true, :&)
       person_certificate.save!
@@ -95,6 +96,7 @@ class PersonCertificate < ApplicationRecord
 
   def generate_token!(attempts = 0)
     raise 'Could not acquire a unique id after 10 attempts' if attempts == 10
+
     charlist = 'A'.upto('Z').to_a + 0.upto(9).to_a.map(&:to_s) - %w(L O 0 1 Z 2)
     self.unique_id = 10.times.collect { charlist.sample }.join
     token_exists = self.class.where(unique_id: unique_id).exists?
@@ -126,7 +128,7 @@ class PersonCertificate < ApplicationRecord
       txt.stroke '#FFFFFF'
     end
 
-    completed_date = (issued_date.to_datetime rescue DateTime.now ).strftime('%B %d, %Y')
+    completed_date = (issued_date.to_datetime rescue DateTime.now).strftime('%B %d, %Y')
 
     img.combine_options do |txt|
       txt.gravity 'NorthEast'
@@ -135,7 +137,7 @@ class PersonCertificate < ApplicationRecord
       txt.pointsize 60
       txt.draw "text 480, 250 '#{completed_date}'"
       txt.weight 700
-      txt.stroke  '#FFFFFF'
+      txt.stroke '#FFFFFF'
     end
     img.format 'jpeg'
 
@@ -143,7 +145,7 @@ class PersonCertificate < ApplicationRecord
 
     img.write(jpeg_file.path)
 
-    pdf_file =  Tempfile.new(%w(certificate_image .pdf))
+    pdf_file = Tempfile.new(%w(certificate_image .pdf))
     Prawn::Document.generate(pdf_file.path, page_layout: :landscape) do |pdf|
       pdf.image jpeg_file.path, fit: [pdf.bounds.right, pdf.bounds.top]
     end

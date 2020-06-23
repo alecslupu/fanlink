@@ -55,6 +55,11 @@ module Api
         return_the @posts, handler: tpl_handler
       end
 
+      # def promoted
+      #   @posts = Post.promoted
+      #   return_the @posts, handler: tpl_handler
+      # end
+
       def show
         if current_user.try(:some_admin?) && web_request?
           @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
@@ -118,7 +123,11 @@ module Api
         else
           time = 1
         end
-        @posts = Post.where('created_at >= ?', time.day.ago).order(Arel.sql('DATE(created_at) ASC')).group(Arel.sql('Date(created_at)')).count
+        @posts = Post
+                 .where('created_at >= ?', time.day.ago)
+                 .order(Arel.sql('DATE(created_at) ASC'))
+                 .group(Arel.sql('Date(created_at)'))
+                 .count
         return_the @posts, handler: tpl_handler
       end
 

@@ -24,7 +24,6 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
         get :index, params: { person_id: person1.id }
 
         expect(response).to be_unauthorized
-
       end
     end
 

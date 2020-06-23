@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Relationship, type: :model do
-
   context 'Associations' do
     describe 'should belong to' do
       it { should belong_to(:requested_by).class_name('Person').touch(true) }

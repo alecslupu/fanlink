@@ -10,7 +10,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password, params: {id: person.id, person: {current_password: current, new_password: new_password}}
+        patch :change_password, params: { id: person.id, person: { current_password: current, new_password: new_password } }
         expect(response).to be_successful
         expect(person.reload.valid_password?(new_password)).to be_truthy
       end
@@ -21,7 +21,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password, params: {id: person.id, person: {current_password: current, new_password: new_password}}
+        patch :change_password, params: { id: person.id, person: { current_password: current, new_password: new_password } }
         expect(response).to be_unprocessable
         expect(json['errors']).to include('Password must be at least 6 characters in length.')
       end
@@ -32,7 +32,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password, params: {id: person.id, person: {current_password: 'wrongpassword', new_password: new_password}}
+        patch :change_password, params: { id: person.id, person: { current_password: 'wrongpassword', new_password: new_password } }
         expect(response).to be_unprocessable
         expect(json['errors']).to include('The password is incorrect')
       end
@@ -42,7 +42,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       new_password = 'newsecret'
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
-        patch :change_password, params: {id: person.id, person: {current_password: current, new_password: new_password}}
+        patch :change_password, params: { id: person.id, person: { current_password: current, new_password: new_password } }
         expect(response).to be_unauthorized
         expect(person.reload.valid_password?(current)).to be_truthy
       end
@@ -54,7 +54,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password, params: {id: pers.id, person: {current_password: current, new_password: new_password}}
+        patch :change_password, params: { id: pers.id, person: { current_password: current, new_password: new_password } }
         expect(response).to be_not_found
         expect(person.reload.valid_password?(current)).to be_truthy
       end
@@ -64,7 +64,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: password)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password,  params: {id: person.id, person: {current_password: password, new_password: password}}
+        patch :change_password,  params: { id: person.id, person: { current_password: password, new_password: password } }
         expect(response).to be_unprocessable
         expect(json['errors']).to include("New password can't be identical to your current one")
       end
@@ -81,7 +81,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"
         post :create, params:
-          {product: product.internal_name,
+          { product: product.internal_name,
             person: {
               username: username,
               email: email,
@@ -91,8 +91,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
               city: 'Las Vegas',
               country_code: 'us',
               picture: fixture_file_upload('images/better.png', 'image/png')
-            }
-          }
+            } }
         expect(response).to be_successful
         expect(Person.last.picture.attached?).to be_truthy
         expect(json['person']['picture_url']).to_not eq(nil)
@@ -127,7 +126,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
         create_list(:person,3, picture: fixture_file_upload('images/better.png', 'image/png'))
 
         login_as(person)
-        get :show, params: {id: person.id}
+        get :show, params: { id: person.id }
 
         expect(response).to be_successful
         expect(json['person']['picture_url']).to_not eq(nil)

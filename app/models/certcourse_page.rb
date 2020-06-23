@@ -49,6 +49,7 @@ class CertcoursePage < ApplicationRecord
 
   def set_properties_from_child
     return if child.blank?
+
     self.content_type = child.content_type
 
     self.duration = child.duration if video?
@@ -93,6 +94,7 @@ class CertcoursePage < ApplicationRecord
   end
 
   protected
+
   def single_child_validator
     errors.add(:base, _('You cannot add a question and a video or image on the same certcourse')) if quiz? && (download? || video? || image?)
     errors.add(:base, _('You cannot add an image and a video or question on the same certcourse')) if image? && (download? || quiz? || video?)

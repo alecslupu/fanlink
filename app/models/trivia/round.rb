@@ -74,7 +74,7 @@ module Trivia
 
     def copy_to_new
       new_entry = dup
-      new_entry.update!(status: :draft, start_date: nil, end_date: nil )
+      new_entry.update!(status: :draft, start_date: nil, end_date: nil)
       new_entry.questions = questions.collect(&:copy_to_new)
       self.class.reset_counters(id, :questions, touch: true)
       self.class.reset_counters(new_entry.id, :questions, touch: true)
@@ -109,19 +109,20 @@ module Trivia
     end
 
     private
-      def avalaible_questions_status_check
-        questions.map(&:available_question).each do |available_question|
-          if !available_question.published?
-            errors.add(:base, "All available questions used must have 'published' status before publishing")
-            break
-          end
-        end
-      end
 
-      def start_date_type
-        if start_date.present?
-          errors.add(:start_date, 'must be an integer') unless start_date.integer?
+    def avalaible_questions_status_check
+      questions.map(&:available_question).each do |available_question|
+        if !available_question.published?
+          errors.add(:base, "All available questions used must have 'published' status before publishing")
+          break
         end
       end
+    end
+
+    def start_date_type
+      if start_date.present?
+        errors.add(:start_date, 'must be an integer') unless start_date.integer?
+      end
+    end
   end
 end

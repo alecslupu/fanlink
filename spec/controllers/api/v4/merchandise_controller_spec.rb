@@ -14,7 +14,7 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
         expect(response).to be_successful
         expect(json['merchandise'].size).to eq(3)
         json['merchandise'].each do |merchandise|
-         expect(merchandise['picture_url']).not_to eq(nil)
+          expect(merchandise['picture_url']).not_to eq(nil)
         end
       end
     end

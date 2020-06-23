@@ -386,9 +386,9 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         login_as(person)
 
         person = create(:person, username: 'customusername')
-        create(:post, person: person, created_at: 10.days.ago )
+        create(:post, person: person, created_at: 10.days.ago)
 
-        get :list, params: {person_filter: person.username_canonical}
+        get :list, params: { person_filter: person.username_canonical }
         posts = Post.where(person_id: person.id)
         expect(response).to be_successful
         expect(json['posts'].count).to eq(posts.count)
@@ -461,7 +461,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         post = create(:post, status: Post.statuses.keys.sample, created_at: 10.days.ago)
         post.save
 
-        get :list, params: {body_filter: post.body}
+        get :list, params: { body_filter: post.body }
         expect(response).to be_successful
         expect(json['posts'].count).to eq(1)
         expect(json['posts'].first['id']).to eq(post.id)
@@ -625,7 +625,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person)
         english = 'This is English'
-        flinkpost.set_translations( 'en' => { body: english } )
+        flinkpost.set_translations('en' => { body: english })
         flinkpost.save
         get :show, params: { id: flinkpost.id }
         expect(response).to be_successful
@@ -642,7 +642,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         flinkpost = create(:published_post, person: person)
         flinkpost.body = 'Something here'
         flinkpost.save
-        get :show, params: {id: flinkpost.id}
+        get :show, params: { id: flinkpost.id }
         expect(response).to be_successful
         expect(json['post']['body']).to eq(flinkpost.body)
       end
@@ -658,7 +658,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         lan = 'es'
         I18n.locale = lan
         translation = 'En espagnol'
-        flinkpost.set_translations( lan => { body: translation  } )
+        flinkpost.set_translations(lan => { body: translation })
         flinkpost.save
 
         request.headers.add 'Accept-Language', (lan + '-spa')
@@ -847,6 +847,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         flinkpost = create(:post, person: person)
         Post.statuses.keys.each do |s|
           next if s == 'published'
+
           flinkpost.update_column(:status, Post.statuses[s])
           get :share, params: { post_id: flinkpost.id, product: flinkpost.product.internal_name }
           expect(response).to be_not_found
@@ -892,8 +893,8 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         flinkpost = create(:published_post, person: person)
         orig = flinkpost.body
         patch :update, params: { id: flinkpost.id,
-                                post: { body: 'notchanged', global: global, starts_at: starts_at, ends_at: ends_at,
-                                       repost_interval: repost_interval, status: status, priority: priority } }
+                                 post: { body: 'notchanged', global: global, starts_at: starts_at, ends_at: ends_at,
+                                         repost_interval: repost_interval, status: status, priority: priority } }
         expect(response).to be_unauthorized
         expect(flinkpost.body).to eq(orig)
       end
@@ -906,7 +907,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
 
         expect(flinkpost.recommended).to be_falsey
         patch :update, params: { id: flinkpost.id, post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
-                                                         recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
+                                                           recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
         expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.recommended).to be_falsey
@@ -919,7 +920,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         flinkpost = create(:published_post, person: person)
         expect(flinkpost.recommended).to be_falsey
         patch :update, params: { id: flinkpost.id, post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
-                                                         recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
+                                                           recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
         expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.recommended).to be_truthy

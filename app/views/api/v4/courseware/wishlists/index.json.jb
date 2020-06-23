@@ -4,9 +4,9 @@ json = { wishlist: [] }
 
 @wishlist.each do |item|
   json[:wishlist].push({
-    id: item.id,
-    certificate: render(partial: 'api/v4/certificates/app', locals: { certificate: item.certificate, user: current_user}, handlers: :jb)
-  })
+                         id: item.id,
+                         certificate: render(partial: 'api/v4/certificates/app', locals: { certificate: item.certificate, user: current_user }, handlers: :jb)
+                       })
 end
 
 json

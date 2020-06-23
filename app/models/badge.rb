@@ -33,7 +33,7 @@ class Badge < ApplicationRecord
   has_one :reward, -> { where('rewards.reward_type = ?', Reward.reward_types['badge']) }, foreign_key: 'reward_type_id', dependent: :destroy
   has_many :assigned_rewards, through: :reward
 
-  scope :for_product, -> (product) { where( badges: { product_id: product.id } ) }
+  scope :for_product, -> (product) { where(badges: { product_id: product.id }) }
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
@@ -45,15 +45,15 @@ class Badge < ApplicationRecord
 
   has_one_attached :picture
 
-  validates :picture, size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png]}
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
 
   def picture_optimal_url
-    opts = { resize: '1000', auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -68,7 +68,7 @@ class Badge < ApplicationRecord
             uniqueness: { scope: :product_id, message: _('There is already a badge with that internal name.') }
 
   validates :action_requirement, presence: { message: _('Action requirement is required.') },
-            numericality: { greater_than: 0, message: _('Action requirement must be greater than zero.') }
+                                 numericality: { greater_than: 0, message: _('Action requirement must be greater than zero.') }
 
   around_create :create_reward
   after_update :update_reward

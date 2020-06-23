@@ -40,7 +40,7 @@ RSpec.describe 'Api::V4::EventsController', type: :request, swagger_doc: 'v4/swa
       let(:Authorization) { '' }
       parameter name: :id, in: :path, type: :string
       let(:id) { Time.zone.now.to_i }
-      let(:event_checkin) {create(:event_checkin)}
+      let(:event_checkin) { create(:event_checkin) }
 
       produces 'application/vnd.api.v4+json'
       response '200', 'HTTP/1.1 200 Ok' do
@@ -69,8 +69,8 @@ RSpec.describe 'Api::V4::EventsController', type: :request, swagger_doc: 'v4/swa
       parameter name: :id, in: :path, type: :string
       let(:id) { Time.zone.now.to_i }
 
-      let(:person) { create(:person)}
-      let(:event) { create(:event)}
+      let(:person) { create(:person) }
+      let(:event) { create(:event) }
 
       response '200', 'HTTP/1.1 200 Ok' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
@@ -86,7 +86,7 @@ RSpec.describe 'Api::V4::EventsController', type: :request, swagger_doc: 'v4/swa
         run_test!
       end
       response '422', '' do
-        let(:event_checkin) {create(:event_checkin)}
+        let(:event_checkin) { create(:event_checkin) }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: event_checkin.person_id)}" }
         let(:id) { event_checkin.event_id }
         run_test!
@@ -107,9 +107,9 @@ RSpec.describe 'Api::V4::EventsController', type: :request, swagger_doc: 'v4/swa
       parameter name: :interst_id, in: :query, type: :integer, required: false, description: ''
 
       let(:id) { Time.zone.now.to_i }
-      let(:person) { create(:person)}
-      let(:event) { create(:event)}
-      let!(:event_checkins) { create_list(:event_checkin, 20, event: event)}
+      let(:person) { create(:person) }
+      let(:event) { create(:event) }
+      let!(:event_checkins) { create_list(:event_checkin, 20, event: event) }
 
       response '200', 'HTTP/1.1 200 Ok' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }

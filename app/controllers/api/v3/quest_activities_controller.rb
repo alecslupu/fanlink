@@ -295,8 +295,7 @@ module Api
 
       def activity_params
         params.require(:quest_activity).permit(:description, :hint, :picture, :title,
-                                               activity_types_attributes: [:id, :atype, {value: [:id, :description]}]
-        )
+                                               activity_types_attributes: [:id, :atype, { value: [:id, :description] }])
       end
     end
   end
