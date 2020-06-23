@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Static
   class SystemEmail < ApplicationRecord
     belongs_to :product
