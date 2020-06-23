@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :static_system_email, class: 'Static::SystemEmail' do
     name  { Faker::Lorem.sentence }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Migration
   class PostJob < ApplicationJob
     queue_as :migration
