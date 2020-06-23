@@ -1,7 +1,7 @@
 rubocop:Layout:
   extends: .base
   stage: rubocop
-  allow_failure: false
+  allow_failure: true
   dependencies:
     - test:rubocop
   script:
@@ -14,7 +14,7 @@ rubocop:Bundler:
   dependencies:
     - test:rubocop
   script:
-    - bundle exec rubocop --only Bundler app config spec lib
+    - bundle exec rubocop --only Bundler
 
 rubocop:Gemspec:
   extends: .base
@@ -23,7 +23,7 @@ rubocop:Gemspec:
   dependencies:
     - test:rubocop
   script:
-    - bundle exec rubocop --only Gemspec app config spec lib
+    - bundle exec rubocop --only Gemspec
 
 rubocop:Lint:
   extends: .base
