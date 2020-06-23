@@ -15,7 +15,7 @@ module Api
 
           def download
             if @person_certificate.issued_certificate_image.present?
-              @url = @person_certificate.issued_certificate_image.url
+              @url = @person_certificate.issued_certificate_image_url
               return_the @url, handler: :jb
             else
               render_422 _('This user does not have a image attached to this certificate.')
