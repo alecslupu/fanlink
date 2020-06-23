@@ -313,7 +313,6 @@ RSpec.describe Message, type: :model do
       end
       pending
     end
-
   end
   describe '.options_for_reported_status_filter' do
     it 'responds to' do

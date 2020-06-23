@@ -48,7 +48,7 @@ RailsAdmin.config do |config|
              :order
 
       field :title do
-        searchable [{interest_translations: :title }]
+        searchable [{ interest_translations: :title }]
         queryable true
         filterable true
       end

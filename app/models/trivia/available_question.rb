@@ -77,6 +77,6 @@ module Trivia
     validates :type, inclusion: { in: %w(Trivia::SingleChoiceAvailableQuestion
                 Trivia::MultipleChoiceAvailableQuestion Trivia::PictureAvailableQuestion
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
-              ),  message: '%{value} is not a valid type' }
+              ), message: '%{value} is not a valid type' }
   end
 end

@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::PostReactionsController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/posts/{post_id}/reactions' do
     post '' do
       security [Bearer: []]
@@ -41,7 +40,6 @@ RSpec.describe 'Api::V4::PostReactionsController', type: :request, swagger_doc: 
         document_response_without_test!
       end
     end
-
   end
   path '/posts/{post_id}/reactions/{id}' do
     delete '' do

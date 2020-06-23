@@ -19,6 +19,7 @@ module  Migration
       unless Poll.with_translations('en').where(id: poll_option.id).first.present?
         return if poll_option.untranslated_description['un'].nil?
         return if poll_option.untranslated_description['un'].empty?
+
         I18n.locale = 'en'
         poll_option.set_translations({ en: { description: poll_option.untranslated_description['un'] } })
         # level.save!

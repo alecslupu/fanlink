@@ -7,9 +7,9 @@ module Referral
 
     scope :with_transactions, -> {
       select('"referral_referred_people".*, COUNT(referral_referred_people.id)').
-      joins(invited: :certificates).
-      where(certificates: { is_free: false }).
-      group(Arel.sql('referral_referred_people.id, person_certificates.person_id'))
+        joins(invited: :certificates).
+        where(certificates: { is_free: false }).
+        group(Arel.sql('referral_referred_people.id, person_certificates.person_id'))
     }
   end
 end

@@ -203,7 +203,7 @@ module Api
         if @product_beacon.valid?
           return_the @product_beacon
         else
-          render json: {errors: @product_beacon.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @product_beacon.errors.messages }, status: :unprocessable_entity
         end
       end
 

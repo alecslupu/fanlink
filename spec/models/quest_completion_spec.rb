@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe QuestCompletion, type: :model do
-
   context 'Associations' do
     describe 'it should validation associatations for' do
       it '#belongs_to' do
@@ -31,12 +30,12 @@ RSpec.describe QuestCompletion, type: :model do
     end
 
     describe '.id_filter' do
-      it { expect(QuestCompletion).to respond_to(:id_filter)}
+      it { expect(QuestCompletion).to respond_to(:id_filter) }
       pending
     end
 
     describe '.person_id_filter' do
-      it { expect(QuestCompletion).to respond_to(:person_id_filter)}
+      it { expect(QuestCompletion).to respond_to(:person_id_filter) }
       pending
     end
 
@@ -59,6 +58,5 @@ RSpec.describe QuestCompletion, type: :model do
       it { expect(QuestCompletion).to respond_to(:activity_filter) }
       pending
     end
-
   end
 end

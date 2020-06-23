@@ -65,6 +65,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate!
     return if authorization_header.nil?
+
     payload, header = TokenProvider.valid?(token)
     user = Person.find_by(id: payload['user_id'])
     unless user.nil? || user.terminated?

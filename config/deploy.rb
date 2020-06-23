@@ -91,5 +91,5 @@ set :delayed_job_args, '-n 2'
 
 # after 'deploy:check', 'delayed_job:restart'
 
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 after 'deploy:finished', 'delayed_job:restart'

@@ -39,26 +39,26 @@ module Fanlink
     # Don't generate system test files.
     config.generators.system_tests = nil
     config.paperclip_defaults = {
-        storage: :s3,
-        url: '/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension',
-        s3_region: Rails.application.secrets.aws_region,
-        bucket:    Rails.application.secrets.aws_bucket,
-        hash_secret: Rails.application.secrets.paperclip_secret,
-        s3_host_name: "s3.#{Rails.application.secrets.aws_region}.amazonaws.com",
-        s3_credentials: {
-            access_key_id: Rails.application.secrets.aws_access_key_id,
-            secret_access_key: Rails.application.secrets.aws_secret_access_key
-        },
-        s3_protocol: :https
+      storage: :s3,
+      url: '/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension',
+      s3_region: Rails.application.secrets.aws_region,
+      bucket: Rails.application.secrets.aws_bucket,
+      hash_secret: Rails.application.secrets.paperclip_secret,
+      s3_host_name: "s3.#{Rails.application.secrets.aws_region}.amazonaws.com",
+      s3_credentials: {
+        access_key_id: Rails.application.secrets.aws_access_key_id,
+        secret_access_key: Rails.application.secrets.aws_secret_access_key
+      },
+      s3_protocol: :https
     }
 
     config.paperclip_defaults = {
       path: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension',
       url: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension'
     } if Rails.env.test?
-    
 
-    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> {Rails.logger}) do
+
+    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
       allow do
         origins do |source, env|
           if ENV['RAILS_ENV'] != 'development'
@@ -80,17 +80,17 @@ module Fanlink
         rtmp_server: Rails.application.secrets.rtmp_server,
         transcoder_key: Rails.application.secrets.aws_transcoder_key,
         transcoder_secret: Rails.application.secrets.aws_transcoder_secret,
-        s3_bucket:  Rails.application.secrets.aws_bucket,
+        s3_bucket: Rails.application.secrets.aws_bucket,
         transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
         region: Rails.application.secrets.aws_region,
         transcoder_queue_url: Rails.application.secrets.transcoder_queue_url
       }
     }
 
-     #Use a real queuing backend for Active Job (and separate queues per environment)
-     config.active_job.queue_adapter     = :sidekiq
-     #config.active_job.queue_name_prefix = "fanlink_#{Rails.env}"
-     #
+    #Use a real queuing backend for Active Job (and separate queues per environment)
+    config.active_job.queue_adapter = :sidekiq
+    #config.active_job.queue_name_prefix = "fanlink_#{Rails.env}"
+    #
 
     config.i18n.fallbacks = [I18n.default_locale]
 

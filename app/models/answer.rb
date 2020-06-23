@@ -46,7 +46,7 @@ class Answer < ApplicationRecord
   protected
 
   def answer_checks
-    correct_answers = quiz_page.answers.reject{|answer| !answer.is_correct}.size
+    correct_answers = quiz_page.answers.reject { |answer| !answer.is_correct }.size
     errors.add(:base, _('You need at least one correct answer. The changes have not been saved. Please refresh and try again')) if correct_answers.zero?
     # FLAPI-875 [RailsAdmin] o add validation for mandatory quizzes to not be able to have more than one correct answer
     errors.add(:base, _('Mandatory quizzes should have ONLY ONE correct answer')) if correct_answers > 1 && quiz_page.is_mandatory?

@@ -33,7 +33,7 @@ class Course < ApplicationRecord
 
   scope :available, -> {
     where('(start_date < ?) and (end_date IS NULL or end_date > ?)',
-                    Time.zone.now, Time.zone.now)
+          Time.zone.now, Time.zone.now)
   }
 
   private

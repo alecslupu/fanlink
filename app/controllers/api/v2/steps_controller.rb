@@ -136,7 +136,7 @@ module Api
           broadcast(:step_created, current_user, @step)
           return_the @step
         else
-          render json: {errors: @step.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @step.errors.messages }, status: :unprocessable_entity
         end
       end
 
@@ -230,10 +230,9 @@ module Api
       def step_params
         params.require(:step).permit(:unlocks, :display, :initial_status, :delay_unlock,
                                      quest_activities_attributes: [:id, :description, :hint, :picture,
-                                                                   activity_types_attributes: [:id, :atype, {value: [:id, :description]}
+                                                                   activity_types_attributes: [:id, :atype, { value: [:id, :description] }
                                                                    ]
-                                     ]
-        )
+                                     ])
       end
     end
   end

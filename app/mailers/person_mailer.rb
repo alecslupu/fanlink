@@ -8,7 +8,7 @@ class PersonMailer < ApplicationMailer
     email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'onboarding').first!
 
     mail_params = {
-      from:     "#{email.from_name} <#{email.from_email}>" ,
+      from: "#{email.from_name} <#{email.from_email}>" ,
       reply_to: 'support@flink.top' ,
       to: "#{@person.name} <#{@person.email}>",
       subject: email.subject
@@ -25,7 +25,7 @@ class PersonMailer < ApplicationMailer
     email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'password-reset').first!
 
     mail_params = {
-      from:     "#{email.from_name} <#{email.from_email}>" ,
+      from: "#{email.from_name} <#{email.from_email}>" ,
       reply_to: 'support@flink.top' ,
       to: "#{@person.name} <#{@person.email}>",
       subject: email.subject
@@ -47,7 +47,7 @@ class PersonMailer < ApplicationMailer
     email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'document-download').first!
 
     mail_params = {
-      from:     "#{email.from_name} <#{email.from_email}>" ,
+      from: "#{email.from_name} <#{email.from_email}>" ,
       reply_to: 'support@flink.top' ,
       to: "#{@person.name} <#{@person.email}>",
       subject: email.subject
@@ -75,7 +75,7 @@ class PersonMailer < ApplicationMailer
     attachments.inline[@person_certificate.issued_certificate_pdf_file_name] = File.read(Paperclip.io_adapters.for(@person_certificate.issued_certificate_pdf).path)
 
     mail_params = {
-      from:     "#{email.from_name} <#{email.from_email}>" ,
+      from: "#{email.from_name} <#{email.from_email}>" ,
       reply_to: 'support@flink.top' ,
       to: @email.presence || "#{@person.name} <#{@person.email}>",
       subject: email.subject
@@ -99,10 +99,10 @@ class PersonMailer < ApplicationMailer
     attachments.inline[@person_certificate.issued_certificate_pdf_file_name] = File.read(Paperclip.io_adapters.for(@person_certificate.issued_certificate_pdf).path)
 
     mail_params = {
-      from:     "#{email.from_name} <#{email.from_email}>" ,
+      from: "#{email.from_name} <#{email.from_email}>" ,
       reply_to: 'support@flink.top' ,
       to: @email.presence || "#{@person.name} <#{@person.email}>",
-      subject:  email.subject % { name: @person.name.presence || @person.product.name }
+      subject: email.subject % { name: @person.name.presence || @person.product.name }
     }
 
     mail(mail_params) do |format|

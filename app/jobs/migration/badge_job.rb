@@ -24,6 +24,7 @@ module  Migration
       unless Badge.with_translations('en').where(id: badge.id).first.present?
         return if badge.untranslated_name['un'].nil?
         return if badge.untranslated_name['un'].empty?
+
         begin
           I18n.locale = 'en'
           badge.name = badge.untranslated_name['un']

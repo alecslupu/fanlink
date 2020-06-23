@@ -39,6 +39,5 @@ FactoryBot.define do
     certificate { create(:certificate) }
     issued_certificate_image { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
     issued_certificate_pdf { File.open("#{Rails.root}/spec/fixtures/pdfs/dummy.pdf") }
-
   end
 end

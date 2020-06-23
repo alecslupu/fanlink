@@ -26,8 +26,7 @@ RSpec.describe Api::V4::Trivia::RoundsController, type: :controller do
         round = create(:trivia_round, with_leaderboard: false, status: :published, game: game)
 
         post :change_status, params: { game_id: game.id, round_id: round.id, product: person.product.internal_name, token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpemF0aW9uIjoiRVJjRVQzenAifQ.XvEudHy8vLVuZc5MlPfo8NmeSTSmhuynxXQT7PE2rBM',
-                                       status: :locked
-        }
+                                       status: :locked }
         expect(response.body).to eq('')
         expect(response.status).to eq(200)
       end
@@ -40,8 +39,7 @@ RSpec.describe Api::V4::Trivia::RoundsController, type: :controller do
 
         post :change_status, params: { game_id: game.id, round_id: round.id,
                                        product: person.product.internal_name, token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpemF0aW9uIjoiRVJjRVQzenAifQ.XvEudHy8vLVuZc5MlPfo8NmeSTSmhuynxXQT7PE2rBM',
-                                       status: :locked
-        }
+                                       status: :locked }
 
         expect(round.reload.status).to eq('locked')
         expect(response.status).to eq(200)

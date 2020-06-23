@@ -58,7 +58,7 @@ class Certcourse < ApplicationRecord
   protected
 
   def children_not_empty
-    validation_buffer  = []
+    validation_buffer = []
     certcourse_pages.each do |cp|
       validation_buffer.push(cp.id) unless cp.child.present? && cp.child.valid?
     end

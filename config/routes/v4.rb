@@ -2,7 +2,6 @@
 
 Rails.application.routes.draw do
   scope(constraints: Routing::Constraints::V4, module: 'api/v4', defaults: { format: :json }) do
-
     resources :people, except: %i[create index show update] do
       collection do
         resources :referral, path: :referral, only: [:index], module: 'referral' do

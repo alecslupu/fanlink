@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::TagsController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/posts/tags' do
     get '' do
       security [Bearer: []]

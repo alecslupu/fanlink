@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::InterestsController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/interests/match' do
     get '' do
       security [Bearer: []]

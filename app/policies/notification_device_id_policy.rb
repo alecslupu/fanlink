@@ -9,6 +9,7 @@ class NotificationDeviceIdPolicy < ApplicationPolicy
   end
 
   protected
+
   def module_name
     'portal_notification'
   end

@@ -40,70 +40,69 @@ RSpec.describe 'Api::V4::SessionController', type: :request, swagger_doc: 'v4/sw
   end
 
   path '/session' do
+    post 'Used to log someone in' do
+      tags 'Session'
+      produces 'application/vnd.api.v4+json'
+      consumes 'multipart/form-data'
+      parameter name: :product, in: :formData,  type: :string
+      parameter name: :facebook_auth_token, in: :formData,type: :string, required: false
+      parameter name: :password, in: :formData,type: :string, required: false
+      parameter name: :email_or_username, in: :formData, type: :string, required: false
 
-   post 'Used to log someone in' do
-     tags 'Session'
-     produces 'application/vnd.api.v4+json'
-     consumes 'multipart/form-data'
-     parameter name: :product, in: :formData,  type: :string
-     parameter name: :facebook_auth_token, in: :formData,type: :string, required: false
-     parameter name: :password, in: :formData,type: :string, required: false
-     parameter name: :email_or_username, in: :formData, type: :string, required: false
+      response '200', 'Returns an user object if successful' do
+        schema "$ref": '#/definitions/SessionObject'
 
-     response '200', 'Returns an user object if successful' do
-       schema "$ref": '#/definitions/SessionObject'
+        before do |example|
+          submit_request(example.metadata)
+          koala_result = { 'id' => '2905623', 'name' => 'John Smith', 'email' => 'no@email.tld' }
+          allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
+        end
 
-       before do |example|
-         submit_request(example.metadata)
-         koala_result = { 'id' => '2905623', 'name' => 'John Smith', 'email' => 'no@email.tld' }
-         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
-       end
+        let!(:user) { create(:person, facebookid: '2905623') }
+        let(:product) { user.product.internal_name }
 
-       let!(:user) { create(:person, facebookid: '2905623') }
-       let(:product) { user.product.internal_name }
+        context 'facebook login ' do
+          let(:facebook_auth_token) { 'some token' }
+          run_test!
+        end
 
-       context 'facebook login ' do
-         let(:facebook_auth_token) { 'some token' }
-         run_test!
-       end
+        context 'username login' do
+          let(:email_or_username) { user.email }
+          let(:password) { 'badpassword' }
+          run_test!
+        end
+      end
 
-       context 'username login' do
-         let(:email_or_username) { user.email }
-         let(:password) { 'badpassword' }
-         run_test!
-       end
-     end
+      response 422, 'Invalid login' do
+        let!(:user) { create(:person) }
+        let(:facebook_auth_token) { '' }
+        let(:product) { user.product.internal_name }
+        run_test!
+      end
 
-     response 422, 'Invalid login' do
-       let!(:user) { create(:person) }
-       let(:facebook_auth_token) { '' }
-       let(:product) { user.product.internal_name }
-       run_test!
-     end
+      response 500, 'Internal server error' do
+        let(:product) { '' }
+        let(:email_or_username) { '' }
+        let(:password) { '' }
+        document_response_without_test!
+      end
+    end
 
-     response 500, 'Internal server error' do
-       let(:product) {''}
-       let(:email_or_username) {''}
-       let(:password) {''}
-       document_response_without_test!
-     end
-   end
+    delete 'Log someone out' do
+      tags 'Session'
+      produces 'application/vnd.api.v4+json'
 
-   delete 'Log someone out' do
-     tags 'Session'
-     produces 'application/vnd.api.v4+json'
+      response '200', '' do
+        run_test!
+      end
 
-     response '200', '' do
-       run_test!
-     end
-
-     response 500, 'Internal server error' do
-       let(:product) {''}
-       let(:email_or_username) {''}
-       let(:password) {''}
-       document_response_without_test!
-     end
-   end
+      response 500, 'Internal server error' do
+        let(:product) { '' }
+        let(:email_or_username) { '' }
+        let(:password) { '' }
+        document_response_without_test!
+      end
+    end
   end
 end
 

@@ -37,7 +37,7 @@ RailsAdmin.config do |config|
         column_width 30
       end
       field :body do
-        searchable [{post_translations: :body}]
+        searchable [{ post_translations: :body }]
         queryable true
         column_width 150
       end
@@ -93,15 +93,15 @@ RailsAdmin.config do |config|
     end
     edit do
       fields :translations,
-            :person,
-            :picture,
-            :global,
-            :recommended,
-            :starts_at,
-            :ends_at,
-            :repost_interval,
-            :status,
-            :priority
+             :person,
+             :picture,
+             :global,
+             :recommended,
+             :starts_at,
+             :ends_at,
+             :repost_interval,
+             :status,
+             :priority
       # field :person_ do
       #   default_value do
       #     if bindings[:view]._current_user.try(:product_id) == ActsAsTenant.current_tenant.id
@@ -116,7 +116,7 @@ RailsAdmin.config do |config|
     export do
       fields :id, :global, :starts_at, :ends_at, :repost_interval,
              :status, :created_at, :updated_at, :priority, :recommended,
-             :notify_followers,  :post_comments_count, :pinned, :translations
+             :notify_followers, :post_comments_count, :pinned, :translations
 
       # field :picture do
       #   # export_value do
@@ -140,7 +140,6 @@ RailsAdmin.config do |config|
         end
       end
       fields :person, :post_comments, :post_reports, :poll, :poll_options
-
     end
   end
 end

@@ -9,19 +9,19 @@ RailsAdmin.config do |config|
     end
     show do
       fields :id,
-            :person,
-            :post,
-            :chat,
-            :event,
-            :merchandise,
-            :user,
-            :badge,
-            :reward,
-            :quest,
-            :beacon,
-            :reporting,
-            :interest,
-            :root
+             :person,
+             :post,
+             :chat,
+             :event,
+             :merchandise,
+             :user,
+             :badge,
+             :reward,
+             :quest,
+             :beacon,
+             :reporting,
+             :interest,
+             :root
     end
     edit do
       field :person

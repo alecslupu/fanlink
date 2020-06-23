@@ -80,5 +80,4 @@ RSpec.describe PortalNotification, type: :model do
       expect(PortalNotification.new).to respond_to(:enqueue_push)
     end
   end
-
 end

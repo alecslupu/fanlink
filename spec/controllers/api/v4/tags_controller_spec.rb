@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe Api::V4::TagsController, type: :controller do
   # TODO: auto-generated
   describe 'GET index' do
-    it'returns posts with reactions info' do
+    it 'returns posts with reactions info' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)

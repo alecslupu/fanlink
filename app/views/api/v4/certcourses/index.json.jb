@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  certcourses: render(partial: 'app', collection: @certcourses, as: :certcourse, locals: {  person: @current_user, certificate: @certificate }, handlers: :jb)
+  certcourses: render(partial: 'app', collection: @certcourses, as: :certcourse, locals: { person: @current_user, certificate: @certificate }, handlers: :jb)
 }

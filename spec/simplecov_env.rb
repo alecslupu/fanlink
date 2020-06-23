@@ -22,5 +22,5 @@ SimpleCov.configure do
 
   minimum_coverage 0
   enable_coverage :branch
-  coverage_dir ENV.fetch( 'COVERAGE_DIR' , 'coverage')
+  coverage_dir ENV.fetch('COVERAGE_DIR' , 'coverage')
 end
