@@ -15,7 +15,7 @@
           "type": "controller",
           "class": "PostsController",
           "method": "share",
-          "line": 7,
+          "line": 9,
           "file": "app/controllers/posts_controller.rb",
           "rendered": {
             "name": "posts/share",
@@ -29,7 +29,7 @@
       },
       "user_input": null,
       "confidence": "High",
-      "note": "This seems to be a false positive"
+      "note": "The post body needs to be displayed as raw html, therefore we are ignoring this"
     },
     {
       "warning_type": "Mass Assignment",
@@ -38,7 +38,7 @@
       "check_name": "PermitAttributes",
       "message": "Potentially dangerous key allowed for mass assignment",
       "file": "app/controllers/api/v3/categories_controller.rb",
-      "line": 174,
+      "line": 179,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.require(:category).permit(:name, :color, :role)",
       "render_path": null,
@@ -49,7 +49,7 @@
       },
       "user_input": ":role",
       "confidence": "Medium",
-      "note": "False positive about role key"
+      "note": ""
     },
     {
       "warning_type": "Mass Assignment",
@@ -58,7 +58,7 @@
       "check_name": "PermitAttributes",
       "message": "Potentially dangerous key allowed for mass assignment",
       "file": "app/controllers/api/v2/categories_controller.rb",
-      "line": 165,
+      "line": 170,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.require(:category).permit(:name, :color, :role)",
       "render_path": null,
@@ -69,9 +69,9 @@
       },
       "user_input": ":role",
       "confidence": "Medium",
-      "note": "False positive about role key"
+      "note": ""
     }
   ],
-  "updated": "2020-05-16 07:27:42 +0300",
-  "brakeman_version": "4.7.2"
+  "updated": "2020-06-23 23:31:52 +0300",
+  "brakeman_version": "4.8.2"
 }
