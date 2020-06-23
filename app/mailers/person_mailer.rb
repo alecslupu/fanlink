@@ -58,7 +58,6 @@ class PersonMailer < ApplicationMailer
 
     attachments.inline[@certcourse_page.download_file_page.document_file_name] = @certcourse_page.download_file_page.document.download
 
-
     mail(mail_params) do |format|
       format.html  { render inline: ERB.new(email.html_template).result(binding) }
       format.text  { render inline: ERB.new(email.text_template).result(binding) }
