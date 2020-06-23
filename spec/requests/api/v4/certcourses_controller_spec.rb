@@ -53,20 +53,22 @@ RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v
 
       response '200', 'HTTP/1.1 200 Ok' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person_certcourse.person.id)}" }
-        let(:certcourse_page) { create(:certcourse_page, certcourse: person_certcourse.certcourse) }
 
         let!(:image_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
+            certcourse_page = create(:certcourse_page, certcourse: person_certcourse.certcourse)
             create(:image_page, certcourse_page: certcourse_page)
           }
         }
         let!(:video_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
+            certcourse_page = create(:certcourse_page, certcourse: person_certcourse.certcourse)
             create(:video_page, certcourse_page: certcourse_page)
           }
         }
         let!(:download_file_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
+            certcourse_page = create(:certcourse_page, certcourse: person_certcourse.certcourse)
             create(:download_file_page, certcourse_page: certcourse_page)
           }
         }
