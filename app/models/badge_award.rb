@@ -26,6 +26,7 @@ class BadgeAward < ApplicationRecord
     already_earned = badge_action.person.badges
     badge_action.action_type.badges.each do |badge|
       next if already_earned.include?(badge) || !badge.current?
+
       achieved = badge.action_count_earned_by(badge_action.person)
       required = badge.action_requirement
       if achieved >= required

@@ -7,6 +7,7 @@ class UpdateMessageCounterJob < ApplicationJob
   def perform(room_id, poster_id, version)
     room = Room.find(room_id)
     return unless room.private?
+
     payload = {}
     room.room_memberships.each do |mem|
       payload[message_counter_path(mem)] = mem.message_count unless mem.person_id == poster_id

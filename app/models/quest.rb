@@ -75,9 +75,9 @@ class Quest < ApplicationRecord
   validates :starts_at, presence: { message: _('Starting date and time is required.') }
 
   scope :in_date_range, ->(start_date, end_date) {
-      where('quests.starts_at >= ? and quests.ends_at <= ?',
-            start_date.beginning_of_day, end_date.end_of_day)
-    }
+                          where('quests.starts_at >= ? and quests.ends_at <= ?',
+                                start_date.beginning_of_day, end_date.end_of_day)
+                        }
 
   scope :for_product, ->(product) { includes(:product).where(product: product) }
   scope :ordered, -> { includes(:quest_activities).order('quest_activities.created_at DESC') }

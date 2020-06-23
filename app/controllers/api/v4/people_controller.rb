@@ -67,6 +67,7 @@ module Api
               if person_params.has_key?(:terminated) && @person.some_admin?
                 return render_422 _('You cannot ban administative accounts.')
               end
+
               @person.update(person_params)
               if @person.terminated && @person == current_user
                 logout

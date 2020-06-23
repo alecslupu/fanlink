@@ -20,6 +20,7 @@ module Migration
       unless Person.with_translations('en').where(id: person.id).first.present?
         return if person.untranslated_designation['un'].nil?
         return if person.untranslated_designation['un'].empty?
+
         I18n.locale = 'en'
         person.designation = person.untranslated_designation['un']
         person.save

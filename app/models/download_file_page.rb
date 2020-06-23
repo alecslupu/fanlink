@@ -48,6 +48,7 @@ class DownloadFilePage < ApplicationRecord
 
   def just_me
     return if certcourse_page.new_record?
+
     target_course_page = CertcoursePage.find(certcourse_page.id)
     child = target_course_page.child
     if child && child != self

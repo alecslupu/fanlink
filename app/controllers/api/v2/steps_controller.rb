@@ -232,8 +232,7 @@ module Api
                                      quest_activities_attributes: [:id, :description, :hint, :picture,
                                                                    activity_types_attributes: [:id, :atype, { value: [:id, :description] }
                                                                    ]
-                                     ]
-        )
+                                     ])
       end
     end
   end

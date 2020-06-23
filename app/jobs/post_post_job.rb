@@ -8,6 +8,7 @@ class PostPostJob < ApplicationJob
     post = Post.find(post_id)
     followers = post.person.followers
     return if followers.size == 0
+
     payload = {}
     followers.each do |f|
       payload["#{user_path(f)}/last_post_id"] = post_id

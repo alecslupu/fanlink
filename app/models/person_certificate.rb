@@ -72,6 +72,7 @@ class PersonCertificate < ApplicationRecord
     # TODO move it in a job
     where(person_id: user_id, certificate_id: certificate_ids).find_each do |person_certificate|
       next if person_certificate.is_completed?
+
       certcouse_ids = person_certificate.certificate.certcourses.live_status.pluck(:id)
       person_certcourses = PersonCertcourse.where(person_id: user_id, certcourse_id: certcouse_ids).pluck(:is_completed)
       # raise ({c_size: c.certificate.certcourse_ids.size, p_size: person_certcourses.size, pc: person_certcourses}).inspect
@@ -82,6 +83,7 @@ class PersonCertificate < ApplicationRecord
 
   def generate_token!(attempts = 0)
     raise 'Could not acquire a unique id after 10 attempts' if attempts == 10
+
     charlist = 'A'.upto('Z').to_a + 0.upto(9).to_a.map(&:to_s) - %w(L O 0 1 Z 2)
     self.unique_id = 10.times.collect { charlist.sample }.join
     token_exists = self.class.where(unique_id: unique_id).exists?

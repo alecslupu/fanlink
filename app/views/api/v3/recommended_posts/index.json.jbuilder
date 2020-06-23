@@ -3,6 +3,7 @@
 json.recommended_posts do
   json.array!(@posts) do |post|
     next if post.deleted? && @req_source != 'web'
+
     if %w[lvconnect nashvilleconnect].include?(ActsAsTenant.current_tenant.internal_name)
       post.recommended = true
     end

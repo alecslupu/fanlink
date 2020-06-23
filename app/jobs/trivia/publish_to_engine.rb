@@ -13,8 +13,7 @@ module Trivia
                       'Content-Type': 'application/json',
                       'trivia-api-key': 'testing'
                     },
-                    logger: Rails.logger, log_level: :debug, log_format: :curl
-                   )
+                    logger: Rails.logger, log_level: :debug, log_format: :curl)
 
       Rails.logger.debug('Got here')
     end

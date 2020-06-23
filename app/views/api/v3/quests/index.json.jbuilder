@@ -12,6 +12,7 @@ elsif current_user.tester
       next if %w[deleted disabled].include?(quest.status.to_s)
       next if quest.starts_at > DateTime.now
       next if quest.ends_at && quest.ends_at < DateTime.now
+
       json.partial! 'quest', locals: { quest: quest, lang: @lang }
     end
   end
@@ -21,6 +22,7 @@ else
       next if %w[deleted disabled enabled].include?(quest.status.to_s)
       next if quest.starts_at > DateTime.now
       next if quest.ends_at && quest.ends_at < DateTime.now
+
       json.partial! 'quest', locals: { quest: quest, lang: @lang }
     end
   end

@@ -7,6 +7,7 @@ class DeletePostJob < ApplicationJob
   def perform(post_id, version = 0)
     post = Post.find(post_id)
     return unless post.deleted?
+
     followers = post.person.followers
 
     return if followers.size == 0

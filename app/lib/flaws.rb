@@ -38,6 +38,7 @@ module Flaws
   #
   def self.sns_confirm(topic_arn, token)
     raise ArgumentError.new('Missing token for subscription confirmation') if (token.blank?)
+
     sns_client.confirm_subscription(topic_arn: topic_arn, token: token)
   end
 
@@ -181,8 +182,10 @@ module Flaws
     thumbnail_name = thumbnail_name_for(filename)
     -> (p) {
       { key: output_name[p], preset_id: p[:id] }.merge(
-        p[:thumbnails] ? { thumbnail_pattern: "#{thumbnail_name[p]}-{count}" } : {}).merge(
-          p[:playlist] ? { segment_duration: '10' } : {})
+        p[:thumbnails] ? { thumbnail_pattern: "#{thumbnail_name[p]}-{count}" } : {}
+      ).merge(
+        p[:playlist] ? { segment_duration: '10' } : {}
+      )
     }
   end
 

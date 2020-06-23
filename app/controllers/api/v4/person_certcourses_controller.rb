@@ -52,6 +52,7 @@ module Api
       def register_regress
         certcourse_pages.where('certcourse_page_order > ?', last_certcourse_page.try(:certcourse_page_order).to_i).each do |cp|
           next if cp.quiz?
+
           update_progress(cp, false)
         end
       end

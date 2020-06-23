@@ -672,6 +672,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         flinkpost = create(:post, person: person)
         Post.statuses.keys.each do |s|
           next if s == 'published'
+
           flinkpost.update_column(:status, Post.statuses[s])
           get :share, params: { id: flinkpost.id, product: flinkpost.product.internal_name }
           expect(response).to be_not_found
