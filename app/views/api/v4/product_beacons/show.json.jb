@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  beacon: render(partial: @req_source, locals: { beacon: @product_beacon }, handlers: "jb")
+  beacon: render(partial: @req_source, locals: { beacon: @product_beacon }, handlers: 'jb')
 }

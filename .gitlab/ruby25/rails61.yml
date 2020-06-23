@@ -1,0 +1,158 @@
+
+.test:rspec-edge:
+  extends: .base
+  services:
+    - postgres:latest
+  dependencies:
+    - test:erd
+    - test:dawnscanner
+    - test:brakeman
+    - test:rubycritic
+    - test:bundle_audit
+    - test:rubocop
+  variables:
+    RAILS_ENV: test
+    FANLINK_PG_USER: $POSTGRES_USER
+    FANLINK_PG_PASSWORD: $POSTGRES_PASSWORD
+    FANLINK_PG_HOST: $POSTGRES_HOST
+    FANLINK_PG_DATABASE: $POSTGRES_DB
+    POSTGRES_USER: $POSTGRES_USER
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    POSTGRES_DB: $POSTGRES_DB
+  before_script:
+    - gem install bundler -v $BUNDLER_VERSION
+    - bundle install --quiet --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
+    - apt-get update -yqq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
+    - apt-get install -yqq ffmpeg
+    - export RAILS_EDGE=true
+    - bundle update --quiet rails
+    - bundle install --quiet
+    - bundle exec rake db:reset
+    - bundle exec rake db:setup
+    - bundle exec rake db:test:prepare
+  stage: rspec
+  allow_failure: true
+
+
+test:rspec-edge:channels:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/channels bundle exec rspec spec/channels --fail-fast
+  artifacts:
+    name: rails60_channels_cov
+    paths:
+      - coverage/rails/61/channels
+
+test:rspec-edge:controllers:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/controllers  bundle exec rspec spec/controllers --fail-fast
+  artifacts:
+    name: rails60_controllers_cov
+    paths:
+      - coverage/rails/61/controllers
+
+test:rspec-edge:helpers:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/helpers  bundle exec rspec spec/helpers --fail-fast
+  artifacts:
+    name: rails60_helpers_cov
+    paths:
+      - coverage/rails/61/helpers
+
+test:rspec-edge:jobs:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/jobs  bundle exec rspec spec/jobs --fail-fast
+  artifacts:
+    name: rails60_jobs_cov
+    paths:
+      - coverage/rails/61/jobs
+
+test:rspec-edge:lib:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/lib  bundle exec rspec spec/lib --fail-fast
+  artifacts:
+    name: rails60_lib_cov
+    paths:
+      - coverage/rails/61/lib
+
+test:rspec-edge:listeners:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/listeners  bundle exec rspec spec/listeners --fail-fast
+  artifacts:
+    name: rails60_listeners_cov
+    paths:
+      - coverage/rails/61/listeners
+
+test:rspec-edge:mailers:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/mailers  bundle exec rspec spec/mailers --fail-fast
+  artifacts:
+    name: rails60_mailers_cov
+    paths:
+      - coverage/rails/61/mailers
+
+test:rspec-edge:middleware:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/middleware  bundle exec rspec spec/middleware --fail-fast
+  artifacts:
+    name: rails60_middleware_cov
+    paths:
+      - coverage/rails/61/middleware
+
+test:rspec-edge:models:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/models  bundle exec rspec spec/models --fail-fast
+  artifacts:
+    name: rails60_models_cov
+    paths:
+      - coverage/rails/61/models
+
+test:rspec-edge:requests:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/requests  bundle exec rspec spec/requests --fail-fast
+  artifacts:
+    name: rails60_requests_cov
+    paths:
+      - coverage/rails/61/requests
+
+test:rspec-edge:policies:
+  extends: .test:rspec-edge
+  script:
+    - COVERAGE_DIR=coverage/rails/61/policies  bundle exec rspec spec/policies --fail-fast
+  artifacts:
+    name: rails60_policies_cov
+    paths:
+      - coverage/rails/61/policies
+
+test:rspec-edge:merge:
+  extends: .base
+  stage: format
+  artifacts:
+    name: my_app_artifacts
+    paths:
+      - coverage/rails/61
+  dependencies:
+    - test:rspec-edge:channels
+    - test:rspec-edge:controllers
+    - test:rspec-edge:helpers
+    - test:rspec-edge:jobs
+    - test:rspec-edge:lib
+    - test:rspec-edge:listeners
+    - test:rspec-edge:mailers
+    - test:rspec-edge:middleware
+    - test:rspec-edge:models
+    - test:rspec-edge:requests
+    - test:rspec-edge:policies
+  script:
+    - chmod +x ./bin/merge-simplecov
+    - COVERAGE_DIR=coverage/rails/61/ bundle exec ./bin/merge-simplecov

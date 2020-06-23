@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
@@ -8,13 +9,13 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server "172.30.0.199", user: "ubuntu", roles: %w{ app db web worker }
-server "172.30.0.34", user: "ubuntu", roles: %w{ app web }
+server '172.30.0.199', user: 'ubuntu', roles: %w{app db web worker}
+server '172.30.0.34', user: 'ubuntu', roles: %w{app web}
 
-set :rails_env, "production"
-set :branch, "master"
+set :rails_env, 'production'
+set :branch, 'master'
 
-set :bundle_without, %w{development test staging}.join(" ")
+set :bundle_without, %w{development test staging}.join(' ')
 set :bundle_jobs, 8
 # role-based syntax
 # ==================

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Person")
-  config.included_models.push("Person::Translation")
+  config.included_models.push('Person')
+  config.included_models.push('Person::Translation')
 
   config.model 'Person::Translation' do
     visible false
@@ -18,8 +19,8 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model "Person" do
-    label_plural "Client Users"
+  config.model 'Person' do
+    label_plural 'Client Users'
     configure :translations, :globalize_tabs
     object_label_method do
       :username
@@ -230,7 +231,7 @@ RailsAdmin.config do |config|
         end
       end
       field :assigned_people do
-        label "Assigned Users"
+        label 'Assigned Users'
         inline_add do
           false
         end
@@ -248,7 +249,7 @@ RailsAdmin.config do |config|
         end
       end
       field :designated_people do
-        label "Designated Users"
+        label 'Designated Users'
         inline_add do
           false
         end
@@ -267,7 +268,7 @@ RailsAdmin.config do |config|
       end
 
       field :clients_assigned do
-        label "Clients - Assigned"
+        label 'Clients - Assigned'
         inline_add do
           false
         end
@@ -285,7 +286,7 @@ RailsAdmin.config do |config|
         end
       end
       field :clients_designated do
-        label "Clients - Designated"
+        label 'Clients - Designated'
         inline_add do
           false
         end
@@ -306,10 +307,10 @@ RailsAdmin.config do |config|
       field :trigger_admin, :hidden do
         visible true
         formatted_value do
-          "true"
+          'true'
         end
         default_value do
-          "true"
+          'true'
         end
       end
     end

@@ -1,12 +1,13 @@
 # frozen_string_literal: true
+
 json.id badge.id
 json.name badge.name
 json.internal_name badge.internal_name
 json.description badge.description
 json.picture_url badge.picture_url
 if badge.reward.present?
-  if badge.reward.assigned_rewards.present? && badge.reward.assigned_rewards.by_type("ActionType").exists?
-    json.action_type_id badge.reward.assigned_rewards.by_type("ActionType").first.id
+  if badge.reward.assigned_rewards.present? && badge.reward.assigned_rewards.by_type('ActionType').exists?
+    json.action_type_id badge.reward.assigned_rewards.by_type('ActionType').first.id
   else
     json.action_type_id nil
   end
@@ -17,7 +18,7 @@ else
   json.action_requirement nil
   json.point_value nil
 end
-if @req_source == "web"
+if @req_source == 'web'
   json.issued_to badge.issued_to
   json.issued_from badge.issued_from
 end

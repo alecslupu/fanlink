@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RailsAdmin
   module Config
     module Fields
@@ -16,7 +17,7 @@ module RailsAdmin
           end
 
           def generic_help
-            "" # false is ignored by I18n.translate
+            '' # false is ignored by I18n.translate
           end
 
           # Reader for validation errors of the bound object
@@ -32,7 +33,6 @@ module RailsAdmin
             # I18n.locale
             TranslationThings::DEFAULT_LANG
           end
-
 
           # Returns array of Translation objects.
           # It gets existing or creates new empty translation for every locale.

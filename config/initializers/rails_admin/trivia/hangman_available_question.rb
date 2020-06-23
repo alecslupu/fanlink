@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Trivia::HangmanAvailableQuestion")
-  config.model "Trivia::HangmanAvailableQuestion" do
-    parent "Trivia::AvailableQuestion"
-    label_plural "Fill in the blank"
+  config.included_models.push('Trivia::HangmanAvailableQuestion')
+  config.model 'Trivia::HangmanAvailableQuestion' do
+    parent 'Trivia::AvailableQuestion'
+    label_plural 'Fill in the blank'
 
     configure :status, :enum do
       queryable false

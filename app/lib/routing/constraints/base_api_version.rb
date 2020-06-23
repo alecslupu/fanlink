@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Routing
   module Constraints
     class BaseApiVersion
@@ -9,7 +10,7 @@ module Routing
 
       protected
       def self.api_version(version)
-        "application/vnd.api."+version+"+json"
+        'application/vnd.api.'+version+'+json'
       end
     end
   end

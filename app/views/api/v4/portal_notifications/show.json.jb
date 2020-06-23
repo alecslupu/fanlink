@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  portal_notification: render(partial: @req_source, locals: { portal_notification: @portal_notification }, handlers: "jb")
+  portal_notification: render(partial: @req_source, locals: { portal_notification: @portal_notification }, handlers: 'jb')
 }

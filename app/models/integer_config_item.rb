@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: config_items
@@ -32,7 +33,6 @@ class IntegerConfigItem < ConfigItem
   end
 
   private
-
 
   def strip_blanks
     self.item_value = self.item_value.strip

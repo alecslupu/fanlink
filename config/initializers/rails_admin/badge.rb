@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-RailsAdmin.config do |config|
-  config.included_models.push("Badge")
 
-  config.included_models.push("Badge::Translation")
+RailsAdmin.config do |config|
+  config.included_models.push('Badge')
+
+  config.included_models.push('Badge::Translation')
 
   config.model 'Badge::Translation' do
     visible false
@@ -18,7 +19,7 @@ RailsAdmin.config do |config|
       fields :locale, :name, :description
     end
   end
-  config.model "Badge" do
+  config.model 'Badge' do
     configure :translations, :globalize_tabs
 
     list do
@@ -27,13 +28,13 @@ RailsAdmin.config do |config|
 
       field :name do
         visible false
-        searchable [{badge_translations: :name } ]
+        searchable [{badge_translations: :name }]
         queryable true
         filterable true
       end
       field :description do
         visible false
-        searchable [{badge_translations: :description } ]
+        searchable [{badge_translations: :description }]
         queryable true
         filterable true
       end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_picture_available_answers
@@ -17,7 +18,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_picture_available_answer, class: "Trivia::PictureAvailableAnswer" do
+  factory :trivia_picture_available_answer, class: 'Trivia::PictureAvailableAnswer' do
     product { current_product }
   end
 end

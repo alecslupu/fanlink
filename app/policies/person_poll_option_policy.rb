@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PersonPollOptionPolicy < PostModulePolicy
   def create?
     false

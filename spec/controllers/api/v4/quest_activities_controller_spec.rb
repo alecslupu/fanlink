@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-require "spec_helper"
+
+require 'spec_helper'
 
 RSpec.describe Api::V4::QuestActivitiesController, type: :controller do
-  describe "GET show" do
+  describe 'GET show' do
     it 'returns the quest_activity with the attached image' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -16,7 +17,7 @@ RSpec.describe Api::V4::QuestActivitiesController, type: :controller do
     end
   end
 
-  describe "PUT update" do
+  describe 'PUT update' do
     it "updates a quest_activity's attachment" do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do

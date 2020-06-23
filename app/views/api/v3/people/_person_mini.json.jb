@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {
   id: person.id.to_s,
   username: person.username,
@@ -10,9 +11,9 @@ json = {
 
 lev = person.level_earned
 if lev.nil?
-  json["level"] =  nil
+  json['level'] =  nil
 else
-  json["level"] = render partial: "api/v3/levels/level", locals: { level: lev }, handlers: "jbuilder"
+  json['level'] = render partial: 'api/v3/levels/level', locals: { level: lev }, handlers: 'jbuilder'
 end
 
 json

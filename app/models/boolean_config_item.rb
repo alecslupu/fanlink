@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: config_items
@@ -24,6 +25,6 @@ class BooleanConfigItem < ConfigItem
   has_paper_trail
 
   def formatted_value
-    item_value == "t"
+    item_value == 't'
   end
 end

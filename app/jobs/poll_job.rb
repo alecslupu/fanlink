@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PollJob < ApplicationJob
 # TODO remove, does not seems to be used.
   queue_as :default

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  following: render(partial: @req_source, locals: { following: @following }, handlers: "jb")
+  following: render(partial: @req_source, locals: { following: @following }, handlers: 'jb')
 }

@@ -1,13 +1,14 @@
 # frozen_string_literal: true
+
 require 'swagger_helper'
 
-RSpec.describe "Api::V4::Courseware::Client::CertcoursesController", type: :request, swagger_doc: "v4/swagger.json" do
+RSpec.describe 'Api::V4::Courseware::Client::CertcoursesController', type: :request, swagger_doc: 'v4/swagger.json' do
 
-  path "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses" do
-    get "" do
+  path '/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses' do
+    get '' do
       security [Bearer: []]
-      let(:Authorization) { "" }
-      tags "Courseware"
+      let(:Authorization) { '' }
+      tags 'Courseware'
       parameter name: :person_id, in: :path, type: :string
       parameter name: :certificate_id, in: :path, type: :string
 
@@ -17,17 +18,17 @@ RSpec.describe "Api::V4::Courseware::Client::CertcoursesController", type: :requ
       let(:certificate_id) { certificate.certificate_id }
       let(:person_id) { hired.id }
 
-      produces "application/vnd.api.v4+json"
-      response "200", "HTTP/1.1 200 Ok" do
+      produces 'application/vnd.api.v4+json'
+      response '200', 'HTTP/1.1 200 Ok' do
         let!(:relation) { create(:client_to_person, client: person, person: hired) }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/ClientCertcoursesArray"
+        schema "$ref": '#/definitions/ClientCertcoursesArray'
         run_test!
       end
-      response "401", "" do
+      response '401', '' do
         run_test!
       end
-      response "422", "" do
+      response '422', '' do
         let!(:relation) { create(:client_to_person, client: person, person: hired) }
 
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
@@ -35,16 +36,16 @@ RSpec.describe "Api::V4::Courseware::Client::CertcoursesController", type: :requ
 
         run_test!
       end
-      response 500, "Internal server error" do
+      response 500, 'Internal server error' do
         document_response_without_test!
       end
     end
   end
-  path "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses/{id}" do
-    get "" do
+  path '/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses/{id}' do
+    get '' do
       security [Bearer: []]
-      let(:Authorization) { "" }
-      tags "Courseware"
+      let(:Authorization) { '' }
+      tags 'Courseware'
       parameter name: :person_id, in: :path, type: :string
       parameter name: :certificate_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
@@ -57,18 +58,18 @@ RSpec.describe "Api::V4::Courseware::Client::CertcoursesController", type: :requ
       let(:person_id) { hired.id }
       let(:id) { create(:certificate_certcourse, certificate: person_certificate.certificate, certcourse: certcourse).certcourse_id }
 
-      produces "application/vnd.api.v4+json"
-      response "200", "HTTP/1.1 200 Ok" do
+      produces 'application/vnd.api.v4+json'
+      response '200', 'HTTP/1.1 200 Ok' do
         let!(:relation) { create(:client_to_person, client: person, person: hired) }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/ClientCertcourseQuizzArray"
+        schema "$ref": '#/definitions/ClientCertcourseQuizzArray'
 
         run_test!
       end
-      response "401", "" do
+      response '401', '' do
         run_test!
       end
-      response "404", "" do
+      response '404', '' do
         let!(:relation) { create(:client_to_person, client: person, person: hired) }
 
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
@@ -78,7 +79,7 @@ RSpec.describe "Api::V4::Courseware::Client::CertcoursesController", type: :requ
 
         run_test!
       end
-      response 500, "Internal server error" do
+      response 500, 'Internal server error' do
         document_response_without_test!
       end
     end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CorsGuard
   ALWAYS_ALLOW = %w(
     https://www.fan.link
@@ -18,8 +19,8 @@ class CorsGuard
     http://alecslupu.go.ro:8082
   )
 
-  if ENV["PORTAL_URL"]
-    ENV["PORTAL_URL"].split(",").each do |url|
+  if ENV['PORTAL_URL']
+    ENV['PORTAL_URL'].split(',').each do |url|
       # TODO Add URL verification here
       ALWAYS_ALLOW << url
     end

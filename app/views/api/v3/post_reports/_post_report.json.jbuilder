@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-json.cache! ["v3", post_report.updated_at, post_report] do
+
+json.cache! ['v3', post_report.updated_at, post_report] do
   json.id post_report.id.to_s
   json.created_at post_report.created_at.to_s
   json.poster post_report.post.person.username
@@ -8,8 +9,8 @@ json.cache! ["v3", post_report.updated_at, post_report] do
   json.status post_report.status
 end
 
-if @req_source == "web"
-  json.cache! ["v3", @req_source, post_report.post.updated_at, post_report.post] do
+if @req_source == 'web'
+  json.cache! ['v3', @req_source, post_report.post.updated_at, post_report.post] do
     json.post post_report.post
   end
 else

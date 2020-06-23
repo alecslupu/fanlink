@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: config_items
@@ -44,7 +45,7 @@ class ConfigItem < ApplicationRecord
             RootConfigItem
             IntegerConfigItem
             ColorConfigItem
-  ], message: "%{value} is not a valid type" }
+  ], message: '%{value} is not a valid type' }
 
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }

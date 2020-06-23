@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 json = {}
 
 json[:recommended_people] = @people.map do |person|
-  render partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: "jb"
+  render partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: 'jb'
 end
 
 json

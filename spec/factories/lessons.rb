@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: lessons
@@ -15,7 +16,7 @@
 #  deleted     :boolean          default(FALSE)
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :lesson do

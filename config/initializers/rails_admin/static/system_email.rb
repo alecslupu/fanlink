@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Static::SystemEmail")
-  config.included_models.push("Static::SystemEmail::Translation")
+  config.included_models.push('Static::SystemEmail')
+  config.included_models.push('Static::SystemEmail::Translation')
 
   config.model 'Static::SystemEmail::Translation' do
     visible false
@@ -17,7 +19,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model "Static::SystemEmail" do
+  config.model 'Static::SystemEmail' do
     configure :translations, :globalize_tabs
     list do
       fields :id,

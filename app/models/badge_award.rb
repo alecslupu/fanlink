@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: badge_awards
@@ -47,7 +48,7 @@ class BadgeAward < ApplicationRecord
 
     def product_match
       if badge.product_id != person.product_id
-        errors.add(:base, :product_mismatch, message: _("Product mismatch!"))
+        errors.add(:base, :product_mismatch, message: _('Product mismatch!'))
       end
     end
 end

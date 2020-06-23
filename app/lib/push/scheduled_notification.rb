@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Push
   class ScheduledNotification < BasePush
     def push(notification_id, person_ids)
@@ -7,10 +8,10 @@ module Push
 
       android_token_notification_push(
         notification.ttl_hours * 3600,
-        context: "marketing",
+        context: 'marketing',
         title: notification.title,
         message_short: notification.body,
-        type: "user"
+        type: 'user'
       )
 
       ios_token_notification_push(
@@ -18,7 +19,7 @@ module Push
         notification.body,
         nil,
         notification.ttl_hours * 3600,
-        context: "marketing"
+        context: 'marketing'
       )
     end
   end

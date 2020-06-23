@@ -1,33 +1,34 @@
 # frozen_string_literal: true
-require "rails_helper"
+
+require 'rails_helper'
 
 RSpec.describe Trivia::Prize, type: :model do
-  context "Valid factory" do
+  context 'Valid factory' do
     it { expect(build(:trivia_prize)).to be_valid }
   end
-  context "Associations" do
+  context 'Associations' do
     describe "should verify associations haven't changed for" do
-      it "#belongs_to" do
+      it '#belongs_to' do
         should belong_to(:game)
       end
     end
   end
 
-  describe ".game_id" do
-    it "matches the trivia game id" do
+  describe '.game_id' do
+    it 'matches the trivia game id' do
       prize = create :trivia_prize
       expect(prize.game_id).to eq(prize.trivia_game_id)
     end
   end
 
-  describe ".product" do
-    it "matches the game product" do
+  describe '.product' do
+    it 'matches the game product' do
       prize = create :trivia_prize
       expect(prize.product).to eq(prize.game.product)
     end
   end
 
-  context "status" do
+  context 'status' do
     subject { Trivia::Prize.new }
     it { expect(subject).to respond_to(:draft?) }
     it { expect(subject).to respond_to(:published?) }
@@ -35,7 +36,7 @@ RSpec.describe Trivia::Prize, type: :model do
     it { expect(subject).to respond_to(:closed?) }
   end
 
-  context "State Machine" do
+  context 'State Machine' do
     subject { Trivia::Prize.new }
 
     it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
@@ -43,10 +44,9 @@ RSpec.describe Trivia::Prize, type: :model do
     it { expect(subject).to transition_from(:locked).to(:closed).on_event(:closed) }
   end
 
-
-  describe "copy_to_new" do
+  describe 'copy_to_new' do
     it { expect(Trivia::Prize.new.respond_to?(:copy_to_new)).to eq(true) }
-    context "creates new record" do
+    context 'creates new record' do
       before do
         create(:trivia_prize)
         expect(Trivia::Prize.count).to eq(1)
@@ -56,7 +56,7 @@ RSpec.describe Trivia::Prize, type: :model do
       end
 
       it { expect(@prize_object).to be_a(Trivia::Prize) }
-      it { expect(@prize_object.status).to eq("draft") }
+      it { expect(@prize_object.status).to eq('draft') }
     end
   end
 end

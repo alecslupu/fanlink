@@ -1,7 +1,9 @@
-RailsAdmin.config do |config|
-  config.included_models.push("Reward")
+# frozen_string_literal: true
 
-  config.included_models.push("Reward::Translation")
+RailsAdmin.config do |config|
+  config.included_models.push('Reward')
+
+  config.included_models.push('Reward::Translation')
 
   config.model 'Reward::Translation' do
     visible false
@@ -18,7 +20,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model "Reward" do
+  config.model 'Reward' do
     configure :translations, :globalize_tabs
 
     list do
@@ -29,7 +31,7 @@ RailsAdmin.config do |config|
 
       field :name do
         visible false
-        searchable [{reward_translations: :name } ]
+        searchable [{reward_translations: :name }]
         queryable true
         filterable true
       end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  activity: render(partial: @req_source, locals: { activity: @quest_activity }, handlers: "jb")
+  activity: render(partial: @req_source, locals: { activity: @quest_activity }, handlers: 'jb')
 }

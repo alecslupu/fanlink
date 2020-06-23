@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if defined?(Slackistrano::Messaging)
   module Slackistrano
     class CustomMessaging < Messaging::Base
@@ -37,7 +39,7 @@ if defined?(Slackistrano::Messaging)
                      }],
             fallback: super[:text]
           }],
-          text: "<!here> Deployment started!"
+          text: '<!here> Deployment started!'
         }
       end
 
@@ -81,7 +83,7 @@ if defined?(Slackistrano::Messaging)
                                    }],
                           fallback: super[:text]
                         }],
-          text: "<!here> Application Deployed!"
+          text: '<!here> Application Deployed!'
         }
       end
 

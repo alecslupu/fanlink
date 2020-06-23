@@ -1,5 +1,6 @@
 # frozen_string_literal: true
+
 {
   certificate:
-    render(partial: "api/v4/certificates/#{@req_source}", locals: { certificate: @certificate, user: @current_user, pc: @certificate.person_certificates }, handlers: "jb")
+    render(partial: "api/v4/certificates/#{@req_source}", locals: { certificate: @certificate, user: @current_user, pc: @certificate.person_certificates }, handlers: 'jb')
 }
