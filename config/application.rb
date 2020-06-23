@@ -57,7 +57,6 @@ module Fanlink
       url: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension'
     } if Rails.env.test?
 
-
     config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
       allow do
         origins do |source, env|
