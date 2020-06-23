@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: person_interests
@@ -7,7 +9,7 @@
 #  interest_id :integer          not null
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :person_interest do

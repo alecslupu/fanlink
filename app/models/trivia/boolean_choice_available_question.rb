@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_available_questions
@@ -17,14 +19,14 @@
 
 module Trivia
   class BooleanChoiceAvailableQuestion < AvailableQuestion
-    has_many :active_questions, class_name: "Trivia::BooleanChoiceQuestion", inverse_of: :available_question, foreign_key: :available_question_id
+    has_many :active_questions, class_name: 'Trivia::BooleanChoiceQuestion', inverse_of: :available_question, foreign_key: :available_question_id
 
     include AASM
     enum status: {
       draft: 0,
       published: 1,
       locked: 2,
-      closed: 3,
+      closed: 3
     }
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
@@ -54,7 +56,6 @@ module Trivia
         transitions from: :locked, to: :closed
       end
     end
-
 
 =begin
     validate :answer_checks

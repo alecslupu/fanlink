@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PostPostJob < ApplicationJob
   queue_as :default
   include RealTimeHelpers
@@ -15,6 +17,6 @@ class PostPostJob < ApplicationJob
         }
       end
     end
-    client.update("", payload)
+    client.update('', payload)
   end
 end

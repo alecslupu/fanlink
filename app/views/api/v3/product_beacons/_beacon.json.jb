@@ -1,4 +1,6 @@
-json = Rails.cache.fetch ["v3", beacon.updated_at, beacon] do
+# frozen_string_literal: true
+
+json = Rails.cache.fetch ['v3', beacon.updated_at, beacon] do
   {
     id: beacon.id,
     product_id: beacon.product_id,

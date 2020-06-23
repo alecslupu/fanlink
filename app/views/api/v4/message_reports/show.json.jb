@@ -1,5 +1,5 @@
+# frozen_string_literal: true
+
 {
-  message_report: Rails.cache.fetch(["v4", "message_report", @req_source, @message_report.id, @message_report.updated_at.to_i]) {
-    render(partial: @req_source, locals: { message_report: @message_report, lang: @lang }, handlers: "jb")
-  }
+  message_report: render(partial: @req_source, locals: { message_report: @message_report, lang: @lang }, handlers: 'jb')
 }

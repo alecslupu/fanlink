@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json =
   {
     id: step.id.to_s,
@@ -8,7 +10,7 @@ json =
   }
 
 if step.quest_activities.count > 0
-  json[:activities] = render partial: "api/v4/quest_activities/activity", collection: step.quest_activities.where(deleted: false), as: :activity, handlers: "jb"
+  json[:activities] = render partial: 'api/v4/quest_activities/activity', collection: step.quest_activities.where(deleted: false), as: :activity, handlers: 'jb'
 else
   json[:activities] = nil
 end
@@ -16,11 +18,11 @@ end
 unlocks_at = step.unlocks_at || nil
 if step.step_completed.present?
   json[:status] = step.step_completed.status
-  unlocks_at = step.step_completed.created_at.to_datetime.utc + step.delay_unlock.minute unless unlocks_at.present?
+  unlocks_at = step.step_completed.created_at.to_datetime.utc + step.delay_unlock.minute if unlocks_at.blank?
 else
   json[:status] = step.initial_status
 end
-unlocks_at ||= Time.now.to_s
+unlocks_at ||= Time.zone.now.to_s
 json[:unlocks_at] = unlocks_at.to_datetime().utc.iso8601
 
 json

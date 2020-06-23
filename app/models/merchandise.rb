@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: merchandise
@@ -23,12 +25,13 @@
 
 class Merchandise < ApplicationRecord
   include AttachmentSupport
-  include TranslationThings
 
   after_save :adjust_priorities
 
   has_image_called :picture
-  has_manual_translated :description, :name
+
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   acts_as_tenant(:product)
   belongs_to :product
@@ -43,13 +46,13 @@ class Merchandise < ApplicationRecord
   # validates :name, presence: { message: _("Name is required.") }
   # validates :description, presence: { message: _("Description is required.") }
 
-private
+  private
 
   def adjust_priorities
     if priority > 0 && saved_change_to_attribute?(:priority)
       same_priority = Merchandise.where.not(id: self.id).where(priority: self.priority)
       if same_priority.count > 0
-        Merchandise.where.not(id: self.id).where("priority >= ?", self.priority).each do |merchandise|
+        Merchandise.where.not(id: self.id).where('priority >= ?', self.priority).each do |merchandise|
           merchandise.increment!(:priority)
         end
       end

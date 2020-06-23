@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: step_completed
@@ -13,11 +15,10 @@
 #
 
 class StepCompleted < ApplicationRecord
-  enum status: %i[ locked unlocked completed ]
+  enum status: %i[locked unlocked completed]
 
   belongs_to :step, touch: true
   belongs_to :person, touch: true
 
-
-private
+  private
 end

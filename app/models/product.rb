@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: products
@@ -41,12 +43,12 @@ class Product < ApplicationRecord
 
   has_image_called :logo
 
-  validates :name, length: { in: 3..60, message: _("Name must be between 3 and 60 characters.") }, uniqueness: { message: _("Product %{product_name} already exists.") % { product_name: name } }
+  validates :name, length: { in: 3..60, message: _('Name must be between 3 and 60 characters.') }, uniqueness: { message: _('Product %{product_name} already exists.') % { product_name: name } }
 
-  validates :internal_name, format: { with: /\A[a-zA-Z0-9_]+\z/, allow_blank: true, message: _("Internal name can only contain letters, numbers and underscores.") },
-            presence: { message: _("Internal name is required.") },
-            length: { in: 3..30, message: _("Internal name must be between 3 and 63 characters."), allow_blank: true },
-            uniqueness: { message: _("Internal name already exists.") }
+  validates :internal_name, format: { with: /\A[a-zA-Z0-9_]+\z/, allow_blank: true, message: _('Internal name can only contain letters, numbers and underscores.') },
+            presence: { message: _('Internal name is required.') },
+            length: { in: 3..30, message: _('Internal name must be between 3 and 63 characters.'), allow_blank: true },
+            uniqueness: { message: _('Internal name already exists.') }
 
   has_many :people, dependent: :restrict_with_error
   has_many :quests, dependent: :restrict_with_error
@@ -54,9 +56,10 @@ class Product < ApplicationRecord
   has_many :events, dependent: :restrict_with_error
   has_many :levels, dependent: :restrict_with_error
   has_many :polls, dependent: :restrict_with_error
-  has_many :static_contents, dependent: :restrict_with_error
+  has_many :web_contents, class_name: 'Static::WebContent', dependent: :restrict_with_error
+  has_many :system_emails, class_name: 'Static::SystemEmail', dependent: :restrict_with_error
 
-  has_many :trivia_games, class_name: "Trivia::Game", dependent: :restrict_with_error
+  has_many :trivia_games, class_name: 'Trivia::Game', dependent: :restrict_with_error
 
   has_many :config_items, dependent: :destroy
 

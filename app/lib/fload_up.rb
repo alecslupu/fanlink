@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FloadUp
   extend ActiveSupport::Concern
 
@@ -42,7 +44,7 @@ module FloadUp
           using: :find_by_id,
           into: "@#{klass.name.underscore}",
           alias: {},
-          except: [],
+          except: []
       }.merge(options.to_h)
 
       id       = options[:from ]

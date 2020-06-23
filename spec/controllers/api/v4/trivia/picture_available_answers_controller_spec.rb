@@ -1,9 +1,11 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Api::V4::Trivia::PictureAvailableAnswersController, type: :controller do
   # TODO: auto-generated
-  describe "GET show" do
-    it "returns the picture answers with the attached image" do
+  describe 'GET show' do
+    it 'returns the picture answers with the attached image' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)

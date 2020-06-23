@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RailsAdmin
   module Config
     module Actions
@@ -19,7 +21,7 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-              @object.status = "pending"
+              @object.status = 'pending'
               post = @object.post
               post.status = :published
               if post.save!
@@ -29,12 +31,11 @@ module RailsAdmin
 
                   flash[:notice] = t('admin.flash.successful', name: @model_config.label, action: t('admin.actions.update.done'))
                 else
-                  flash[:error] = @object.errors.full_messages.join("<br/>")
+                  flash[:error] = @object.errors.full_messages.join('<br/>')
                 end
               else
-                flash[:error] = "Could not save associated message"
+                flash[:error] = 'Could not save associated message'
               end
-
 
               redirect_to action: :index
             end

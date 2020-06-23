@@ -1,13 +1,16 @@
+# frozen_string_literal: true
+
 # require "json"
 
 Rails.application.configure do
+  config.web_console.development_only = false
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
   config.cache_classes = true
 
-  config.cache_store = :redis_store, "#{Rails.application.secrets.redis_url}/0/cache", {expires_in: 30.minutes}
+  config.cache_store = :redis_store, "#{Rails.application.secrets.redis_url}/0/cache", { expires_in: 30.minutes }
 
   # Disable full error reports.
   config.consider_all_requests_local = true
@@ -17,7 +20,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
   # For nginx:
-  config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
+  config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
 
   # If you have no front-end server that supports something like X-Sendfile,
   # just comment this out and Rails will serve the files
@@ -61,9 +64,11 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.web_console.whitelisted_ips = '172.30.0.0/12'
+
   config.after_initialize do
     Bullet.enable = true
-    # Bullet.bullet_logger = true
+    Bullet.bullet_logger = true
     Bullet.rails_logger = true
     # Bullet.rollbar = true
   end

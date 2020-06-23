@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_games
@@ -31,28 +33,17 @@ module Trivia
     include AttachmentSupport
     has_image_called :picture
 
-    belongs_to :room, class_name: "Room", optional: true
-    has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :leaderboards, class_name: "Trivia::GameLeaderboard", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :subscribers, class_name: "Trivia::Subscriber", foreign_key: :trivia_game_id, dependent: :destroy
+    belongs_to :room, class_name: 'Room', optional: true
+    has_many :prizes, class_name: 'Trivia::Prize', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :rounds, -> { order(:start_date) }, class_name: 'Round', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :leaderboards, class_name: 'Trivia::GameLeaderboard', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :subscribers, class_name: 'Trivia::Subscriber', foreign_key: :trivia_game_id, dependent: :destroy
 
     accepts_nested_attributes_for :prizes, allow_destroy: true
     accepts_nested_attributes_for :rounds, allow_destroy: true
 
     validates :long_name, presence: true
     validates :short_name, presence: true
-
-=begin
-validates the startd_date > now when draft and published FLAPI-936
-
-    validate :start_time_constraints
-    def start_time_constraints
-      if published?
-        errors.add(:start_date) if start_date < DateTime.now.to_i
-      end
-    end
-=end
 
     def compute_leaderboard
       self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
@@ -65,7 +56,7 @@ validates the startd_date > now when draft and published FLAPI-936
       published: 1,
       locked: 2,
       running: 3,
-      closed: 4,
+      closed: 4
     }
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
@@ -100,13 +91,9 @@ validates the startd_date > now when draft and published FLAPI-936
       end
     end
 
-    def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
-    end
-
-    scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
-    scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
-    scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
+    scope :enabled, -> { where(status: [:published, :locked, :running, :closed]) }
+    scope :completed, -> { where(status: [:closed]).order(end_date: :desc).where('end_date < ?', DateTime.now.to_i) }
+    scope :upcomming, -> { where(status: [:published, :locked, :running]).order(:start_date).where('end_date > ?', DateTime.now.to_i) }
 
     after_save :handle_status_changes
 

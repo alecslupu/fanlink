@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 json = {}
 
 json[:posts] = @posts.map do |post|
-  Rails.cache.fetch ["v4", "post", @req_source, post.id, post.updated_at.to_i] do
-    render partial: @req_source, locals: { post: post }
-  end
+  render partial: @req_source, locals: { post: post }
 end
 
 json[:total] = @posts.size

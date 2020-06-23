@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("PostReport")
-  config.model "PostReport" do
-    parent "Post"
+  config.included_models.push('PostReport')
+  config.model 'PostReport' do
+    parent 'Post'
 
     configure :post_body do
 

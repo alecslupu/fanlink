@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe PostsController, type: :controller do
   describe 'GET share' do
     it 'returns the record' do

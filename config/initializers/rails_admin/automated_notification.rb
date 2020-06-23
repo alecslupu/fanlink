@@ -1,7 +1,9 @@
-RailsAdmin.config do |config|
-  config.included_models.push("AutomatedNotification")
+# frozen_string_literal: true
 
-  config.model "AutomatedNotification" do
+RailsAdmin.config do |config|
+  config.included_models.push('AutomatedNotification')
+
+  config.model 'AutomatedNotification' do
 
     list do
       field :id do

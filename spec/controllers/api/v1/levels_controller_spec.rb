@@ -1,8 +1,10 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 RSpec.describe Api::V1::LevelsController, type: :controller do
-  describe "#index" do
-    it "should return all levels" do
+  describe '#index' do
+    it 'should return all levels' do
       person = create(:person)
       create(:level, product: create(:product))
       ActsAsTenant.with_tenant(person.product) do
@@ -10,9 +12,9 @@ RSpec.describe Api::V1::LevelsController, type: :controller do
         login_as(person)
         get :index
         expect(response).to have_http_status(200)
-        expect(json["levels"].count).to eq(2)
-        expect(level_json(json["levels"].first)).to be_truthy
-        expect(level_json(json["levels"].last)).to be_truthy
+        expect(json['levels'].count).to eq(2)
+        expect(level_json(json['levels'].first)).to be_truthy
+        expect(level_json(json['levels'].last)).to be_truthy
       end
       # l1 = json["levels"].first
       # expect(json["levels"].first).to eq(level_json(level2))

@@ -1,8 +1,10 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe QuizPage, type: :model do
-  describe "dependencies" do
-    it "destroys dependent answers" do
+  describe 'dependencies' do
+    it 'destroys dependent answers' do
       quiz_page = create(:quiz_page)
       no_of_quiz_answers = quiz_page.answers.count
 

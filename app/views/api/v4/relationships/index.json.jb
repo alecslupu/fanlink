@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 json = {}
 
 json[:relationships] = @relationships.map do |relationship|
-  Rails.cache.fetch ["v4", "relationship", @req_source, relationship.id, relationship.updated_at.to_i] do
-    render partial: @req_source, locals: { relationship: relationship }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { relationship: relationship }, handlers: 'jb'
 end
 
 json

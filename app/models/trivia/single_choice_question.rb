@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_questions
@@ -18,7 +20,7 @@
 
 module Trivia
   class SingleChoiceQuestion < Question
-    belongs_to :available_question, class_name: "Trivia::SingleChoiceAvailableQuestion", foreign_key: :available_question_id
+    belongs_to :available_question, class_name: 'Trivia::SingleChoiceAvailableQuestion', foreign_key: :available_question_id
 
   end
 end

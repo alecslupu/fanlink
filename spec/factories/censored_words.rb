@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: censored_words
@@ -10,6 +12,6 @@
 
 FactoryBot.define do
   factory :censored_word do
-    word { "MyString" }
+    word { 'MyString' }
   end
 end

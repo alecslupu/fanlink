@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RailsAdmin
   module Config
     module Actions
@@ -25,16 +27,16 @@ module RailsAdmin
                 @auditing_adapter && @auditing_adapter.update_object(@object, @abstract_model, _current_user, changes)
                 delete_message(@object, @api_version)
                 @object.message_reports.each(&:message_hidden!)
-                flash[:notice] = t("admin.flash.successful", name: @model_config.label, action: t("admin.actions.update.done"))
+                flash[:notice] = t('admin.flash.successful', name: @model_config.label, action: t('admin.actions.update.done'))
               else
-                flash[:error] = @object.errors.full_messages.join("<br/>")
+                flash[:error] = @object.errors.full_messages.join('<br/>')
               end
               redirect_to action: :index
             end
           end
 
           register_instance_option :link_icon do
-            "icon-off"
+            'icon-off'
           end
         end
       end

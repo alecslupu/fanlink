@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe ApplicationPolicy, type: :policy do
 
@@ -17,11 +17,10 @@ RSpec.describe ApplicationPolicy, type: :policy do
     show_in_app: false,
     dashboard: false,
     # select_product_dashboard: false,
-    select_product: false,
+    select_product: false
   }
 
-
-  describe "defined policies" do
+  describe 'defined policies' do
     subject { described_class.new(build(:super_admin), nil) }
 
     permission_list.each do |policy, value|

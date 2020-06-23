@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: categories
@@ -17,7 +19,7 @@ FactoryBot.define do
   factory :category do
     product { current_product }
     sequence(:name) { |n| "Category #{n}" }
-    color { "#FFFFFF" }
+    color { '#FFFFFF' }
     role { 0 }
   end
 end

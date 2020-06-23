@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Some string wrangling utilities that we don't want to patch into
 # `String`.
@@ -14,7 +16,7 @@ module StringUtil
   #   The cleaned up string.
   #
   def self.search_ify(s)
-    s.to_s.downcase_u.de_accent.gsub(/\p{^Alnum}/, "")
+    s.to_s.downcase_u.de_accent.gsub(/\p{^Alnum}/, '')
   end
 
   #
@@ -28,7 +30,7 @@ module StringUtil
   #   A URL-safe and SEO-friendly version of the string.
   #
   def self.url_ify(s)
-    CGI.escape(s.de_accent.gsub(/\s+/, "-"))
+    CGI.escape(s.de_accent.gsub(/\s+/, '-'))
   end
 
   #

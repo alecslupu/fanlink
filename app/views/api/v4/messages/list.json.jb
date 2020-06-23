@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 json = {}
 
 json[:messages] = @messages.map do |message|
-  render partial: @req_source, locals: { message: message }, handlers: "jb"
+  render partial: @req_source, locals: { message: message }, handlers: 'jb'
 end
 
 json

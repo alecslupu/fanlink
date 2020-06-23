@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RailsAdmin
   module Config
     module Actions
@@ -27,7 +29,7 @@ module RailsAdmin
               if @object.destroy
                 flash[:notice] = t('admin.flash.successful', name: @model_config.label, action: t('admin.actions.delete.done'))
               else
-                flash[:error] = @object.errors.full_messages.join("<br/>")
+                flash[:error] = @object.errors.full_messages.join('<br/>')
               end
               redirect_to action: :index
             end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 json = {
-  room: render(partial: @req_source, locals: { room: @room }, handlers: "jb")
+  room: render(partial: @req_source, locals: { room: @room }, handlers: 'jb')
 }
 
 json[:room][:owned] = @room.created_by_id == current_user.id

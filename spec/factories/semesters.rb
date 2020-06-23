@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: semesters
@@ -13,7 +15,7 @@
 #  deleted     :boolean          default(FALSE)
 #
 
-require "faker"
+require 'faker'
 I18n.reload!
 
 FactoryBot.define do

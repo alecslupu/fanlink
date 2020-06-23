@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: rooms
@@ -23,7 +25,6 @@
 class Room < ApplicationRecord
   include AttachmentSupport
   # include Room::RealTime
-  include TranslationThings
 
   # old Room::RealTime
   def clear_message_counter(membership)
@@ -53,14 +54,16 @@ class Room < ApplicationRecord
 
   # replicated_model
 
-  enum status: %i[ inactive active deleted ]
+  enum status: %i[inactive active deleted]
 
   acts_as_tenant(:product)
+  scope :for_product, -> (product) { where( rooms: { product_id: product.id } ) }
 
-  belongs_to :created_by, class_name: "Person", required: false
+  belongs_to :created_by, class_name: 'Person', required: false
   belongs_to :product
 
-  has_manual_translated :description, :name
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_image_called :picture
 
@@ -74,15 +77,14 @@ class Room < ApplicationRecord
   has_many :room_memberships, dependent: :destroy
   has_many :room_subscribers, dependent: :destroy
 
-
   has_many :members, through: :room_memberships, source: :person
   has_many :pin_from, through: :pin_messages, source: :person
   has_many :subscribers, through: :room_subscribers, source: :person
 
   has_paper_trail
 
-  validates :picture, absence: { message: _("Private rooms may not have pictures.") }, if: Proc.new { |room| room.private? }
-  scope :privates_for_person, -> (member) { joins(:room_memberships).where("room_memberships.person_id = ? and rooms.public = ?", member.id, false).order(updated_at: :desc) }
+  validates :picture, absence: { message: _('Private rooms may not have pictures.') }, if: Proc.new { |room| room.private? }
+  scope :privates_for_person, -> (member) { joins(:room_memberships).where('room_memberships.person_id = ? and rooms.public = ?', member.id, false).order(updated_at: :desc) }
   scope :publics, -> { where(public: true).order(updated_at: :desc) }
   scope :privates, -> { where(public: false) }
 

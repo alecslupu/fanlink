@@ -1,8 +1,10 @@
-RailsAdmin.config do |config|
-  config.included_models.push("RoomSubscriber")
+# frozen_string_literal: true
 
-  config.model "RoomSubscriber" do
-    label_plural "Room Owners"
+RailsAdmin.config do |config|
+  config.included_models.push('RoomSubscriber')
+
+  config.model 'RoomSubscriber' do
+    label_plural 'Room Owners'
     list do
       fields :id,
              :person,

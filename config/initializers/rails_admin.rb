@@ -1,15 +1,18 @@
-Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| require f }
-Dir[Rails.root.join("app/lib/rails_admin/config/actions/**/*.rb")].each { |f| require f }
-Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| require f }
-Dir[Rails.root.join("app/lib/rails_admin/config/fields/types/*.rb")].each { |f| require f }
-Dir[Rails.root.join("config/initializers/rails_admin/*.rb")].each { |f| require f }
+# frozen_string_literal: true
+
+Dir[Rails.root.join('app/lib/rails_admin/extensions/pundit/*.rb')].each { |f| require f }
+Dir[Rails.root.join('app/lib/rails_admin/config/actions/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('app/lib/rails_admin/config/actions/*.rb')].each { |f| require f }
+Dir[Rails.root.join('app/lib/rails_admin/config/fields/types/*.rb')].each { |f| require f }
+Dir[Rails.root.join('config/initializers/rails_admin/*.rb')].each { |f| require f }
 
 RailsAdmin.config do |config|
-  config.main_app_name = ["Fan link", "BackOffice"]
-  # or something more dynamic
-  config.main_app_name = proc { |controller| [ "Cool app", "BackOffice - #{controller.params[:action].try(:titleize)}" ] }
 
-  config.parent_controller = "RailsAdminController"
+  config.main_app_name = ['Fan link', 'BackOffice']
+  # or something more dynamic
+  config.main_app_name = proc { |controller| ['Cool app', "BackOffice - #{controller.params[:action].try(:titleize)}"] }
+
+  config.parent_controller = 'RailsAdminController'
 
   #
   # %w(PostComment PostReaction PostReport PostCommentReport PostTag).each do |model|
@@ -36,7 +39,7 @@ RailsAdmin.config do |config|
   #   ## == Pundit ==
   config.authorize_with :pundit
   #   ## == PaperTrail ==
-  config.audit_with :paper_trail, "Person", "PaperTrail::Version" # PaperTrail >= 3.0.0
+  config.audit_with :paper_trail, 'Person', 'PaperTrail::Version' # PaperTrail >= 3.0.0
   #
   #   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
   #
@@ -62,54 +65,54 @@ RailsAdmin.config do |config|
     history_show
 
     forget_action do
-      only ["PersonCertcourse"]
+      only ['PersonCertcourse']
     end
     reset_progress_action do
-      only ["PersonCertcourse"]
+      only ['PersonCertcourse']
     end
 
     hide_message_action do
-      only ["MessageReport"]
+      only ['MessageReport']
     end
     reanalyze_message_action do
-      only ["MessageReport"]
+      only ['MessageReport']
     end
     ignore_message_action do
-      only ["MessageReport"]
+      only ['MessageReport']
     end
     hide_post_report_action do
-      only ["PostReport"]
+      only ['PostReport']
     end
     reanalyze_post_report_action do
-      only ["PostReport"]
+      only ['PostReport']
     end
 
     ignore_post_report_action do
-      only ["PostReport"]
+      only ['PostReport']
     end
 
     hide_action do
-      only ["Message"]
+      only ['Message']
     end
 
     unhide_action do
-      only ["Message"]
+      only ['Message']
     end
 
     referral_purchase_report_action do
-      only ["Referral::ReferredPerson"]
+      only ['Referral::ReferredPerson']
     end
 
     referral_report_action do
-      only ["Referral::ReferredPerson"]
+      only ['Referral::ReferredPerson']
     end
 
     generate_game_action do
-      only ["Trivia::Game"]
+      only ['Trivia::Game']
     end
 
     copy_new_game_action do
-      only ["Trivia::Game"]
+      only ['Trivia::Game']
     end
 
     select_product_dashboard

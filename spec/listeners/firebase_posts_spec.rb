@@ -1,13 +1,15 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe FirebasePosts do
   # TODO: auto-generated
-  describe "#post_created" do
+  describe '#post_created' do
     pending
   end
 
   # TODO: auto-generated
-  describe "#post_deleted" do
+  describe '#post_deleted' do
     pending
   end
 end

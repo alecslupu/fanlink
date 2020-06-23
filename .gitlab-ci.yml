@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - rubocop
   - rspec
   - format
   - report
@@ -20,9 +21,63 @@ stages:
       - apt-cache/
       - vendor/ruby
       - vendor/bundle
+  variables:
+    LANG: en_US.UTF-8
+    LC_ALL: en_US.UTF-8
   before_script:
+    - apt-get update -yqq && DEBIAN_FRONTEND=noninteractive apt-get install -yqq locales
+    - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+    - dpkg-reconfigure --frontend=noninteractive locales
+    - update-locale LANG=en_US.UTF-8
     - gem install bundler -v $BUNDLER_VERSION
-    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle update --ruby --quiet
+    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
+  tags:
+    - anything
+
+.base26:
+  image: ruby:2.6
+  cache:
+    key: gems_and_packages
+    paths:
+      - apt-cache/
+      - vendor/ruby
+      - vendor/bundle
+  variables:
+    LANG: en_US.UTF-8
+    LC_ALL: en_US.UTF-8
+    CUSTOM_RUBY_VERSION: "~> 2.6"
+  before_script:
+    - apt-get update -yqq && DEBIAN_FRONTEND=noninteractive apt-get install -yqq locales
+    - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+    - dpkg-reconfigure --frontend=noninteractive locales
+    - update-locale LANG=en_US.UTF-8
+    - gem install bundler -v $BUNDLER_VERSION
+    - bundle update --ruby --quiet
+    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
+  tags:
+    - anything
+
+.base27:
+  image: ruby:2.7
+  cache:
+    key: gems_and_packages
+    paths:
+      - apt-cache/
+      - vendor/ruby
+      - vendor/bundle
+  variables:
+    LANG: en_US.UTF-8
+    LC_ALL: en_US.UTF-8
+    CUSTOM_RUBY_VERSION: "~> 2.7"
+  before_script:
+    - apt-get update -yqq && DEBIAN_FRONTEND=noninteractive apt-get install -yqq locales
+    - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+    - dpkg-reconfigure --frontend=noninteractive locales
+    - update-locale LANG=en_US.UTF-8
+    - gem install bundler -v $BUNDLER_VERSION
+    - bundle update --ruby --quiet
+    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
   tags:
     - anything
 
@@ -42,107 +97,21 @@ stages:
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     POSTGRES_DB: $POSTGRES_DB
   before_script:
+    - apt-get update -yqq && DEBIAN_FRONTEND=noninteractive apt-get install  -yqq locales
+    - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+    - dpkg-reconfigure --frontend=noninteractive locales
+    - update-locale LANG=en_US.UTF-8
     - gem install bundler -v $BUNDLER_VERSION
-    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle update --ruby
+    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
     - bundle exec rake db:reset
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
 
-
-build:initial:
-  extends: .base
-  stage: build
-  script:
-    - echo "main"
-
-test:rubocop:
-  extends: .base
-  stage: test
-  allow_failure: true
-  artifacts:
-    name: rubocop
-    when: always
-    paths:
-      - rubocop/
-  script:
-    - bundle exec rubocop --format html --out rubocop/index.html app config spec lib
-
-build:assets_precompile:
-  extends: .base_db
-  stage: build
-  script:
-    - bundle exec rake assets:precompile
-
-test:bundle_audit:
-  extends: .base
-  stage: test
-  allow_failure: true
-  script:
-    - gem install bundler-audit
-    - bundle-audit check --update
-
-test:rubycritic:
-  stage: test
-  extends: .base
-  allow_failure: true
-  script:
-    - bundle exec rubycritic app config
-  artifacts:
-    name: rubycritic
-    when: always
-    paths:
-      - tmp/rubycritic/
-
-test:brakeman:
-  extends: .base
-  stage: test
-  allow_failure: true
-  artifacts:
-    name: brakeman_report
-    when: always
-    paths:
-      - brakeman/
-  script:
-    - bundle exec brakeman --format html -o brakeman/index.html
-
-test:dawnscanner:
-  extends: .base
-  stage: test
-  allow_failure: true
-  artifacts:
-    name: dawnscanner_report
-    when: always
-    paths:
-      - dawnscanner
-  script:
-    - gem install dawnscanner
-    - mkdir dawnscanner
-    - dawn --html -zF dawnscanner/index.html .
-
-test:erd:
-  extends: .base_db
-  stage: test
-  allow_failure: true
-  artifacts:
-    name: erd
-    paths:
-      - erd.pdf
-  script:
-    - apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -y -qq graphviz
-    - gem install 'rails-erd'
-    - bundle exec rails g erd:install
-    - bundle exec rake erd
-
-.test:rspec52:
-  image: ruby:2.5.1
-  cache:
-    key: gems_and_packages
-    paths:
-      - apt-cache/
-      - vendor/ruby
-      - vendor/bundle
+.base26_db:
+  extends: .base26
   tags:
     - anything
   services:
@@ -157,29 +126,20 @@ test:erd:
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     POSTGRES_DB: $POSTGRES_DB
   before_script:
+    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install  -yqq locales
+    - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+    - dpkg-reconfigure --frontend=noninteractive locales
+    - update-locale LANG=en_US.UTF-8
     - gem install bundler -v $BUNDLER_VERSION
-    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
-    - apt-get install  -y ffmpeg
-    - export RAILS52=true
-    - bundle update rails
-    - bundle install
     - bundle exec rake db:reset
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
-    - mkdir -p coverage/rails/52/
-  stage: rspec
-  allow_failure: false
 
-.test:rspec60:
-  image: ruby:2.5.1
-  cache:
-    key: gems_and_packages
-    paths:
-      - apt-cache/
-      - vendor/ruby
-      - vendor/bundle
+.base27_db:
+  extends: .base27
   tags:
     - anything
   services:
@@ -194,363 +154,34 @@ test:erd:
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     POSTGRES_DB: $POSTGRES_DB
   before_script:
+    - apt-get update -yqq && DEBIAN_FRONTEND=noninteractive apt-get install -yqq locales
+    - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+    - dpkg-reconfigure --frontend=noninteractive locales
+    - update-locale LANG=en_US.UTF-8
     - gem install bundler -v $BUNDLER_VERSION
-    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
-    - apt-get install  -y ffmpeg
-    - export RAILS6=true
-    - bundle update rails
-    - bundle install
     - bundle exec rake db:reset
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
-  stage: rspec
-  allow_failure: true
 
-test:rspec52:channels:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/channels bundle exec rspec spec/channels --fail-fast
-  artifacts:
-    name: rails52_channels_cov
-    paths:
-      - coverage/rails/52/channels
-
-test:rspec52:controllers:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/controllers  bundle exec rspec spec/controllers --fail-fast
-  artifacts:
-    name: rails52_controllers_cov
-    paths:
-      - coverage/rails/52/controllers
-
-test:rspec52:helpers:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/helpers  bundle exec rspec spec/helpers --fail-fast
-  artifacts:
-    name: rails52_helpers_cov
-    paths:
-      - coverage/rails/52/helpers
-
-test:rspec52:jobs:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/jobs  bundle exec rspec spec/jobs --fail-fast
-  artifacts:
-    name: rails52_jobs_cov
-    paths:
-      - coverage/rails/52/jobs
-
-test:rspec52:lib:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/lib  bundle exec rspec spec/lib --fail-fast
-  artifacts:
-    name: rails52_lib_cov
-    paths:
-      - coverage/rails/52/lib
-
-test:rspec52:listeners:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/listeners  bundle exec rspec spec/listeners --fail-fast
-  artifacts:
-    name: rails52_listeners_cov
-    paths:
-      - coverage/rails/52/listeners
-
-
-test:rspec52:mailers:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/mailers  bundle exec rspec spec/mailers --fail-fast
-  artifacts:
-    name: rails52_mailers_cov
-    paths:
-      - coverage/rails/52/mailers
-
-test:rspec52:middleware:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/middleware  bundle exec rspec spec/middleware --fail-fast
-  artifacts:
-    name: rails52_middleware_cov
-    paths:
-      - coverage/rails/52/middleware
-
-test:rspec52:models:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/models  bundle exec rspec spec/models --fail-fast
-  artifacts:
-    name: rails52_models_cov
-    paths:
-      - coverage/rails/52/models
-
-test:rspec52:requests:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/requests  bundle exec rspec spec/requests --fail-fast
-  artifacts:
-    name: rails52_requests_cov
-    paths:
-      - coverage/rails/52/requests
-
-test:rspec52:policies:
-  extends: .test:rspec52
-  script:
-    - COVERAGE_DIR=coverage/rails/52/policies  bundle exec rspec spec/policies --fail-fast
-  artifacts:
-    name: rails52_policies_cov
-    paths:
-      - coverage/rails/52/policies
-
-
-test:rspec60:channels:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/channels bundle exec rspec spec/channels --fail-fast
-  artifacts:
-    name: rails60_channels_cov
-    paths:
-      - coverage/rails/60/channels
-
-test:rspec60:controllers:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/controllers  bundle exec rspec spec/controllers --fail-fast
-  artifacts:
-    name: rails60_controllers_cov
-    paths:
-      - coverage/rails/60/controllers
-
-test:rspec60:helpers:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/helpers  bundle exec rspec spec/helpers --fail-fast
-  artifacts:
-    name: rails60_helpers_cov
-    paths:
-      - coverage/rails/60/helpers
-
-test:rspec60:jobs:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/jobs  bundle exec rspec spec/jobs --fail-fast
-  artifacts:
-    name: rails60_jobs_cov
-    paths:
-      - coverage/rails/60/jobs
-
-test:rspec60:lib:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/lib  bundle exec rspec spec/lib --fail-fast
-  artifacts:
-    name: rails60_lib_cov
-    paths:
-      - coverage/rails/60/lib
-
-test:rspec60:listeners:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/listeners  bundle exec rspec spec/listeners --fail-fast
-  artifacts:
-    name: rails60_listeners_cov
-    paths:
-      - coverage/rails/60/listeners
-
-
-test:rspec60:mailers:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/mailers  bundle exec rspec spec/mailers --fail-fast
-  artifacts:
-    name: rails60_mailers_cov
-    paths:
-      - coverage/rails/60/mailers
-
-test:rspec60:middleware:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/middleware  bundle exec rspec spec/middleware --fail-fast
-  artifacts:
-    name: rails60_middleware_cov
-    paths:
-      - coverage/rails/60/middleware
-
-test:rspec60:models:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/models  bundle exec rspec spec/models --fail-fast
-  artifacts:
-    name: rails60_models_cov
-    paths:
-      - coverage/rails/60/models
-
-test:rspec60:requests:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/requests  bundle exec rspec spec/requests --fail-fast
-  artifacts:
-    name: rails60_requests_cov
-    paths:
-      - coverage/rails/60/requests
-
-test:rspec60:policies:
-  extends: .test:rspec60
-  script:
-    - COVERAGE_DIR=coverage/rails/60/policies  bundle exec rspec spec/policies --fail-fast
-  artifacts:
-    name: rails60_policies_cov
-    paths:
-      - coverage/rails/60/policies
-
-test:rspec52:merge:
-  extends: .test:rspec52
-  stage: format
-  artifacts:
-    name: my_app_artifacts
-    paths:
-      - coverage/rails/52
-  dependencies:
-    - test:rspec52:channels
-    - test:rspec52:controllers
-    - test:rspec52:helpers
-    - test:rspec52:jobs
-    - test:rspec52:lib
-    - test:rspec52:listeners
-    - test:rspec52:mailers
-    - test:rspec52:middleware
-    - test:rspec52:models
-    - test:rspec52:requests
-    - test:rspec52:policies
-  script:
-    - chmod +x ./bin/merge-simplecov
-    - COVERAGE_DIR=coverage/rails/52/ bundle exec ./bin/merge-simplecov
-
-test:rspec60:merge:
-  extends: .test:rspec60
-  stage: format
-  artifacts:
-    name: my_app_artifacts
-    paths:
-      - coverage/rails/60
-  dependencies:
-    - test:rspec60:channels
-    - test:rspec60:controllers
-    - test:rspec60:helpers
-    - test:rspec60:jobs
-    - test:rspec60:lib
-    - test:rspec60:listeners
-    - test:rspec60:mailers
-    - test:rspec60:middleware
-    - test:rspec60:models
-    - test:rspec60:requests
-    - test:rspec60:policies
-  script:
-    - chmod +x ./bin/merge-simplecov
-    - COVERAGE_DIR=coverage/rails/60/ bundle exec ./bin/merge-simplecov
-
-pages:
-  extends: .base_minimal
-  stage: report
-  allow_failure: true
-  dependencies:
-    - test:brakeman
-    - test:dawnscanner
-    - test:erd
-    - test:rubycritic
-    - test:rubocop
-    - test:rspec52:merge
-    - test:rspec60:merge
-  artifacts:
-    name: my_app_artifacts
-    paths:
-      - public/brakeman
-      - coverage/rails/52/
-      - coverage/rails/60/
-      - public/dawnscanner
-      - public/rubocop
-      - public/erd.pdf
-      - public/rubycritic
-  only:
-    - master
-  script:
-    - mv brakeman public/ || true
-    - mv dawnscanner public/ || true
-    - mv erd.pdf public/ || true
-    - mv tmp/rubycritic public/ || true
-    - mv rubocop public/ || true
-    - mv coverage/rails/52 public/coverage52 || true
-    - mv coverage/rails/60 public/coverage60 || true
-    - mv coverage6 public/ || true
-    - cp $PAGES_INDEX_FILE public/index.html
-
-deploy:staging:
-  extends: .base
-  stage: deploy
-  artifacts:
-    name: "$CI_JOB_NAME-capistrano-log"
-    when: on_failure
-    paths:
-      - log/capistrano.log
-  variables:
-    RAILS_ENV: staging
-  tags:
-    - deploy
-  environment:
-    name: staging
-    url: https://staging.fan.link
-  only:
-    - staging
-  script:
-    - mkdir ~/.ssh/
-    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
-    - chmod 400 ~/.ssh/id_rsa
-    - echo "Host *" >> ~/.ssh/config
-    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
-    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
-    - eval $(ssh-agent -s)
-    - ssh-add
-    - ssh-add -l
-    - export USER="$GITLAB_USER_LOGIN via gitlab"
-    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
-    - bundle exec cap staging deploy
-
-deploy:production:
-  extends: .base
-  stage: deploy
-  when: manual
-  artifacts:
-    name: "$CI_JOB_NAME-capistrano-log"
-    when: on_failure
-    paths:
-      - log/capistrano.log
-  variables:
-    RAILS_ENV: production
-  tags:
-    - deploy
-  environment:
-    name: production
-    url: https://portal.fan.link
-  only:
-    - tags
-  script:
-    - mkdir ~/.ssh/
-    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
-    - chmod 400 ~/.ssh/id_rsa
-    - echo "Host *" >> ~/.ssh/config
-    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
-    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
-    - eval $(ssh-agent -s)
-    - ssh-add
-    - ssh-add -l
-    - export USER="$GITLAB_USER_LOGIN via gitlab"
-    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
-    - bundle exec cap production deploy
-
-
+include:
+  - local: .gitlab/ruby25/base.yml
+  - local: .gitlab/ruby25/standards.yml
+  - local: .gitlab/ruby25/rubocops.yml
+  - local: .gitlab/ruby25/rails60.yml
+  - local: .gitlab/ruby25/pages.yml
+  - local: .gitlab/ruby25/deployment.yml
+  - local: .gitlab/ruby26/base.yml
+  - local: .gitlab/ruby26/standards.yml
+  - local: .gitlab/ruby26/rails60.yml
+  # - local: .gitlab/ruby27/base.yml
+  # - local: .gitlab/ruby27/standards.yml
+  # - local: .gitlab/ruby27/rails60.yml
+  # - local: .gitlab/ruby26/pages.yml
+  # - local: .gitlab/ruby26/deployment.yml
+  # - local: .gitlab/ruby27/pages.yml
+  # - local: .gitlab/ruby27/deployment.yml
+  # - local: .gitlab/ruby25/rails52.yml
+  # - local: .gitlab/ruby25/rails61.yml

@@ -1,19 +1,20 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Trivia::HangmanQuestion, type: :model do
-  context "Associations" do
+  context 'Associations' do
     describe "should verify associations haven't changed for" do
-      it "#belong_to" do
+      it '#belong_to' do
         should belong_to(:available_question)
       end
     end
 
-
-    describe "copy_to_new" do
-      it "has the method" do
+    describe 'copy_to_new' do
+      it 'has the method' do
         expect(Trivia::HangmanQuestion.new.respond_to?(:copy_to_new)).to eq(true)
       end
-      context "creates new record" do
+      context 'creates new record' do
         before do
           create(:trivia_hangman_question)
           expect(Trivia::HangmanQuestion.count).to eq(1)

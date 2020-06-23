@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: product_beacons
@@ -20,7 +22,7 @@ class ProductBeacon < ApplicationRecord
 
   has_paper_trail
 
-  validates :beacon_pid, presence: { message: _("Beacon PID is required.") }
+  validates :beacon_pid, presence: { message: _('Beacon PID is required.') }
 
   normalize_attributes :attached_to, :uuid
 

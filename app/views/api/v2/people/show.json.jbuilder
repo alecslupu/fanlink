@@ -1,1 +1,3 @@
-json.person @person, partial: "person", as: :person
+# frozen_string_literal: true
+
+json.person @person, partial: 'person', as: :person

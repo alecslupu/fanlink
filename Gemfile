@@ -9,33 +9,36 @@ git_source(:fanlink) do |repo_name|
   "https://gitlab.fan.link/#{repo_name}"
 end
 
-ruby "2.5.1"
+ruby ENV['CUSTOM_RUBY_VERSION'] || "2.5.1"
 
-if ENV["RAILS6"]
-  gem "rails", "~> 6"
+if ENV["RAILS_EDGE"]
+  # gem "rails", github: "rails/rails"
+  # gem 'sass-rails', '~> 6.0'
+else
+  gem "rails", "~> 6.0.3"
   # Use SCSS for stylesheets
   gem 'sass-rails', '~> 6.0'
-else
-  gem "rails", "~> 5.2"
-  # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 5.0'
 end
+
+# gem 'sprockets', '>= 4.0.2'
+# SegFault Bug ... needs investigationbug https://github.com/rails/sprockets/issues/633
+gem 'sprockets', '~> 3.7.2'
 
 # gem "rack-cache"
 # Use Puma as the app server
-gem 'puma', '~> 3.12'
+gem 'puma', '>= 4.3.4'
 
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '>= 2.10.0'
 
 # Use CoffeeScript for .coffee assets and views
 gem "coffee-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+# gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use ActiveModel has_secure_password
 gem "bcrypt", "~> 3.1.7"
@@ -44,7 +47,7 @@ gem "redis"
 
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 0.18"
+gem "pg", ">= 1.2.3"
 
 
 gem "json", "~> 2.3.0"
@@ -53,53 +56,55 @@ gem "jb"
 gem "redis-namespace"
 gem "redis-rails"
 
-gem "httparty", "0.16.4"
+gem "httparty", ">= 0.18.1"
 
 # Use Capistrano for deployment
 # gem "capistrano-rails", group: :development
 #
 
 group :production, :staging do
-  gem 'elastic-apm', '~> 3.1.0'
+  gem 'elastic-apm', '>= 3.7.0'
 end
 
+group :staging, :development do
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem "web-console", ">= 4.0.2"
+  gem "listen", ">= 3.0.5", "< 3.2"
+end
 group :staging, :development, :test do
-  gem "derailed_benchmarks", "~>1.3.6"
+  gem "derailed_benchmarks", ">= 1.7.0"
   gem "stackprof"
-  gem "bullet", "~>6.0.2"
+  gem "bullet", ">= 6.1.0"
 end
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
-  gem "pry", "~>0.12.2"
-  gem "byebug", "~>11.0.1", platforms: [:mri, :mingw]
-  gem "pry-byebug", "~>3.7.0"
+  gem "pry", ">= 0.13.0"
+  gem "byebug", "~> 11.1.3", platforms: [:mri, :mingw]
+  gem "pry-byebug", ">= 3.9.0"
   gem "dotenv-rails", "~>2.7.5"
-  gem "faker", "~>2.1.2"
+  gem "faker", ">= 2.12.0"
   gem "rspec-mocks", "~> 3.9.0"
-  gem "rspec-rails", "~> 3.9.0"
+  gem "rspec-rails", "~> 4.0.1"
   gem "rails-controller-testing"
-  gem "factory_bot_rails", "~>5.0.2"
-  gem "fuubar", "~>2.4.1"
+  gem "factory_bot_rails", ">=5.2.0"
+  gem "fuubar", ">= 2.5.0"
   gem "httplog"
 
-  gem "rubocop", require: false
+  gem "rubocop", ">= 0.85.0", require: false
   # gem "rubocop-rails_config"
-  gem "rubocop-rails", require: false
-  gem "rubocop-rspec", require: false
-  gem "rubocop-performance", require: false
+  gem "rubocop-rails", ">= 2.6.0", require: false
+  gem "rubocop-rspec", ">= 1.40.0", require: false
+  gem "rubocop-performance", ">= 1.6.1", require: false
 
   gem "rails-erd"
 end
 
 group :development do
-  gem "better_errors", "~>2.5.1"
+  gem "better_errors", ">= 2.7.1"
   gem "binding_of_caller"
   gem "gettext", ">=3.0.2", require: false
 
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "web-console", ">= 3.3.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -112,16 +117,16 @@ group :development do
   gem "launchy"
   gem "guard-rspec"
   # gem "guard-rubocop"
-  gem "guard-brakeman"
+  gem "guard-brakeman", ">= 0.8.6"
   gem "guard-annotate"
   # gem "guard-rubycritic"
-  gem "rubycritic"
+  gem "rubycritic", ">= 4.5.0"
 
-  gem "capistrano", require: false
+  gem "capistrano", "> 3.14", require: false
   gem "capistrano-bundler", require: false
-  gem "capistrano-rails", require: false
+  gem "capistrano-rails", ">= 1.5.0", require: false
   gem "slackistrano", require: false
-  gem "capistrano3-puma" , require: false
+  gem "capistrano3-puma", ">= 4.0.0", require: false
 end
 
 group :test do
@@ -130,10 +135,10 @@ group :test do
   gem "simplecov", "~>0.18", require: false
   gem "simplecov-console", require: false
   gem "timecop"
-  gem "webmock", "~>3.6.2"
+  gem "webmock", ">=3.8.3"
   gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
   gem "wisper-rspec", require: false
-  gem "json_schemer", "~>0.2.5"
+  gem "json_schemer", ">= 0.2.11"
   gem "turnip", require: false
 end
 
@@ -150,7 +155,6 @@ gem "acts_as_api"
 # # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 # gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
-
 gem "awesome_nested_set"
 
 gem "rails_admin", "~> 2.0.0"
@@ -159,12 +163,15 @@ gem "rails_admin_nested_set"
 gem "api-pagination"
 # gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
 gem "attribute_normalizer"
-gem "aws-sdk"
+
+gem 'aws-sdk-s3', '>= 1.68.0'
+gem 'aws-sdk-sns', '>= 1.25.1'
+gem 'aws-sdk-sqs', '>= 1.27.1'
+gem 'aws-sdk-elastictranscoder', '>= 1.22.1'
+
 gem "countries"
 gem "daemons", "~>1.3.1"
-gem "delayed_job_web"
-gem "delayed_job_active_record"
-gem 'sidekiq'
+gem 'sidekiq', ">= 6.0.7"
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"
@@ -174,30 +181,28 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-#gem "jko_api" # api versioning
-gem "kaminari", "~> 1.1.0"
+gem "kaminari", ">= 1.2.1"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
-gem "mandrill-api", fanlink: "dependencies/mandrill-api-ruby", require: "mandrill"
+# gem "mandrill-api", fanlink: "dependencies/mandrill-api-ruby", require: "mandrill"
 #
-gem "excon", ">= 0.71"
+# gem "excon", ">= 0.71"
 # I don't necessarily love this thing but then I don't love ActionMailer either
-gem "mandrill_mailer", "~> 1.6"
+# gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
 gem "oauth2"
 gem "oj" # json opt recommended with rollbar
 gem "paperclip", "~> 6.1.0"
 gem "paperclip-meta"
 gem "paperclip-dimension-validator"
-gem "pg_search"
-gem "postgresql-check"
+# gem "pg_search"
+gem "postgresql-check", ">= 0.1.4"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
 # gem "rack-timeout"
 gem "rest-firebase"
-gem "sorcery"
-gem "timber", "~> 2.0"
+gem "sorcery", ">= 0.15.0"
 gem "unicode_utils"
 gem "uuidtools"
 gem "wisper", "> 2.0.0"
@@ -207,7 +212,8 @@ gem "wisper-activerecord"
 # To get video's length
 gem "streamio-ffmpeg"
 
-gem "rmagick"
+gem "mini_magick"
+# gem "rmagick"
 
 # Use Json Web Token (JWT) for token based authentication
 gem "jwt"
@@ -229,10 +235,15 @@ gem "rswag-ui"
 
 gem "psych"
 #for page caching
-gem "actionpack-page_caching"
+gem "actionpack-page_caching", ">= 1.2.3"
 
 gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
 gem 'whenever', require: false
 
+gem 'acts-as-taggable-on'
+
+gem 'globalize'
+gem 'globalize-versioning'
+gem 'rails_admin_globalize_field'

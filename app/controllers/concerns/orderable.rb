@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Adapted from https://gist.github.com/mamantoha/9c0aec7958c7636cebef
 module Orderable
   extend ActiveSupport::Concern
@@ -16,10 +18,10 @@ module Orderable
     #
     ordering = {}
     if params[:sortBy]
-      sort_order = { "asc" => :asc, "desc" => :desc }
-      sort_sign = "asc"
+      sort_order = { 'asc' => :asc, 'desc' => :desc }
+      sort_sign = 'asc'
       if params.has_key?(:descending) && params[:descending]
-        sort_sign = "desc"
+        sort_sign = 'desc'
       end
       model = controller_name.classify.constantize
       if model.attribute_names.include?(params[:sortBy])

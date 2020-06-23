@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 {
   id: option.id.to_s,
-  description: option.description(@lang)
+  description: option.description
 }

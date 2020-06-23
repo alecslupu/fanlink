@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 json = {}
 
 json[:course] = @courses.map do |course|
-  Rails.cache.fetch ["v4", "course", @req_source, course.id, course.updated_at.to_i] do
-    render partial: @req_source, locals: { course: course }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { course: course }, handlers: 'jb'
 end
 
 json

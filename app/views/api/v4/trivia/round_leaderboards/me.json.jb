@@ -1,2 +1,4 @@
-json = render partial: @req_source, locals: { leaderboard: @leaderboard }, handler: "jb"
+# frozen_string_literal: true
+
+json = render partial: @req_source, locals: { leaderboard: @leaderboard }, handler: 'jb'
 json

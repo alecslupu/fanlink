@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DeleteRoomJob < ApplicationJob
   queue_as :default
   include RealTimeHelpers
@@ -18,7 +20,7 @@ class DeleteRoomJob < ApplicationJob
         end
       end
     end
-    client.update("", payload)
+    client.update('', payload)
     client.delete(room_path(room))
     if version.present?
       version.downto(1) do |v|

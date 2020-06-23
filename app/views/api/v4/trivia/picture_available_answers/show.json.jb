@@ -1,2 +1,4 @@
-json = render partial: "app", locals: { answer: @answer }, handler: :jb
+# frozen_string_literal: true
+
+json = render partial: 'app', locals: { answer: @answer }, handler: :jb
 json

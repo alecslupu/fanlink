@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 json = {}
-json[:post] = render(partial: @req_source, locals: {post: @post}, handlers: "jb")
+json[:post] = render(partial: @req_source, locals: { post: @post }, handlers: 'jb')
 
 json[:post][:pinned] = @post.pinned
 
@@ -10,15 +12,14 @@ else
 end
 
 if @post.poll.present?
-  json[:post][:poll] = Rails.cache.fetch ["v4", "poll", @req_source, @post.poll.id, @post.poll.updated_at.to_i] do
-    render(partial: "api/v4/polls/app", locals: { poll: @post.poll }, handlers: "jb")
-  end
+  json[:post][:poll] = render(partial: 'api/v4/polls/app', locals: { poll: @post.poll }, handlers: 'jb')
   json[:post][:poll][:closed] = @post.poll.closed?
+  json[:post][:poll][:locale] = I18n.locale
+  json[:post][:poll][:clocale] = @lang
+
   if @post.poll.poll_options.present?
     json[:post][:poll][:poll_options] = @post.poll.poll_options.map do |option|
-      po = Rails.cache.fetch ["v4", "poll_options", @req_source, option.id, option.updated_at.to_i] do
-        render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
-      end
+      po = render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: 'jb')
       po[:numberOfVotes] = option.voters.count
       po[:voted] = option.voted?(current_user)
       po

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   before_action :require_login
@@ -11,7 +13,7 @@ class ApplicationController < ActionController::Base
   def status
     head :ok
   end
-  skip_before_action :require_login, only: %i[ status ]
+  skip_before_action :require_login, only: %i[status]
 
   #
   # Respond to an API request with an object. If the object is invalid
@@ -34,7 +36,7 @@ class ApplicationController < ActionController::Base
   #   to the current `params[:action]` value.
   #
   def return_the(obj, opts = {})
-    opts = { using: params[:action], handler: "jbuilder", postfix: "base" }.merge(opts)
+    opts = { using: params[:action], handler: 'jbuilder', postfix: 'base' }.merge(opts)
     # /api\/(?<version>v[0-9]+)\/(?<template>\w+)/ =~ params[:controller] #ActAsApi
     #
     # If `obj` doesn't know what `valid?` means then we're presumably
@@ -44,7 +46,7 @@ class ApplicationController < ActionController::Base
     # everything else.
     #
     if obj.nil?
-      render_404(_("Not found.")) && (return)
+      render_404(_('Not found.')) && (return)
       # return
     elsif (obj.respond_to?(:valid?) && !obj.valid?)
       render_422(obj.errors) && (return)
@@ -64,7 +66,7 @@ class ApplicationController < ActionController::Base
   def authenticate!
     return if authorization_header.nil?
     payload, header = TokenProvider.valid?(token)
-    user = Person.find_by(id: payload["user_id"])
+    user = Person.find_by(id: payload['user_id'])
     unless user.nil? || user.terminated?
       auto_login(user)
       user.update_column(:last_activity_at, Time.zone.now)
@@ -73,12 +75,12 @@ class ApplicationController < ActionController::Base
   end
 
   def token
-    @jwt_token ||= authorization_header.split(" ").last
+    @jwt_token ||= authorization_header.split(' ').last
   end
 
   private
 
   def authorization_header
-    request.headers["Authorization"]
+    request.headers['Authorization']
   end
 end

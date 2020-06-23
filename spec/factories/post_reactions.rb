@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: post_reactions
@@ -8,7 +10,7 @@
 #  reaction  :text             not null
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :post_reaction do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 progress = person.level_progresses
 level = person.level_earned_from_progresses(progress)
 json = {
@@ -9,14 +11,14 @@ json = {
   country_code: person.country_code,
   birthdate: person.birthdate,
   biography: person.biography,
-  picture_url: (person.picture_url.present? ? person.picture_url : (person.facebook_picture_url.present? ? person.facebook_picture_url : nil)),
+  picture_url: (person.picture_url.presence || person.facebook_picture_url.presence),
   product_account: person.product_account,
   recommended: person.recommended,
   chat_banned: person.chat_banned,
   tester: person.tester,
   terminated: person.terminated,
   terminated_reason: person.terminated_reason,
-  designation: person.designation(@lang),
+  designation: person.designation,
   role: person.role.to_s,
   do_not_message_me: person.do_not_message_me,
   pin_messages_from: person.pin_messages_from,
@@ -26,7 +28,7 @@ json = {
   facebookid: person.facebookid,
   facebook_picture_url: person.facebook_picture_url,
   badge_points: (progress.present? ? progress.first.total : 0),
-  level: (level.nil? ? nil : render(partial: "api/v4/levels/#{@req_source}", locals: { level: level }, handlers: "jb")),
+  level: (level.nil? ? nil : render(partial: "api/v4/levels/#{@req_source}", locals: { level: level }, handlers: 'jb')),
   created_at: person.created_at.to_s,
   updated_at: person.updated_at.to_s
 }

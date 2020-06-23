@@ -1,0 +1,63 @@
+
+deploy:staging:
+  extends: .base
+  stage: deploy
+  artifacts:
+    name: "$CI_JOB_NAME-capistrano-log"
+    when: on_failure
+    paths:
+      - log/capistrano.log
+  variables:
+    RAILS_ENV: staging
+  tags:
+    - deploy
+  environment:
+    name: staging
+    url: https://staging.fan.link
+  only:
+    - staging
+  script:
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -yqq && apt-get install openssh-client -yqq )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
+    - bundle exec cap staging deploy
+
+deploy:production:
+  extends: .base
+  stage: deploy
+  when: manual
+  artifacts:
+    name: "$CI_JOB_NAME-capistrano-log"
+    when: on_failure
+    paths:
+      - log/capistrano.log
+  variables:
+    RAILS_ENV: production
+  tags:
+    - deploy
+  environment:
+    name: production
+    url: https://portal.fan.link
+  only:
+    - tags
+  script:
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -yqq && apt-get install openssh-client -yqq )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
+    - bundle exec cap production deploy

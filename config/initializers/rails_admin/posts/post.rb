@@ -1,13 +1,31 @@
+# frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Post")
+  config.included_models.push('Post')
+  config.included_models.push('Post::Translation')
 
-  config.model "Post" do
-    navigation_label "Posts"
+  config.model 'Post::Translation' do
+    visible false
+    configure :locale, :hidden do
+      help ''
+    end
+    include_fields :locale, :body
+    #
+    # edit do
+    #   field :locale, :body
+    # end
+    export do
+      fields :locale, :body
+    end
+  end
 
+  config.model 'Post' do
+    navigation_label 'Posts'
+    configure :translations, :globalize_tabs
     configure :reported do
     end
     configure :id do
-      label "Post ID"
+      label 'Post ID'
     end
     list do
       scopes [nil, :reported, :not_reported]
@@ -19,6 +37,8 @@ RailsAdmin.config do |config|
         column_width 30
       end
       field :body do
+        searchable [{post_translations: :body}]
+        queryable true
         column_width 150
       end
       field :picture do
@@ -59,9 +79,9 @@ RailsAdmin.config do |config|
       end
     end
     show do
-      fields :person,
+      fields :translations,
+             :person,
              :id,
-             :body,
              :picture,
              :global,
              :recommended,
@@ -72,7 +92,16 @@ RailsAdmin.config do |config|
              :priority
     end
     edit do
-      field :body, :translated
+      fields :translations,
+            :person,
+            :picture,
+            :global,
+            :recommended,
+            :starts_at,
+            :ends_at,
+            :repost_interval,
+            :status,
+            :priority
       # field :person_ do
       #   default_value do
       #     if bindings[:view]._current_user.try(:product_id) == ActsAsTenant.current_tenant.id
@@ -82,22 +111,12 @@ RailsAdmin.config do |config|
       #     end
       #   end
       # end
-      fields :person,
-             :picture,
-             :global,
-             :recommended,
-             :starts_at,
-             :ends_at,
-             :repost_interval,
-             :status,
-             :priority
     end
 
     export do
-      configure :body, :string
-      fields :id, :body_text_old, :global, :starts_at, :ends_at, :repost_interval,
-             :status, :created_at, :updated_at,:body, :priority, :recommended,
-             :notify_followers,  :post_comments_count, :pinned
+      fields :id, :global, :starts_at, :ends_at, :repost_interval,
+             :status, :created_at, :updated_at, :priority, :recommended,
+             :notify_followers,  :post_comments_count, :pinned, :translations
 
       # field :picture do
       #   # export_value do

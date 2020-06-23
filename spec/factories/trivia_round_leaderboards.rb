@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Informationr_digits
 #
 # Table name: trivia_round_leaderboards
@@ -14,7 +16,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_round_leaderboard, class: "Trivia::RoundLeaderboard" do
+  factory :trivia_round_leaderboard, class: 'Trivia::RoundLeaderboard' do
     product { current_product }
 
     round { create(:trivia_round) }

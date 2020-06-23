@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: people
@@ -42,7 +44,7 @@
 #  authorized                      :boolean          default(TRUE), not null
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :person do
@@ -50,9 +52,9 @@ FactoryBot.define do
     sequence(:username) { |n| "person#{n}" }
     sequence(:email) { |n| "person#{n}@example.com" }
     name { Faker::Name.name }
-    password { "badpassword" }
-    birthdate { "2000-01-01" }
-    country_code { "US" }
+    password { 'badpassword' }
+    birthdate { '2000-01-01' }
+    country_code { 'US' }
     # city { "Bucharest" }
     # biography { Faker::Lorem.paragraph(sentence_count: 2)}
     # picture { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }

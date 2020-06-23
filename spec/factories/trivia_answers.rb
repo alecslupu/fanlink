@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_answers
@@ -14,12 +16,12 @@
 #
 
 FactoryBot.define do
-  factory :trivia_answer, class: "Trivia::Answer" do
+  factory :trivia_answer, class: 'Trivia::Answer' do
     product { current_product }
 
     person { create(:person) }
     question { create(:trivia_single_choice_question) }
-    answered { "MyString" }
+    answered { 'MyString' }
     time { Faker::Number.between from: 1, to: 2000 }
 
     factory :correct_trivia_answer do
@@ -27,7 +29,7 @@ FactoryBot.define do
     end
 
     factory :wrong_trivia_answer do
-      answered { "a wrong answer" }
+      answered { 'a wrong answer' }
     end
   end
 end

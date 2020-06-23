@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Trivia::Question")
-  config.model "Trivia::Question" do
-    parent "Trivia::Game"
-    label_plural "Questions"
+  config.included_models.push('Trivia::Question')
+  config.model 'Trivia::Question' do
+    parent 'Trivia::Game'
+    label_plural 'Questions'
     edit do
       fields :round, :type, :time_limit, :question_order, :cooldown_period, :available_question
       #  trivia_round_id :bigint(8)
@@ -15,11 +17,11 @@ RailsAdmin.config do |config|
         enum do
           # Trivia::Question.descendants.map(&:name)
           [
-            ["Single Choice", "Trivia::SingleChoiceQuestion"],
-            ["Multiple Choice", "Trivia::MultipleChoiceQuestion"],
-            ["Picture Choice", "Trivia::PictureQuestion"],
-            ["True or False", "Trivia::BooleanChoiceQuestion"],
-            ["Fill in the blanks", "Trivia::HangmanQuestion"],
+            ['Single Choice', 'Trivia::SingleChoiceQuestion'],
+            ['Multiple Choice', 'Trivia::MultipleChoiceQuestion'],
+            ['Picture Choice', 'Trivia::PictureQuestion'],
+            ['True or False', 'Trivia::BooleanChoiceQuestion'],
+            ['Fill in the blanks', 'Trivia::HangmanQuestion'],
           ]
         end
       end

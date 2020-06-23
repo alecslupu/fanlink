@@ -1,10 +1,16 @@
-class Api::V1::MerchandiseController < ApiController
-  def index
-    @merchandise = Merchandise.listable.order(:priority)
-  end
+# frozen_string_literal: true
 
-  def show
-    @merchandise = Merchandise.listable.find(params[:id])
-    return_the @merchandise
+module Api
+  module V1
+    class MerchandiseController < ApiController
+      def index
+        @merchandise = Merchandise.listable.order(:priority)
+      end
+
+      def show
+        @merchandise = Merchandise.listable.find(params[:id])
+        return_the @merchandise
+      end
+    end
   end
 end

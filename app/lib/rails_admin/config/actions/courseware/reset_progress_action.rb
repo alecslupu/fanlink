@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RailsAdmin
   module Config
     module Actions
@@ -34,14 +36,14 @@ module RailsAdmin
                 PersonCertificate.update_certification_status(@object.certcourse.certificate_ids, @object.person_id)
                 flash[:notice] = t('admin.flash.successful', name: @model_config.label, action: t('admin.actions.reset.done'))
               else
-                flash[:error] = @object.errors.full_messages.join("<br/>")
+                flash[:error] = @object.errors.full_messages.join('<br/>')
               end
               redirect_to action: :index
             end
           end
 
           register_instance_option :link_icon do
-            "icon-refresh"
+            'icon-refresh'
           end
         end
       end

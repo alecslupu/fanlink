@@ -1,18 +1,20 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 RSpec.describe Api::V4::CertcoursesController, type: :controller do
   # TODO: auto-generated
-  describe "GET index" do
+  describe 'GET index' do
     pending
   end
 
   # TODO: auto-generated
-  describe "DELETE destroy" do
+  describe 'DELETE destroy' do
     pending
   end
 
-  describe "#show" do
-    it "does not display as selected the wrong_answers" do
+  describe '#show' do
+    it 'does not display as selected the wrong_answers' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -21,20 +23,20 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
         allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.certcourse_page.certcourse_id)
 
-        get :show, params: {id: qp.certcourse_page.certcourse_id }
+        get :show, params: { id: qp.certcourse_page.certcourse_id }
         expect(response).to have_http_status(200)
 
         expect(qp).to exist_in_database
 
-        json["certcourse_pages"][0]["quiz"]["answers"].each do |selected_answer|
-          expect(selected_answer["is_selected"]).to be_falsey
-          expect(selected_answer["is_selected"]).not_to be_nil
-          expect(selected_answer["id"]).to eq(qp.answers.where(id: selected_answer["id"]).first.id)
+        json['certcourse_pages'][0]['quiz']['answers'].each do |selected_answer|
+          expect(selected_answer['is_selected']).to be_falsey
+          expect(selected_answer['is_selected']).not_to be_nil
+          expect(selected_answer['id']).to eq(qp.answers.where(id: selected_answer['id']).first.id)
         end
       end
     end
 
-    it "displays the right answer if selected" do
+    it 'displays the right answer if selected' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -42,15 +44,15 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         create(:person_quiz, person: person, answer_id: qp.answers.first.id, quiz_page: qp)
 
         allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.certcourse_page.certcourse_id)
-        get :show, params: {id: qp.certcourse_page.certcourse_id }
+        get :show, params: { id: qp.certcourse_page.certcourse_id }
 
         expect(response).to have_http_status(200)
         expect(qp).to exist_in_database
 
-        json["certcourse_pages"][0]["quiz"]["answers"].each do |selected_answer|
-          expect(selected_answer["is_selected"]).not_to be_nil
-          expect(selected_answer["id"]).to eq(qp.answers.where(id: selected_answer["id"]).first.id)
-          expect(selected_answer["is_selected"]).to eq(selected_answer["id"] == qp.answers.first.id)
+        json['certcourse_pages'][0]['quiz']['answers'].each do |selected_answer|
+          expect(selected_answer['is_selected']).not_to be_nil
+          expect(selected_answer['id']).to eq(qp.answers.where(id: selected_answer['id']).first.id)
+          expect(selected_answer['is_selected']).to eq(selected_answer['id'] == qp.answers.first.id)
         end
       end
     end

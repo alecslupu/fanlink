@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: image_pages
@@ -46,7 +48,7 @@ class ImagePage < ApplicationRecord
       target_course_page = CertcoursePage.find(certcourse_page.id)
       child = target_course_page.child
       if child && child != self
-        errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
+        errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
       end
     end
 

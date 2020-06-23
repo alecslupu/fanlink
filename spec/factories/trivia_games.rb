@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_games
@@ -22,7 +24,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_game, class: "Trivia::Game" do
+  factory :trivia_game, class: 'Trivia::Game' do
     start_date { Faker::Time.backward(days: 5) }
     end_date { Faker::Time.forward(days: 5) }
     long_name { Faker::Lorem.words(number: 10) }

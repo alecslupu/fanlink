@@ -1,6 +1,8 @@
-require "swagger_helper"
+# frozen_string_literal: true
 
-RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc: "v4/swagger.json" do
+require 'swagger_helper'
+
+RSpec.describe 'Api::V4::Trivia::GamesControllers', type: :request, swagger_doc: 'v4/swagger.json' do
   #path "/trivia/games/completed" do
   #  get "displays completed games" do
   #    tags "Trivia"

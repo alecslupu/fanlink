@@ -1,7 +1,9 @@
-RailsAdmin.config do |config|
-  config.included_models.push("Event")
+# frozen_string_literal: true
 
-  config.model "Event" do
+RailsAdmin.config do |config|
+  config.included_models.push('Event')
+
+  config.model 'Event' do
 
     list do
       fields :id,

@@ -1,12 +1,4 @@
-# json = {}
-
-# json[:products] = @products.map do |pd|
-#   Rails.cache.fetch ["v4", "product", @req_source, pd.id, pd.updated_at] do
-#     render partial: @req_source, locals: { pd: pd }, handlers: "jb"
-#   end
-# end
-
-# json
+# frozen_string_literal: true
 
 {
   products: @products

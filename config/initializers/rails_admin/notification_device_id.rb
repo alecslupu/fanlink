@@ -1,7 +1,9 @@
-RailsAdmin.config do |config|
-  config.included_models.push("NotificationDeviceId")
+# frozen_string_literal: true
 
-  config.model "NotificationDeviceId" do
+RailsAdmin.config do |config|
+  config.included_models.push('NotificationDeviceId')
+
+  config.model 'NotificationDeviceId' do
     configure :person do
       pretty_value do
         Person.find(bindings[:object].person_id)

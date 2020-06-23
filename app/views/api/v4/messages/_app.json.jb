@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json = {
   id: message.id,
   room_id: message.room_id,
@@ -9,6 +11,6 @@ json = {
   pinned: message.pinned,
   create_time: message.created_at.to_s
 }
-json[:person] = render(partial: "api/v4/people/#{@req_source}", locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }, handlers: "jb")
+json[:person] = render(partial: "api/v4/people/#{@req_source}", locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }, handlers: 'jb')
 
 json

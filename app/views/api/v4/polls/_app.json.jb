@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 {
   id: poll.id.to_s,
   type: poll.poll_type,
   type_id: poll.poll_type_id.to_s,
-  description: poll.description(@lang),
+  description: poll.description,
   start_date: poll.start_date.to_s,
   duration: poll.duration,
   end_date: poll.end_date.to_s,

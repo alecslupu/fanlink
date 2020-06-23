@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_available_questions
@@ -26,7 +28,7 @@ module Trivia
       draft: 0,
       published: 1,
       locked: 2,
-      closed: 3,
+      closed: 3
     }
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
@@ -57,13 +59,9 @@ module Trivia
       end
     end
 
-    def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
-    end
-
-    belongs_to :topic, class_name: "Trivia::Topic"
-    has_many :available_answers, class_name: "Trivia::AvailableAnswer", foreign_key: :trivia_question_id
-    has_many :active_questions, class_name: "Trivia::Question", inverse_of: :available_question, dependent: :destroy
+    belongs_to :topic, class_name: 'Trivia::Topic'
+    has_many :available_answers, class_name: 'Trivia::AvailableAnswer', foreign_key: :trivia_question_id
+    has_many :active_questions, class_name: 'Trivia::Question', inverse_of: :available_question, dependent: :destroy
 
     accepts_nested_attributes_for :available_answers, allow_destroy: true
 
@@ -79,6 +77,6 @@ module Trivia
     validates :type, inclusion: { in: %w(Trivia::SingleChoiceAvailableQuestion
                 Trivia::MultipleChoiceAvailableQuestion Trivia::PictureAvailableQuestion
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
-              ),  message: "%{value} is not a valid type" }
+              ),  message: '%{value} is not a valid type' }
   end
 end

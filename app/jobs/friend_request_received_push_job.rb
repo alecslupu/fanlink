@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FriendRequestReceivedPushJob < ApplicationJob
   queue_as :default
   include Push

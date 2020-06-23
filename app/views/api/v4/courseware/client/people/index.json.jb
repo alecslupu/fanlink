@@ -1,10 +1,9 @@
+# frozen_string_literal: true
+
 json = {}
 
 json[:people] = @assignees.map do |assignee|
-  a = Rails.cache.fetch ["v4", "courseware","client","people", @req_source, assignee.id, assignee.updated_at.to_i] do
-    render(partial: "api/v4/courseware/client/people/#{@req_source}", locals: { assignee: assignee }, handlers: "jb")
-  end
-  a
+  render(partial: "api/v4/courseware/client/people/#{@req_source}", locals: { assignee: assignee }, handlers: 'jb')
 end
 json
 

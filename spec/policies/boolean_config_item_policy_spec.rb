@@ -1,27 +1,14 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe BooleanConfigItemPolicy, type: :policy do
-  let(:user) { User.new }
+  args = BooleanConfigItem, 'root'
+  include_examples 'enforces the permissions', args
+  include_examples 'enforces the read permission', args
+  include_examples 'enforces the update permission', args
+  include_examples 'enforces the delete permission', args
+  include_examples 'enforces the history permission', args
+  include_examples 'enforces the export permission', args
 
-  subject { described_class }
-
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
 end

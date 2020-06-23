@@ -1,7 +1,9 @@
-json.cache! ["v3", person] do
+# frozen_string_literal: true
+
+json.cache! ['v3', person] do
   json.id person.id.to_s
   json.(person, :username, :name, :gender, :city, :country_code, :birthdate, :biography, :picture_url, :product_account, :recommended, :chat_banned, :tester, :terminated, :terminated_reason)
-  json.designation person.designation(@lang)
+  json.designation person.designation
 
   json.role person.role.to_s
   json.do_not_message_me person.do_not_message_me
@@ -25,7 +27,7 @@ json.cache! ["v3", person] do
   if lev.nil?
     json.level nil
   else
-    json.level lev, partial: "api/v3/levels/level", as: :level
+    json.level lev, partial: 'api/v3/levels/level', as: :level
   end
 end
 
@@ -36,5 +38,5 @@ else
 end
 
 if defined?(relationships) && !relationships.empty?
-  json.relationships relationships, partial: "api/v3/relationships/relationship", as: :relationship
+  json.relationships relationships, partial: 'api/v3/relationships/relationship', as: :relationship
 end

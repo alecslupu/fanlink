@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: client_to_people
@@ -10,8 +12,6 @@
 #  updated_at :datetime         not null
 #  type       :string           not null
 #
-
-
 
 module Courseware
   module Client

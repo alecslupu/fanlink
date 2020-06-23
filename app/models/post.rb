@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: posts
@@ -41,10 +43,10 @@ class Post < ApplicationRecord
 
   scope :id_filter, -> (query) { where(id: query.to_i) }
   scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
-  scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
-  scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
-  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
-  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
+  scope :person_filter, -> (query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
+  scope :body_filter, -> (query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
+  scope :posted_after_filter, -> (query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
+  scope :posted_before_filter, -> (query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
   scope :status_filter, -> (query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { sign == '>' ? after_post(created_at, id) : before_post(created_at, id) }
   scope :after_post, ->(created_at, id) { where("posts.created_at > ? AND posts.id > ?", created_at, id) }
@@ -52,7 +54,6 @@ class Post < ApplicationRecord
 
 
   # include Post::PortalFilters
-  include TranslationThings
 
   #   include Post::RealTime
 
@@ -67,11 +68,12 @@ class Post < ApplicationRecord
     end
   end
   #   include Post::RealTime
-  enum status: %i[ pending published deleted rejected errored ]
+  enum status: %i[pending published deleted rejected errored]
 
   after_save :adjust_priorities
 
-  has_manual_translated :body
+  translates :body, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_image_called :picture
   has_audio_called :audio
@@ -79,14 +81,16 @@ class Post < ApplicationRecord
 
   has_paper_trail
 
+  acts_as_taggable
+
   has_many :post_tags
-  has_many :tags, through: :post_tags
+  has_many :old_tags, through: :post_tags, source: :tag
 
   has_many :post_comments, dependent: :destroy
   has_many :post_reports, dependent: :destroy
   has_many :post_reactions
 
-  has_one :poll, -> { where("polls.poll_type = ?", Poll.poll_types["post"]) }, foreign_key: "poll_type_id", dependent: :destroy
+  has_one :poll, -> { where('polls.poll_type = ?', Poll.poll_types['post']) }, foreign_key: 'poll_type_id', dependent: :destroy
   has_many :poll_options, through: :poll
 
   belongs_to :person, touch: true
@@ -106,30 +110,29 @@ class Post < ApplicationRecord
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
-          left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.now, Time.now)
+          left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
         }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
-  scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
+  scope :for_product, -> (product) { joins(:person).where( people: { product_id: product.id } ) }
   scope :in_date_range, -> (start_date, end_date) {
-          where("posts.created_at >= ? and posts.created_at <= ?",
+          where('posts.created_at >= ? and posts.created_at <= ?',
                 start_date.beginning_of_day, end_date.end_of_day)
         }
-  scope :for_tag, -> (tag) { joins(:tags).where("lower(tags.name) = ?", tag.downcase) }
-  scope :for_category, -> (categories) { joins(:category).where("categories.name IN (?)", categories) }
+
+  scope :for_category, -> (categories) { joins(:category).where('categories.name IN (?)', categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
-          published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
+          published.where('(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)',
                           Time.zone.now, Time.zone.now)
         }
-  scope :not_promoted, -> { left_joins(:poll).where("poll_type_id IS NULL or end_date < NOW()") }
-
+  scope :not_promoted, -> { left_joins(:poll).where('poll_type_id IS NULL or end_date < NOW()') }
 
   scope :reported, -> { joins(:post_reports) }
-  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: {id: nil} ) }
+  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }
 
   def cache_key
-    [super, person.cache_key].join("/")
+    [super, person.cache_key].join('/')
   end
 
   def comments
@@ -167,13 +170,13 @@ class Post < ApplicationRecord
     #
     # We assume that the post has been deleted if we can't find it.
     #
-    raise msg.inspect if (msg["state"] != "COMPLETED")
-    post = self.find_by(:id => msg["userMetadata"]["post_id"].to_i)
-    return unless post.present?
+    raise msg.inspect if (msg['state'] != 'COMPLETED')
+    post = self.find_by(:id => msg['userMetadata']['post_id'].to_i)
+    return if post.blank?
 
-    if msg["userMetadata"]["sizer"]
+    if msg['userMetadata']['sizer']
       # There should be exactly one entry in `outputs`.
-      width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
+      width, height = msg['outputs'][0].values_at('width', 'height').map(&:to_i)
       job = Flaws.finish_transcoding(post.video.path,
                                      width, height,
                                      post_id: post.id.to_s)
@@ -181,7 +184,7 @@ class Post < ApplicationRecord
       post.save!
       post.send(:start_listener)
     else
-      presets = ([msg["userMetadata"]["presets"]] + msg["outputs"].to_a.map { |output| output["presetId"] }).compact
+      presets = ([msg['userMetadata']['presets']] + msg['outputs'].to_a.map { |output| output['presetId'] }).compact
       post.send(:youve_been_transcoded!, presets)
     end
   end
@@ -211,20 +214,20 @@ class Post < ApplicationRecord
   # end
 
   def cached_tags
-    Rails.cache.fetch([self, "tags"]) { tags }
+    Rails.cache.fetch([self, 'tags']) { old_tags }
   end
 
   def reactions
-    Rails.cache.fetch([self, "post_reactions"]) { post_reactions }
+    Rails.cache.fetch([self, 'post_reactions']) { post_reactions }
   end
 
   def reported?
-    (post_reports.size > 0) ? "Yes" : "No"
+    (post_reports.size > 0) ? 'Yes' : 'No'
   end
   alias :reported :reported?
 
   def visible?
-    (status == "published" && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))) ? self : nil
+    (status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))) ? self : nil
   end
 
   def start_listener
@@ -234,7 +237,7 @@ class Post < ApplicationRecord
   end
 
   def published?
-    status == "published" && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) && poll == nil
+    status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) && poll == nil
   end
 
   private
@@ -248,7 +251,7 @@ class Post < ApplicationRecord
 
   def merge_new_videos(new_videos)
     by_src = -> (e) { e[:src] }
-    by_m3u8 = -> (e) { e[:src].to_s.end_with?("v.m3u8") }
+    by_m3u8 = -> (e) { e[:src].to_s.end_with?('v.m3u8') }
 
     m3u8, the_rest = (self.video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
     m3u8 + the_rest.sort_by(&by_src)
@@ -268,7 +271,7 @@ class Post < ApplicationRecord
     if priority > 0 && saved_change_to_attribute?(:priority)
       same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
       if same_priority.count > 0
-        person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |post|
+        person.posts.where.not(id: self.id).where('priority >= ?', self.priority).each do |post|
           post.increment!(:priority)
         end
       end
@@ -277,7 +280,7 @@ class Post < ApplicationRecord
 
   def sensible_dates
     if starts_at.present? && ends_at.present? && starts_at > ends_at
-      errors.add(:starts_at, :sensible_dates, message: _("Start date cannot be after end date."))
+      errors.add(:starts_at, :sensible_dates, message: _('Start date cannot be after end date.'))
     end
   end
 

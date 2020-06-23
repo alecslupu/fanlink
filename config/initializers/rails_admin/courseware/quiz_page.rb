@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("QuizPage")
-  config.model "QuizPage" do
-    parent "Certificate"
+  config.included_models.push('QuizPage')
+  config.model 'QuizPage' do
+    parent 'Certificate'
 
     configure :course_name do
     end
@@ -12,7 +14,7 @@ RailsAdmin.config do |config|
     list do
       field :id
       field :course_name do
-        searchable [{Certcourse => :short_name}]
+        searchable [{ Certcourse => :short_name }]
         queryable true
       end
       fields :quiz_text, :answers, :is_optional, :is_survey
@@ -37,7 +39,7 @@ RailsAdmin.config do |config|
             wording = associated.send(amc.object_label_method)
             can_see = !am.embedded? && (show_action = v.action(:show, am, associated))
             link = v.link_to(wording, v.url_for(action: show_action.action_name, model_name: am.to_param, id: associated.id), class: 'pjax')
-            [ can_see ? link : ERB::Util.html_escape(wording), icon  ].join
+            [can_see ? link : ERB::Util.html_escape(wording), icon].join
           end.to_sentence.html_safe
         end
       end

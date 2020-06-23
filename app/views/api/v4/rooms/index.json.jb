@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 json = {}
 
 json[:rooms] = @rooms.map do |room|
-  r = render partial: @req_source, locals: { room: room }, handlers: "jb"
+  r = render partial: @req_source, locals: { room: room }, handlers: 'jb'
   r[:owned] = room.created_by_id == current_user.id
   r
 end

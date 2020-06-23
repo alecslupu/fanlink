@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 json.id post.id.to_s
 json.create_time post.created_at.to_s
-json.body post.body(@lang)
+json.body post.body
 json.picture_url post.picture_optimal_url
 json.audio_url post.audio_url
 json.audio_size post.audio_file_size
 json.audio_content_type post.audio_content_type
 json.person do
-  json.partial! "api/v1/people/person", locals: { person: post.person, relationships: Relationship.for_people(current_user, post.person) }
+  json.partial! 'api/v1/people/person', locals: { person: post.person, relationships: Relationship.for_people(current_user, post.person) }
 end
 json.post_reaction_counts post.reaction_breakdown.to_json
 if defined?(post_reaction) && post_reaction.present?
-  json.post_reaction post_reaction, partial: "api/v1/post_reactions/post_reaction", as: :post_reaction
+  json.post_reaction post_reaction, partial: 'api/v1/post_reactions/post_reaction', as: :post_reaction
 else
   json.post_reaction nil
 end
@@ -36,7 +38,7 @@ else
   end
 end
 if post.tags.count > 0
-  json.tags post.tags, partial: "api/v2/tags/tag", as: :tag
+  json.tags post.tags, partial: 'api/v2/tags/tag', as: :tag
 else
   json.tag nil
 end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 {
-  body: portal_notification.body(@lang),
+  body: portal_notification.body,
   send_me_at: portal_notification.send_me_at,
   sent_status: portal_notification.sent_status,
   created_at: portal_notification.created_at,

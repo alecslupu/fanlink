@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: product_beacons
@@ -14,8 +16,8 @@
 #  upper       :integer          not null
 #
 
-require "securerandom"
-require "faker"
+require 'securerandom'
+require 'faker'
 
 FactoryBot.define do
   factory :product_beacon do

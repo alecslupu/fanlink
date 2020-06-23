@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: contests
@@ -15,7 +17,7 @@
 #  updated_at    :datetime         not null
 #
 
-require "faker"
+require 'faker'
 I18n.reload!
 
 FactoryBot.define do

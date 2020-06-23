@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Role")
-  config.model "Role" do
+  config.included_models.push('Role')
+  config.model 'Role' do
     list do
       fields :id,
              :name,

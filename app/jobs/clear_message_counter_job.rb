@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ClearMessageCounterJob < ApplicationJob
   queue_as :default
   include RealTimeHelpers

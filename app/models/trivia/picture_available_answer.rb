@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_picture_available_answers
@@ -22,16 +24,15 @@ module Trivia
     acts_as_tenant(:product)
     scope :for_product, -> (product) { where(product_id: product.id) }
 
-
     has_paper_trail
-    belongs_to :question, class_name: "Trivia::PictureAvailableQuestion", foreign_key: :question_id, optional: true
+    belongs_to :question, class_name: 'Trivia::PictureAvailableQuestion', foreign_key: :question_id, optional: true
 
     include AASM
     enum status: {
       draft: 0,
       published: 1,
       locked: 2,
-      closed: 3,
+      closed: 3
     }
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
@@ -65,7 +66,6 @@ module Trivia
     def status_enum
       new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end
-
 
     has_image_called :picture
   end

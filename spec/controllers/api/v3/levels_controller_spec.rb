@@ -1,7 +1,9 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Api::V3::LevelsController, type: :controller do
-  describe "GET index" do
+  describe 'GET index' do
     it 'returns all levels with their attached image' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -25,17 +27,17 @@ RSpec.describe Api::V3::LevelsController, type: :controller do
   end
 
   # TODO: auto-generated
-  describe "POST create" do
+  describe 'POST create' do
     pending
   end
 
   # TODO: auto-generated
-  describe "PUT update" do
+  describe 'PUT update' do
     pending
   end
 
   # TODO: auto-generated
-  describe "DELETE destroy" do
+  describe 'DELETE destroy' do
     pending
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json = {
   id: event.id.to_s,
   name: event.name,

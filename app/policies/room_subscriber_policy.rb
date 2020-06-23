@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoomSubscriberPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
@@ -7,6 +9,6 @@ class RoomSubscriberPolicy < ApplicationPolicy
 
   protected
   def module_name
-    "portal_notification"
+    'portal_notification'
   end
 end

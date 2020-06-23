@@ -1,5 +1,6 @@
-namespace :delayed_job do
+# frozen_string_literal: true
 
+namespace :delayed_job do
 
   def args
     fetch(:delayed_job_args, "-e #{fetch(:rails_env)}")

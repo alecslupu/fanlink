@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserReferredListener
   def self.person_created(person_id, params)
     return unless params && params[:referrer].present?

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: messages
@@ -20,7 +22,7 @@
 #  audio_updated_at     :datetime
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :message do

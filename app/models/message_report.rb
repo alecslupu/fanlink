@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: message_reports
@@ -17,16 +19,15 @@ class MessageReport < ApplicationRecord
 
   # include MessageReport::PortalFilters
 
-  enum status: %i[ pending no_action_needed message_hidden ]
+  enum status: %i[pending no_action_needed message_hidden]
 
   belongs_to :message
   belongs_to :person
 
   has_paper_trail
 
-  validates :reason, length: { maximum: 500, message: _("Reason cannot be longer than 500 characters.") }
-  validates_inclusion_of :status, in: MessageReport.statuses.keys, message: _("%{value} is not a valid status type.")
-
+  validates :reason, length: { maximum: 500, message: _('Reason cannot be longer than 500 characters.') }
+  validates_inclusion_of :status, in: MessageReport.statuses.keys, message: _('%{value} is not a valid status type.')
 
   normalize_attributes :reason
 

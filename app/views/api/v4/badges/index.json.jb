@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 for_user = (params.has_key?(:person_id) ? params[:person_id] : current_user.id)
 json = {}
 
@@ -11,9 +13,7 @@ json[:badges] = @badges.map do |badge|
     end
   end
   b = {
-    badge: Rails.cache.fetch(["v4", "badge", @req_source, badge.id, badge.updated_at.to_i, @lang]) {
-      render partial: @req_source, locals: { badge: badge }, handlers: "jb"
-    },
+    badge: render(partial: @req_source, locals: { badge: badge }, handlers: 'jb'),
     badge_action_count: bac
   }
   b

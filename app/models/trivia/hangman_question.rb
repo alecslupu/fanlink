@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_questions
@@ -18,6 +20,6 @@
 
 module Trivia
   class HangmanQuestion < Question
-    belongs_to :available_question, class_name: "Trivia::HangmanAvailableQuestion", foreign_key: :available_question_id
+    belongs_to :available_question, class_name: 'Trivia::HangmanAvailableQuestion', foreign_key: :available_question_id
   end
 end

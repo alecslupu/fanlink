@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DeletePostJob < ApplicationJob
   queue_as :default
   include RealTimeHelpers
@@ -18,7 +20,7 @@ class DeletePostJob < ApplicationJob
         end
       end
     end
-    client.update("", payload)
+    client.update('', payload)
 
   end
 end

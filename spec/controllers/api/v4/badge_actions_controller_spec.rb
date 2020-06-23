@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Api::V4::BadgeActionsController, type: :controller do
@@ -28,7 +30,7 @@ RSpec.describe Api::V4::BadgeActionsController, type: :controller do
         reward2 = badge2.reward
 
         post :create, params: { badge_action: { action_type: action_type.internal_name, identifier: 345 } }
-        expect(json["badges_awarded"]). to be_truthy
+        expect(json['badges_awarded']). to be_truthy
       end
     end
   end

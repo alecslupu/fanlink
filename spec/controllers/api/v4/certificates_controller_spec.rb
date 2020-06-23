@@ -1,28 +1,30 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Api::V4::CertificatesController, type: :controller do
   # TODO: auto-generated
-  describe "POST create" do
+  describe 'POST create' do
     pending
   end
 
   # TODO: auto-generated
-  describe "GET index" do
+  describe 'GET index' do
     pending
   end
 
   # TODO: auto-generated
-  describe "GET show" do
+  describe 'GET show' do
     pending
   end
 
   # TODO: auto-generated
-  describe "DELETE destroy" do
+  describe 'DELETE destroy' do
     pending
   end
 
   # TODO: auto-generated
-  describe "GET send_certificate" do
+  describe 'GET send_certificate' do
     pending
   end
 end

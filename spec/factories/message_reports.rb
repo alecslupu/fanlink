@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: message_reports
@@ -11,13 +13,13 @@
 #  updated_at :datetime         not null
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :message_report do
     person { create(:person) }
     message { create(:message) }
     reason { Faker::Lorem.paragraph }
-    status { "pending" }
+    status { 'pending' }
   end
 end

@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 json = {}
 
 json[:person_rewards] = @person_rewards.map do |reward|
-  Rails.cache.fetch ["v4", "person_reward", @req_source, reward.id, reward.updated_at.to_i] do
-    render partial: @req_source, locals: { reward: reward }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { reward: reward }, handlers: 'jb'
 end
 
 json

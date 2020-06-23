@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 if !activity.deleted
-  json.cache! ["v3", activity.updated_at, activity] do
+  json.cache! ['v3', activity.updated_at, activity] do
     json.id activity.id
     json.quest_id activity.step.quest_id
     json.step_id activity.step_id
@@ -12,7 +14,7 @@ if !activity.deleted
       json.requirements do
         json.array!(activity.activity_types) do |atype|
           next if atype.deleted
-          json.partial! "api/v3/activity_types/type", locals: { atype: atype }
+          json.partial! 'api/v3/activity_types/type', locals: { atype: atype }
         end
       end
     else

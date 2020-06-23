@@ -1,7 +1,9 @@
-RailsAdmin.config do |config|
-  config.included_models.push("MarketingNotification")
+# frozen_string_literal: true
 
-  config.model "MarketingNotification" do
+RailsAdmin.config do |config|
+  config.included_models.push('MarketingNotification')
+
+  config.model 'MarketingNotification' do
     list do
       fields :id,
              :person,

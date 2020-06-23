@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RailsAdmin
   module Config
     module Actions
@@ -25,7 +27,7 @@ module RailsAdmin
             proc do
               ::Trivia::CopyGameJob.perform_later(@object.id)
 
-              flash[:notice] = "Game copied"
+              flash[:notice] = 'Game copied'
               redirect_to action: :index
             end
           end

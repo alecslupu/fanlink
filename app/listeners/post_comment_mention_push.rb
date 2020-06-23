@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PostCommentMentionPush < BaseMention
   def self.post_comment_created(post_comment_id, product_id)
     post_comment = PostComment.find(post_comment_id)

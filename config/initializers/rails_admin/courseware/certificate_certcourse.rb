@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("CertificateCertcourse")
-  config.model "CertificateCertcourse" do
-    parent "Certificate"
+  config.included_models.push('CertificateCertcourse')
+  config.model 'CertificateCertcourse' do
+    parent 'Certificate'
 
     list do
       fields :certcourse, :certcourse_order

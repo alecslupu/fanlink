@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Referral
   class ReferredPersonPolicy < ApplicationPolicy
     def deny
@@ -25,7 +27,7 @@ module Referral
 
     protected
     def module_name
-      "root"
+      'root'
     end
   end
 end

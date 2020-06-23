@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json = {
   id: certcourse_page.id,
   course_id: certcourse_page.certcourse_id,
@@ -6,7 +8,7 @@ json = {
   timer: certcourse_page.duration,
   media_content_type: certcourse_page.media_content_type,
   media_url: certcourse_page.media_url,
-  media_url_large: certcourse_page.image? ? certcourse_page.image_page.image.url(:large) : "",
+  media_url_large: certcourse_page.image? ? certcourse_page.image_page.image.url(:large) : '',
   background_color_hex: certcourse_page.background_color_hex
 }
 json

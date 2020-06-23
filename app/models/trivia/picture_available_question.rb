@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_available_questions
@@ -17,15 +19,15 @@
 
 module Trivia
   class PictureAvailableQuestion < AvailableQuestion
-    has_many :active_questions, class_name: "Trivia::PictureQuestion", inverse_of: :available_question, foreign_key: :available_question_id
-    has_many :available_answers, class_name: "Trivia::PictureAvailableAnswer", foreign_key: :question_id
+    has_many :active_questions, class_name: 'Trivia::PictureQuestion', inverse_of: :available_question, foreign_key: :available_question_id
+    has_many :available_answers, class_name: 'Trivia::PictureAvailableAnswer', foreign_key: :question_id
 
     include AASM
     enum status: {
       draft: 0,
       published: 1,
       locked: 2,
-      closed: 3,
+      closed: 3
     }
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do

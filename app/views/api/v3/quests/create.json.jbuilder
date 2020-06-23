@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 json.quest do
-  json.cache! ["v3", @quest] do
-    json.partial! "quest", locals: { quest: @quest, lang: nil }
+  json.cache! ['v3', @quest] do
+    json.partial! 'quest', locals: { quest: @quest, lang: nil }
   end
   quest_completed = current_user.quest_completed.find { |x| x.quest_id == @quest.id }
   json.completed ((quest_completed) ? true : false)
@@ -8,8 +10,8 @@ json.quest do
   if @quest.steps.count > 0
     json.steps do
       json.array!(@quest.steps) do |step|
-          json.cache! ["v3", step] do
-            json.partial! "api/v3/steps/step", locals: { step: step }
+          json.cache! ['v3', step] do
+            json.partial! 'api/v3/steps/step', locals: { step: step }
           end
         end
     end
@@ -21,8 +23,8 @@ json.quest do
     if assigned.badge
       json.assigned_badge assigned.badge
       json.badge do
-        json.cache! ["v3", assigned.badge] do
-            json.partial! "api/v3/badges/badge", locals: { badge: assigned.badge }
+        json.cache! ['v3', assigned.badge] do
+            json.partial! 'api/v3/badges/badge', locals: { badge: assigned.badge }
           end
       end
     else
