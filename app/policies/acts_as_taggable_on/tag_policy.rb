@@ -8,7 +8,7 @@ module ActsAsTaggableOn
     protected
 
     def module_name
-      "root"
+      'root'
     end
   end
 end

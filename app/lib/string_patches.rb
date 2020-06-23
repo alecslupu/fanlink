@@ -15,7 +15,7 @@ class String
   #   of the found `MatchData` objects.
   #
   def scanm(re)
-    matches = [ ]
+    matches = []
     start   = 0
     while (m = re.match(self, start))
       block_given? ? yield(m) : matches.push(m)

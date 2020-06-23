@@ -57,7 +57,6 @@ module Trivia
       end
     end
 
-
 =begin
     validate :answer_checks
 

@@ -57,7 +57,6 @@ class Post < ApplicationRecord
     DeletePostJob.perform_later(self.id, version)
   end
 
-
   def post(version = 0)
     PostPostJob.perform_later(self.id, version)
     if person.followers.count > 0
@@ -124,7 +123,6 @@ class Post < ApplicationRecord
                           Time.zone.now, Time.zone.now)
         }
   scope :not_promoted, -> { left_joins(:poll).where('poll_type_id IS NULL or end_date < NOW()') }
-
 
   scope :reported, -> { joins(:post_reports) }
   scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }

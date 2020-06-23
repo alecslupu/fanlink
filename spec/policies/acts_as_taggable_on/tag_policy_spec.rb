@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require "spec_helper"
+
+require 'spec_helper'
 
 RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
   let(:master_class) { ActsAsTaggableOn::Tag.new }
@@ -19,42 +20,42 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
     select_product: false
   }
 
-  describe "defined policies" do
+  describe 'defined policies' do
     subject { described_class.new(build(:person), master_class) }
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
     end
   end
-  context "logged in user with no permission" do
+  context 'logged in user with no permission' do
     subject { described_class.new(build(:person), master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         it { is_expected.to forbid_action(policy) }
       end
     end
-    describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("root") }
+    describe 'protected methods' do
+      it { expect(subject.send(:module_name)).to eq('root') }
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-  context "logged in admin with no permission" do
+  context 'logged in admin with no permission' do
     subject { described_class.new(build(:admin_user), master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         it { is_expected.to forbid_action(policy) }
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-  context "logged in admin with read permission" do
+  context 'logged in admin with read permission' do
     permission_list = {
       index: true,
       show: true,
@@ -70,7 +71,7 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
     }
     subject { described_class.new(create(:portal_access, root_read: true).person, master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -79,13 +80,13 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-  context "logged in admin with update permission" do
+  context 'logged in admin with update permission' do
     permission_list = {
       index: false,
       show: false,
@@ -101,7 +102,7 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
     }
     subject { described_class.new(create(:portal_access, root_update: true).person, master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -110,13 +111,13 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-  context "logged in admin with delete permission" do
+  context 'logged in admin with delete permission' do
     permission_list = {
       index: false,
       show: false,
@@ -132,7 +133,7 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
     }
     subject { described_class.new(create(:portal_access, root_delete: true).person, master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -141,13 +142,13 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-  context "logged in admin with export permission" do
+  context 'logged in admin with export permission' do
     permission_list = {
       index: false,
       show: false,
@@ -163,7 +164,7 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
     }
     subject { described_class.new(create(:portal_access, root_export: true).person, master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -172,13 +173,13 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-  context "logged in admin with history permission" do
+  context 'logged in admin with history permission' do
     permission_list = {
       index: false,
       show: false,
@@ -194,15 +195,15 @@ RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
     }
     subject { described_class.new(create(:portal_access, root_history: true).person, master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         it { is_expected.to forbid_action(policy) }
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 end

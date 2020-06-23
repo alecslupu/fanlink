@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Static
   class SystemEmail < ApplicationRecord
     belongs_to :product
@@ -17,7 +19,6 @@ module Static
 
     attr_accessor :remove_attachments
     attr_accessor :remove_images
-
 
     after_save do
       Array(remove_attachments).each { |id| attachments.find_by_id(id).try(:purge) }

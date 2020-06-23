@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :send_activity_notification do
   desc 'Send notification to the users that have been inactive for 48 hours'
   task two_days_inactive: :environment do

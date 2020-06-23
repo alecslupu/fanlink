@@ -6,7 +6,6 @@ steps = false
 quest_activities = false
 badges = false
 
-
 json.id reward.id
 json.product_id reward.product_id
 json.name reward.name

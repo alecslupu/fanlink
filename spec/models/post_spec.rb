@@ -267,7 +267,6 @@ RSpec.describe Post, type: :model do
     pending
   end
 
-
   describe '#delete_real_time' do
     it 'responds to method ' do
       expect(Post.new).to respond_to(:delete_real_time)

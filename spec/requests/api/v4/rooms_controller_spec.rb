@@ -52,7 +52,6 @@ RSpec.describe 'Api::V4::RoomsController', type: :request, swagger_doc: 'v4/swag
       parameter name: :"private", in: :query, type: :string, required: false
       let(:Authorization) { '' }
 
-
       let(:message) { create(:message, room: create(:private_active_room)) }
       let(:room) { message.room }
       #let(:id) { room.id }
@@ -348,7 +347,6 @@ RSpec.describe 'Api::V4::RoomsController', type: :request, swagger_doc: 'v4/swag
       let(:room_id) { room.id }
       let(:id) { message.id }
       let(:Authorization) { '' }
-
 
       response '200', 'HTTP/1.1 200 Ok' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }

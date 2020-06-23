@@ -88,7 +88,6 @@ class Quest < ApplicationRecord
     starts_at >= Time.zone.now && (ends_at.nil? || ends_at <= Time.zone.now)
   end
 
-
   private
 
   def date_sanity

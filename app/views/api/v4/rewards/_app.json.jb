@@ -8,7 +8,6 @@ assigned_locals = {
   Badge: 'badge'
 }
 
-
 json = {
   id: reward.id,
   product_id: reward.product_id,

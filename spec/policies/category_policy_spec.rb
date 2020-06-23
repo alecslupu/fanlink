@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe CategoryPolicy, type: :policy do
-  args = [ Category, 'admin' ]
+  args = [Category, 'admin']
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args
