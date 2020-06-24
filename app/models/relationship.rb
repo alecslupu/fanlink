@@ -38,6 +38,7 @@ class Relationship < ApplicationRecord
   validate :people_from_same_product
 
   scope :pending_to_person, ->(person) { where(status: :requested).where(requested_to: person) }
+  scope :for_product, ->(product) { joins(:requested_by).where(people: { product_id: product.id }) }
   scope :for_people, ->(source_person, target_person) {
     where(requested_to: [source_person, target_person])
       .where(requested_by: [source_person, target_person])

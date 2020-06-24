@@ -134,11 +134,6 @@ class Post < ApplicationRecord
 
   scope :following_and_own, ->(follower) { includes(:person).where(person: follower.following + [follower]) }
 
-  scope :in_date_range, ->(start_date, end_date) {
-    where('posts.created_at >= ? and posts.created_at <= ?',
-          start_date.beginning_of_day, end_date.end_of_day)
-  }
-
   scope :promoted, -> {
                      left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
                    }

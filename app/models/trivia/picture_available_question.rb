@@ -70,7 +70,7 @@ module Trivia
     def number_of_correct_answers
       is_correct_answers = available_answers.map(&:is_correct)
       message = 'Picture choice questions can have only one correct answer'
-      errors.add(:base, message) unless is_correct_answers.count.one?
+      errors.add(:base, message) unless is_correct_answers.one?
     end
   end
 end

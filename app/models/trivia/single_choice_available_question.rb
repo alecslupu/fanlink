@@ -66,7 +66,7 @@ module Trivia
 
     def number_of_correct_answers
       message = 'Single choice questions must have one correct answer'
-      errors.add(:available_answers, message) unless available_answers.where(is_correct: true).count.one?
+      errors.add(:available_answers, message) unless available_answers.where(is_correct: true).one?
     end
   end
 end
