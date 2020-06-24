@@ -35,7 +35,8 @@ module Api
                 no_of_failed_attempts = failed_attempts.count
 
                 # change this with "where" and the response in case of multiple correct answer possibility
-                person_correct_answer = person_responses.find_by(answer_id: correct_answer.id) unless no_of_failed_attempts == person_responses.count
+                all_failed = no_of_failed_attempts == person_responses.count
+                person_correct_answer = person_responses.find_by(answer_id: correct_answer.id) unless all_failed
 
                 if person_correct_answer.present?
                   answer_text = correct_answer.description

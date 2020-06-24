@@ -11,7 +11,9 @@ module Api
 
           def index
             @assignees = Person.where(id: assignee_ids)
-            @assignees = @assignees.username_filter(params[:username_filter], current_user) if params[:username_filter].present?
+            if params[:username_filter].present?
+              @assignees = @assignees.username_filter(params[:username_filter], current_user)
+            end
 
             @assignees = paginate(@assignees)
             return_the(@assignees, handler: :jb)

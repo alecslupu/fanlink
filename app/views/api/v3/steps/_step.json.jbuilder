@@ -17,7 +17,9 @@ json.cache! ['v3', step.updated_at, step] do
 end
 
 if step.quest_activities.count > 0
-  json.activities step.quest_activities.where(deleted: false), partial: 'api/v3/quest_activities/activity', as: :activity
+  json.activities step.quest_activities.where(deleted: false),
+                  partial: 'api/v3/quest_activities/activity',
+                  as: :activity
 else
   json.activities nil
 end
