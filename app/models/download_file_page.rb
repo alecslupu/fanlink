@@ -20,6 +20,7 @@ class DownloadFilePage < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
   scope :for_product, -> (product) { where(product_id: product.id) }
+
   acts_as_tenant(:product)
   belongs_to :product
   belongs_to :certcourse_page, autosave: true

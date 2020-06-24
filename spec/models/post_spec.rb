@@ -76,7 +76,8 @@ RSpec.describe Post, type: :model do
   # TODO: we should care about poster status WHEN we implement that
   describe '.following' do
     it 'should get posts for someone you are following with your own' do
-      expect(Post.following_and_own(@person).map { |p| p.id }.sort).to eq([@followed2_post1.id, @followed1_post2.id, @followed1_post1.id, @before_range.id].sort)
+      sorted = [@followed2_post1.id, @followed1_post2.id, @followed1_post1.id, @before_range.id].sort
+      expect(Post.following_and_own(@person).map { |p| p.id }.sort).to eq(sorted)
     end
   end
 
@@ -84,7 +85,8 @@ RSpec.describe Post, type: :model do
   # TODO: we should care about poster status WHEN we implement that
   describe '.in_date_range' do
     it 'should get posts in a date range' do
-      expect(Post.in_date_range(@start_date, @end_date).map { |p| p.id }.sort).to eq([@followed2_post1.id, @followed1_post2.id, @followed1_post1.id].sort)
+      sorted = [@followed2_post1.id, @followed1_post2.id, @followed1_post1.id].sort
+      expect(Post.in_date_range(@start_date, @end_date).map { |p| p.id }.sort).to eq(sorted)
     end
   end
   describe '#body' do

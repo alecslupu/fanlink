@@ -2,7 +2,6 @@
 
 module Push
   class PrivateMessage < BasePush
-
     def push(message)
       room = message.room
       person = message.person

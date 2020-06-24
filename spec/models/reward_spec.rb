@@ -95,11 +95,17 @@ RSpec.describe Reward, type: :model do
       subject { build(:badge_reward) }
 
       it '#internal_name' do
-        should validate_length_of(:internal_name).is_at_least(3).is_at_most(26).with_message(_('Internal name must be between 3 and 26 characters.'))
+        should validate_length_of(:internal_name)
+          .is_at_least(3)
+          .is_at_most(26)
+          .with_message(_('Internal name must be between 3 and 26 characters.'))
       end
 
       it '#series' do
-        should validate_length_of(:series).is_at_least(3).is_at_most(26).with_message(_('Series must be between 3 and 26 characters.'))
+        should validate_length_of(:series)
+          .is_at_least(3)
+          .is_at_most(26)
+          .with_message(_('Series must be between 3 and 26 characters.'))
       end
     end
 
@@ -127,7 +133,7 @@ RSpec.describe Reward, type: :model do
       describe '#reward_type_id' do
         it 'should not allow a reward to be assigned multiple times' do
           product = create(:product)
-          badge= create(:badge) #already creates a reward
+          badge = create(:badge) # already creates a reward
           reward1 = badge.reward
           reward2 = build(:reward, product: product, reward_type_id: badge.id, reward_type: :badge)
 

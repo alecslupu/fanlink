@@ -2,7 +2,6 @@
 
 module Push
   class MessageMention < BasePush
-
     def push(message, mentioned_person)
       @target_person = mentioned_person
 

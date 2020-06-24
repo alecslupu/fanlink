@@ -10,8 +10,10 @@ RSpec.describe 'Api::V4::Referral::ReferralController', type: :request, swagger_
 
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
 
       let(:Authorization) { '' }
       let(:person) { create(:person) }
@@ -35,8 +37,10 @@ RSpec.describe 'Api::V4::Referral::ReferralController', type: :request, swagger_
       security [Bearer: []]
       tags 'Referral'
 
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
 
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'

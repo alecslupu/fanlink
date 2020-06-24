@@ -11,14 +11,18 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
       produces 'application/vnd.api.v4+json'
       consumes 'application/vnd.api.v4+json'
 
-      parameter name: :product, in: :query, type: :string
-      parameter name: :product_account_filter, in: :query, required: false, type: :string
-      parameter name: :email_filer, in: :query, required: false, type: :string
-      parameter name: :username_filter, in: :query, required: false, type: :string
+      parameter name: :product,
+                in: :query, type: :string
+      parameter name: :product_account_filter,
+                in: :query, required: false, type: :string
+      parameter name: :email_filer,
+                in: :query, required: false, type: :string
+      parameter name: :username_filter,
+                in: :query, required: false, type: :string
       let(:product) { create(:product).internal_name }
       let(:Authorization) { '' }
 
-      #android-old
+      # android-old
       context 'email_filer' do
         response '200', 'HTTP/1.1 200 Ok' do
           schema "$ref": '#/definitions/PeopleArray'
@@ -37,7 +41,7 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
         end
       end
 
-      #android-old
+      # android-old
       context 'username_filter' do
         response '200', 'HTTP/1.1 200 Ok' do
           schema "$ref": '#/definitions/PeopleArray'
@@ -56,7 +60,7 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
         end
       end
 
-      #kotlin
+      # kotlin
       context 'product_account_filter' do
         response '200', 'HTTP/1.1 200 Ok' do
           schema "$ref": '#/definitions/PeopleArray'
@@ -77,12 +81,13 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
     end
 
     post '' do
-      tags 'People' #kotlin
+      tags 'People' # kotlin
 
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
 
-      parameter name: :product, in: :query, type: :string, required: true
+      parameter name: :product,
+                in: :query, type: :string, required: true
       parameter name: :"person[email]", in: :formData, type: :string, required: false
       parameter name: :"person[username]", in: :formData, type: :string, required: true
       parameter name: :"person[password]", in: :formData, type: :string, required: false

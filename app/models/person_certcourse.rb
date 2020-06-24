@@ -22,5 +22,4 @@ class PersonCertcourse < ApplicationRecord
 
   scope :for_person, -> (person) { where(person_id: person.id) }
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
-
 end

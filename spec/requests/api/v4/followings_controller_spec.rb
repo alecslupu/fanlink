@@ -7,7 +7,7 @@ RSpec.describe 'Api::V4::FollowingsController', type: :request, swagger_doc: 'v4
     post '' do
       security [Bearer: []]
 
-      tags 'Followings'# , 'kotlin']
+      tags 'Followings' # , 'kotlin']
 
       parameter name: :followed_id, in: :formData, type: :string
 
@@ -34,11 +34,13 @@ RSpec.describe 'Api::V4::FollowingsController', type: :request, swagger_doc: 'v4
     get '' do
       security [Bearer: []]
 
-      tags 'Followings'# , 'kotlin']
+      tags 'Followings' # , 'kotlin']
       let(:Authorization) { '' }
       let(:person) { create(:person) }
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
       parameter name: :followed_id, in: :formData, type: :string, required: false
       parameter name: :follower_id, in: :formData, type: :string, required: false
 

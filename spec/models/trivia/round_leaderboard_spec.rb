@@ -16,4 +16,3 @@ RSpec.describe Trivia::RoundLeaderboard, type: :model do
   end
   pending "add some examples to (or delete) #{__FILE__}"
 end
-

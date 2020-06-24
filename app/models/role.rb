@@ -42,5 +42,4 @@ class Role < ApplicationRecord
   def to_s
     internal_name
   end
-
 end

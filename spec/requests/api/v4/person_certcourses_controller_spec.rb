@@ -60,7 +60,6 @@ RSpec.describe 'Api::V4::PersonCertcoursesController', type: :request, swagger_d
 
       response '200', 'HTTP/1.1 200 Ok' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person_certcourse.person.id)}" }
-        #
         schema "$ref": '#/definitions/PersonCertcourseCreateJson'
         run_test!
       end

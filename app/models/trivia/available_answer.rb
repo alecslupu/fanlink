@@ -77,9 +77,5 @@ module Trivia
         true
       end
     end
-
-    # def assigned_available_question_status
-
-    # end
   end
 end

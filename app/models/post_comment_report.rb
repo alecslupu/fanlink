@@ -20,11 +20,11 @@ class PostCommentReport < ApplicationRecord
   belongs_to :post_comment
 
   # include PostCommentReport::PortalFilters
-  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :status_filter, ->(query) { where(status: query.to_sym) }
   # include PostCommentReport::PortalFilters
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  scope :for_product, -> (product) { joins(:person).where('people.product_id = ?', product.id) }
+  scope :for_product, ->(product) { joins(:person).where('people.product_id = ?', product.id) }
 
   validates :reason, length: { maximum: 500, message: _('Reason cannot be longer than 500 characters.') }
 

@@ -26,7 +26,6 @@ RSpec.describe Trivia::HangmanAvailableQuestion, type: :model do
     it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
     it { expect(subject).to transition_from(:locked).to(:closed).on_event(:closed) }
   end
-
   context 'Validations' do
     describe '#hangman_answer' do
       describe 'adding more than one answer' do

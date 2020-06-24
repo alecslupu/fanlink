@@ -29,7 +29,11 @@ RSpec.describe PostCommentReport, type: :model do
     context 'Validation' do
       subject { create(:post_comment_report) }
       it { is_expected.to define_enum_for(:status).with(PostCommentReport.statuses.keys) }
-      it { should validate_length_of(:reason).is_at_most(500).with_message(_('Reason cannot be longer than 500 characters.')) }
+      it {
+        should validate_length_of(:reason)
+          .is_at_most(500)
+          .with_message(_('Reason cannot be longer than 500 characters.'))
+      }
     end
 
     context 'validates inclusion' do
@@ -38,7 +42,7 @@ RSpec.describe PostCommentReport, type: :model do
           expect(build(:post_comment_report, status: status)).to be_valid
         end
 
-        expect { build(:post_comment_report, status: :invalid_status_form_spec) }.to raise_error(/is not a valid status/)
+        expect { build(:post_comment_report, status: :invalid_status) }.to raise_error(/is not a valid status/)
       end
     end
 

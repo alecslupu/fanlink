@@ -9,7 +9,8 @@ RSpec.describe 'Api::V4::InterestsController', type: :request, swagger_doc: 'v4/
 
       tags 'Interests'
 
-      parameter name: :interest_ids, type: :string, in: :query, required: false
+      parameter name: :interest_ids, type: :string,
+                in: :query, required: false
 
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'

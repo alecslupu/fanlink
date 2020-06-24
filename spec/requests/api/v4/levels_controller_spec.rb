@@ -14,8 +14,10 @@ RSpec.describe 'Api::V4::LevelsController', type: :request, swagger_doc: 'v4/swa
       let(:Authorization) { '' }
       let(:person) { create(:person) }
 
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
       response '200', 'HTTP/1.1 200 Ok' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         schema "$ref": '#/definitions/LevelsArray'
@@ -31,4 +33,3 @@ RSpec.describe 'Api::V4::LevelsController', type: :request, swagger_doc: 'v4/swa
     end
   end
 end
-

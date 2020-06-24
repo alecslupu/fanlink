@@ -44,9 +44,12 @@ RSpec.describe 'Api::V4::PostReportsController', type: :request, swagger_doc: 'v
       let(:person) { create(:admin_user) }
       tags 'PostCommentReports'
 
-      parameter name: :status_filter, in: :query, type: :string, required: false
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :status_filter,
+                in: :query, type: :string, required: false
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
 
       produces 'application/vnd.api.v4+json'
 

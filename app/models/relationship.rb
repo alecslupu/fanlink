@@ -37,10 +37,12 @@ class Relationship < ApplicationRecord
   validate :valid_status_transition
   validate :people_from_same_product
 
-  scope :pending_to_person, -> (person) { where(status: :requested).where(requested_to: person) }
-  scope :for_people, -> (source_person, target_person) { where(requested_to: [source_person, target_person]).where(requested_by: [source_person, target_person]) }
-  scope :for_person, -> (person) { where(requested_to: person).or(where(requested_by: person)) }
-  scope :for_product, -> (product) { joins('JOIN people ON people.id = relationships.requested_by_id').where('people.product_id = ?', product.id) }
+  scope :pending_to_person, ->(person) { where(status: :requested).where(requested_to: person) }
+  scope :for_people, ->(source_person, target_person) {
+    where(requested_to: [source_person, target_person])
+      .where(requested_by: [source_person, target_person])
+  }
+  scope :for_person, ->(person) { where(requested_to: person).or(where(requested_by: person)) }
 
   def person_involved?(person)
     requested_to == person || requested_by == person
@@ -56,7 +58,8 @@ class Relationship < ApplicationRecord
 
   def check_outstanding
     if requested? && Relationship.where.not(id: id).for_people(requested_by, requested_to).exists?
-      errors.add(:base, :existing_friendship, message: _('You already have an existing friendship or friend request to or from that person.'))
+      errors.add(:base, :existing_friendship,
+                 message: _('You already have an existing friendship or friend request to or from that person.'))
     end
   end
 

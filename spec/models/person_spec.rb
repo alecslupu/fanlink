@@ -24,20 +24,23 @@ RSpec.describe Person, type: :model do
       it "should raise an error if username's length is not between 5 and 25 characters" do
         subject = Person.new(username: 'as')
         subject.valid?
-        expect(subject.errors.messages[:username_error].first).to include('Username must be 5 to 25 characters with no special characters or spaces')
+        message = 'Username must be 5 to 25 characters with no special characters or spaces'
+        expect(subject.errors.messages[:username_error].first).to include(message)
 
         subject = Person.new(username: 'ThisIsLongerThan25Characters')
         subject.valid?
-        expect(subject.errors.messages[:username_error].first).to include('Username must be 5 to 25 characters with no special characters or spaces')
+        expect(subject.errors.messages[:username_error].first).to include(message)
       end
 
       it 'should raise an error if the username contains special characters' do
         subject = Person.new(username: 'username&')
         subject.valid?
-        expect(subject.errors.messages[:username_error].first).to include('Username must be 5 to 25 characters with no special characters or spaces')
+        message = 'Username must be 5 to 25 characters with no special characters or spaces'
+        expect(subject.errors.messages[:username_error].first).to include(message)
       end
       it "should validate password's length" do
-        should validate_length_of(:password).is_at_least(6).with_message(_('Password must be at least 6 characters in length.'))
+        message = _('Password must be at least 6 characters in length.')
+        should validate_length_of(:password).is_at_least(6).with_message(message)
       end
     end
 
@@ -52,8 +55,9 @@ RSpec.describe Person, type: :model do
 
       it 'should not allow duplicate emails and usernames for same product' do
         product = create(:product)
-        person1 = create(:person, product: product, username: 'Person1', password: 'testpassword', email: 'person1@example.com')
-        person2 = build(:person, product: product, username: 'Person1', password: 'testpassword', email: 'person1@example.com')
+        attr_hash = { product: product, username: 'Person1', password: 'testpassword', email: 'person1@example.com' }
+        person1 = create(:person, attr_hash)
+        person2 = build(:person, attr_hash)
 
         expect(person1).to be_valid
         expect(person2).not_to be_valid
@@ -512,7 +516,7 @@ RSpec.describe Person, type: :model do
     end
     it 'should ignore accents, case, and punctuation when using for_username' do
       examples = ['Whére.Ïs.Pañçâkè.HOUSE', 'where.is.pancake.house',
-                   'whereispancakehouse', 'where-is_pancake.house', 'where@is_pancakehouse']
+                  'whereispancakehouse', 'where-is_pancake.house', 'where@is_pancakehouse']
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end
@@ -532,7 +536,9 @@ RSpec.describe Person, type: :model do
         expect(p).to eq(Person.last)
       end
       it 'should return nil if api error' do
-        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with('me', fields: %w(id email picture.width(320).height(320))).and_raise(Koala::Facebook::APIError.new(nil, nil))
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object)
+          .with('me', fields: %w(id email picture.width(320).height(320)))
+          .and_raise(Koala::Facebook::APIError.new(nil, nil))
         expect(Person.create_from_facebook('12345', 'fdafafadadfa')).to be_nil
       end
     end
@@ -547,7 +553,9 @@ RSpec.describe Person, type: :model do
       end
       it 'should return nil if given bad token' do
         tok = '1234567'
-        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with('me', fields: [:id]).and_raise(Koala::Facebook::APIError.new(nil, nil))
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object)
+          .with('me', fields: [:id])
+          .and_raise(Koala::Facebook::APIError.new(nil, nil))
         expect(Person.for_facebook_auth_token(tok)).to be_nil
       end
     end
@@ -740,7 +748,10 @@ RSpec.describe Person, type: :model do
       expect {
         pc.person.send_course_attachment_email(certcourse_page)
       }.to have_enqueued_job.on_queue('mailers').with(
-        'PersonMailer', 'send_downloaded_file', 'deliver_now', { id: pc.person_id, certcourse_page_id: certcourse_page.id }
+        'PersonMailer', 'send_downloaded_file', 'deliver_now', {
+          id: pc.person_id,
+          certcourse_page_id: certcourse_page.id
+        }
       )
     end
   end

@@ -38,6 +38,5 @@ module Static
     def uniq?
       self.class.where(product_id: product_id).where(title: name).exists?
     end
-
   end
 end

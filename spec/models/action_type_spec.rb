@@ -11,13 +11,25 @@ RSpec.describe ActionType, type: :model do
       it { should validate_presence_of(:name).with_message(_('Name is required.')) }
     end
     describe '#length' do
-      it { should validate_length_of(:internal_name).is_at_least(3).is_at_most(26).with_message(_('Internal name must be between 3 and 26 characters.')) }
-      it { should validate_length_of(:name).is_at_least(3).is_at_most(36).with_message(_('Name must be between 3 and 36 characters.')) }
+      it {
+        should validate_length_of(:internal_name)
+          .is_at_least(3)
+          .is_at_most(26)
+          .with_message(_('Internal name must be between 3 and 26 characters.'))
+      }
+      it {
+        should validate_length_of(:name)
+          .is_at_least(3)
+          .is_at_most(36)
+          .with_message(_('Name must be between 3 and 36 characters.'))
+      }
     end
     describe '#uniqueness' do
       it 'should check for uniqueness of name and internal_name' do
-        should validate_uniqueness_of(:internal_name).with_message(_('There is already an action type with that internal name.'))
-        should validate_uniqueness_of(:name).with_message(_('There is already an action type with that name.'))
+        should validate_uniqueness_of(:internal_name)
+          .with_message(_('There is already an action type with that internal name.'))
+        should validate_uniqueness_of(:name)
+          .with_message(_('There is already an action type with that name.'))
       end
     end
     describe '#format' do

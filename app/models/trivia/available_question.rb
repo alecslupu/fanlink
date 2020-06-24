@@ -20,7 +20,6 @@
 module Trivia
   class AvailableQuestion < ApplicationRecord
     has_paper_trail ignore: [:created_at, :updated_at]
-
     acts_as_tenant(:product)
     scope :for_product, ->(product) { where(product_id: product.id) }
 
@@ -77,10 +76,10 @@ module Trivia
 
     validates :title, presence: true
 
-    validates :type, inclusion: { in: %w(Trivia::SingleChoiceAvailableQuestion
+    validates :type, inclusion: { in: %w[Trivia::SingleChoiceAvailableQuestion
                 Trivia::MultipleChoiceAvailableQuestion Trivia::PictureAvailableQuestion
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
-              ), message: '%{value} is not a valid type' }
+              ], message: '%{value} is not a valid type' }
 
     validate :avalaible_answers_status_check, on: :update, if: -> { published? }
 
@@ -90,7 +89,7 @@ module Trivia
 
     def avalaible_answers_status_check
       available_answers.each do |answer|
-        if !answer.published?
+        unless answer.published?
           errors.add(:available_answers, "used in the questions must have 'published' status before publishing")
           break
         end

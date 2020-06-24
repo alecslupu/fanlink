@@ -19,7 +19,8 @@ class VideoPage < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
   scope :for_product, -> (product) { where(product_id: product.id) }
-  require 'streamio-ffmpeg'
+
+  # require 'streamio-ffmpeg'
 
   acts_as_tenant(:product)
   belongs_to :product

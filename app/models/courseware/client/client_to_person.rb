@@ -16,7 +16,6 @@
 module Courseware
   module Client
     class ClientToPerson < ApplicationRecord
-
       has_paper_trail ignore: [:created_at, :updated_at]
       belongs_to :person, class_name: 'Person', foreign_key: :person_id #, touch: true
       belongs_to :client, class_name: 'Person', foreign_key: :client_id #, touch: true
