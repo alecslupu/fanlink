@@ -43,8 +43,8 @@ module Api
       # *
       def create
         candidate_action = current_user.badge_actions
-          .where(action_type: @action_type)
-          .where('created_at > ?', Time.zone.now - @action_type.seconds_lag.seconds)
+                                       .where(action_type: @action_type)
+                                       .where('created_at > ?', Time.zone.now - @action_type.seconds_lag.seconds)
         if @action_type.seconds_lag > 0 && candidate_action.exists?
           head :too_many_requests
         else
