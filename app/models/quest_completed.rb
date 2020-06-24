@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: quest_completed
@@ -17,7 +18,6 @@ class QuestCompleted < ApplicationRecord
   belongs_to :quest
   belongs_to :person, touch: true
 
-
-# default_scope { order(created_at: :desc) }
-private
+  # default_scope { order(created_at: :desc) }
+  private
 end

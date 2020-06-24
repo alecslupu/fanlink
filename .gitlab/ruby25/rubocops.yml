@@ -1,0 +1,71 @@
+rubocop:Layout:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Layout app config spec lib
+
+rubocop:Bundler:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Bundler
+
+rubocop:Gemspec:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Gemspec
+
+rubocop:Lint:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Lint app config spec lib
+
+rubocop:Metrics_and_Migration:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Metrics,Migration app config spec lib
+
+rubocop:Naming:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Naming app config spec lib
+
+rubocop:Security:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Security app config spec lib
+
+rubocop:Style:
+  extends: .base
+  stage: rubocop
+  allow_failure: true
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Style app config spec lib

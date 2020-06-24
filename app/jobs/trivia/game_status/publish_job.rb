@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Trivia
   module GameStatus
     class PublishJob < ::ApplicationJob
@@ -20,11 +21,10 @@ module Trivia
           ::Trivia::RoundStatus::LockedJob.set(wait_until: Time.at(round.start_date) - 30.minutes).perform_later(round.id)
           ::Trivia::RoundStatus::RunningJob.set(wait_until: Time.at(round.start_date)).perform_later(round.id)
           ::Trivia::RoundStatus::CloseJob.set(wait_until: Time.at(round.end_date)).perform_later(round.id)
-          ::Trivia::RoundStatus::RoundStartAnnouncementJob.set(wait_until: Time.at(round.start_date) - 15.minutes).perform_later(round.id, game.id, round_order, "15 minutes")
-          ::Trivia::RoundStatus::RoundStartAnnouncementJob.set(wait_until: Time.at(round.start_date) - 1.minute).perform_later(round.id, game.id, round_order, "1 minute")
+          ::Trivia::RoundStatus::RoundStartAnnouncementJob.set(wait_until: Time.at(round.start_date) - 15.minutes).perform_later(round.id, game.id, round_order, '15 minutes')
+          ::Trivia::RoundStatus::RoundStartAnnouncementJob.set(wait_until: Time.at(round.start_date) - 1.minute).perform_later(round.id, game.id, round_order, '1 minute')
           round_order += 1
         end
-
       end
     end
   end

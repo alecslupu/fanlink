@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class InactiveTwoDaysNotificationJob < InactiveNotificationJob
   protected
 
@@ -14,6 +15,3 @@ class InactiveTwoDaysNotificationJob < InactiveNotificationJob
     Time.zone.now - 48.hours
   end
 end
-
-
-

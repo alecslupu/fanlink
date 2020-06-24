@@ -1,8 +1,5 @@
 # frozen_string_literal: true
-json = {}
 
-json[:people] = @assignees.map do |assignee|
-  render(partial: "api/v4/courseware/client/people/#{@req_source}", locals: { assignee: assignee }, handlers: "jb")
-end
-json
-
+{
+  people: render(partial: 'app', collection: @assignees, as: :assignee, handlers: :jb)
+}

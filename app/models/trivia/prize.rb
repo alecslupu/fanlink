@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_prizes
@@ -23,7 +24,8 @@ module Trivia
   class Prize < ApplicationRecord
     include AttachmentSupport
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+
+    scope :for_product, ->(product) { where(product_id: product.id) }
 
     has_paper_trail ignore: [:created_at, :updated_at]
 

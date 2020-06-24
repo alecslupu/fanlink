@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples 'enforces the permissions' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
 
@@ -19,46 +18,44 @@ RSpec.shared_examples 'enforces the permissions' do |klass, module_name|
     select_product: false
   }
 
-  describe "defined policies" do
+  describe 'defined policies' do
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
     end
   end
-  context "logged in user with no permission" do
-    describe "permissions" do
+  context 'logged in user with no permission' do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         it { is_expected.to forbid_action(policy) }
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:module_name)).to eq(module_name) }
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-  context "logged in admin with no permission" do
+  context 'logged in admin with no permission' do
     subject { described_class.new(Person.new(role: build(:role_admin)), master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         it { is_expected.to forbid_action(policy) }
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-
 end
 
 RSpec.shared_examples 'enforces the history permission' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
-  context "logged in admin with history permission" do
+  context 'logged in admin with history permission' do
     permission_list = {
       index: false,
       show: false,
@@ -74,9 +71,10 @@ RSpec.shared_examples 'enforces the history permission' do |klass, module_name|
     }
 
     before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_history": true))
+      allow_any_instance_of(Person).to receive(:individual_access)
+        .and_return(PortalAccess.new("#{module_name}_history": true))
     end
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -85,19 +83,18 @@ RSpec.shared_examples 'enforces the history permission' do |klass, module_name|
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 end
 
 RSpec.shared_examples 'enforces the export permission' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
-  context "logged in admin with export permission" do
+  context 'logged in admin with export permission' do
     permission_list = {
       index: false,
       show: false,
@@ -112,9 +109,10 @@ RSpec.shared_examples 'enforces the export permission' do |klass, module_name|
       select_product: false
     }
 
-    describe "permissions" do
+    describe 'permissions' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_export": true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new("#{module_name}_export": true))
       end
       permission_list.each do |policy, value|
         if value
@@ -124,10 +122,10 @@ RSpec.shared_examples 'enforces the export permission' do |klass, module_name|
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 end
@@ -135,7 +133,7 @@ end
 RSpec.shared_examples 'enforces the read permission' do |klass, module_name|
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
-  context "logged in admin with read permission" do
+  context 'logged in admin with read permission' do
     permission_list = {
       index: true,
       show: true,
@@ -150,9 +148,10 @@ RSpec.shared_examples 'enforces the read permission' do |klass, module_name|
       select_product: false
     }
 
-    describe "permissions" do
+    describe 'permissions' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_read": true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new("#{module_name}_read": true))
       end
       permission_list.each do |policy, value|
         if value
@@ -162,19 +161,18 @@ RSpec.shared_examples 'enforces the read permission' do |klass, module_name|
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 end
 
 RSpec.shared_examples 'enforces the update permission' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
-  context "logged in admin with update permission" do
+  context 'logged in admin with update permission' do
     permission_list = {
       index: false,
       show: false,
@@ -189,9 +187,10 @@ RSpec.shared_examples 'enforces the update permission' do |klass, module_name|
       select_product: false
     }
 
-    describe "permissions" do
+    describe 'permissions' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_update": true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new("#{module_name}_update": true))
       end
       permission_list.each do |policy, value|
         if value
@@ -201,19 +200,18 @@ RSpec.shared_examples 'enforces the update permission' do |klass, module_name|
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 end
 
 RSpec.shared_examples 'enforces the delete permission' do |klass, module_name|
-
   let(:master_class) { klass.new }
   subject { described_class.new(Person.new, master_class) }
-  context "logged in admin with delete permission" do
+  context 'logged in admin with delete permission' do
     permission_list = {
       index: false,
       show: false,
@@ -228,9 +226,10 @@ RSpec.shared_examples 'enforces the delete permission' do |klass, module_name|
       select_product: false
     }
 
-    describe "permissions" do
+    describe 'permissions' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_delete": true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new("#{module_name}_delete": true))
       end
       permission_list.each do |policy, value|
         if value
@@ -240,11 +239,10 @@ RSpec.shared_examples 'enforces the delete permission' do |klass, module_name|
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 end
-

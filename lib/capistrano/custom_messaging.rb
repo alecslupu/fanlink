@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 if defined?(Slackistrano::Messaging)
   module Slackistrano
     class CustomMessaging < Messaging::Base
-
       # Send failed message to #ops. Send all other messages to default channels.
       # The #ops channel must exist prior.
       # def channels_for(action)
@@ -19,25 +20,25 @@ if defined?(Slackistrano::Messaging)
             color: 'good',
             title: 'Application Deployment started :boom:',
             fields: [{
-                       title: 'Environment',
-                       value: stage,
-                       short: true
-                     }, {
-                       title: 'Branch',
-                       value: branch,
-                       short: true
-                     }, {
-                       title: 'Deployer',
-                       value: deployer,
-                       short: true
-                     }, {
-                       title: 'Time',
-                       value: elapsed_time,
-                       short: true
-                     }],
+              title: 'Environment',
+              value: stage,
+              short: true
+            }, {
+              title: 'Branch',
+              value: branch,
+              short: true
+            }, {
+              title: 'Deployer',
+              value: deployer,
+              short: true
+            }, {
+              title: 'Time',
+              value: elapsed_time,
+              short: true
+            }],
             fallback: super[:text]
           }],
-          text: "<!here> Deployment started!"
+          text: '<!here> Deployment started!'
         }
       end
 
@@ -56,32 +57,32 @@ if defined?(Slackistrano::Messaging)
       def payload_for_updated
         {
           attachments: [{
-                          color: 'good',
-                          title: 'Application Deployed :bangbang:',
-                          fields: [{
-                                     title: 'Environment',
-                                     value: stage,
-                                     short: true
-                                   }, {
-                                     title: 'Branch',
-                                     value: branch,
-                                     short: true
-                                   }, {
-                                     title: 'Deployer',
-                                     value: deployer,
-                                     short: true
-                                   }, {
-                                      title: 'Time',
-                                      value: elapsed_time,
-                                      short: true
-                                    }, {
-                                     title: 'Hash',
-                                     value: revision,
-                                     short: true
-                                   }],
-                          fallback: super[:text]
-                        }],
-          text: "<!here> Application Deployed!"
+            color: 'good',
+            title: 'Application Deployed :bangbang:',
+            fields: [{
+              title: 'Environment',
+              value: stage,
+              short: true
+            }, {
+              title: 'Branch',
+              value: branch,
+              short: true
+            }, {
+              title: 'Deployer',
+              value: deployer,
+              short: true
+            }, {
+              title: 'Time',
+              value: elapsed_time,
+              short: true
+            }, {
+              title: 'Hash',
+              value: revision,
+              short: true
+            }],
+            fallback: super[:text]
+          }],
+          text: '<!here> Application Deployed!'
         }
       end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PostQueueListenerJob < ApplicationJob
   queue_as :default
 
@@ -6,7 +7,7 @@ class PostQueueListenerJob < ApplicationJob
     @job_id   = job_id
     @attempts = attempts || 0
 
-    the_job_we_want = ->(m) { m["jobId"] == @job_id }
+    the_job_we_want = ->(m) { m['jobId'] == @job_id }
     if (msg = Flaws.extract_from_transcoding_queue(&the_job_we_want))
       Rails.logger.error("\nCalled\n")
       Post.process_et_response(msg)
@@ -25,15 +26,15 @@ class PostQueueListenerJob < ApplicationJob
 
   private
 
-    def should_keep_trying?
-      @attempts < 30
-    end
+  def should_keep_trying?
+    @attempts < 30
+  end
 
-    def try_again
-      PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(@job_id, @attempts + 1)
-    end
+  def try_again
+    PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(@job_id, @attempts + 1)
+  end
 
-    def give_up
-      raise "Cannot find #{self.job_id} in SQS and I tried really really hard."
-    end
+  def give_up
+    raise "Cannot find #{self.job_id} in SQS and I tried really really hard."
+  end
 end

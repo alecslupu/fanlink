@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: step_completed
@@ -20,6 +21,5 @@ class StepCompleted < ApplicationRecord
   belongs_to :step, touch: true
   belongs_to :person, touch: true
 
-
-private
+  private
 end

@@ -17,7 +17,7 @@ test26:rubocop:
 test26:bundle_audit:
   extends: .base26
   stage: test
-  allow_failure: true
+  allow_failure: false
   dependencies:
     - build26:initial
     - build26:assets_precompile

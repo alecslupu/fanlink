@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # TODO this is getting messy...divide out into Chat, Post, Relationship subclasses or something
 module Messaging
   def clear_message_counter(room, person, version = nil)
@@ -8,7 +9,7 @@ module Messaging
   def delete_message(message, version = nil)
     return false unless message.hidden
 
-    client_update_call(generic_payload_room("last_deleted_message_id", message, message.id, version))
+    client_update_call(generic_payload_room('last_deleted_message_id', message, message.id, version))
   end
 
   def delete_room(room, version = nil)
@@ -16,7 +17,7 @@ module Messaging
   end
 
   def delete_room_for_member(room, member, version = nil)
-    client_update_call(generic_payload_user("deleted_room_id", member, room.id, version))
+    client_update_call(generic_payload_user('deleted_room_id', member, room.id, version))
   end
 
   def new_private_room(room, version = nil)
@@ -36,13 +37,13 @@ module Messaging
   def delete_post(post, to_be_notified, version = nil)
     return true if to_be_notified.empty?
 
-    client_update_call( generic_bulk_payload_user("deleted_post_id", to_be_notified, post.id, version) )
+    client_update_call(generic_bulk_payload_user('deleted_post_id', to_be_notified, post.id, version))
   end
 
   def post_post(post, to_be_notified, version = nil)
     return true if to_be_notified.empty?
 
-    client_update_call(generic_bulk_payload_user("last_post_id", to_be_notified, post.id, version))
+    client_update_call(generic_bulk_payload_user('last_post_id', to_be_notified, post.id, version))
   end
 
   def set_message_counters(room, except_user, version = nil)
@@ -50,20 +51,20 @@ module Messaging
   end
 
   def update_relationship_count(member, version = nil)
-    client_update_call(generic_payload_user("friend_request_count", member, member.friend_request_count, version))
+    client_update_call(generic_payload_user('friend_request_count', member, member.friend_request_count, version))
   end
 
-private
+  private
 
   def client_update_call(payload)
-    client.update("", payload).response.status == 200
+    client.update('', payload).response.status == 200
   end
 
   def generic_payload_user(fragment, member, value, version)
     payload = {}
     payload["#{user_path(member)}/#{fragment}"] = value
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{user_path(member, v)}/#{fragment}"] = value
       }
     end
@@ -71,12 +72,12 @@ private
   end
 
   def payload_for_post_public_message(message, msg, version)
-    fragment = "last_message"
+    fragment = 'last_message'
 
     payload = {}
     payload["#{room_path(message.room)}/#{fragment}"] = message.as_json
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{room_path(message.room, v)}/#{fragment}"] = msg
       }
     end
@@ -87,7 +88,7 @@ private
     payload = {}
     payload["#{room_path(msg.room)}/#{fragment}"] = value
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{room_path(msg.room, v)}/#{fragment}"] = value
       }
     end
@@ -99,7 +100,7 @@ private
     to_be_notified.each do |member|
       payload["#{user_path(member)}/#{fragment}"] = value
       if version.present?
-        version.downto(1) {|v|
+        version.downto(1) { |v|
           payload["#{user_path(member, v)}/#{fragment}"] = value
         }
       end
@@ -112,7 +113,7 @@ private
     room.room_memberships.each do |mem|
       payload[message_counter_path(mem)] = mem.message_count + 1 unless mem.person == except_user
       if version.present?
-        version.downto(1) {|v|
+        version.downto(1) { |v|
           payload[message_counter_path(mem, v)] = mem.message_count + 1 unless mem.person == except_user
         }
       end
@@ -121,7 +122,7 @@ private
   end
 
   def add_room_for_member(room, member, version = nil)
-    client_update_call(generic_payload_user("new_room_id", member, room.id, version))
+    client_update_call(generic_payload_user('new_room_id', member, room.id, version))
   end
 
   def client
@@ -151,13 +152,13 @@ private
   def message_counter_path(membership, version = nil)
     [
       user_path(membership.person, version),
-      "message_counts",
+      'message_counts',
       membership.room.id
-    ].join("/")
+    ].join('/')
   end
 
   def post_private_message(msg, version = nil)
-    client_update_call(generic_payload_room("last_message_id", msg, msg.id, version))
+    client_update_call(generic_payload_room('last_message_id', msg, msg.id, version))
   end
 
   def post_public_message(message, version = nil)
@@ -181,20 +182,20 @@ private
         picture_url: message.person.picture_url
       }
     }
-    client_update_call( payload_for_post_public_message(message, msg, version))
+    client_update_call(payload_for_post_public_message(message, msg, version))
   end
 
   def room_path(room, version = nil)
     path = [room.product.internal_name]
     path.push("v#{version}") if version.present?
     path.push(['rooms', room.id])
-    path.join("/")
+    path.join('/')
   end
 
   def user_path(person, version = nil)
     path = [person.product.internal_name]
     path.push("v#{version}") if version.present?
     path.push(['users', person.id])
-    path.join("/")
+    path.join('/')
   end
 end

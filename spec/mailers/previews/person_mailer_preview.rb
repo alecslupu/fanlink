@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Preview all emails at http://localhost:3000/rails/mailers/user_mailer/onboarding.html?locale=en&product=caned
 class PersonMailerPreview < ActionMailer::Preview
   def onboarding
@@ -26,7 +28,11 @@ class PersonMailerPreview < ActionMailer::Preview
   def send_certificate
     product = Product.where(internal_name: params[:product]).last || Product.last
 
-    person_certificate = PersonCertificate.joins(:person).where(people: { product_id: product.id}).where.not(issued_date: nil).first
+    person_certificate = PersonCertificate
+                         .joins(:person)
+                         .where(people: { product_id: product.id })
+                         .where.not(issued_date: nil)
+                         .first
 
     PersonMailer.with(
       id: person_certificate.person.id,
@@ -37,13 +43,17 @@ class PersonMailerPreview < ActionMailer::Preview
   def send_assignee_certificate
     product = Product.where(internal_name: params[:product]).last || Product.last
 
-    person_certificate = PersonCertificate.joins(:person).where(people: { product_id: product.id}).where.not(issued_date: nil).first
+    person_certificate = PersonCertificate
+                         .joins(:person)
+                         .where(people: { product_id: product.id })
+                         .where.not(issued_date: nil)
+                         .first
 
     PersonMailer.with(
       person: product.people.last.id,
       assignee: person_certificate.person.id,
       person_certificate: person_certificate.id,
-      email: "random@flink.to"
+      email: 'random@flink.to'
     ).send_assignee_certificate
   end
 end

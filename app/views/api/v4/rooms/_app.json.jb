@@ -1,15 +1,18 @@
 # frozen_string_literal: true
+
 json = {
   id: room.id.to_s,
   name: room.name,
   description: room.description,
   picture_url: room.picture_url,
-  public: room.public
+  public: room.public?,
 }
+json[:owned] = (room.created_by_id == current_user.id)
+
 json[:order] = room.order
 json[:last_message_timestamp] = room.last_message_timestamp
 
-json[:members] = render partial: "api/v4/people/#{@req_source}", collection: room.members, as: :person if room.private?
+json[:members] = render partial: 'api/v4/people/app', collection: room.members, as: :person if room.private?
 
 if room.pin_from.present?
   json[:pin_messages_from] = room.pin_messages.map do |pin|

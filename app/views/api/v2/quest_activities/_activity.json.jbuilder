@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if !activity.deleted
   json.id activity.id.to_s
   json.quest_id activity.step.quest_id
@@ -14,7 +15,7 @@ if !activity.deleted
     json.completed false
   end
   if activity.activity_types.count > 0
-    json.requirements activity.activity_types, partial: "api/v2/activity_types/type", as: :atype
+    json.requirements activity.activity_types, partial: 'api/v2/activity_types/type', as: :atype
   else
     json.requirements nil
   end

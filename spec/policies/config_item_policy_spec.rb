@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ConfigItemPolicy, type: :policy do
-  args = ConfigItem, "root"
+  args = ConfigItem, 'root'
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
@@ -10,5 +11,4 @@ RSpec.describe ConfigItemPolicy, type: :policy do
   include_examples 'enforces the delete permission', args
   include_examples 'enforces the history permission', args
   include_examples 'enforces the export permission', args
-
 end

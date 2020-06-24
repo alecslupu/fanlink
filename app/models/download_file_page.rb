@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: download_file_pages
@@ -18,7 +19,8 @@
 class DownloadFilePage < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
+
   acts_as_tenant(:product)
   belongs_to :product
 
@@ -49,10 +51,11 @@ class DownloadFilePage < ApplicationRecord
 
   def just_me
     return if certcourse_page.new_record?
+
     target_course_page = CertcoursePage.find(certcourse_page.id)
     child = target_course_page.child
     if child && child != self
-      errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
+      errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
     end
   end
 

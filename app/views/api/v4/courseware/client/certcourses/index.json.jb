@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 json = {}
 
 json[:certcourses] = @certcourses.map do |certcourse|
-  cc = render partial: "api/v4/certcourses/app", locals: { certcourse: certcourse, person: @assignee, certificate: @certificate }, handlers: "jb"
+  cc = render partial: 'api/v4/certcourses/app', locals: { certcourse: certcourse, person: @assignee, certificate: @certificate }, handlers: 'jb'
   cc[:last_completed_page_order] = CertcoursePage.where(id: cc[:last_completed_page_id]).first&.certcourse_page_order
   cc
 end

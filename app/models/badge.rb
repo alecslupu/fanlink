@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: badges
@@ -30,10 +31,10 @@ class Badge < ApplicationRecord
   accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_many :badge_awards, dependent: :restrict_with_error
-  has_one :reward, -> { where("rewards.reward_type = ?", Reward.reward_types["badge"]) }, foreign_key: "reward_type_id", dependent: :destroy
+  has_one :reward, -> { where('rewards.reward_type = ?', Reward.reward_types['badge']) }, foreign_key: 'reward_type_id', dependent: :destroy
   has_many :assigned_rewards, through: :reward
 
-  scope :for_product, -> (product) { where( badges: { product_id: product.id } ) }
+  scope :for_product, ->(product) { where(badges: { product_id: product.id }) }
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
@@ -48,13 +49,13 @@ class Badge < ApplicationRecord
   normalize_attributes :issued_from, :issued_to
 
   validates :internal_name,
-            presence: { message: _("Internal name is required.") },
-            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") } },
-            length: { in: 3..26, message: _("Internal name must be between 3 and 26 characters.") },
-            uniqueness: { scope: :product_id, message: _("There is already a badge with that internal name.") }
+            presence: { message: _('Internal name is required.') },
+            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _('Internal name can only contain lowercase letters, numbers and underscores.') } },
+            length: { in: 3..26, message: _('Internal name must be between 3 and 26 characters.') },
+            uniqueness: { scope: :product_id, message: _('There is already a badge with that internal name.') }
 
-  validates :action_requirement, presence: { message: _("Action requirement is required.") },
-            numericality: { greater_than: 0, message: _("Action requirement must be greater than zero.") }
+  validates :action_requirement, presence: { message: _('Action requirement is required.') },
+                                 numericality: { greater_than: 0, message: _('Action requirement must be greater than zero.') }
 
   around_create :create_reward
   after_update :update_reward
@@ -62,18 +63,18 @@ class Badge < ApplicationRecord
   def action_count_earned_by(person)
     time_frame_start = (issued_from.present?) ? issued_from : Time.zone.now - 10.years
     time_frame_end = (issued_to.present?) ? issued_to : Time.zone.now + 10.years
-    person.badge_actions.where(action_type: action_type).where("created_at >= ?", time_frame_start).where("created_at <= ?", time_frame_end).count
+    person.badge_actions.where(action_type: action_type).where('created_at >= ?', time_frame_start).where('created_at <= ?', time_frame_end).count
   end
 
   def current?
     (issued_from.nil? || (Time.zone.now > issued_from)) && (issued_to.nil? || (Time.zone.now < issued_to))
   end
 
-private
+  private
 
   def issued_time_sanity
     if issued_from.present? && issued_to.present? && issued_from > issued_to
-      errors.add(:issued_to, :time_sanity, message: _("Issued to cannot be before issued from."))
+      errors.add(:issued_to, :time_sanity, message: _('Issued to cannot be before issued from.'))
     end
   end
 
@@ -88,7 +89,7 @@ private
     )
     reward.name = name
 
-    if reward.valid? && self.valid?# check if the new reward and badge are valid
+    if reward.valid? && self.valid? # check if the new reward and badge are valid
       yield # saves the badge
       reward.reward_type_id = id
       reward.save

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Trivia::Round")
-  config.model "Trivia::Round" do
-    parent "Trivia::Game"
-    label_plural "Rounds"
+  config.included_models.push('Trivia::Round')
+  config.model 'Trivia::Round' do
+    parent 'Trivia::Game'
+    label_plural 'Rounds'
 
     configure :status, :enum do
       queryable false
@@ -11,12 +12,12 @@ RailsAdmin.config do |config|
       # enum_method :rails_admin_status_field
       enum do
         if bindings[:object].new_record?
-          {draft: bindings[:object].class.statuses[:draft]}
+          { draft: bindings[:object].class.statuses[:draft] }
         else
           ha = {}
-          bindings[:object].aasm.states(permitted: true).map(&:name).
-            push(bindings[:object].status).
-            map { |c| ha[c] = bindings[:object].class.statuses[c] }
+          bindings[:object].aasm.states(permitted: true).map(&:name)
+                           .push(bindings[:object].status)
+                           .map { |c| ha[c] = bindings[:object].class.statuses[c] }
           ha
         end
       end
@@ -28,7 +29,7 @@ RailsAdmin.config do |config|
       field :start_date, :unix_timestamp
       field :questions do
         def render
-          bindings[:view].render partial: "rails_admin/main/form_nested_many_orderable", locals: {
+          bindings[:view].render partial: 'rails_admin/main/form_nested_many_orderable', locals: {
             field: self, form: bindings[:form], field_order: :question_order_field
           }
         end
@@ -41,7 +42,7 @@ RailsAdmin.config do |config|
         visible { bindings[:object].persisted? }
 
         def render
-          bindings[:view].render partial: "rails_admin/main/form_nested_many_orderable", locals: {
+          bindings[:view].render partial: 'rails_admin/main/form_nested_many_orderable', locals: {
             field: self, form: bindings[:form], field_order: :question_order_field
           }
         end

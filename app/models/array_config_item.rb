@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: config_items
@@ -22,5 +23,4 @@
 
 class ArrayConfigItem < ConfigItem
   has_paper_trail ignore: [:created_at, :updated_at]
-
 end

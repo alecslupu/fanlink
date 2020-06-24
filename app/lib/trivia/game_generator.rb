@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-  module Trivia
+
+module Trivia
   class GameGenerator
     attr_reader :game
 
@@ -14,10 +15,10 @@
         @round = game.rounds.build(
           status: :draft,
           leaderboard_size: game.leaderboard_size,
-	  start_date: start_date,
+          start_date: start_date,
           complexity: 1
         )
-        questions = Trivia::AvailableQuestion.order(Arel.sql "random()").first(100)
+        questions = Trivia::AvailableQuestion.order(Arel.sql 'random()').first(100)
 
         50.times do |index|
           available_question = questions.pop
@@ -46,8 +47,8 @@
         status: :draft,
         leaderboard_size: 10,
         long_name: "Generated Game #{DateTime.now.to_i}",
-        short_name: "Generated Game",
-        description: "Generated description for the game "
+        short_name: 'Generated Game',
+        description: 'Generated description for the game '
       )
     end
   end

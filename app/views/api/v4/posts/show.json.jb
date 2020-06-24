@@ -1,24 +1,25 @@
 # frozen_string_literal: true
+
 json = {}
-json[:post] = render(partial: @req_source, locals: { post: @post }, handlers: "jb")
+json[:post] = render(partial: 'app', locals: { post: @post }, handlers: :jb)
 
 json[:post][:pinned] = @post.pinned
 
 if defined?(@post_reaction) && @post_reaction.present?
-  json[:post][:post_reaction] = render partial: "api/v4/post_reactions/#{@req_source}", locals: { post_reaction: @post_reaction }
+  json[:post][:post_reaction] = render partial: 'api/v4/post_reactions/app', locals: { post_reaction: @post_reaction }
 else
   json[:post][:post_reaction] = nil
 end
 
 if @post.poll.present?
-  json[:post][:poll] = render(partial: "api/v4/polls/app", locals: { poll: @post.poll }, handlers: "jb")
+  json[:post][:poll] = render(partial: 'api/v4/polls/app', locals: { poll: @post.poll }, handlers: :jb)
   json[:post][:poll][:closed] = @post.poll.closed?
   json[:post][:poll][:locale] = I18n.locale
   json[:post][:poll][:clocale] = @lang
 
   if @post.poll.poll_options.present?
     json[:post][:poll][:poll_options] = @post.poll.poll_options.map do |option|
-      po = render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
+      po = render(partial: 'api/v4/poll_options/app', locals: { option: option }, handlers: :jb)
       po[:numberOfVotes] = option.voters.count
       po[:voted] = option.voted?(current_user)
       po

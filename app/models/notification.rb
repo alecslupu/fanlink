@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: notifications
@@ -13,7 +14,6 @@
 #
 
 class Notification < ApplicationRecord
-
   def notify
     SimpleNotificationPushJob.perform_later(self.id)
   end

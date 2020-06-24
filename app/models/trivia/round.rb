@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_rounds
@@ -25,8 +26,11 @@ module Trivia
 
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id, counter_cache: :round_count
 
-    has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id, dependent: :destroy
-    has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id, dependent: :destroy
+    has_many :questions, -> { order('question_order') },
+             class_name: 'Trivia::Question',
+             foreign_key: :trivia_round_id,
+             dependent: :destroy
+    has_many :leaderboards, class_name: 'RoundLeaderboard', foreign_key: :trivia_round_id, dependent: :destroy
     accepts_nested_attributes_for :questions, allow_destroy: true
 
     include AASM
@@ -73,7 +77,7 @@ module Trivia
 
     def copy_to_new
       new_entry = dup
-      new_entry.update!(status: :draft, start_date: nil, end_date: nil )
+      new_entry.update!(status: :draft, start_date: nil, end_date: nil)
       new_entry.questions = questions.collect(&:copy_to_new)
       self.class.reset_counters(id, :questions, touch: true)
       self.class.reset_counters(new_entry.id, :questions, touch: true)

@@ -1,9 +1,11 @@
 # frozen_string_literal: true
+
 module Trivia
   class QuestionLeaderboardPolicy < TriviaModulePolicy
     def create?
       false
     end
+
     def new?
       create?
     end

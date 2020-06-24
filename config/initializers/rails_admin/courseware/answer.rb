@@ -1,9 +1,10 @@
 # frozen_string_literal: true
-RailsAdmin.config do |config|
-  config.included_models.push("Answer")
 
-  config.model "Answer" do
-    parent "Certificate"
+RailsAdmin.config do |config|
+  config.included_models.push('Answer')
+
+  config.model 'Answer' do
+    parent 'Certificate'
 
     configure :question do
     end
@@ -11,21 +12,21 @@ RailsAdmin.config do |config|
     end
     show do
       fields :quiz_page,
-            :id,
-            :description,
-            :is_correct
+             :id,
+             :description,
+             :is_correct
     end
     list do
       fields :id,
-            :certcourse_name,
-            :question,
-            :description,
-            :is_correct
+             :certcourse_name,
+             :question,
+             :description,
+             :is_correct
     end
     edit do
       fields :quiz_page,
-            :description,
-            :is_correct
+             :description,
+             :is_correct
     end
 
     nested do

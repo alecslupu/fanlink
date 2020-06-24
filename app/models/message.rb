@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: messages
@@ -25,18 +26,18 @@ class Message < ApplicationRecord
   include AttachmentSupport
   # include Message::FilterrificImpl
 
-  scope :person_name_query, ->(query)  { joins(:person).where("people.name ilike ?", "%#{query}%") }
-  scope :person_username_query, ->(query)  { joins(:person).where("people.username_canonical ilike ?", "%#{query}%") }
+  scope :person_name_query, ->(query) { joins(:person).where('people.name ilike ?', "%#{query}%") }
+  scope :person_username_query, ->(query) { joins(:person).where('people.username_canonical ilike ?', "%#{query}%") }
   scope :room_query,   ->(query)  { joins(:room).where("rooms.name->>'en' ilike ? or rooms.name->>'un' ilike ?", "%#{query}%", "%#{query}%") }
   scope :id_query,     ->(query)  { where(id: query.to_i) }
-  scope :body_query,   ->(query)  { where("messages.body ilike ?", "%#{query}%") }
+  scope :body_query,   ->(query)  { where('messages.body ilike ?', "%#{query}%") }
   scope :sorted_by, lambda { |sort_option|
-    direction = (sort_option =~ /desc$/) ? "desc" : "asc"
+    direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
     case sort_option.to_s
     when /^created/
       order("created_at #{direction}")
     when /^person/
-      joins(:person).order("LOWER(people.username) #{ direction }")
+      joins(:person).order("LOWER(people.username) #{direction}")
     when /^room/
       joins(:room).order("LOWER(rooms.name) #{direction}")
     when /^id/
@@ -44,14 +45,14 @@ class Message < ApplicationRecord
     when /^body/
       order("body #{direction}")
     else
-      raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
+      raise(ArgumentError, "Invalid sort option: #{sort_option.inspect}")
     end
   }
 
   scope :with_reported_status, lambda { |reported|
-    if reported == "Yes"
+    if reported == 'Yes'
       joins(:message_reports).where.not(message_reports: { message_id: nil })
-    elsif reported == "No"
+    elsif reported == 'No'
       left_outer_joins(:message_reports).where(message_reports: { message_id: nil })
     else
       nil
@@ -59,7 +60,7 @@ class Message < ApplicationRecord
   }
 
   filterrific(
-    default_filter_params: { sorted_by: "created_at desc" },
+    default_filter_params: { sorted_by: 'created_at desc' },
     available_filters: [
       :sorted_by,
       :person_username_query,
@@ -77,16 +78,16 @@ class Message < ApplicationRecord
   # include Message::PortalFilters
 
   scope :id_filter, ->(query) { where(id: query.to_i) }
-  scope :person_filter, ->(query) { joins(:person).where("people.username_canonical ilike ?", "%#{query}%") }
-  scope :room_id_filter, ->(query) { joins(:room).where("rooms.id = ?", query.to_i) }
-  scope :body_filter, ->(query) { where("body ilike ?", "%#{query}%") }
-  scope :created_after_filter, ->(query) { where("messages.created_at > ?", query) }
-  scope :created_before_filter, ->(query) { where("messages.created_at < ?", query) }
+  scope :person_filter, ->(query) { joins(:person).where('people.username_canonical ilike ?', "%#{query}%") }
+  scope :room_id_filter, ->(query) { joins(:room).where('rooms.id = ?', query.to_i) }
+  scope :body_filter, ->(query) { where('body ilike ?', "%#{query}%") }
+  scope :created_after_filter, ->(query) { where('messages.created_at > ?', query) }
+  scope :created_before_filter, ->(query) { where('messages.created_at < ?', query) }
 
   scope :reported_filter, lambda { |reported|
-    if reported == "Yes"
+    if reported == 'Yes'
       joins(:message_reports).where.not(message_reports: { message_id: nil })
-    elsif reported == "No"
+    elsif reported == 'No'
       joins(:message_reports).where(message_reports: { message_id: nil })
     else
       nil
@@ -111,7 +112,7 @@ class Message < ApplicationRecord
   end
 
   def public_room_message_push
-    if RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.current - 2.minute).where.not(person_id: person_id).exists?
+    if RoomSubscriber.where(room_id: room.id).where('last_notification_time < ?', DateTime.current - 2.minute).where.not(person_id: person_id).exists?
       PublicMessagePushJob.perform_later(id)
     end
   end
@@ -119,7 +120,7 @@ class Message < ApplicationRecord
 
   # replicated_model
 
-  enum status: %i[ pending posted ]
+  enum status: %i[pending posted]
 
   normalize_attributes :body
 
@@ -136,37 +137,39 @@ class Message < ApplicationRecord
   has_many :room_subscribers, dependent: :nullify
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  scope :for_date_range, ->(room, from, to, limit = nil) {
-          where(room: room).where("created_at >= ?", from.beginning_of_day).
-            where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit)
-        }
-  scope :for_product, ->(product) { joins(:room).where( rooms: { product_id: product.id }) }
-  scope :pinned, ->(param) { joins(:person).where( people: { pin_messages_from: (param.downcase == "yes") } ) }
-  scope :publics, -> { joins(:room).where( rooms: { public: true } ) }
-  scope :reported_action_needed, -> { joins(:message_reports).where( message_reports: { status: MessageReport.statuses[:pending] } ) }
+  scope :for_date_range, ->(room, from, to, limit = nil) do
+    where(room: room)
+      .where('created_at >= ?', from.beginning_of_day)
+      .where('created_at <= ?', to.end_of_day)
+      .order(created_at: :desc)
+      .limit(limit)
+  end
+  scope :for_product, ->(product) { joins(:room).where(rooms: { product_id: product.id }) }
+  scope :pinned, ->(param) { joins(:person).where(people: { pin_messages_from: (param.downcase == 'yes') }) }
+  scope :publics, -> { joins(:room).where(rooms: { public: true }) }
+  scope :reported_action_needed, -> { joins(:message_reports).where(message_reports: { status: MessageReport.statuses[:pending] }) }
   scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
 
-  scope :not_reported_by_user, -> (person_id) {
+  scope :not_reported_by_user, ->(person_id) do
     where("NOT EXISTS (
       SELECT 1 FROM message_reports
       WHERE message_reports.message_id = messages.id
       AND message_reports.person_id = ?
     )", person_id)
-  }
+  end
 
   scope :visible, -> { where(hidden: false) }
-  scope :room_date_range, ->(from, to) { where("messages.created_at BETWEEN ? AND ?", from, to) }
+  scope :room_date_range, ->(from, to) { where('messages.created_at BETWEEN ? AND ?', from, to) }
   scope :chronological, ->(sign, created_at, id) { where("messages.created_at #{sign} ? AND messages.id #{sign} ?", created_at, id) }
 
-
   scope :reported, -> { joins(:message_reports) }
-  scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil } ) }
+  scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil }) }
 
   def as_json
-    super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url pinned ],
-          include: { message_mentions: { except: %i[ message_id ] },
-                    person: { only: %i[ id username name designation product_account chat_banned badge_points
-                                       level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] } })
+    super(only: %i[id body picture_id], methods: %i[create_time picture_url pinned],
+          include: { message_mentions: { except: %i[message_id] },
+                     person: { only: %i[ id username name designation product_account chat_banned badge_points
+                       level do_not_message_me pin_messages_from ], methods: %i[level picture_url] } })
   end
 
   def create_time
@@ -192,7 +195,7 @@ class Message < ApplicationRecord
   end
 
   def reported?
-    (message_reports.size > 0) ? "Yes" : "No"
+    (message_reports.size > 0) ? 'Yes' : 'No'
   end
 
   def username
@@ -214,11 +217,11 @@ class Message < ApplicationRecord
         if body.match?(/[^\u201C]*@\w{3,26}[^\u201D]*/i)
           mod_body = body
           body.scanm(/[^\u201C]*(@\w{3,26})[^\u201D]*/i).each { |m|
-            person = Person.where(username: m[1].sub("@", "")).first
+            person = Person.where(username: m[1].sub('@', '')).first
             if person.present?
               # self.mention_meta.push({ person_id: person.id, location: mod_body.index(m[1]), length: m[1].size })
               mmeta << { id: MessageMention.maximum(:id) + rand(200 - 1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size }
-              mod_body = mod_body.sub(m[1], "a" * m[1].size)
+              mod_body = mod_body.sub(m[1], 'a' * m[1].size)
             end
           }
         end

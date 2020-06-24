@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ApplicationPolicy
   attr_reader :user, :record
 
@@ -71,7 +72,7 @@ class ApplicationPolicy
   protected
 
   def has_permission?(permission)
-    user.full_permission_list.include?([module_name, permission].join("_").delete_suffix("?").to_sym)
+    user.full_permission_list.include?([module_name, permission].join('_').delete_suffix('?').to_sym)
   end
 
   def super_admin?
@@ -80,7 +81,7 @@ class ApplicationPolicy
 
   def module_name
     Rails.logger.debug("Defaulting to #{self.class.name}")
-    "admin"
+    'admin'
   end
 
   class Scope

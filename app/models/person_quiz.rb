@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: person_quizzes
@@ -18,6 +19,5 @@ class PersonQuiz < ApplicationRecord
   belongs_to :person
   belongs_to :quiz_page
   belongs_to :answer
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id } ) }
-
+  scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
 end

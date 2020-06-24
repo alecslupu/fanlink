@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RequestHelpers
   #   def delete(*args)
   #     super *add_accept_header(args)

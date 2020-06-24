@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require 'sidekiq'
 require 'sidekiq/web'
 
 Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
-  [user, password] == ["sidekiqadmin", "yourpassword"]
+  [user, password] == ['sidekiqadmin', 'yourpassword']
 end
 
 Sidekiq::Web.set :session_secret, Rails.application.credentials[:secret_key_base]

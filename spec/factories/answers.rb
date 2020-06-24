@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: answers
@@ -17,7 +18,7 @@ FactoryBot.define do
     quiz_page { create(:quiz_page) }
     product { current_product }
     is_correct { false }
-    description { "MyString" }
+    description { 'MyString' }
 
     factory :wrong_answers do
       is_correct { false }

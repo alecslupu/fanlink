@@ -1,10 +1,9 @@
 # frozen_string_literal: true
-require "spec_helper"
 
+require 'spec_helper'
 
 RSpec.describe Trivia::AvailableAnswerPolicy, type: :policy do
-
-  args = [ Trivia::AvailableAnswer, "trivia" ]
+  args = [Trivia::AvailableAnswer, 'trivia']
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args
@@ -12,8 +11,8 @@ RSpec.describe Trivia::AvailableAnswerPolicy, type: :policy do
   include_examples 'enforces the history permission', args
   include_examples 'enforces the export permission', args
 
-  context "Scope" do
-    it "should only return the person quiz in current product" do
+  context 'Scope' do
+    it 'should only return the person quiz in current product' do
       person = build(:person)
 
       post2 = ActsAsTenant.with_tenant(create(:product)) { create(:trivia_available_answer) }

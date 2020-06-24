@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PersonQuizPolicy < CoursewareModulePolicy
   class Scope < Scope
     def resolve

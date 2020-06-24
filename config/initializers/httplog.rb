@@ -1,10 +1,10 @@
 # frozen_string_literal: true
+
 if Rails.env.production? || Rails.env.staging?
 
 else
   require 'httplog'
   HttpLog.configure do |config|
-
     # Enable or disable all logging
     config.enabled = true
 

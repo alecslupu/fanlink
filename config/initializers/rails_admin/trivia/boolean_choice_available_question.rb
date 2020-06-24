@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Trivia::BooleanChoiceAvailableQuestion")
-  config.model "Trivia::BooleanChoiceAvailableQuestion" do
-    parent "Trivia::AvailableQuestion"
-    label_plural "True or False"
+  config.included_models.push('Trivia::BooleanChoiceAvailableQuestion')
+  config.model 'Trivia::BooleanChoiceAvailableQuestion' do
+    parent 'Trivia::AvailableQuestion'
+    label_plural 'True or False'
 
     configure :status, :enum do
       queryable false
@@ -11,12 +12,12 @@ RailsAdmin.config do |config|
       # enum_method :rails_admin_status_field
       enum do
         if bindings[:object].new_record?
-          {draft: bindings[:object].class.statuses[:draft]}
+          { draft: bindings[:object].class.statuses[:draft] }
         else
           ha = {}
-          bindings[:object].aasm.states(permitted: true).map(&:name).
-            push(bindings[:object].status).
-            map { |c| ha[c] = bindings[:object].class.statuses[c] }
+          bindings[:object].aasm.states(permitted: true).map(&:name)
+                           .push(bindings[:object].status)
+                           .map { |c| ha[c] = bindings[:object].class.statuses[c] }
           ha
         end
       end

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 json = {
   id: round.id,
   game_id: round.trivia_game_id,
-  start_date:  (round.start_date.to_i rescue nil),
-  end_date:  (round.end_date rescue nil),
+  start_date: (round.start_date.to_i rescue nil),
+  end_date: (round.end_date rescue nil),
   question_size: round.questions.size,
   complexity: round.complexity,
   status: round.status

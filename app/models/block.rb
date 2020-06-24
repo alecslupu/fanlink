@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: blocks
@@ -14,5 +15,5 @@ class Block < ApplicationRecord
   belongs_to :blocked, class_name: "Person", touch: true
   has_paper_trail ignore: [:created_at]
 
-  validates :blocked_id, uniqueness: { scope: :blocker_id, message: _("That user is already blocked.") }
+  validates :blocked_id, uniqueness: { scope: :blocker_id, message: _('That user is already blocked.') }
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: certificates
@@ -46,7 +47,7 @@ class Certificate < ApplicationRecord
 
   validates_uniqueness_to_tenant :certificate_order
   validates_attachment_presence :template_image
-  validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _("Must be 3840x2967") }
+  validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _('Must be 3840x2967') }
 
   validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
 
@@ -59,8 +60,8 @@ class Certificate < ApplicationRecord
   validates :certificate_order, numericality: { only_integer: true, greater_than: 0 }
   # validate :certificate_order_validation, if: :certificate_order_changed?
 
-  scope :live_status, -> { where(status: "live") }
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :live_status, -> { where(status: 'live') }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
   def title
     short_name
@@ -79,7 +80,8 @@ class Certificate < ApplicationRecord
   end
 
   private
-    def certificate_order_validation
-      errors.add(:certificate_order, _("The certificate order must be greater than %{size}. Got %{value}" % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
-    end
+
+  def certificate_order_validation
+    errors.add(:certificate_order, _('The certificate order must be greater than %{size}. Got %{value}' % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
+  end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: roles
@@ -38,9 +39,7 @@ class Role < ApplicationRecord
   scope :normals, -> { where(internal_name: 'normal') }
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   def to_s
     internal_name
   end
-
 end

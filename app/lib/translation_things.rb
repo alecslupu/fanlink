@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module TranslationThings
   extend ActiveSupport::Concern
 
@@ -7,20 +8,20 @@ module TranslationThings
   end
 
   LANGS = {
-      "un" => "Language Unspecified",
-      "en" => "English*",
-      # 'ar' => 'Arabic',
-      # 'de' => 'German',
-      "es" => "Spanish",
-      #  'fr' => 'French',
-      #  'it' => 'Italian',
-      #  'ko' => 'Korean',
-      #  'pt' => 'Portuguese',
-      "ro" => "Romanian",
+    'un' => 'Language Unspecified',
+    'en' => 'English*',
+    # 'ar' => 'Arabic',
+    # 'de' => 'German',
+    'es' => 'Spanish',
+    #  'fr' => 'French',
+    #  'it' => 'Italian',
+    #  'ko' => 'Korean',
+    #  'pt' => 'Portuguese',
+    'ro' => 'Romanian',
   }.freeze
 
-  DEFAULT_LANG = "en"
-  DEFAULT_READ_LANG = "en"
+  DEFAULT_LANG = 'en'
+  DEFAULT_READ_LANG = 'en'
 
   def self.word(code)
     LANGS[code]
@@ -46,11 +47,11 @@ module TranslationThings
     # first if it is present.  This ensures the hash is correctly setup.
     #
     def has_manual_translated(*names)
-      ActiveSupport::Deprecation.warn("The TranslationThings is deprecated. Please implement Globalize functionality #{caller_locations(1,1)[0].label}")
+      ActiveSupport::Deprecation.warn("The TranslationThings is deprecated. Please implement Globalize functionality #{caller_locations(1, 1)[0].label}")
       add_translation_things_instance_methods_for(names)
     end
 
-  private
+    private
 
     def translation_things_module
       @translation_things_module ||= Module.new

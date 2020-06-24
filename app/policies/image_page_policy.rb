@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ImagePagePolicy < CoursewareModulePolicy
   # class Scope < Scope
   #   def resolve
@@ -7,7 +8,7 @@ class ImagePagePolicy < CoursewareModulePolicy
   # end
   class Scope < Scope
     def resolve
-        super.for_product(ActsAsTenant.current_tenant).includes(certcourse_page: :certcourse)
+      super.for_product(ActsAsTenant.current_tenant).includes(certcourse_page: :certcourse)
     end
   end
 end

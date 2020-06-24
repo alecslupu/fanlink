@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RailsAdmin
   module Config
     module Actions
@@ -17,11 +18,10 @@ module RailsAdmin
             proc do
               ::Trivia::CreateRandomGameJob.perform_later(ActsAsTenant.current_tenant.id)
 
-              flash[:notice] = t("game enqueued")
+              flash[:notice] = t('game enqueued')
               redirect_to action: :index
             end
           end
-
         end
       end
     end

@@ -1,3 +1,8 @@
 # frozen_string_literal: true
-class Api::V4::PasswordResetsController < Api::V3::PasswordResetsController
+
+module Api
+  module V4
+    class PasswordResetsController < Api::V3::PasswordResetsController
+    end
+  end
 end

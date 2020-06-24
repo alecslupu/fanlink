@@ -1,8 +1,5 @@
 # frozen_string_literal: true
-json = {}
 
-json[:relationships] = @relationships.map do |relationship|
-  render partial: @req_source, locals: { relationship: relationship }, handlers: "jb"
-end
-
-json
+{
+  relationships: render(partial: 'app', collection: @relationships, as: :relationship, handlers: :jb)
+}

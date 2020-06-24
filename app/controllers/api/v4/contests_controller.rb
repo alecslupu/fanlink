@@ -1,17 +1,22 @@
 # frozen_string_literal: true
-class Api::V4::ContestsController < Api::V3::ContestsController
-  def index
-  end
 
-  def show
-  end
+module Api
+  module V4
+    class ContestsController < Api::V3::ContestsController
+      def index
+      end
 
-  def create
-  end
+      def show
+      end
 
-  def update
-  end
+      def create
+      end
 
-  def destroy
+      def update
+      end
+
+      def destroy
+      end
+    end
   end
 end

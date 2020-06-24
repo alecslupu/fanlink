@@ -1,8 +1,5 @@
 # frozen_string_literal: true
-json = {}
 
-json[:beacons] = @product_beacons.map do |beacon|
-  render partial: @req_source, locals: { beacon: beacon }, handlers: "jb"
-end
-
-json
+{
+  beacons: render(partial: 'app', collection: @product_beacons, as: :beacon, handlers: :jb)
+}

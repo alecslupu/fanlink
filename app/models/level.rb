@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: levels
@@ -23,25 +24,24 @@ class Level < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   acts_as_tenant(:product)
   belongs_to :product
 
   has_image_called :picture
   # has_manual_translated :description, :name
 
-  scope :for_product, -> (product) { where( levels: { product_id: product.id } ) }
+  scope :for_product, ->(product) { where(levels: { product_id: product.id }) }
 
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
   validates :internal_name,
-            presence: { message: _("Internal name is required.") },
-            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") } },
-            length: { in: 3..26, message: _("Internal name must be between 3 and 26 characters in length.") },
-            uniqueness: { scope: :product_id, message: _("There is already a level with that internal name.") }
+            presence: { message: _('Internal name is required.') },
+            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _('Internal name can only contain lowercase letters, numbers and underscores.') } },
+            length: { in: 3..26, message: _('Internal name must be between 3 and 26 characters in length.') },
+            uniqueness: { scope: :product_id, message: _('There is already a level with that internal name.') }
 
-  validates :points, presence: { message: _("Point value is required.") },
-            numericality: { greater_than: 0, message: _("Point value must be greater than zero.") },
-            uniqueness: { scope: :product_id, message: _("There is already a level with that point value.") }
+  validates :points, presence: { message: _('Point value is required.') },
+                     numericality: { greater_than: 0, message: _('Point value must be greater than zero.') },
+                     uniqueness: { scope: :product_id, message: _('There is already a level with that point value.') }
 end

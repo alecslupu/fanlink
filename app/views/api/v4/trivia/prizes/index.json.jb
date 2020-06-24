@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-json = {}
 
-json[:prizes] = render partial: @req_source, collection: @prizes, as: :prize, handler: :jb
-json
+{
+  prizes: render(partial: 'app', collection: @prizes, as: :prize, handler: :jb)
+}

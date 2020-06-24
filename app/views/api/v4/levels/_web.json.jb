@@ -1,9 +1,0 @@
-# frozen_string_literal: true
-{
-  id: level.id,
-  name: level.name,
-  internal_name: level.internal_name,
-  description: level.description,
-  points: level.points,
-  picture_url: level.picture_url
-}

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RailsAdminController < ApplicationController
   include Messaging
   include ::Pundit
@@ -13,15 +14,14 @@ class RailsAdminController < ApplicationController
 
   def require_login
     unless logged_in?
-      session[:return_to_url] = "/admin_portal/"
+      session[:return_to_url] = '/admin_portal/'
       send(Config.not_authenticated_action)
-    # else
-    #   not_found unless current_user.product_id == Product.first.id && current_user.role == "super_admin"
+      # else
+      #   not_found unless current_user.product_id == Product.first.id && current_user.role == "super_admin"
     end
   end
 
   protected
-
 
   def set_language
     I18n.locale = :en
@@ -41,7 +41,7 @@ class RailsAdminController < ApplicationController
 
     if product.present?
       set_current_tenant(product)
-      cookies[:product_internal_name] = ((current_user.present?) ? current_user.product.internal_name : product.internal_name)
+      cookies[:product_internal_name] = ((current_user.present?) ? current_user.product : product).internal_name
     else
       head :not_found
     end
@@ -49,8 +49,7 @@ class RailsAdminController < ApplicationController
 
   private
 
-
   def not_found
-    raise ActionController::RoutingError.new("Not Found")
+    raise ActionController::RoutingError.new('Not Found')
   end
 end

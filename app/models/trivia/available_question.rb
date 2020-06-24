@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_available_questions
@@ -59,9 +60,9 @@ module Trivia
       end
     end
 
-    belongs_to :topic, class_name: "Trivia::Topic"
-    has_many :available_answers, class_name: "Trivia::AvailableAnswer", foreign_key: :trivia_question_id
-    has_many :active_questions, class_name: "Trivia::Question", inverse_of: :available_question, dependent: :destroy
+    belongs_to :topic, class_name: 'Trivia::Topic'
+    has_many :available_answers, class_name: 'Trivia::AvailableAnswer', foreign_key: :trivia_question_id
+    has_many :active_questions, class_name: 'Trivia::Question', inverse_of: :available_question, dependent: :destroy
 
     accepts_nested_attributes_for :available_answers, allow_destroy: true
 
@@ -74,9 +75,9 @@ module Trivia
     validates :complexity, numericality: { greater_than: 0 },
                            presence: true
 
-    validates :type, inclusion: { in: %w(Trivia::SingleChoiceAvailableQuestion
+    validates :type, inclusion: { in: %w[Trivia::SingleChoiceAvailableQuestion
                 Trivia::MultipleChoiceAvailableQuestion Trivia::PictureAvailableQuestion
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
-              ),  message: "%{value} is not a valid type" }
+              ], message: '%{value} is not a valid type' }
   end
 end

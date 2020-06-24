@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: post_comment_reports
@@ -13,20 +14,19 @@
 #
 
 class PostCommentReport < ApplicationRecord
-  enum status: %i[ pending no_action_needed comment_hidden ]
+  enum status: %i[pending no_action_needed comment_hidden]
 
   belongs_to :person
   belongs_to :post_comment
 
   # include PostCommentReport::PortalFilters
-  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :status_filter, ->(query) { where(status: query.to_sym) }
   # include PostCommentReport::PortalFilters
   has_paper_trail ignore: [:created_at, :updated_at]
 
+  scope :for_product, ->(product) { joins(:person).where('people.product_id = ?', product.id) }
 
-  scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
-
-  validates :reason, length: { maximum: 500, message: _("Reason cannot be longer than 500 characters.") }
+  validates :reason, length: { maximum: 500, message: _('Reason cannot be longer than 500 characters.') }
 
   normalize_attributes :reason
 

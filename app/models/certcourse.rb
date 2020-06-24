@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: certcourses
@@ -42,8 +43,8 @@ class Certcourse < ApplicationRecord
   validates_format_of :color_hex, with: /\A#(?:[A-F0-9]{3}){1,2}\z/i
   validates :duration, numericality: { greater_than: 0 }
 
-  scope :live_status, -> { where(status: "live") }
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :live_status, -> { where(status: 'live') }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
   validate :children_not_empty, if: :status_changed? && :live?
 
@@ -58,7 +59,7 @@ class Certcourse < ApplicationRecord
   protected
 
   def children_not_empty
-    validation_buffer  = []
+    validation_buffer = []
     certcourse_pages.each do |cp|
       validation_buffer.push(cp.id) unless cp.child.present? && cp.child.valid?
     end

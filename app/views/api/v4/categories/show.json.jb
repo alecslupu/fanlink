@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  category: render(partial: @req_source, locals: { category: @category }, handlers: "jb")
+  category: render(partial: 'app', locals: { category: @category }, handlers: :jb)
 }

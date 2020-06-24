@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module MessagingHelpers
   class ResponseStatus
     def status

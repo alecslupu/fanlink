@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  merchandise: render(partial: @req_source, locals: { merchandise: @merchandise, lang: @lang }, handlers: "jb")
+  merchandise: render(partial: 'app', locals: { merchandise: @merchandise, lang: @lang }, handlers: :jb)
 }

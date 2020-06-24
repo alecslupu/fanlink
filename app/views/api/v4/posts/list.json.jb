@@ -1,9 +1,6 @@
 # frozen_string_literal: true
-json = {}
 
-json[:posts] = @posts.map do |post|
-  render partial: @req_source, locals: { post: post }
-end
-
-json[:total] = @posts.size
-json
+{
+  posts: render(partial: 'app', collection: @posts, as: :post, handlers: :jb),
+  total: @posts.size
+}

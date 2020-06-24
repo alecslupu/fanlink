@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PersonCertcoursePolicy < CoursewareModulePolicy
   def forget_action?
     super_admin? || has_permission?(:forget?)

@@ -132,7 +132,7 @@ test:rspec60:policies:
       - coverage/rails/60/policies
 
 test:rspec60:merge:
-  extends: .test:rspec60
+  extends: .base
   stage: format
   artifacts:
     name: my_app_artifacts

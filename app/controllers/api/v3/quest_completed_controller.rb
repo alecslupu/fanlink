@@ -1,3 +1,8 @@
 # frozen_string_literal: true
-class Api::V3::QuestCompletedController < Api::V2::QuestCompletedController
+
+module Api
+  module V3
+    class QuestCompletedController < Api::V2::QuestCompletedController
+    end
+  end
 end

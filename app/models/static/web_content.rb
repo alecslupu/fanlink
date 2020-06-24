@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: static_web_contents
@@ -19,7 +21,7 @@ module Static
     belongs_to :product
     acts_as_tenant(:product)
 
-    scope :for_product, -> (product) { where( product_id: product.id ) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
 
     # validates :title, presence: true
     # validates :content, presence: true
