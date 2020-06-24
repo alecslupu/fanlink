@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  level: render(partial: @req_source, locals: { level: @level, lang: @lang }, handlers: 'jb')
+  level: render(partial: 'app', locals: { level: @level, lang: @lang }, handlers: :jb)
 }

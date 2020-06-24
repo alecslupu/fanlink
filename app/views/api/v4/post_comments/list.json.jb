@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-json = {}
-
-json[:post_comments] = @post_comments.map do |post_comment|
-  render partial: @req_source, locals: { post_comment: post_comment }, handlers: 'jb'
-end
-
-json
+{
+  post_comments: render(partial: 'app', collection: @post_comments, as: :post_comment, handlers: :jb)
+}

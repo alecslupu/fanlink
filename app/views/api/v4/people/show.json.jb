@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  person: render(partial: @req_source, locals: { person: @person }, handlers: 'jb')
+  person: render(partial: 'app', locals: { person: @person }, handlers: :jb)
 }

@@ -920,8 +920,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         flinkpost = create(:published_post, person: person)
         orig = flinkpost.body
         patch :update, params: { id: flinkpost.id,
-                                 post: { body: 'notchanged',
-                                         global: global, starts_at: starts_at, ends_at: ends_at,
+                                 post: { body: 'notchanged', global: global, starts_at: starts_at, ends_at: ends_at,
                                          repost_interval: repost_interval, status: status, priority: priority } }
         expect(response).to be_unauthorized
         expect(flinkpost.body).to eq(orig)

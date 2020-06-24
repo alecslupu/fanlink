@@ -24,6 +24,7 @@ module Trivia
     scope :for_product, ->(product) { where(product_id: product.id) }
 
     has_paper_trail
+
     belongs_to :round,
                class_name: 'Trivia::Round',
                counter_cache: :question_count,
@@ -47,9 +48,9 @@ module Trivia
     validates :cooldown_period, numericality: { greater_than: 5 },
                                 presence: true
 
-    validates :type, inclusion: { in: %w(Trivia::SingleChoiceQuestion
+    validates :type, inclusion: { in: %w[Trivia::SingleChoiceQuestion
                                          Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
-                                         Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion),
+                                         Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion],
                                   message: '%{value} is not a valid type' }
 
     validates :available_question, presence: {

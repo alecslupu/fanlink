@@ -4,12 +4,12 @@ json = {}
 
 if @certcourse.certcourse_pages.present?
   json[:certcourse_pages] = @certcourse.certcourse_pages.order('certcourse_page_order').map do |ccp|
-    cpc = render(partial: "api/v4/certcourse_pages/app", locals: { certcourse_page: ccp }, handlers: :jb)
+    cpc = render(partial: 'api/v4/certcourse_pages/app', locals: { certcourse_page: ccp }, handlers: :jb)
     cpc[:is_passed] = ccp.course_page_progresses.where(person_id: current_user.id).first_or_initialize.passed
     if ccp.quiz?
-      cpc[:quiz] = render(partial: "api/v4/quiz_pages/app", locals: { quiz_page: ccp.quiz_page }, handlers: :jb)
+      cpc[:quiz] = render(partial: 'api/v4/quiz_pages/app', locals: { quiz_page: ccp.quiz_page }, handlers: :jb)
       cpc[:quiz][:answers] = ccp.quiz_page.answers.map do |answer|
-        render(partial: "api/v4/answers/app", locals: { answer: answer, person: current_user }, handlers: :jb)
+        render(partial: 'api/v4/answers/app', locals: { answer: answer, person: current_user }, handlers: :jb)
       end
     elsif ccp.download?
       cpc[:caption] = ccp.download_file_page.caption

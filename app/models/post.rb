@@ -122,6 +122,7 @@ class Post < ApplicationRecord
   scope :for_person, ->(person) { includes(:person).where(person: person) }
   scope :for_category, ->(categories) { joins(:category).where('categories.name IN (?)', categories) }
   scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
+
   scope :visible, -> {
                     published.where('(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)',
                                     Time.zone.now, Time.zone.now)

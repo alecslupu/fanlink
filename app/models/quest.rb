@@ -46,7 +46,7 @@ class Quest < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-  scope :for_product, ->(product) { where(quests: { product_id: product.id }) }
+  scope :for_product, -> (product) { where(quests: { product_id: product.id }) }
 
   has_image_called :picture
 
