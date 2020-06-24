@@ -9,5 +9,9 @@ else
   json.mentions nil
 end
 json.person do
-  json.partial! 'api/v1/people/person', locals: { person: post_comment.person, relationships: Relationship.for_people(current_user, post_comment.person) }
+  json.partial! 'api/v1/people/person',
+                locals: {
+                  person: post_comment.person,
+                  relationships: Relationship.for_people(current_user, post_comment.person)
+                }
 end

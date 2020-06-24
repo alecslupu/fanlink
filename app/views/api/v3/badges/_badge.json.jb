@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 json = Rails.cache.fetch ['v3', badge.updated_at, @lang, badge] do
+  first_action_type = badge.reward.present? &&
+    badge.reward.assigned_rewards.present? &&
+    badge.reward.assigned_rewards.by_type('ActionType').exists?
   {
     id: badge.id,
     name: badge.name,
@@ -9,9 +12,9 @@ json = Rails.cache.fetch ['v3', badge.updated_at, @lang, badge] do
     picture_url: badge.picture_url,
     reward: badge.reward,
     assigned_rewards: badge.assigned_rewards,
-    action_type_id: ((badge.reward.present? && badge.reward.assigned_rewards.present? && badge.reward.assigned_rewards.by_type('ActionType').exists?) ? badge.reward.assigned_rewards.by_type('ActionType').first.id : nil),
-    action_requirement: ((badge.reward.present?) ? badge.reward.completion_requirement : nil),
-    point_value: ((badge.reward.present?) ? badge.reward.points : nil)
+    action_type_id: (first_action_type ? badge.reward.assigned_rewards.by_type('ActionType').first.id : nil),
+    action_requirement: (badge.reward.present? ? badge.reward.completion_requirement : nil),
+    point_value: (badge.reward.present? ? badge.reward.points : nil)
   }
 end
 if @req_source == 'web'

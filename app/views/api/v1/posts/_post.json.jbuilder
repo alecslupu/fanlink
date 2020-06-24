@@ -8,7 +8,8 @@ json.audio_url post.audio_url
 json.audio_size post.audio_file_size
 json.audio_content_type post.audio_content_type
 json.person do
-  json.partial! 'api/v1/people/person', locals: { person: post.person, relationships: Relationship.for_people(current_user, post.person) }
+  json.partial! 'api/v1/people/person',
+                locals: { person: post.person, relationships: Relationship.for_people(current_user, post.person) }
 end
 json.post_reaction_counts post.reaction_breakdown.to_json
 if defined?(post_reaction) && post_reaction.present?

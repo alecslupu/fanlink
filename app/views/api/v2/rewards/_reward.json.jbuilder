@@ -9,7 +9,8 @@ badges = false
 json.id reward.id
 json.product_id reward.product_id
 json.name reward.name
-json.(reward, :internal_name, :reward_type, :reward_type_id, :series, :completion_requirement, :points, :status, :deleted)
+json.(reward, :internal_name, :reward_type, :reward_type_id, :series, :completion_requirement, :points,
+      :status, :deleted)
 json.created_at reward.created_at.to_s
 json.updated_at reward.updated_at.to_s
 reward.assigned_rewards.each do |assigned|
