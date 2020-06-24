@@ -22,6 +22,5 @@ class DeletePostJob < ApplicationJob
       end
     end
     client.update('', payload)
-
   end
 end

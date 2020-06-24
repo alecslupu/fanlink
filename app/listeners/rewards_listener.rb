@@ -33,6 +33,7 @@ class RewardsListener
       end
     end
   end
+
   def self.create_step_completed_successful(completed)
     if completed.step.rewards.present?
       completed.step.rewards.each do |reward|

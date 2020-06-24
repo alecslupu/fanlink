@@ -166,8 +166,11 @@ class Message < ApplicationRecord
   end
 
   scope :visible, -> { where(hidden: false) }
+  scope :chronological, ->(sign, created_at, id) { sign == '>' ? after_message(created_at, id) : before_message(created_at, id) }
+  scope :after_message, ->(created_at, id) { where("messages.created_at > ? AND messages.id > ?", created_at, id) }
+  scope :before_message, ->(created_at, id) { where("messages.created_at < ? AND messages.id < ?", created_at, id) }
+
   scope :room_date_range, ->(from, to) { where('messages.created_at BETWEEN ? AND ?', from, to) }
-  scope :chronological, ->(sign, created_at, id) { where("messages.created_at #{sign} ? AND messages.id #{sign} ?", created_at, id) }
 
   scope :reported, -> { joins(:message_reports) }
   scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil }) }

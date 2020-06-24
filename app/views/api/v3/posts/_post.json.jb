@@ -9,9 +9,6 @@ json = Rails.cache.fetch ['v3.1', post] do
     audio_url: post.audio_url,
     audio_size: post.audio_file_size,
     audio_content_type: post.audio_content_type,
-    # person do,
-    #  json.partial! "api/v3/people/person_mini", locals: { person: post.person, relationships: Relationship.for_people(current_user, post.person) },
-    # end, handlers: "jb"
     post_reaction_counts: post.reaction_breakdown.to_json,
     global: post.global,
     starts_at: (post.starts_at.nil?) ? nil : post.starts_at.to_s,

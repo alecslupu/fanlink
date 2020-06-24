@@ -25,20 +25,20 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-              @objects = Person.
-                         joins(:referrals).
-                         select("people.*, COUNT(#{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count").
-                         group('people.id').
-                         order('referral_count DESC')
+              @objects = Person
+                         .joins(:referrals)
+                         .select("people.*, COUNT(#{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count")
+                         .group('people.id')
+                         .order('referral_count DESC')
 
               if params[:f].present?
                 params[:f].each_pair do |field_name, filters_dump|
                   filters_dump.each do |_, filter_dump|
                     if field_name == 'referral_referred_people.created_at'
-                      value = if filter_dump[:v].is_a?(Array)
-                                filter_dump[:v].map { |v| RailsAdmin::Support::Datetime.new('%B %d, %Y %H:%M').parse_string(v) }
+                      if filter_dump[:v].is_a?(Array)
+                        value = filter_dump[:v].map { |v| RailsAdmin::Support::Datetime.new('%B %d, %Y %H:%M').parse_string(v) }
                       else
-                        RailsAdmin::Support::Datetime.new(strftime_format).parse_string(filter_dump[:v])
+                        value = RailsAdmin::Support::Datetime.new(strftime_format).parse_string(filter_dump[:v])
                       end
                       conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :datetime, value, (filter_dump[:o] || 'default')).to_statement
 

@@ -8,7 +8,7 @@
     status: @post.status,
     person: {
       username: @post.person.username,
-      picture_url: (@post.person.picture_url.present? ? @post.person.picture_url : (@post.person.facebook_picture_url.presence))
+      picture_url: @post.person.picture_url.presence || @post.person.facebook_picture_url.presence
     }
   }
 }

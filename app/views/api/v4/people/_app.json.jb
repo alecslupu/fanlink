@@ -34,11 +34,7 @@ json = {
   updated_at: person.updated_at.to_s
 }
 
-if fol = current_user && current_user.following_for_person(person)
-  json[:following_id] = fol.id
-else
-  json[:following_id] = nil
-end
+json[:following_id] = (fol = current_user && current_user.following_for_person(person)) ? fol.id : nil
 
 if defined?(relationships) && relationships.present?
   json[:relationships] = render(partial: 'api/v4/relationships/app', collection: relationships, as: :relationship)

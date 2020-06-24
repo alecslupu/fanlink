@@ -30,7 +30,8 @@ module Api
             if params[:facebook_auth_token].present?
               @person = Person.create_from_facebook(params[:facebook_auth_token], person_params[:username])
               if @person.nil?
-                (render json: { errors: _('There was a problem contacting Facebook.') }, status: :service_unavailable) && return
+                (render json: { errors: _('There was a problem contacting Facebook.') },
+                        status: :service_unavailable) && return
               end
             else
               @person = Person.create(person_params)
@@ -54,7 +55,9 @@ module Api
           end
         else
           render_422 _('Invalid submission.') if Rails.env.production?
-          render_422 _("Invalid submission. Please make sure you're submitting the form using person[form_field]") unless Rails.env.production?
+          unless Rails.env.production?
+            render_422 _("Invalid submission. Please make sure you're submitting the form using person[form_field]")
+          end
         end
       end
 
@@ -91,7 +94,9 @@ module Api
         else
           time = 1
         end
-        @people = Person.where('created_at >= ?', time.day.ago).order(Arel.sql 'DATE(created_at) ASC').group(Are.sql 'Date(created_at)').count
+        @people = Person.where('created_at >= ?', time.day.ago)
+                        .order(Arel.sql 'DATE(created_at) ASC')
+                        .group(Are.sql 'Date(created_at)').count
         return_the @people, handler: tpl_handler
       end
 

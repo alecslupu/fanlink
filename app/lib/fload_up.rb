@@ -47,9 +47,9 @@ module FloadUp
         except: []
       }.merge(options.to_h)
 
-      id       = options[:from ]
+      id       = options[:from]
       find     = options[:using]
-      obj_name = options[:into ]
+      obj_name = options[:into]
       actions  = extract_actions_from(options)
 
       before_action except: options[:except] do

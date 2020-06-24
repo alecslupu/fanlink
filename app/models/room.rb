@@ -97,9 +97,9 @@ class Room < ApplicationRecord
   validate :picture_validation
 
   scope :privates_for_person, ->(member) {
-    joins(:room_memberships).
-      where('room_memberships.person_id = ? and rooms.public = ?', member.id, false)
-                            .order(updated_at: :desc)
+    joins(:room_memberships)
+      .where('room_memberships.person_id = ? and rooms.public = ?', member.id, false)
+      .order(updated_at: :desc)
   }
   scope :publics, -> { where(public: true).order(updated_at: :desc) }
   scope :privates, -> { where(public: false) }

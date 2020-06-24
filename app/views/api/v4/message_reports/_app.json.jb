@@ -2,8 +2,18 @@
 
 {
   id: message_report.id,
-  poster: render(partial: 'api/v4/people/app', locals: { person: message_report.poster, relationships: Relationship.for_people(current_user, message_report.poster) }, handlers: :jb),
-  reporter: render(partial: 'api/v4/people/app', locals: { person: message_report.reporter, relationships: Relationship.for_people(current_user, message_report.reporter) }, handlers: :jb),
+  poster: render(partial: 'api/v4/people/app',
+                 locals: {
+                   person: message_report.poster,
+                   relationships: Relationship.for_people(current_user, message_report.poster)
+                 },
+                 handlers: :jb),
+  reporter: render(partial: 'api/v4/people/app',
+                   locals: {
+                     person: message_report.reporter,
+                             relationships:    Relationship.for_people(current_user, message_report.reporter)
+                   },
+                   handlers: :jb),
   reason: message_report.reason,
   status: message_report.status,
   created_at: message_report.created_at.to_s,
