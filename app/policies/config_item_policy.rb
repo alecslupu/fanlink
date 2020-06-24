@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ConfigItemPolicy < ApplicationPolicy
-
   def nested_set?
     edit?
   end
@@ -13,6 +12,7 @@ class ConfigItemPolicy < ApplicationPolicy
   end
 
   protected
+
   def module_name
     'root'
   end

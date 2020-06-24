@@ -13,7 +13,7 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         create(:static_system_email, name: 'password-reset')
         expect {
-          post :create, params: {product: person.product.internal_name, email_or_username: email}
+          post :create, params: { product: person.product.internal_name, email_or_username: email }
         }.to have_enqueued_job.on_queue('mailers').with(
           'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
         )
@@ -27,7 +27,9 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         create(:static_system_email, name: 'password-reset')
         expect {
-          post :create, params: {product: person.product.internal_name, email_or_username: 'really_forgetful@example.com'}
+          post :create, params: {
+            product: person.product.internal_name, email_or_username: 'really_forgetful@example.com'
+          }
         }.not_to have_enqueued_job.on_queue('mailers').with(
           'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
         )
@@ -41,7 +43,7 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         create(:static_system_email, name: 'password-reset')
         expect {
-          post :create, params: {product: person.product.internal_name, email_or_username: username}
+          post :create, params: { product: person.product.internal_name, email_or_username: username }
         }.to have_enqueued_job.on_queue('mailers').with(
           'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
         )
@@ -55,8 +57,8 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         create(:static_system_email, name: 'password-reset')
         expect {
-          post :create, params: {product: person.product.internal_name, email_or_username: 'really_forgetful'}
-        }.not_to  have_enqueued_job.on_queue('mailers').with(
+          post :create, params: { product: person.product.internal_name, email_or_username: 'really_forgetful' }
+        }.not_to have_enqueued_job.on_queue('mailers').with(
           'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
         )
         expect(response).to be_successful
@@ -69,8 +71,8 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         create(:static_system_email, name: 'password-reset')
         expect {
-          post :create, params: {product: 'foofarmfizzle', email_or_username: email}
-        }.not_to  have_enqueued_job.on_queue('mailers').with(
+          post :create, params: { product: 'foofarmfizzle', email_or_username: email }
+        }.not_to have_enqueued_job.on_queue('mailers').with(
           'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
         )
         expect(response).to be_unprocessable

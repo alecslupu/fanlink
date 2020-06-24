@@ -34,7 +34,7 @@ class RootConfigItem < ConfigItem
 
   def self.copy_tree(from_id, product_id)
     product = Product.find(product_id)
-    ConfigItem.find_each {|ci| ConfigItem.reset_counters(ci.id, :children)}
+    ConfigItem.find_each { |ci| ConfigItem.reset_counters(ci.id, :children) }
     root = RootConfigItem.find(from_id)
     new_root = ActsAsTenant.with_tenant(product) {
       root.class.create!(
@@ -65,5 +65,4 @@ class RootConfigItem < ConfigItem
       original_node.children.each { |node| copy_node(node, new_node, product) }
     end
   end
-
 end

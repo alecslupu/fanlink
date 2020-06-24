@@ -31,7 +31,11 @@ RSpec.describe Api::V2::SessionController, type: :controller do
     it 'should log in a person with email from a regular account' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        post :create, params: { email_or_username: person.email, password: 'badpassword', product: person.product.internal_name }
+        post :create, params: {
+          email_or_username: person.email,
+          password: 'badpassword',
+          product: person.product.internal_name
+        }
       end
       expect(response).to have_http_status(200)
       expect(person_private_json(json['person'])).to be_truthy
@@ -39,7 +43,11 @@ RSpec.describe Api::V2::SessionController, type: :controller do
     it 'should log in a person with username from a regular account' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        post :create, params: { email_or_username: person.username, password: 'badpassword', product: person.product.internal_name }
+        post :create, params: {
+          email_or_username: person.username,
+          password: 'badpassword',
+          product: person.product.internal_name
+        }
       end
       expect(response).to have_http_status(200)
       expect(person_private_json(json['person'])).to be_truthy
@@ -47,14 +55,22 @@ RSpec.describe Api::V2::SessionController, type: :controller do
     it 'should not log in a person with wrong username from a regular account' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        post :create, params: { email_or_username: 'wrongusername', password: 'badpassword', product: person.product.internal_name }
+        post :create, params: {
+          email_or_username: 'wrongusername',
+          password: 'badpassword',
+          product: person.product.internal_name
+        }
       end
       expect(response).to have_http_status(422)
     end
     it 'should not log in a person with wrong email from a regular account' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        post :create, params: { email_or_username: 'wrongemail@example.com', password: 'badpassword', product: person.product.internal_name }
+        post :create, params: {
+          email_or_username: 'wrongemail@example.com',
+          password: 'badpassword',
+          product: person.product.internal_name
+        }
       end
       expect(response).to have_http_status(422)
     end

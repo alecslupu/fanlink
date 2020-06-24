@@ -31,7 +31,7 @@ RailsAdmin.config do |config|
     edit do
       fields :id, :name, :public, :from_name, :from_email, :translations
 
-      field :images , :multiple_active_storage do
+      field :images, :multiple_active_storage do
         delete_method :remove_images
       end
 

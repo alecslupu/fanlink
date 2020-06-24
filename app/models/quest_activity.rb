@@ -43,7 +43,7 @@ class QuestActivity < ApplicationRecord
 
   # default_scope { order(created_at: :desc) }
 
-  scope :with_completion, -> (person) { where('quest_completions.person_id = ?', person.id) }
+  scope :with_completion, ->(person) { where('quest_completions.person_id = ?', person.id) }
 
   def product
     step.quest.product

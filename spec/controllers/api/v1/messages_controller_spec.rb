@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe Api::V1::MessagesController, type: :controller do
   before(:each) do
     stub_wisper_publisher('MentionPushNotification',
-                         :execute, :message_created)
+                          :execute, :message_created)
   end
   describe '#create' do
     before :each do
@@ -15,7 +15,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         expect_any_instance_of(Message).to receive(:post)
-        expect_any_instance_of(Room).not_to receive(:increment_message_counters) # msg counters are only for closers!..er, private rooms
+        expect_any_instance_of(Room).not_to receive(:increment_message_counters)
         login_as(person)
         body = 'Do you like my body?'
         room = create(:room, public: true, status: :active)
@@ -41,12 +41,12 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         login_as(person)
         body = 'Do you like my body?'
         post :create, params: { room_id: room.id, message: { body: body,
-                                                           mentions: [{ person_id: mentioned1.id,
-                                                                       location: 11,
-                                                                       length: 8 },
-                                                                      { person_id: mentioned2.id,
-                                                                       location: 14,
-                                                                       length: 4 },] } }
+                                                             mentions: [{ person_id: mentioned1.id,
+                                                                          location: 11,
+                                                                          length: 8 },
+                                                                        { person_id: mentioned2.id,
+                                                                          location: 14,
+                                                                          length: 4 },] } }
         expect(response).to be_successful
         msg = Message.last
         expect(msg.mentions.count).to eq(2)
@@ -66,9 +66,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         body = 'Do you like my body?'
         expect {
           post :create, params: { room_id: room.id, message: { body: body,
-                                                             mentions: [{ location: 4, length: 11 },
-                                                                        { person_id: mentioned2.id,
-                                                                         location: 5, length: 1 },] } }
+                                                               mentions: [{ location: 4, length: 11 },
+                                                                          { person_id: mentioned2.id,
+                                                                            location: 5, length: 1 },] } }
         }.to change { Message.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).not_to be_empty
@@ -110,9 +110,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         mentioned1 = create(:person)
         body = 'Do you like my body?'
         post :create, params: { room_id: room.id,
-                               message: { body: body, mentions: [{ person_id: mentioned1.id,
-                                                                 location: 14,
-                                                                 length: 4 }] } }
+                                message: { body: body, mentions: [{ person_id: mentioned1.id,
+                                                                    location: 14,
+                                                                    length: 4 }] } }
         expect(response).to be_successful
         msg = Message.last
         expect(msg.mentions.count).to eq(1)
@@ -186,15 +186,15 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         body = 'Do you like my body?'
-        room = create(:public_active_room, )
+        room = create(:public_active_room,)
         post :create,
-        params: {
-          room_id: room.id,
-          message: {
-            body: body,
-            picture: fixture_file_upload('images/better.png', 'image/png')
-          }
-        }
+             params: {
+               room_id: room.id,
+               message: {
+                 body: body,
+                 picture: fixture_file_upload('images/better.png', 'image/png')
+               }
+             }
         expect(response).to be_successful
         expect(json['message']['picture_url']).not_to eq(nil)
         expect(Message.last.picture.exists?).to be_truthy
@@ -206,15 +206,15 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         body = 'Do you like my body?'
-        room = create(:public_active_room, )
+        room = create(:public_active_room,)
         post :create,
-        params: {
-          room_id: room.id,
-          message: {
-            body: body,
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-          }
-        }
+             params: {
+               room_id: room.id,
+               message: {
+                 body: body,
+                 audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+               }
+             }
         expect(response).to be_successful
         expect(json['message']['audio_url']).not_to eq(nil)
         expect(Message.last.audio.exists?).to be_truthy
@@ -288,7 +288,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room = create(:room, public: true, status: :active)
         msg1 = create(:message, room: room, created_at: Date.today - 1.day)
         msg2 = create(:message, room: room)
-        expect(Message).to receive(:for_date_range).with(room, Date.parse(from), Date.parse(to), nil).and_return(Message.order(created_at: :desc).where(id: [msg1.id, msg2.id]))
+        expect(Message).to receive(:for_date_range)
+          .with(room, Date.parse(from), Date.parse(to), nil)
+          .and_return(Message.order(created_at: :desc).where(id: [msg1.id, msg2.id]))
         expect_any_instance_of(Room).to_not receive(:increment_message_counters) # only for priv rooms
         get :index, params: { room_id: room.id, from_date: from, to_date: to }
         expect(response).to be_successful
@@ -302,7 +304,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room = create(:room, public: true, status: :active)
         msg2 = create(:message, room: room)
 
-        expect(Message).to receive(:for_date_range).with(room, Date.parse(from), Date.parse(to), 1).and_return(Message.order(created_at: :desc).where(id: [msg2.id]))
+        expect(Message).to receive(:for_date_range)
+          .with(room, Date.parse(from), Date.parse(to), 1)
+          .and_return(Message.order(created_at: :desc).where(id: [msg2.id]))
         get :index, params: { room_id: room.id, from_date: from, to_date: to, limit: 1 }
         expect(response).to be_successful
         expect(json['messages'].map { |m| m['id'] }).to eq([msg2.id.to_s])
@@ -416,8 +420,11 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
           private_room.members << person << private_room.created_by
           login_as(person)
           msg = create(:message, room: private_room, body: 'wat wat')
-          expect(Message).to receive(:for_date_range).with(private_room, Date.parse(from), Date.parse(to), 1).and_return(Message.order(created_at: :desc).where(id: [msg.id]))
-          expect_any_instance_of(Room).to receive(:clear_message_counter).with(private_room.room_memberships.where(person: person).first)
+          expect(Message).to receive(:for_date_range)
+            .with(private_room, Date.parse(from), Date.parse(to), 1)
+            .and_return(Message.order(created_at: :desc).where(id: [msg.id]))
+          expect_any_instance_of(Room).to receive(:clear_message_counter)
+            .with(private_room.room_memberships.where(person: person).first)
           get :index, params: { room_id: private_room.id, from_date: from, to_date: to, limit: 1 }
           expect(response).to be_successful
           # expect(json["messages"].first).to eq(message_json(msg))
@@ -453,11 +460,11 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
             picture: fixture_file_upload('images/better.png', 'image/png')
           )
           get :index,
-            params: {
-              room_id: private_room.id,
-              from_date: from,
-              to_date: to
-            }
+              params: {
+                room_id: private_room.id,
+                from_date: from,
+                to_date: to
+              }
 
           expect(response).to be_successful
           expect(json['messages'].size).to eq(3)
@@ -484,11 +491,11 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
           )
 
           get :index,
-            params: {
-              room_id: private_room.id,
-              from_date: from,
-              to_date: to
-            }
+              params: {
+                room_id: private_room.id,
+                from_date: from,
+                to_date: to
+              }
 
           expect(response).to be_successful
           expect(json['messages'].size).to eq(3)
@@ -511,12 +518,16 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: 'membership1'))
-        msg1 = build(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = build(:message,
+                     created_at: Time.zone.now - 10.minutes,
+                     room: room1,
+                     body: 'this is msg1',
+                     person: create(:person, username: 'message1person'))
         msg2 = build(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: 'msg2')
         msg12 = build(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: 'msg12')
         msg13 = build(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: 'msg13')
         msg14 = build(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: 'msg14')
-        msg3 = build(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: 'msg3')
+        msg3 = build(:message, created_at: 5.minutes.ago, room: room2, person: membership1.person, body: 'msg3')
 
         login_as(admin_person)
         toget = [msg1, msg2, msg12, msg13, msg14, msg3]
@@ -533,12 +544,20 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: 'membership1'))
-        msg1 = create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = create(:message,
+                      created_at: Time.zone.now - 10.minutes,
+                      room: room1,
+                      body: 'this is msg1',
+                      person: create(:person, username: 'message1person'))
         msg2 = create(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: 'msg2')
         msg12 = create(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: 'msg12')
         msg13 = create(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: 'msg13')
         msg14 = create(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: 'msg14')
-        msg3 = create(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: 'msg3')
+        msg3 = create(:message,
+                      created_at: Time.zone.now - 5.minutes,
+                      room: room2,
+                      person: membership1.person,
+                      body: 'msg3')
 
         toget = [msg3, msg14]
         login_as(admin_person)
@@ -557,12 +576,16 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: 'membership1'))
-        msg1 = create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = create(:message,
+                      created_at: 10.minutes.ago,
+                      room: room1,
+                      body: 'this is msg1',
+                      person: create(:person, username: 'message1person'))
         msg2 = create(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: 'msg2')
         msg12 = create(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: 'msg12')
         msg13 = create(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: 'msg13')
         msg14 = create(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: 'msg14')
-        msg3 = create(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: 'msg3')
+        msg3 = create(:message, created_at: 5.minutes.ago, room: room2, person: membership1.person, body: 'msg3')
         login_as(admin_person)
 
         toget = [msg3, msg14]
@@ -581,12 +604,16 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: 'membership1'))
-        msg1 = create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = create(:message,
+                      created_at: Time.zone.now - 10.minutes,
+                      room: room1,
+                      body: 'this is msg1',
+                      person: create(:person, username: 'message1person'))
         msg2 = create(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: 'msg2')
         msg12 = create(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: 'msg12')
         msg13 = create(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: 'msg13')
         msg14 = create(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: 'msg14')
-        msg3 = create(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: 'msg3')
+        msg3 = create(:message, created_at: 5.minutes.ago, room: room2, person: membership1.person, body: 'msg3')
         login_as(admin_person)
 
         toget = [msg13, msg12]
@@ -605,12 +632,15 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: 'membership1'))
-        msg1 = create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = create(:message,
+                      created_at: Time.zone.now - 10.minutes,
+                      room: room1, body: 'this is msg1',
+                      person: create(:person, username: 'message1person'))
         msg2 = create(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: 'msg2')
         msg12 = create(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: 'msg12')
         msg13 = create(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: 'msg13')
         msg14 = create(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: 'msg14')
-        msg3 = create(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: 'msg3')
+        msg3 = create(:message, created_at: 5.minutes.ago, room: room2, person: membership1.person, body: 'msg3')
         login_as(admin_person)
 
         get :list, params: { id_filter: msg1.id }
@@ -626,12 +656,16 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: 'membership1'))
-        msg1 = create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = create(:message,
+                      created_at: Time.zone.now - 10.minutes,
+                      room: room1,
+                      body: 'this is msg1',
+                      person: create(:person, username: 'message1person'))
         msg2 = create(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: 'msg2')
         msg12 = create(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: 'msg12')
         msg13 = create(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: 'msg13')
         msg14 = create(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: 'msg14')
-        msg3 = create(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: 'msg3')
+        msg3 = create(:message, created_at: 5.minutes.ago, room: room2, person: membership1.person, body: 'msg3')
         login_as(admin_person)
 
         get :list, params: { person_filter: 'ship1' }
@@ -647,12 +681,16 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: 'membership1'))
-        msg1 = create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = create(:message,
+                      created_at: Time.zone.now - 10.minutes,
+                      room: room1,
+                      body: 'this is msg1',
+                      person: create(:person, username: 'message1person'))
         msg2 = create(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: 'msg2')
         msg12 = create(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: 'msg12')
         msg13 = create(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: 'msg13')
         msg14 = create(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: 'msg14')
-        msg3 = create(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: 'msg3')
+        msg3 = create(:message, created_at: 5.minutes.ago, room: room2, person: membership1.person, body: 'msg3')
         login_as(admin_person)
 
         toget = [msg14, msg13, msg12, msg2, msg1]
@@ -671,12 +709,16 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: 'membership1'))
-        msg1 = create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = create(:message,
+                      created_at: Time.zone.now - 10.minutes,
+                      room: room1,
+                      body: 'this is msg1',
+                      person: create(:person, username: 'message1person'))
         msg2 = create(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: 'msg2')
         msg12 = create(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: 'msg12')
         msg13 = create(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: 'msg13')
         msg14 = create(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: 'msg14')
-        msg3 = create(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: 'msg3')
+        msg3 = create(:message, created_at:  5.minutes.ago, room: room2, person: membership1.person, body: 'msg3')
         login_as(admin_person)
         get :list, params: { body_filter: 'his is msg1' }
         expect(response).to be_successful
@@ -690,7 +732,11 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       ActsAsTenant.with_tenant(admin_person.product) do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
-        msg1 = create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = create(:message,
+                      created_at: Time.zone.now - 10.minutes,
+                      room: room1,
+                      body: 'this is msg1',
+                      person: create(:person, username: 'message1person'))
         login_as(admin_person)
         create(:message_report, message: msg1)
         get :list, params: { reported_filter: 'Yes' }
@@ -721,12 +767,15 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: 'membership1'))
-        msg1 = create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: 'this is msg1', person: create(:person, username: 'message1person'))
+        msg1 = create(:message,
+                      created_at: Time.zone.now - 10.minutes,
+                      room: room1, body: 'this is msg1',
+                      person: create(:person, username: 'message1person'))
         msg2 = create(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: 'msg2')
         msg12 = create(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: 'msg12')
         msg13 = create(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: 'msg13')
         msg14 = create(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: 'msg14')
-        msg3 = create(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: 'msg3')
+        msg3 = create(:message, created_at: 5.minutes.ago, room: room2, person: membership1.person, body: 'msg3')
         login_as(admin_person)
         get :list, params: { room_id_filter: room1.id, person_filter: 'essage1' }
         expect(response).to be_successful

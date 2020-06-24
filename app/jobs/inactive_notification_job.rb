@@ -18,6 +18,7 @@ class InactiveNotificationJob < ApplicationJob
   end
 
   protected
+
   def criteria
     raise 'Not implemented'
   end

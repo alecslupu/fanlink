@@ -11,6 +11,7 @@ module Api
               break
             else
               next if PersonReward.exists?(person_id: current_user.id, reward_id: reward.id)
+
               badge_action = current_user.badge_actions.new(action_type: @action_type, identifier: params[:badge_action][:identifier])
               if badge_action.save
                 @progress = RewardProgress.find_or_initialize_by(reward_id: reward.id, person_id: current_user.id)
@@ -25,7 +26,7 @@ module Api
                   return_the @progress, handler: tpl_handler
                 else
                   if @progress.blank?
-                    render json: {errors: {base: _('Reward does not exist for that action type.')}}, status: :not_found
+                    render json: { errors: { base: _('Reward does not exist for that action type.') } }, status: :not_found
                   else
                     render_422(@progress.errors)
                   end
@@ -38,7 +39,7 @@ module Api
             end
           end
         else
-          render json: {errors: {base: _('Reward does not exist for that action type.')}}, status: :not_found
+          render json: { errors: { base: _('Reward does not exist for that action type.') } }, status: :not_found
         end
       end
 

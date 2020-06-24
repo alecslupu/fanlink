@@ -23,5 +23,4 @@
 
 class ArrayConfigItem < ConfigItem
   has_paper_trail
-
 end

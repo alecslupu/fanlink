@@ -2,7 +2,9 @@
 
 module Static
   class WebContentPolicy < ApplicationPolicy
+
     protected
+
     def module_name
       'root'
     end

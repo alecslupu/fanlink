@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe ApplicationPolicy, type: :policy do
-
   permission_list = {
     index: false,
     show: false,

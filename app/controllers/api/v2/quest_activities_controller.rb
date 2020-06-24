@@ -156,7 +156,7 @@ module Api
         if @quest_activity.valid?
           return_the @quest_activity
         else
-          render json: {errors: @quest_activity.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @quest_activity.errors.messages }, status: :unprocessable_entity
         end
       end
 
@@ -286,8 +286,7 @@ module Api
 
       def activity_params
         params.require(:quest_activity).permit(:description, :hint, :picture,
-                                               activity_types_attributes: [:id, :atype, {value: [:id, :description]}]
-        )
+                                               activity_types_attributes: [:id, :atype, { value: [:id, :description] }])
       end
     end
   end

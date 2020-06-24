@@ -11,19 +11,23 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
       produces 'application/vnd.api.v4+json'
       consumes 'application/vnd.api.v4+json'
 
-      parameter name: :product, in: :query,  type: :string
-      parameter name: :product_account_filter, in: :query, required: false, type: :string
-      parameter name: :email_filer, in: :query, required: false, type: :string
-      parameter name: :username_filter, in: :query, required: false, type: :string
+      parameter name: :product,
+                in: :query, type: :string
+      parameter name: :product_account_filter,
+                in: :query, required: false, type: :string
+      parameter name: :email_filer,
+                in: :query, required: false, type: :string
+      parameter name: :username_filter,
+                in: :query, required: false, type: :string
       let(:product) { create(:product).internal_name }
       let(:Authorization) { '' }
 
-      #android-old
+      # android-old
       context 'email_filer' do
         response '200', 'HTTP/1.1 200 Ok' do
           schema "$ref": '#/definitions/PeopleArray'
           let(:people) { create_list(:person, 20) }
-          let(:person) { FactoryBot.create(:person).reload}
+          let(:person) { FactoryBot.create(:person).reload }
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
           let(:email_filer) { 'email@' }
           run_test!
@@ -37,13 +41,12 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
         end
       end
 
-      #android-old
+      # android-old
       context 'username_filter' do
-
         response '200', 'HTTP/1.1 200 Ok' do
           schema "$ref": '#/definitions/PeopleArray'
           let(:people) { create_list(:person, 20) }
-          let(:person) { FactoryBot.create(:person).reload}
+          let(:person) { FactoryBot.create(:person).reload }
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
           let(:username_filter) { 'User' }
           run_test!
@@ -57,13 +60,12 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
         end
       end
 
-      #kotlin
+      # kotlin
       context 'product_account_filter' do
-
         response '200', 'HTTP/1.1 200 Ok' do
           schema "$ref": '#/definitions/PeopleArray'
           let(:people) { create_list(:person, 20) }
-          let(:person) { FactoryBot.create(:person).reload}
+          let(:person) { FactoryBot.create(:person).reload }
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
           let(:product_account_filter) { true }
           run_test!
@@ -79,21 +81,22 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
     end
 
     post '' do
-      tags 'People' #kotlin
+      tags 'People' # kotlin
 
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
 
-      parameter name: :product, in: :query, type: :string, required: true
+      parameter name: :product,
+                in: :query, type: :string, required: true
       parameter name: :"person[email]", in: :formData, type: :string, required: false
       parameter name: :"person[username]", in: :formData, type: :string, required: true
       parameter name: :"person[password]", in: :formData, type: :string, required: false
       parameter name: :"person[picture]", in: :formData,  type: :file
       parameter name: :facebook_auth_token, in: :formData, type: :string, required: false
-      parameter name: :referrer, in: :formData,  type: :string, required: false
+      parameter name: :referrer, in: :formData, type: :string, required: false
 
-      let(:product) { }
-      let('person[picture]') {  }
+      let(:product) {}
+      let('person[picture]') {}
       let('person[email]') { Faker::Internet.email }
       let('person[username]') { 'SomeValidUsername' }
       let('person[password]') { Faker::Internet.password }
@@ -107,7 +110,7 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
       end
 
       response '422', '' do
-        let('person[picture]') {  }
+        let('person[picture]') {}
         run_test!
       end
 
@@ -127,14 +130,14 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
 
       parameter name: :id, in: :path, type: :string
       let(:person) { create(:person) }
-      let(:other_person) { create(:person)}
+      let(:other_person) { create(:person) }
       let(:id) { person.id }
       let(:Authorization) { '' }
 
       parameter name: :"person[email]", in: :formData, type: :string
       parameter name: :"person[biography]", in: :formData, type: :string
       parameter name: :"person[name]", in: :formData, type: :string
-      parameter name: :"person[picture]", in: :formData,  type: :file
+      parameter name: :"person[picture]", in: :formData, type: :file
       parameter name: :"person[gender]", in: :formData, type: :string
       parameter name: :"person[birthdate]", in: :formData, type: :string
       parameter name: :"person[city]", in: :formData, type: :string
@@ -145,7 +148,7 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
       let('person[birthdate]') { Faker::Date.birthday(min_age: 18, max_age: 65) }
       let('person[gender]') { Faker::Gender.binary_type.downcase }
       let('person[email]') { Faker::Internet.email }
-      let('person[picture]') {  }
+      let('person[picture]') {}
       let('person[biography]') { Faker::Lorem.paragraph }
       let('person[name]') { Faker::Name.name }
 
@@ -182,7 +185,7 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
       parameter name: :id, in: :path, type: :string
 
       let(:person) { create(:person) }
-      let(:other_person) { create(:person)}
+      let(:other_person) { create(:person) }
       let(:id) { other_person.id }
       let(:Authorization) { '' }
 

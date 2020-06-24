@@ -18,7 +18,8 @@ RSpec.describe PersonCertcoursePolicy, type: :policy do
   context 'Logged in admin with courseware_forget permission' do
     describe 'message report with no action needed status' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(courseware_forget: true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new(courseware_forget: true))
       end
 
       it { is_expected.to permit_action(:forget_action) }
@@ -29,7 +30,8 @@ RSpec.describe PersonCertcoursePolicy, type: :policy do
   context 'Logged in admin with courseware_reset permission' do
     describe 'message report with pending status' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(courseware_reset: true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new(courseware_reset: true))
       end
 
       it { is_expected.to permit_action(:reset_progress_action) }

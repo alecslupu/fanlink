@@ -22,6 +22,7 @@ module  Migration
       unless QuestActivity.with_translations('en').where(id: quest_activity.id).first.present?
         return if quest_activity.untranslated_name['un'].nil?
         return if quest_activity.untranslated_name['un'].empty?
+
         I18n.locale = 'en'
         value = 'un'
         quest_activity.name = quest_activity.untranslated_name[value]

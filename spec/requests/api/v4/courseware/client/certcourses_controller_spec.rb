@@ -3,7 +3,6 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::Courseware::Client::CertcoursesController', type: :request, swagger_doc: 'v4/swagger.json' do
-
   path '/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses' do
     get '' do
       security [Bearer: []]
@@ -56,7 +55,11 @@ RSpec.describe 'Api::V4::Courseware::Client::CertcoursesController', type: :requ
       let(:person_certificate) { create(:person_certificate, person: hired) }
       let(:certificate_id) { person_certificate.certificate_id }
       let(:person_id) { hired.id }
-      let(:id) { create(:certificate_certcourse, certificate: person_certificate.certificate, certcourse: certcourse).certcourse_id }
+      let(:id) {
+        create(:certificate_certcourse,
+               certificate: person_certificate.certificate,
+               certcourse: certcourse).certcourse_id
+      }
 
       produces 'application/vnd.api.v4+json'
       response '200', 'HTTP/1.1 200 Ok' do
@@ -75,7 +78,7 @@ RSpec.describe 'Api::V4::Courseware::Client::CertcoursesController', type: :requ
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let(:person_certificate) { create(:person_certificate, person: hired) }
         let(:certificate_id) { person_certificate.certificate_id }
-        let(:id) { create(:certificate_certcourse, certificate: person_certificate.certificate ).certcourse_id }
+        let(:id) { create(:certificate_certcourse, certificate: person_certificate.certificate).certcourse_id }
 
         run_test!
       end
@@ -84,5 +87,4 @@ RSpec.describe 'Api::V4::Courseware::Client::CertcoursesController', type: :requ
       end
     end
   end
-
 end

@@ -18,7 +18,7 @@
 module Trivia
   class RoundLeaderboard < ApplicationRecord
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
 
     has_paper_trail
     belongs_to :round, class_name: 'Trivia::Round', foreign_key: :trivia_round_id

@@ -21,23 +21,23 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-                @object.status = 'no_action_needed'
-                message = @object.message
-                message.hidden = false
-                if message.save
-                  changes = @object.changes
-                  if @object.save
-                    @auditing_adapter && @auditing_adapter.update_object(@object, @abstract_model, _current_user, changes)
+              @object.status = 'no_action_needed'
+              message = @object.message
+              message.hidden = false
+              if message.save
+                changes = @object.changes
+                if @object.save
+                  @auditing_adapter && @auditing_adapter.update_object(@object, @abstract_model, _current_user, changes)
 
-                    flash[:notice] = t('admin.flash.successful', name: @model_config.label, action: t('admin.actions.update.done'))
-                  else
-                    flash[:error] = @object.errors.full_messages.join('<br/>')
-                  end
+                  flash[:notice] = t('admin.flash.successful', name: @model_config.label, action: t('admin.actions.update.done'))
                 else
-                  flash[:error] = 'Could not save associated message'
+                  flash[:error] = @object.errors.full_messages.join('<br/>')
                 end
+              else
+                flash[:error] = 'Could not save associated message'
+              end
 
-                redirect_to action: :index
+              redirect_to action: :index
             end
           end
 

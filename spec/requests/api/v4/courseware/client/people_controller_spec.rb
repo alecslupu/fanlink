@@ -8,9 +8,12 @@ RSpec.describe 'Api::V4::Courseware::Client::PeopleController', type: :request, 
       security [Bearer: []]
       let(:Authorization) { '' }
       tags 'Courseware'
-      parameter name: :page, in: :query, type: :integer, required: false, description: '', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: '', default: 25
-      parameter name: :username_filter, in: :query, required: false, type: :string
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: '', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: '', default: 25
+      parameter name: :username_filter,
+                in: :query, required: false, type: :string
 
       let(:person) { create(:client_user) }
 
@@ -18,7 +21,7 @@ RSpec.describe 'Api::V4::Courseware::Client::PeopleController', type: :request, 
       response '200', 'HTTP/1.1 200 Ok' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         schema "$ref": '#/definitions/MiniPeopleArray'
-        let!(:people) { create_list(:client_to_person,3, client: person) }
+        let!(:people) { create_list(:client_to_person, 3, client: person) }
         run_test!
       end
       response '401', '' do

@@ -12,7 +12,7 @@ json = {
 
 lev = person.level_earned
 if lev.nil?
-  json['level'] =  nil
+  json['level'] = nil
 else
   json['level'] = render partial: "api/v4/levels/#{@req_source}", locals: { level: lev }, handlers: 'jb'
 end
