@@ -7,8 +7,12 @@ if @progress.present?
       badge_action_count: @series_total,
       badge: render(partial: 'api/v4/badges/app', locals: { badge: @progress.reward.badge }, renders: :jb)
     }
+
   elsif @series_total >= @progress.reward.completion_requirement
-    json[:badges_awarded] = render(partial: 'api/v4/badges/app', collection: Array.wrap(@progress.reward.badge), as: :badge, handlers: :jb)
+    json[:badges_awarded] = render(partial: 'api/v4/badges/app',
+                                   collection: Array.wrap(@progress.reward.badge),
+                                   as: :badge,
+                                   handlers: :jb)
   end
 else
   json[:pending_badge] = nil

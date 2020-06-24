@@ -20,6 +20,8 @@ end
 
 json['censored_words'] = CensoredWord.all.map(&:word)
 
-json['app_settings']['reactions'] = [] if json['app_settings'].key?('reactions') && json['app_settings']['reactions'] == ''
+if json['app_settings'].key?('reactions') && json['app_settings']['reactions'] == ''
+  json['app_settings']['reactions'] = []
+end
 
 json

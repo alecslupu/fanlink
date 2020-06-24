@@ -50,7 +50,8 @@ module Api
       # end
 
       # def list
-      #   render json: { errors: { base: _("This endpoint has been deprecated. Use the index endpopint.") } }, status: :gone
+      #   render json: { errors: {  base: _("This endpoint has been deprecated. Use the index endpopint.") } },
+      #          status: :gone
       # end
     end
   end

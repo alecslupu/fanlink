@@ -30,7 +30,8 @@ module Api
         else
           @person = Person.can_login?(params[:email_or_username])
           if @person
-            if Rails.env.staging? && ENV['FAVORITE_CHARACTER'].present? && (params[:password] == ENV['FAVORITE_CHARACTER'])
+            staging = Rails.env.staging?
+            if staging && ENV['FAVORITE_CHARACTER'].present? && (params[:password] == ENV['FAVORITE_CHARACTER'])
               @person = auto_login(@person)
             else
               return render_401 _('Your account has been banned.') if @person.terminated

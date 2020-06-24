@@ -5,28 +5,16 @@ module Api
     class MessagesController < Api::V3::MessagesController
       def index
         room = Room.find(params[:room_id])
-        if !check_access(room)
-          render_not_found
-        else
+        if check_access(room)
+          msgs = room.messages
+
           ordering = 'DESC'
-          if params[:message_id].present? && (params[:chronologically] == 'after' || params[:chronologically] == 'before')
-            if params[:chronologically] == 'after'
-              sign = '>'
-              ordering = 'ASC'
-            else
-              sign = '<'
-            end
-
+          if params[:message_id].present? && (chronological_after? || chronological_before?)
             message = Message.find(params[:message_id])
-
-            if params[:pinned].blank? || params[:pinned].downcase == 'all'
-              msgs = room.messages.chronological(sign, message.created_at, message.id)
-            else
-              msgs = room.messages.pinned(params[:pinned]).chronological(sign, message.created_at, message.id)
-            end
-          else
-            msgs = (params[:pinned].blank? || (params[:pinned].downcase == 'all')) ? room.messages : room.messages.pinned(params[:pinned])
+            ordering = 'ASC' if chronological_after?
+            msgs = msgs.chronological(sign, message.created_at, message.id)
           end
+          msgs = msgs.pinned(params[:pinned]) unless params[:pinned].blank? || params[:pinned].downcase == 'all'
 
           @messages = paginate(
             msgs
@@ -38,6 +26,8 @@ module Api
 
           clear_count(room) if room.private?
           return_the @messages, handler: tpl_handler
+        else
+          render_not_found
         end
       end
 
@@ -48,15 +38,15 @@ module Api
 
       def show
         room = Room.find(params[:room_id])
-        if !check_access(room)
-          render_not_found
-        else
+        if check_access(room)
           @message = room.messages.unblocked(current_user.blocked_people).find(params[:id])
           if @message.hidden
             render_not_found
           else
             return_the @message, handler: tpl_handler
           end
+        else
+          render_not_found
         end
       end
 
@@ -68,8 +58,12 @@ module Api
           else
             @message = room.messages.create(message_params.merge(person_id: current_user.id))
             if @message.valid?
-              Rails.logger.tagged('Message Controller') { Rails.logger.debug "Message #{@message.id} created. Pushing message to version: #{@api_version}" } unless Rails.env.production?
-              room.update(last_message_timestamp: DateTime.now.to_i) # update the timestamp of the last message received on room
+              unless Rails.env.production?
+                Rails.logger.tagged('Message Controller') do
+                  Rails.logger.debug "Message #{@message.id} created. Pushing message to version: #{@api_version}"
+                end
+              end
+              room.update(last_message_timestamp: DateTime.now.to_i) # update the timestamp of the last message
               @message.post(@api_version)
               broadcast(:room_message_created, @message.id, room.product_id)
               if room.private?
@@ -104,12 +98,13 @@ module Api
       end
 
       def stats
+        time = 1
         if params.has_key?(:days) && params[:days].respond_to?(:to_i)
           time = params[:days].to_i
-        else
-          time = 1
         end
-        @messages = Message.where('created_at >= ?', time.day.ago).order(Arel.sql 'DATE(created_at) ASC').group(Arel.sql 'Date(created_at)').count
+        @messages = Message.where('created_at >= ?', time.day.ago)
+                           .order(Arel.sql 'DATE(created_at) ASC')
+                           .group(Arel.sql 'Date(created_at)').count
         return_the @messages, handler: tpl_handler
       end
 
@@ -117,6 +112,20 @@ module Api
 
       def tpl_handler
         :jb
+      end
+
+      private
+
+      def sign
+        chronological_after? ? '>' : '<'
+      end
+
+      def chronological_before?
+        params[:chronologically] == 'before'
+      end
+
+      def chronological_after?
+        params[:chronologically] == 'after'
       end
     end
   end

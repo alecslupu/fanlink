@@ -10,7 +10,11 @@ json.cache! ['v3', message] do
   json.audio_size message.audio_file_size
   json.audio_content_type message.audio_content_type
   json.person do
-    json.partial! 'api/v3/people/person', locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }
+    json.partial! 'api/v3/people/person',
+                  locals: {
+                    person: message.person,
+                    relationships: Relationship.for_people(current_user, message.person)
+                  }
   end
   if message.mention_meta.length > 0
     json.mentions message.mention_meta

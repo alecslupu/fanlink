@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 json = render(partial: 'api/v4/people/app', locals: { person: person }, handlers: :jb)
 
 json[:email] = person.email
@@ -9,10 +10,17 @@ json[:product] = {
   name: person.product.name
 }
 if person.level_progresses.present?
-  json[:level_progress] = render(partial: 'api/v4/level_progresses/app', collection: person.level_progresses, as: :level, handlers: :jb)
+  json[:level_progress] = render(partial: "api/v4/level_progresses/app",
+                                 collection: person.level_progresses,
+                                 as: :level,
+                                 handlers: :jb)
 end
+
 if person.person_rewards.present?
-  json[:rewards] = render(partial: 'api/v4/person_rewards/app', collection: person.person_rewards, as: :reward, handlers: :jb)
+  json[:rewards] = render(partial: "api/v4/person_rewards/app",
+                          collection: person.person_rewards,
+                          as: :reward,
+                          handlers: :jb)
 end
 
 if person.blocked_people.present?
@@ -25,6 +33,7 @@ if person.blocked_people.present?
 end
 
 json[:permissions] = person.summarize_permissions
+
 if person.pinned_to.present?
   json[:pin_messages_to] = person.pin_messages.map do |pin|
     {
