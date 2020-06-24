@@ -42,8 +42,10 @@ module Api
       #           or duplicate action type, person, identifier combination
       # *
       def create
-        if @action_type.seconds_lag > 0 && current_user.badge_actions.where(action_type: @action_type)
-                                                       .where('created_at > ?', Time.zone.now - @action_type.seconds_lag.seconds).exists?
+        candidate_action = current_user.badge_actions
+                                       .where(action_type: @action_type)
+                                       .where('created_at > ?', Time.zone.now - @action_type.seconds_lag.seconds)
+        if @action_type.seconds_lag > 0 && candidate_action.exists?
           head :too_many_requests
         else
           badge_action = current_user.badge_actions.create(action_type: @action_type, identifier: params[:badge_action][:identifier])

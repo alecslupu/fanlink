@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-json = {}
-
-json[:certcourses] = @certcourses.map do |certcourse|
-  render partial: @req_source, locals: { certcourse: certcourse, person: @current_user }, handlers: 'jb'
-end
-
-json
+{
+  certcourses: render(partial: 'app', collection: @certcourses, as: :certcourse, locals: { person: @current_user, certificate: @certificate }, handlers: :jb)
+}

@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-json = {}
-
-json[:levels] = @progress.map do |level_progress|
-  render partial: @req_source, locals: { level: level_progress }, handlers: 'jb'
-end
-
-json
+{
+  levels: render(partial: 'app', collection: @progress, as: :level, handlers: :jb)
+}

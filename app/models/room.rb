@@ -56,7 +56,7 @@ class Room < ApplicationRecord
   enum status: %i[inactive active deleted]
 
   acts_as_tenant(:product)
-  scope :for_product, ->(product) { where(rooms: { product_id: product.id }) }
+  scope :for_product, -> (product) { where(rooms: { product_id: product.id }) }
 
   belongs_to :created_by, class_name: 'Person', required: false
   belongs_to :product

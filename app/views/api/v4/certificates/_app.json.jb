@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-person_certificate = pc.for_person(user).first_or_initialize
+person_certificate = certificate.person_certificates.for_person(user).first_or_initialize
 json = {
   id: certificate.id,
   order: certificate.certificate_order,

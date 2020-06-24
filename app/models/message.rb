@@ -144,23 +144,26 @@ class Message < ApplicationRecord
   has_many :room_subscribers, dependent: :nullify
   has_paper_trail
 
-  scope :for_date_range, ->(room, from, to, limit = nil) {
-                           where(room: room).where('created_at >= ?', from.beginning_of_day)
-                                            .where('created_at <= ?', to.end_of_day).order(created_at: :desc).limit(limit)
-                         }
+  scope :for_date_range, ->(room, from, to, limit = nil) do
+    where(room: room)
+      .where('created_at >= ?', from.beginning_of_day)
+      .where('created_at <= ?', to.end_of_day)
+      .order(created_at: :desc)
+      .limit(limit)
+  end
   scope :for_product, ->(product) { joins(:room).where(rooms: { product_id: product.id }) }
   scope :pinned, ->(param) { joins(:person).where(people: { pin_messages_from: (param.downcase == 'yes') }) }
   scope :publics, -> { joins(:room).where(rooms: { public: true }) }
   scope :reported_action_needed, -> { joins(:message_reports).where(message_reports: { status: MessageReport.statuses[:pending] }) }
   scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
 
-  scope :not_reported_by_user, ->(person_id) {
+  scope :not_reported_by_user, ->(person_id) do
     where("NOT EXISTS (
       SELECT 1 FROM message_reports
       WHERE message_reports.message_id = messages.id
       AND message_reports.person_id = ?
     )", person_id)
-  }
+  end
 
   scope :visible, -> { where(hidden: false) }
   scope :room_date_range, ->(from, to) { where('messages.created_at BETWEEN ? AND ?', from, to) }
@@ -173,7 +176,7 @@ class Message < ApplicationRecord
     super(only: %i[id body picture_id], methods: %i[create_time picture_url pinned],
           include: { message_mentions: { except: %i[message_id] },
                      person: { only: %i[ id username name designation product_account chat_banned badge_points
-                                         level do_not_message_me pin_messages_from ], methods: %i[level picture_url] } })
+                       level do_not_message_me pin_messages_from ], methods: %i[level picture_url] } })
   end
 
   def create_time

@@ -40,7 +40,7 @@ class Level < ApplicationRecord
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
-  scope :for_product, ->(product) { where(levels: { product_id: product.id }) }
+  scope :for_product, -> (product) { where(levels: { product_id: product.id }) }
 
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true

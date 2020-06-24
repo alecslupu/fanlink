@@ -3,6 +3,6 @@
 {
   id: post_comment.id.to_s,
   body: post_comment.body,
-  person: render(partial: "api/v4/people/#{@req_source}", locals: { person: post_comment.person, relationships: Relationship.for_people(current_user, post_comment.person) }),
+  person: render(partial: 'api/v4/people/app', locals: { person: post_comment.person, relationships: Relationship.for_people(current_user, post_comment.person) }),
   create_time: post_comment.created_at.to_s
 }

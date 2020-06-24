@@ -3,13 +3,9 @@
 json = {}
 
 if defined?(@followers)
-  json[:followers] = @followers.map do |follower|
-    render partial: "api/v4/people/#{@req_source}", locals: { person: follower }, handlers: 'jb'
-  end
+  json[:followers] = render(partial: 'api/v4/people/app', collection: @followers, as: :person, handlers: :jb)
 else
-  json[:following] = @following.map do |following|
-    render partial: "api/v4/people/#{@req_source}", locals: { person: following }, handlers: 'jb'
-  end
+  json[:following] = render(partial: 'api/v4/people/app', collection: @following, as: :person, handlers: :jb)
 end
 
 json
