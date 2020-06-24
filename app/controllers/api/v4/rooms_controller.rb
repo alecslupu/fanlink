@@ -4,7 +4,9 @@ module Api
   module V4
     class RoomsController < Api::V3::RoomsController
       def index
-        @rooms = (params['private'].present? && params['private'] == 'true') ? Room.active.privates_for_person(current_user) : Room.active.publics
+        @rooms = params['private'].present? && params['private'] == 'true' ?
+                   Room.active.privates_for_person(current_user) :
+                   Room.active.publics
         return_the @rooms, handler: tpl_handler
       end
 
@@ -16,7 +18,7 @@ module Api
       def create
         @room = Room.new(room_params.merge(status: :active, created_by_id: current_user.id).except(:member_ids))
         room_members = []
-        if !@room.public
+        unless @room.public
           blocks_with = current_user.blocks_with.map(&:id)
           members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map(&:to_i) : []
           members_ids << current_user.id

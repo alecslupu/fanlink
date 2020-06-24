@@ -24,12 +24,12 @@ json = {
 }
 if post.category.present?
   json[:category] =
-  {
-    id: post.category.id,
-    name: post.category.name,
-    color: post.category.color,
-    role: post.category.role
-  }
+    {
+      id: post.category.id,
+      name: post.category.name,
+      color: post.category.color,
+      role: post.category.role
+    }
 else
   json[:category] = nil
 end

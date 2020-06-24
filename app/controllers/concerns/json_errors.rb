@@ -48,7 +48,9 @@ module JSONErrors
   def render_500(errors)
     unless (Rails.env.test? && ENV['ROLLBAR_ENABLED'])
       logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)
-      errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless errors.is_a?(String)
+      unless errors.is_a?(String)
+        errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) }
+      end
     end
     render json: { errors: errors.message }.to_json, status: 500
     nil
@@ -60,18 +62,7 @@ module JSONErrors
 
   def render_errors(errors, status = 400)
     errors = Array.wrap(errors) unless errors.is_a?(Array)
-    # if status == 500
-    #   # logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
-    #   # errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test?
-    #   # Rollbar.error(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
-    # else
-    #   # logger.warn ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)  unless Rails.env.test?
-    #   # Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
-    # end
-    data = {
-      errors: errors
-    }
-    render json: data, status: status
+    render json: { errors: errors }, status: status
     nil
   end
 

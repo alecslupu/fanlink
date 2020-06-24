@@ -29,7 +29,7 @@ module Api
         if check_blocked(requested_to)
           @relationship = Relationship.for_people(current_user, requested_to).first
           if @relationship
-            if @relationship.requested? && @relationship.requested_by == requested_to # there was request o/s from this user to us
+            if @relationship.requested? && @relationship.requested_by == requested_to
               @relationship.friended!
               update_relationship_count(current_user, @api_version)
               @relationship.friend_request_accepted_push

@@ -7,9 +7,11 @@ json[:badges] = @badges.map do |badge|
   bac = 0
   if badge.reward.present?
     if badge.reward&.series.present?
-      bac = (RewardProgress.where(person_id: for_user, series: badge.reward.series).exists? ? RewardProgress.where(person_id: for_user, series: badge.reward.series).sum(:total) : 0)
+      reward_progress_where = RewardProgress.where(person_id: for_user, series: badge.reward.series)
+      bac = (reward_progress_where.exists? ? reward_progress_where.sum(:total) : 0)
     else
-      bac = (RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).exists? ? RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).first.total : 0)
+      progress_where = RewardProgress.where(person_id: for_user, reward_id: badge.reward.id)
+      bac = (progress_where.exists? ? progress_where.first.total : 0)
     end
   end
   b = {
