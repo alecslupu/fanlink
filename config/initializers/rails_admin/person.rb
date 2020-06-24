@@ -31,7 +31,6 @@ RailsAdmin.config do |config|
     end
 
     configure :level_earned do
-
     end
     configure :password do
     end
@@ -43,8 +42,8 @@ RailsAdmin.config do |config|
             nil, :has_interests, :has_no_interests, :has_followings, :has_no_followings, :with_friendships,
             :without_friendships, :has_posts, :has_no_posts, :has_facebook_id, :has_created_acc_past_24h,
             :has_created_acc_past_7days, :has_free_certificates_enrolled, :has_no_free_certificates_enrolled,
-            :has_paid_certificates, :has_no_paid_certificates, :has_certificates_generated, :has_no_sent_messages, :active_48h,
-            :active_7days, :active_30days, :inactive_48h, :inactive_7days, :inactive_30days
+            :has_paid_certificates, :has_no_paid_certificates, :has_certificates_generated, :has_no_sent_messages,
+            :active_48h, :active_7days, :active_30days, :inactive_48h, :inactive_7days, :inactive_30days
           ]
         else
           []
@@ -77,7 +76,8 @@ RailsAdmin.config do |config|
       field :notification_device_ids do
         column_width 100
         pretty_value do
-          bindings[:view].link_to "#{ bindings[:object].notification_device_ids.size} notification device ids", bindings[:view].rails_admin.show_path('person', bindings[:object].id)
+          bindings[:view].link_to "#{bindings[:object].notification_device_ids.size} notification device ids",
+                                  bindings[:view].rails_admin.show_path('person', bindings[:object].id)
         end
         visible do
           bindings[:view]._current_user.super_admin?
@@ -178,7 +178,7 @@ RailsAdmin.config do |config|
       field :role do
         def render
           bindings[:view].render :partial => 'rails_admin/main/client_role_warning', locals: {
-            field: self, form: bindings[:form] ,
+            field: self, form: bindings[:form],
             client_id: Role.where(internal_name: 'client').first.try(:id)
           }
         end
@@ -243,7 +243,7 @@ RailsAdmin.config do |config|
           designated_people_ids = bindings[:object].designated_people.pluck(:id)
 
           Proc.new { |scope|
-            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: designated_people_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i).where.not(id: designated_people_ids)
             scope = scope.limit(50)
           }
         end
@@ -254,14 +254,14 @@ RailsAdmin.config do |config|
           false
         end
         visible do
-        bindings[:object].client?
+          bindings[:object].client?
         end
         associated_collection_scope do
           normal_role = Role.normals.first
           assigned_people_ids = bindings[:object].assigned_people.pluck(:id)
 
           Proc.new { |scope|
-            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: assigned_people_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i).where.not(id: assigned_people_ids)
             scope = scope.limit(50)
           }
         end
@@ -280,7 +280,7 @@ RailsAdmin.config do |config|
           clients_designated_ids = bindings[:object].clients_designated.pluck(:id)
 
           Proc.new { |scope|
-            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_designated_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i).where.not(id: clients_designated_ids)
             scope = scope.limit(50)
           }
         end
@@ -298,7 +298,7 @@ RailsAdmin.config do |config|
           clients_assigned_ids = bindings[:object].clients_assigned.pluck(:id)
 
           Proc.new { |scope|
-            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_assigned_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i).where.not(id: clients_assigned_ids)
             scope = scope.limit(50)
           }
         end

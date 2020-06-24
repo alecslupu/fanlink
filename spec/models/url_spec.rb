@@ -10,7 +10,9 @@ RSpec.describe Url, type: :model do
 
     describe 'should have one' do
       it '#reward' do
-        should have_one(:reward).conditions("rewards.reward_type = #{Reward.reward_types["url"]}").with_foreign_key(:reward_type_id)
+        should have_one(:reward)
+          .conditions("rewards.reward_type = #{Reward.reward_types["url"]}")
+          .with_foreign_key(:reward_type_id)
       end
     end
 

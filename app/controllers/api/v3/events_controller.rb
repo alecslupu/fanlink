@@ -100,7 +100,7 @@ module Api
 
       def index
         if !check_dates
-          render json: {errors: _('Invalid date(s)')}, status: :unprocessable_entity
+          render json: { errors: _('Invalid date(s)') }, status: :unprocessable_entity
         else
           start_boundary = (params[:from_date].present?) ? Date.parse(params[:from_date]) : (Time.zone.now - 3.years).beginning_of_day
           end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.zone.now + 3.years).end_of_day
@@ -126,7 +126,7 @@ module Api
         if @event_checkin.valid?
           return_the @event_checkin, handler: tpl_handler
         else
-          render json: {errors: [@event_checkin.errors.messages]}, status: :unprocessable_entity
+          render json: { errors: [@event_checkin.errors.messages] }, status: :unprocessable_entity
         end
       end
 

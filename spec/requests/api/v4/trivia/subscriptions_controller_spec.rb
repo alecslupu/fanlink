@@ -3,7 +3,7 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::Trivia::SubscriptionsController', type: :request, swagger_doc: 'v4/swagger.json' do
-  #path "/trivia/games/{game_id}/subscription" do
+  # path "/trivia/games/{game_id}/subscription" do
   #  get "Show the subscription information" do
   #    tags "Trivia"
   #    security [Bearer: []]
@@ -152,5 +152,5 @@ RSpec.describe 'Api::V4::Trivia::SubscriptionsController', type: :request, swagg
   #      run_test!
   #    end
   #  end
-  #end
+  # end
 end

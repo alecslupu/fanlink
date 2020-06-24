@@ -88,7 +88,7 @@ module Api
 
       def create
         if current_user.chat_banned?
-          render json: {errors: 'You are banned.'}, status: :unprocessable_entity
+          render json: { errors: 'You are banned.' }, status: :unprocessable_entity
         else
           @post = Post.create(post_params.merge(person_id: current_user.id))
           if @post.valid?
@@ -123,10 +123,10 @@ module Api
           time = 1
         end
         @posts = Post
-                   .where('created_at >= ?', time.day.ago)
-                   .order(Arel.sql('DATE(created_at) ASC'))
-                   .group(Arel.sql('Date(created_at)'))
-                   .count
+                 .where('created_at >= ?', time.day.ago)
+                 .order(Arel.sql('DATE(created_at) ASC'))
+                 .group(Arel.sql('Date(created_at)'))
+                 .count
         return_the @posts, handler: tpl_handler
       end
 

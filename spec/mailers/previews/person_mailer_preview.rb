@@ -28,7 +28,11 @@ class PersonMailerPreview < ActionMailer::Preview
   def send_certificate
     product = Product.where(internal_name: params[:product]).last || Product.last
 
-    person_certificate = PersonCertificate.joins(:person).where(people: { product_id: product.id}).where.not(issued_date: nil).first
+    person_certificate = PersonCertificate
+                         .joins(:person)
+                         .where(people: { product_id: product.id })
+                         .where.not(issued_date: nil)
+                         .first
 
     PersonMailer.with(
       id: person_certificate.person.id,
@@ -39,7 +43,11 @@ class PersonMailerPreview < ActionMailer::Preview
   def send_assignee_certificate
     product = Product.where(internal_name: params[:product]).last || Product.last
 
-    person_certificate = PersonCertificate.joins(:person).where(people: { product_id: product.id}).where.not(issued_date: nil).first
+    person_certificate = PersonCertificate
+                         .joins(:person)
+                         .where(people: { product_id: product.id })
+                         .where.not(issued_date: nil)
+                         .first
 
     PersonMailer.with(
       person: product.people.last.id,

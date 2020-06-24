@@ -22,7 +22,7 @@ module Api
         if @product.valid?
           return_the @product
         else
-          render json: {errors: @product.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @product.errors.messages }, status: :unprocessable_entity
         end
       end
 
@@ -31,7 +31,7 @@ module Api
         if @product.valid?
           return_the @product
         else
-          render json: {errors: @product.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @product.errors.messages }, status: :unprocessable_entity
         end
       end
 
@@ -40,7 +40,7 @@ module Api
         if @product.update(product_params)
           return_the @product
         else
-          render json: {errors: @product.errors.messages}, status: :unprocessable_entity
+          render json: { errors: @product.errors.messages }, status: :unprocessable_entity
         end
       end
 

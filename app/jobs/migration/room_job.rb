@@ -21,6 +21,7 @@ module Migration
       unless Room.with_translations('en').where(id: room.id).first.present?
         return if room.untranslated_name['un'].nil?
         return if room.untranslated_name['un'].empty?
+
         I18n.locale = 'en'
         room.name = room.untranslated_name['un']
         room.description = room.untranslated_description['un']

@@ -10,7 +10,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password, params: { id: person.id, person: { current_password: current, new_password: new_password } }
+        patch :change_password, params: { id: person.id, person: {
+          current_password: current, new_password: new_password
+        } }
         expect(response).to be_successful
         expect(person.reload.valid_password?(new_password)).to be_truthy
       end
@@ -21,7 +23,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password, params: { id: person.id, person: { current_password: current, new_password: new_password } }
+        patch :change_password, params: { id: person.id, person: {
+          current_password: current, new_password: new_password
+        } }
         expect(response).to be_unprocessable
         expect(json['errors']).to include('Password must be at least 6 characters in length.')
       end
@@ -32,7 +36,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password, params: { id: person.id, person: { current_password: 'wrongpassword', new_password: new_password } }
+        patch :change_password, params: { id: person.id, person: {
+          current_password: 'wrongpassword', new_password: new_password
+        } }
         expect(response).to be_unprocessable
         expect(json['errors']).to include('The password is incorrect')
       end
@@ -42,7 +48,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       new_password = 'newsecret'
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
-        patch :change_password, params: { id: person.id, person: { current_password: current, new_password: new_password } }
+        patch :change_password, params: { id: person.id, person: {
+          current_password: current, new_password: new_password
+        } }
         expect(response).to be_unauthorized
         expect(person.reload.valid_password?(current)).to be_truthy
       end
@@ -54,7 +62,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password, params: { id: pers.id, person: { current_password: current, new_password: new_password } }
+        patch :change_password, params: { id: pers.id, person: {
+          current_password: current, new_password: new_password
+        } }
         expect(response).to be_not_found
         expect(person.reload.valid_password?(current)).to be_truthy
       end
@@ -62,7 +72,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
   end
 
   describe '#create' do
-    it 'should sign up new user with email, username, and password, profile fields and send onboarding email', :run_delayed_jobs do
+    it 'should sign up new user with email, username, and password, profile fields and send onboarding email' do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         create(:static_system_email, name: 'onboarding')
@@ -74,8 +84,8 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         post :create, params:
           { product: product.internal_name,
-           person: { username: username, email: email, password: 'secret', gender: 'male',
-                    birthdate: '2000-01-02', city: 'Shambala', country_code: 'us' } }
+            person: { username: username, email: email, password: 'secret', gender: 'male',
+                      birthdate: '2000-01-02', city: 'Shambala', country_code: 'us' } }
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -102,7 +112,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect_any_instance_of(Person).to receive(:send_onboarding_email)
 
         expect {
-          post :create, params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
+          post :create, params: { product: product.internal_name,
+                                  facebook_auth_token: tok,
+                                  person: { username: username } }
         }.to change { Person.count }.by(1)
         expect(response).to be_successful
         p = Person.last
@@ -125,7 +137,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect_any_instance_of(Person).not_to receive(:send_onboarding_email)
 
         expect {
-          post :create, params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
+          post :create, params: { product: product.internal_name,
+                                  facebook_auth_token: tok,
+                                  person: { username: username } }
         }.to change { Person.count }.by(1)
         expect(response).to be_successful
         p = Person.last
@@ -142,7 +156,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       ActsAsTenant.with_tenant(product) do
         expect(Person).to receive(:create_from_facebook).with(tok, username).and_return(nil)
         expect {
-          post :create, params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
+          post :create, params: { product: product.internal_name,
+                                  facebook_auth_token: tok,
+                                  person: { username: username } }
         }.to change { Person.count }.by(0)
         expect(response.status).to eq(503)
         expect(json['errors']).to include('problem contacting Facebook')
@@ -153,8 +169,14 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       person = create(:person, username: username)
       ActsAsTenant.with_tenant(person.product) do
         expect {
-          post :create, params: { product: person.product.internal_name, person: { email: 'nobodyimportant@example.com',
-                                                                                 username: username, password: 'anything' } }
+          post :create, params: {
+            product: person.product.internal_name,
+            person: {
+              email: 'nobodyimportant@example.com',
+              username: username,
+              password: 'anything'
+            }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('The username has already been taken.')
@@ -166,8 +188,11 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       person = create(:person, email: email)
       ActsAsTenant.with_tenant(person.product) do
         expect {
-          post :create, params: { product: person.product.internal_name, person: { email: email,
-                                                                                 username: 'anything', password: 'anything' } }
+          post :create, params: { product: person.product.internal_name, person: {
+            email: email,
+            username: 'anything',
+            password: 'anything'
+          } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('A user has already signed up with that email address.')
@@ -177,7 +202,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect {
-          post :create, params: { product: product.internal_name, person: { username: 'anything', password: 'anything' } }
+          post :create, params: {
+            product: product.internal_name,
+            person: { username: 'anything', password: 'anything' }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('Email is required.')
@@ -187,7 +215,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect {
-          post :create, params: { product: product.internal_name, person: { email: 'nogood', username: 'anything', password: 'anything' } }
+          post :create, params: {
+            product: product.internal_name,
+            person: { email: 'nogood', username: 'anything', password: 'anything' }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('Email is invalid.')
@@ -197,7 +228,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect {
-          post :create, params: { product: product.internal_name, person: { email: "anything#{Time.now.to_i}@example.com", password: 'anything' } }
+          post :create, params: {
+            product: product.internal_name,
+            person: { email: "anything#{Time.now.to_i}@example.com", password: 'anything' }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('Username is required.')
@@ -207,7 +241,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect {
-          post :create, params: { product: product.internal_name, person: { username: 'abcd', email: "anything#{Time.now.to_i}@example.com", password: 'anything' } }
+          post :create, params: {
+            product: product.internal_name,
+            person: { username: 'abcd', email: "anything#{Time.now.to_i}@example.com", password: 'anything' }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('Username must be 5 to 25 characters with no special characters or spaces')
@@ -217,7 +254,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect {
-          post :create, params: { product: product.internal_name, person: { username: 'a' * 26, email: "anything#{Time.now.to_i}@example.com", password: 'anything' } }
+          post :create, params: {
+            product: product.internal_name,
+            person: { username: 'a' * 26, email: "anything#{Time.now.to_i}@example.com", password: 'anything' }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('Username must be 5 to 25 characters with no special characters or spaces')
@@ -228,7 +268,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect {
-          post :create, params: { product: product.internal_name, person: { username: 'abcde$', email: "anything#{Time.now.to_i}@example.com", password: 'anything' } }
+          post :create, params: {
+            product: product.internal_name,
+            person: { username: 'abcde$', email: "anything#{Time.now.to_i}@example.com", password: 'anything' }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('Username must be 5 to 25 characters with no special characters or spaces')
@@ -239,7 +282,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect {
-          post :create, params: { product: product.internal_name, person: { username: 'abc', email: 'anything', password: 'anything' } }
+          post :create, params: {
+            product: product.internal_name, person: { username: 'abc', email: 'anything', password: 'anything' }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('Email is invalid.')
@@ -254,7 +299,11 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         koala_result = { 'id' => fbid, 'name' => 'John Smith' }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect {
-          post :create, params: { product: person.product.internal_name, facebook_auth_token: tok, person: { username: 'anything' } }
+          post :create, params: {
+            product: person.product.internal_name,
+            facebook_auth_token: tok,
+            person: { username: 'anything' }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('A user has already signed up with that Facebook account.')
@@ -270,7 +319,11 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         koala_result = { 'id' => '12345', 'name' => 'John Smith', 'email' => email }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect {
-          post :create, params: { product: person.product.internal_name, facebook_auth_token: tok, person: { username: 'anything' } }
+          post :create, params: {
+            product: person.product.internal_name,
+            facebook_auth_token: tok,
+            person: { username: 'anything' }
+          }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json['errors']).to include('A user has already signed up with that email address.')
@@ -296,8 +349,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
               city: 'Las Vegas',
               country_code: 'us',
               picture: fixture_file_upload('images/better.png', 'image/png')
-            }
-          }
+            } }
         expect(response).to be_successful
         expect(json['person']['picture_url']).to_not eq(nil)
         expect(Person.last.picture.exists?).to be_truthy
@@ -324,7 +376,8 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         normal_person = create(:person, username: 'normal', email: 'normal@example.com')
         login_as(normal_person)
 
-        allow(subject).to receive(:apply_filters).and_return [person, normal_person, person1, person2, person3, person4, person5]
+        people_list = [person, normal_person, person1, person2, person3, person4, person5]
+        allow(subject).to receive(:apply_filters).and_return people_list
 
         get :index
         expect(response).to be_successful
@@ -350,7 +403,6 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
     it 'should page 2 of all people with no filter' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-
         normal_person = create(:person, username: 'normal', email: 'normal@example.com')
         # person1 =
         create(:person, username: 'pers1', email: 'pers1@example.com')
@@ -380,7 +432,8 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         login_as(person)
 
-        allow(subject).to receive(:apply_filters).and_return [normal_person, person1, person2, person3, person4, person5]
+        people_list = [normal_person, person1, person2, person3, person4, person5]
+        allow(subject).to receive(:apply_filters).and_return people_list
 
         get :index, params: { page: 1 }
         expect(response).to be_successful
@@ -513,12 +566,14 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
     end
 
     it 'should return the people objects with their attached picture' do
-      person = create(:person, picture: fixture_file_upload('images/better.png', 'image/png'))
-      ActsAsTenant.with_tenant(person.product) do
+      fixture_file = fixture_file_upload('images/better.png', 'image/png')
 
+      person = create(:person, picture: fixture_file)
+      ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
-        allow(subject).to receive(:apply_filters).and_return build_list(:person,3, picture: fixture_file_upload('images/better.png', 'image/png'))
+        fixture_file = fixture_file_upload('images/better.png', 'image/png')
+        allow(subject).to receive(:apply_filters).and_return build_list(:person, 3, picture: fixture_file)
 
         get :index
 
@@ -570,10 +625,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
     it 'should return the people object with their attached picture' do
       person = create(:person, picture: fixture_file_upload('images/better.png', 'image/png'))
       ActsAsTenant.with_tenant(person.product) do
-        create_list(:person,3, picture: fixture_file_upload('images/better.png', 'image/png'))
+        create_list(:person, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
 
         login_as(person)
-        get :show ,params: { id: person.id }
+        get :show, params: { id: person.id }
 
         expect(response).to be_successful
         expect(json['person']['picture_url']).to_not eq(nil)
@@ -589,8 +644,18 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         new_username = 'thisbetterbeunique'
         new_email = 'fooism@example.com'
         new_name = 'Joe Foo'
-        patch :update, params: { id: person.id, person: { email: new_email, name: new_name, username: new_username,
-                                                        gender: 'female', birthdate: '1999-03-03', city: 'FooismTown', country_code: 'fr' } }
+        patch :update, params: {
+          id: person.id,
+          person: {
+            email: new_email,
+            name: new_name,
+            username: new_username,
+            gender: 'female',
+            birthdate: '1999-03-03',
+            city: 'FooismTown',
+            country_code: 'fr'
+          }
+        }
         expect(response).to be_successful
         per = person.reload
         expect(per.username).to eq(new_username)

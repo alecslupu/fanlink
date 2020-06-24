@@ -7,6 +7,7 @@ class DeleteMessageJob < ApplicationJob
   def perform(message_id, version = 0)
     message = Message.find(message_id)
     return unless message.hidden?
+
     client.set("#{room_path(message.room)}/last_deleted_message_id", message.id)
     if version.present?
       version.downto(1) do |v|

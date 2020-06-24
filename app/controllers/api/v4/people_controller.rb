@@ -30,7 +30,7 @@ module Api
             if params[:facebook_auth_token].present?
               @person = Person.create_from_facebook(params[:facebook_auth_token], person_params[:username])
               if @person.nil?
-                (render json: {errors: _('There was a problem contacting Facebook.')}, status: :service_unavailable) && return
+                (render json: { errors: _('There was a problem contacting Facebook.') }, status: :service_unavailable) && return
               end
             else
               @person = Person.create(person_params)
@@ -67,6 +67,7 @@ module Api
               if person_params.has_key?(:terminated) && @person.some_admin?
                 return render_422 _('You cannot ban administative accounts.')
               end
+
               @person.update(person_params)
               if @person.terminated && @person == current_user
                 logout
@@ -96,7 +97,7 @@ module Api
 
       def send_certificate
         current_user.send_certificate_email(params[:certificate_id], params[:email_address])
-        render json: {message: _('Email sent')}
+        render json: { message: _('Email sent') }
       end
 
       protected

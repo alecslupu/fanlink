@@ -14,6 +14,7 @@ if !activity.deleted
       json.requirements do
         json.array!(activity.activity_types) do |atype|
           next if atype.deleted
+
           json.partial! 'api/v3/activity_types/type', locals: { atype: atype }
         end
       end

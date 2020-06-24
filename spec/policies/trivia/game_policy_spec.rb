@@ -28,7 +28,8 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
     }
 
     before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(trivia_generate_game_action: true))
+      allow_any_instance_of(Person).to receive(:individual_access)
+        .and_return(PortalAccess.new(trivia_generate_game_action: true))
     end
 
     subject { described_class.new(Person.new, master_class) }

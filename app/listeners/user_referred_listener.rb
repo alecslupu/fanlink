@@ -3,6 +3,7 @@
 class UserReferredListener
   def self.person_created(person_id, params)
     return unless params && params[:referrer].present?
+
     person = Person.find(person_id)
     code = Referral::UserCode.where(unique_code: params[:referrer].try(:downcase)).first!
 

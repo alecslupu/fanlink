@@ -2,7 +2,6 @@
 
 module Trivia
   class GameLeaderboardPolicy < TriviaModulePolicy
-
     def create?
       false
     end

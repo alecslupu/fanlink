@@ -20,7 +20,8 @@ AttributeNormalizer.configure do |config|
     value.is_a?(String) ? value.downcase : value
   end
 
-  # The default normalizers if no :with option or block is given is to apply the :strip and :blank normalizers (in that order).
+  # The default normalizers if no :with option or block is given is to apply the :strip and :blank normalizers
+  # (in that order).
   # You can change this if you would like as follows:
   # config.default_normalizers = :strip, :blank
 end

@@ -150,7 +150,7 @@ module Push
   end
   module_function :push_client
 
-  #moved
+  # moved
   def disconnect
     @fbcm = nil
   end
@@ -286,6 +286,7 @@ module Push
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
       next if blocks_with.include?(m.id)
+
       android_tokens += m.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
       ios_tokens += m.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
     end

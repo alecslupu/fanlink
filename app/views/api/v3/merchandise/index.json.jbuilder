@@ -12,6 +12,7 @@ else
   json.merchandise do
     json.array!(@merchandise) do |merch|
       next if merch.deleted
+
       json.cache! ['v3', merch, @lang] do
         json.partial! 'merchandise', locals: { merchandise: merch, lang: @lang }
       end

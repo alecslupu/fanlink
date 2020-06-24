@@ -39,12 +39,12 @@ class ConfigItem < ApplicationRecord
   end
 
   validates :type, inclusion: { in: %w[
-            StringConfigItem
-            ArrayConfigItem
-            BooleanConfigItem
-            RootConfigItem
-            IntegerConfigItem
-            ColorConfigItem
+    StringConfigItem
+    ArrayConfigItem
+    BooleanConfigItem
+    RootConfigItem
+    IntegerConfigItem
+    ColorConfigItem
   ], message: '%{value} is not a valid type' }
 
   scope :enabled, -> { where(enabled: true) }

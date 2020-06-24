@@ -116,7 +116,7 @@ module Api
           if params[:facebook_auth_token].present?
             @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
             if @person.nil?
-              (render json: {errors: 'There was a problem contacting Facebook'}, status: :service_unavailable) && return
+              (render json: { errors: 'There was a problem contacting Facebook' }, status: :service_unavailable) && return
             end
           else
             @person = Person.create(person_params)
@@ -295,7 +295,7 @@ module Api
 
       def person_params
         params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
-                                      username password picture product current_password new_password ] +
+                                           username password picture product current_password new_password ] +
                                          ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[recommended] : []))
       end
     end

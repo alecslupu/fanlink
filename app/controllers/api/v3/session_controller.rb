@@ -80,6 +80,7 @@ module Api
           @person = Person.for_facebook_auth_token(params['facebook_auth_token'])
           return render_422 _('Unable to find user from token. Likely a problem contacting Facebook.') if @person.nil?
           return render_401 _('Your account has been banned.') if @person.terminated
+
           auto_login(@person)
         else
           @person = Person.can_login?(params[:email_or_username])
@@ -88,6 +89,7 @@ module Api
               @person = auto_login(@person)
             else
               return render_401 _('Your account has been banned.') if @person.terminated
+
               @person = login(@person.email, params[:password]) if @person
             end
           end

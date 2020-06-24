@@ -11,5 +11,4 @@ class PostCommentMentionPushJob < ApplicationJob
       post_comment_mention_push(post_comment_mention, post_comment_mention.person)
     end
   end
-
 end

@@ -8,11 +8,14 @@ RSpec.describe 'Api::V4::MessageReportsController', type: :request, swagger_doc:
       security [Bearer: []]
       let(:Authorization) { '' }
       let(:person) { create(:admin_user) }
-      let!(:message_reports) { ActsAsTenant.with_tenant(person.product) {  create(:message_report) } }
+      let!(:message_reports) { ActsAsTenant.with_tenant(person.product) { create(:message_report) } }
 
-      parameter name: :status_filter, in: :query, type: :string, required: false
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :status_filter,
+                in: :query, type: :string, required: false
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
 
       tags 'MessageReports'
       produces 'application/vnd.api.v4+json'

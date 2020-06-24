@@ -2,7 +2,6 @@
 
 module Push
   class PrivateMessage < BasePush
-
     def push(message)
       room = message.room
       person = message.person
@@ -36,18 +35,18 @@ module Push
 
     private
 
-      def get_unblocked_members(members, person)
-        member_ids = []
+    def get_unblocked_members(members, person)
+      member_ids = []
 
-        members.each do |member|
-          blocks_with = person.blocks_with.map { |b| b.id }
-          next if member == person
-          next if blocks_with.include?(member.id)
+      members.each do |member|
+        blocks_with = person.blocks_with.map { |b| b.id }
+        next if member == person
+        next if blocks_with.include?(member.id)
 
-          member_ids << member.id
-        end
-
-        return member_ids
+        member_ids << member.id
       end
+
+      return member_ids
+    end
   end
 end

@@ -51,11 +51,11 @@ RSpec.describe 'Api::V4::PersonCertificatesController', type: :request, swagger_
 
       let(:certificate_id) { certificate.id }
       let('person_certificate[certificate_id]') { certificate.id }
-      let('person_certificate[purchased_order_id]') { }
+      let('person_certificate[purchased_order_id]') {}
       let('person_certificate[amount_paid]') { Faker::Number.number(digits: 3) }
       let('person_certificate[currency]') { Faker::Currency.code }
-      let('person_certificate[purchased_sku]') { }
-      let('person_certificate[receipt_id]') { }
+      let('person_certificate[purchased_sku]') {}
+      let('person_certificate[receipt_id]') {}
 
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
@@ -82,4 +82,3 @@ RSpec.describe 'Api::V4::PersonCertificatesController', type: :request, swagger_
     end
   end
 end
-

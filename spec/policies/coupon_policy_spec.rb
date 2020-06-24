@@ -11,5 +11,4 @@ RSpec.describe CouponPolicy, type: :policy do
   include_examples 'enforces the delete permission', args
   include_examples 'enforces the history permission', args
   include_examples 'enforces the export permission', args
-
 end

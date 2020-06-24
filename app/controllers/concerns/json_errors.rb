@@ -16,7 +16,7 @@ module JSONErrors
     rescue_from ActiveRecord::RecordNotFound,       with: :render_404
     rescue_from ActionController::ParameterMissing, with: :render_400
     rescue_from ActionController::RoutingError,     with: :render_404
-#    rescue_from Rack::Timeout::RequestTimeoutException, with: :render_500
+    #    rescue_from Rack::Timeout::RequestTimeoutException, with: :render_500
     rescue_from AccessDeniedException, with: :render_401
   end
 
@@ -48,7 +48,7 @@ module JSONErrors
   def render_500(errors)
     unless (Rails.env.test? && ENV['ROLLBAR_ENABLED'])
       logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)
-      errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) }  unless errors.is_a?(String)
+      errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless errors.is_a?(String)
     end
     render json: { errors: errors.message }.to_json, status: 500
     nil
