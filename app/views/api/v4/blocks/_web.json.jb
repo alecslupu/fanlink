@@ -1,7 +1,0 @@
-# frozen_string_literal: true
-
-{
-  id: block.id,
-  blocker_id: block.blocker_id,
-  blocked_id: block.blocked_id
-}

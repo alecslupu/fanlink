@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  block: render(partial: @req_source, locals: { block: @block }, handlers: 'jb')
+  block: render(partial: 'app', locals: { block: @block }, handlers: :jb)
 }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json = render(partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: 'jb')
+json = render(partial: 'api/v4/people/app', locals: { person: person }, handlers: :jb)
 
 json[:email] = person.email
 json[:product] = {
@@ -10,11 +10,12 @@ json[:product] = {
 }
 
 json[:level_progress] = if person.level_progresses.present?
-                          render(partial: "api/v4/level_progresses/#{@req_source}", collection: person.level_progresses, as: :level, handlers: 'jb')
+                          render(partial: 'api/v4/level_progresses/app', collection: person.level_progresses, as: :level, handlers: :jb)
 end
 
 json[:rewards] = if person.person_rewards.present?
-                   render(partial: "api/v4/person_rewards/#{@req_source}", collection: person.person_rewards, as: :reward, handlers: 'jb')
+                   render(partial: 'api/v4/person_rewards/app', collection: person.person_rewards, as: :reward, handlers: :jb)
+
 end
 
 json[:blocked_people] = if person.blocked_people.present?

@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-json = {}
-
-json[:actions] = @action_types.map do |action|
-  render partial: @req_source, locals: { action: action }, handlers: 'jb'
-end
-
-json
+{
+  actions: render(partial: 'app', collection: @action_types, as: :action, handlers: :jb)
+}

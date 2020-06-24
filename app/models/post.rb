@@ -114,12 +114,13 @@ class Post < ApplicationRecord
                      left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
                    }
 
-  scope :in_date_range, -> (start_date, end_date) {
-    where('posts.created_at >= ? and posts.created_at <= ?',
-          start_date.beginning_of_day, end_date.end_of_day)
-  }
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
   scope :for_person, -> (person) { includes(:person).where(person: person) }
+  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
+  scope :in_date_range, -> (start_date, end_date) {
+                          where('posts.created_at >= ? and posts.created_at <= ?',
+                                start_date.beginning_of_day, end_date.end_of_day)
+                        }
+
   scope :for_category, -> (categories) { joins(:category).where('categories.name IN (?)', categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
