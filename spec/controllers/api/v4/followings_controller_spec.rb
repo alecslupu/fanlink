@@ -65,7 +65,7 @@ RSpec.describe Api::V4::FollowingsController, type: :controller do
 
       ActsAsTenant.with_tenant(follower.product) do
         login_as(follower)
-        followed1= create(:person)
+        followed1 = create(:person)
         followed3 = create(:person)
         followed2 = create(:person)
         follower.follow(followed1)

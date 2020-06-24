@@ -11,8 +11,10 @@ RSpec.describe 'Api::V4::QuestsController', type: :request, swagger_doc: 'v4/swa
       let(:person) { create(:person) }
       let(:quests) { create_list(:quest, 2) }
 
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
 
       produces 'application/vnd.api.v4+json'
       response '200', 'HTTP/1.1 200 Ok' do
@@ -67,4 +69,3 @@ RSpec.describe 'Api::V4::QuestsController', type: :request, swagger_doc: 'v4/swa
     end
   end
 end
-

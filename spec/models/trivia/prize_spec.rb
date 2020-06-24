@@ -60,4 +60,3 @@ RSpec.describe Trivia::Prize, type: :model do
     end
   end
 end
-

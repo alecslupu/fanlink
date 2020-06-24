@@ -82,4 +82,3 @@ RSpec.describe 'Api::V4::PersonCertificatesController', type: :request, swagger_
     end
   end
 end
-

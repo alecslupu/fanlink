@@ -29,7 +29,11 @@ RSpec.describe Api::V4::PasswordResetsController, type: :controller do
         create(:static_system_email, name: 'password-reset')
 
         expect {
-          post :create, params: { product: person.product.internal_name, email_or_username: 'really_forgetful@example.com' }
+
+          post :create, params: {
+            product: person.product.internal_name,
+            email_or_username: 'really_forgetful@example.com'
+          }
         }.not_to have_enqueued_job.on_queue('mailers').with(
           'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
         )

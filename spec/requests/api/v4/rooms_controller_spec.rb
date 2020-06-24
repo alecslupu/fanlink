@@ -48,12 +48,13 @@ RSpec.describe 'Api::V4::RoomsController', type: :request, swagger_doc: 'v4/swag
     get '' do
       security [Bearer: []]
       tags 'Rooms' # 'kotlin']
-      parameter name: :"private", in: :query, type: :string, required: false
+      parameter name: :"private",
+                in: :query, type: :string, required: false
       let(:Authorization) { '' }
 
       let(:message) { create(:message, room: create(:private_active_room)) }
       let(:room) { message.room }
-      #let(:id) { room.id }
+      # let(:id) { room.id }
 
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
@@ -92,7 +93,7 @@ RSpec.describe 'Api::V4::RoomsController', type: :request, swagger_doc: 'v4/swag
   path '/rooms/{id}' do
     patch '' do
       security [Bearer: []]
-      tags 'Rooms' #'android-old']
+      tags 'Rooms' # 'android-old']
       parameter name: :id, in: :path, type: :string
       parameter name: :"room[name]", in: :formData, type: :string, required: false
       parameter name: :"room[picture]", in: :formData, type: :file, required: false
@@ -159,11 +160,16 @@ RSpec.describe 'Api::V4::RoomsController', type: :request, swagger_doc: 'v4/swag
       security [Bearer: []]
       tags 'Messages' # 'android-old']
       parameter name: :id, in: :path, type: :string
-      parameter name: :from_date, in: :query, type: :string, required: false
-      parameter name: :to_date, in: :query, type: :string, required: false
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum'
-      parameter name: :pinned, in: :formData, type: :string, enum: [:yes, :no], description: ' Lorem ipsum', required: false
+      parameter name: :from_date,
+                in: :query, type: :string, required: false
+      parameter name: :to_date,
+                in: :query, type: :string, required: false
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum'
+      parameter name: :pinned,
+                in: :formData, type: :string, enum: [:yes, :no], description: ' Lorem ipsum', required: false
 
       let(:Authorization) { '' }
 

@@ -15,6 +15,7 @@ end
 
 json[:rewards] = if person.person_rewards.present?
                    render(partial: 'api/v4/person_rewards/app', collection: person.person_rewards, as: :reward, handlers: :jb)
+
 end
 
 json[:blocked_people] = if person.blocked_people.present?

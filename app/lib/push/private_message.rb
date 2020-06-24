@@ -2,7 +2,6 @@
 
 module Push
   class PrivateMessage < BasePush
-
     def push(message)
       room = message.room
       person = message.person
@@ -47,7 +46,7 @@ module Push
         member_ids << member.id
       end
 
-      return member_ids
+      member_ids
     end
   end
 end

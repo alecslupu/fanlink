@@ -65,5 +65,4 @@ class RootConfigItem < ConfigItem
       original_node.children.each { |node| copy_node(node, new_node, product) }
     end
   end
-
 end

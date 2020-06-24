@@ -24,6 +24,6 @@ FactoryBot.define do
     product { current_product }
     sequence(:name) { |n| "Action #{n}" }
     sequence(:internal_name) { |n| "action_#{n}" }
-    sequence (:points) { |n| Faker::Number.between(from: n*10, to: (n*10-1)) }
+    sequence (:points) { |n| Faker::Number.between(from: n * 10, to: (n * 10 - 1)) }
   end
 end

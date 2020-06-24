@@ -15,7 +15,7 @@
 
 class PostReport < ApplicationRecord
   # include PostReport::PortalFilters
-  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :status_filter, ->(query) { where(status: query.to_sym) }
   # include PostReport::PortalFilters
 
   enum status: %i[pending no_action_needed post_hidden]
@@ -25,7 +25,7 @@ class PostReport < ApplicationRecord
 
   has_paper_trail
 
-  scope :for_product, -> (product) { joins([post: :person]).where('people.product_id = ?', product.id) }
+  scope :for_product, ->(product) { joins([post: :person]).where('people.product_id = ?', product.id) }
 
   validates :reason, length: { maximum: 500, message: _('Reason cannot be longer than 500 characters.') }
 

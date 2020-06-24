@@ -41,7 +41,7 @@ class RailsAdminController < ApplicationController
 
     if product.present?
       set_current_tenant(product)
-      cookies[:product_internal_name] = ((current_user.present?) ? current_user.product.internal_name : product.internal_name)
+      cookies[:product_internal_name] = ((current_user.present?) ? current_user.product : product).internal_name
     else
       head :not_found
     end

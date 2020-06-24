@@ -19,4 +19,3 @@ module Trivia
     end
   end
 end
-

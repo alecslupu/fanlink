@@ -10,7 +10,9 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post_comment = create(:post_comment, post: create(:post))
-        post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
+        post :create, params: { post_id: post_comment.post_id, post_comment_report: {
+          post_comment_id: post_comment.id, reason: reason
+        } }
         expect(response).to be_successful
 
         report = PostCommentReport.last
@@ -24,7 +26,9 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         post_comment = create(:post_comment, post: create(:post))
-        post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
+        post :create, params: { post_id: post_comment.post_id, post_comment_report: {
+          post_comment_id: post_comment.id, reason: reason
+        } }
         expect(response).to be_unauthorized
       end
     end
@@ -34,7 +38,9 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
       person = create(:person, product: create(:product))
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
+        post :create, params: { post_id: post_comment.post_id, post_comment_report: {
+          post_comment_id: post_comment.id, reason: reason
+        } }
         expect(response).to be_not_found
       end
     end
@@ -65,8 +71,6 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
         get :index, params: { page: 1, per_page: 2 }
         expect(response).to be_successful
         expect(json['post_comment_reports'].count).to eq(2)
-        # expect(json["post_comment_reports"].first).to eq(post_comment_report_json(@index_reports.last))
-        # expect(json["post_comment_reports"].last).to eq(post_comment_report_json(@index_reports[-2]))
         expect(post_comment_report_json(json['post_comment_reports'].first)).to be true
         expect(post_comment_report_json(json['post_comment_reports'].last)).to be true
       end

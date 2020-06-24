@@ -56,7 +56,6 @@ module RailsAdmin
             render @action.template_name, status: @status_code || :ok
           end
         end
-
       end
     end
   end

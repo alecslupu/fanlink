@@ -88,7 +88,7 @@ class Badge < ApplicationRecord
     )
     reward.name = name
 
-    if reward.valid? && self.valid?# check if the new reward and badge are valid
+    if reward.valid? && self.valid? # check if the new reward and badge are valid
       yield # saves the badge
       reward.reward_type_id = id
       reward.save

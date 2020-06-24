@@ -67,7 +67,6 @@ module RailsAdmin
               # @objects = paginate @objects
             end
           end
-
         end
       end
     end

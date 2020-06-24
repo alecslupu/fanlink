@@ -56,17 +56,20 @@ RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v
 
         let!(:image_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
-            create(:image_page, certcourse_page: create(:certcourse_page, certcourse: person_certcourse.certcourse))
+            certcourse_page = create(:certcourse_page, certcourse: person_certcourse.certcourse)
+            create(:image_page, certcourse_page: certcourse_page)
           }
         }
         let!(:video_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
-            create(:video_page, certcourse_page: create(:certcourse_page, certcourse: person_certcourse.certcourse))
+            certcourse_page = create(:certcourse_page, certcourse: person_certcourse.certcourse)
+            create(:video_page, certcourse_page: certcourse_page)
           }
         }
         let!(:download_file_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
-            create(:download_file_page, certcourse_page: create(:certcourse_page, certcourse: person_certcourse.certcourse))
+            certcourse_page = create(:certcourse_page, certcourse: person_certcourse.certcourse)
+            create(:download_file_page, certcourse_page: certcourse_page)
           }
         }
 

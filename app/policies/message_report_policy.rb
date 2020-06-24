@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class MessageReportPolicy < ChatModulePolicy
-
   # a message report should not be edited by an admin
   def update?
     false
@@ -22,7 +21,7 @@ class MessageReportPolicy < ChatModulePolicy
   end
 
   def ignore_message_action?
-    !['no_action_needed'].include?(record.status)&& has_permission?(:ignore?)
+    !['no_action_needed'].include?(record.status) && has_permission?(:ignore?)
   end
 
   def reanalyze_message_action?

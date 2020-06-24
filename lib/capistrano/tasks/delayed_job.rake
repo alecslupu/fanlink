@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 namespace :delayed_job do
-
   def args
     fetch(:delayed_job_args, "-e #{fetch(:rails_env)}")
   end
@@ -46,7 +45,7 @@ namespace :delayed_job do
   #     end
   #   end
   # end
-  
+
   desc 'Restart the delayed_job process'
   task :restart do
     on roles(delayed_job_roles) do

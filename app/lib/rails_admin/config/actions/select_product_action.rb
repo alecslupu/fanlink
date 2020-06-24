@@ -62,7 +62,6 @@ module RailsAdmin
             redirect_to dashboard_url
           end
         end
-
       end
     end
   end

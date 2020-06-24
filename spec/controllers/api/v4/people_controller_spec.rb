@@ -9,7 +9,9 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
       person = create(:person, password: password)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password,  params: { id: person.id, person: { current_password: password, new_password: password } }
+        patch :change_password, params: { id: person.id, person: {
+          current_password: password, new_password: password
+        } }
         expect(response).to be_unprocessable
         expect(json['errors']).to include("New password can't be identical to your current one")
       end
@@ -19,10 +21,11 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
   # TODO: auto-generated
   describe 'GET index' do
     it 'should return the people objects with their attached picture' do
-      person = create(:person, picture: fixture_file_upload('images/better.png', 'image/png'))
+      fixture_file = fixture_file_upload('images/better.png', 'image/png')
+      person = create(:person, picture: fixture_file)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        allow(Person).to receive(:order).and_return build_list(:person, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
+        allow(Person).to receive(:order).and_return build_list(:person, 3, picture: fixture_file)
 
         get :index
 
@@ -38,12 +41,13 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
   # TODO: auto-generated
   describe 'GET show' do
     it 'should return the people object with their attached picture' do
-      person = create(:person, picture: fixture_file_upload('images/better.png', 'image/png'))
+      fixture_file = fixture_file_upload('images/better.png', 'image/png')
+      person = create(:person, picture: fixture_file)
       ActsAsTenant.with_tenant(person.product) do
-        create_list(:person,3, picture: fixture_file_upload('images/better.png', 'image/png'))
+        create_list(:person, 3, picture: fixture_file)
 
         login_as(person)
-        get :show ,params: { id: person.id }
+        get :show, params: { id: person.id }
 
         expect(response).to be_successful
         expect(json['person']).to_not eq(nil)

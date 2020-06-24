@@ -12,7 +12,6 @@ RailsAdmin.config do |config|
     end
 
     include_fields :locale, :name, :description
-    #
     edit do
       field :name do
         help do

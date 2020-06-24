@@ -128,7 +128,9 @@ RSpec.describe Api::V1::RelationshipsController, type: :controller do
         rel1 = create(:relationship, requested_by: person1, requested_to: person2)
         rel3 = create(:relationship, requested_by: person2, requested_to: person3, status: :friended)
 
-        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(person2).and_return(true)
+        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count)
+          .with(person2)
+          .and_return(true)
         get :index, params: { person_id: person2.id.to_s }
         expect(response).to be_successful
         expect(json['relationships'].map { |r| r['id'].to_i }.sort).to eq([rel1.id, rel3.id])
@@ -144,7 +146,9 @@ RSpec.describe Api::V1::RelationshipsController, type: :controller do
         rel1 = create(:relationship, requested_by: person1, requested_to: person2)
         rel3 = create(:relationship, requested_by: person2, requested_to: person3, status: :friended)
 
-        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(person2).and_return(true)
+        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count)
+          .with(person2)
+          .and_return(true)
         get :index
         expect(response).to be_successful
         expect(json['relationships'].map { |r| r['id'].to_i }.sort).to eq([rel1.id, rel3.id])
@@ -207,7 +211,8 @@ RSpec.describe Api::V1::RelationshipsController, type: :controller do
         login_as(person)
         rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
         expect_any_instance_of(Relationship).to receive(:friend_request_accepted_push)
-        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(rel.requested_to)
+        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count)
+          .with(rel.requested_to)
         patch :update, params: { id: rel.id, relationship: { status: 'friended' } }
         expect(response).to be_successful
         expect(rel.reload.friended?).to be_truthy
@@ -244,7 +249,9 @@ RSpec.describe Api::V1::RelationshipsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(person).and_return(true)
+        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count)
+          .with(person)
+          .and_return(true)
         patch :update, params: { id: rel.id, relationship: { status: 'denied' } }
         expect(response).to be_successful
         expect(rel).not_to exist_in_database
@@ -257,7 +264,9 @@ RSpec.describe Api::V1::RelationshipsController, type: :controller do
         login_as(person)
         req_to = create(:person, product: person.product)
         rel = create(:relationship, requested_by: person, requested_to: req_to)
-        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(req_to).and_return(true)
+        expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count)
+          .with(req_to)
+          .and_return(true)
         patch :update, params: { id: rel.id, relationship: { status: :withdrawn } }
         expect(response).to be_successful
         expect(rel).not_to exist_in_database

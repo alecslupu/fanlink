@@ -45,8 +45,8 @@ RSpec.describe 'Api::V4::SessionController', type: :request, swagger_doc: 'v4/sw
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
       parameter name: :product, in: :formData,  type: :string
-      parameter name: :facebook_auth_token, in: :formData,type: :string, required: false
-      parameter name: :password, in: :formData,type: :string, required: false
+      parameter name: :facebook_auth_token, in: :formData, type: :string, required: false
+      parameter name: :password, in: :formData, type: :string, required: false
       parameter name: :email_or_username, in: :formData, type: :string, required: false
 
       response '200', 'Returns an user object if successful' do
@@ -105,4 +105,3 @@ RSpec.describe 'Api::V4::SessionController', type: :request, swagger_doc: 'v4/sw
     end
   end
 end
-

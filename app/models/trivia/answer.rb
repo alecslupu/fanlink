@@ -22,6 +22,6 @@ module Trivia
     belongs_to :question, class_name: 'Trivia::Question', foreign_key: :trivia_question_id
 
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
   end
 end

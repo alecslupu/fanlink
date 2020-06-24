@@ -61,7 +61,7 @@ class Certificate < ApplicationRecord
   # validate :certificate_order_validation, if: :certificate_order_changed?
 
   scope :live_status, -> { where(status: 'live') }
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
   def title
     short_name

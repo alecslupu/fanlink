@@ -18,7 +18,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         expect(post_json(json['post'])).to be true
       end
     end
-    it 'should create a new post and publish it with a lot of fields normal users really should not have access to but i am told they should' do
+    it 'create a new post and publish it with a lot of fields normal users really should not have access to' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -27,7 +27,11 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         endat = '2018-06-08T12:15:59Z'
         prior = 123
         rpi = 1
-        post :create, params: { post: { body: body, global: true, starts_at: startat, ends_at: endat, repost_interval: rpi, status: 'rejected', priority: prior } }
+        post :create, params: { post: {
+          body: body,
+          global: true,
+          starts_at: startat, ends_at: endat, repost_interval: rpi, status: 'rejected', priority: prior
+        } }
         expect(response).to be_successful
         post = Post.last
         expect(post.global).to be_truthy
@@ -59,7 +63,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         expect(post.recommended).to be_falsey
       end
     end
-    it 'should create a new post and publish it with a lot of fields normal users really should not have access to but i am told they should' do
+    it 'creates a new post and publish it with a lot of fields ' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -68,7 +72,13 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         endat = '2018-06-08T12:15:59Z'
         prior = 123
         rpi = 1
-        post :create, params: { post: { body: body, global: true, starts_at: startat, ends_at: endat, repost_interval: rpi, status: 'rejected', priority: prior } }
+        post :create, params: { post: {
+          body: body,
+          global: true,
+          starts_at: startat,
+          ends_at: endat, repost_interval: rpi, status: 'rejected',
+          priority: prior
+        } }
         expect(response).to be_successful
         post = Post.last
         expect(post.global).to be_truthy
@@ -177,10 +187,14 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         person.follow(people.last)
 
         postloggedin = create(:published_post, person: person, created_at: created_in_range + 31.minutes)
-        post11 = create(:published_post, person: people.first, status: :published, created_at: created_in_range - 1.hour)
-        post12 = create(:published_post, person: people.first, status: :published, created_at: created_in_range - 30.minutes)
-        post21 = create(:published_post, person: people.last, status: :published, created_at: created_in_range)
-        post22 = create(:published_post, person: people.last, status: :published, created_at: created_in_range + 30.minutes)
+        post11 = create(:published_post,
+                        person: people.first, status: :published, created_at: created_in_range - 1.hour)
+        post12 = create(:published_post,
+                        person: people.first, status: :published, created_at: created_in_range - 30.minutes)
+        post21 = create(:published_post,
+                        person: people.last, status: :published, created_at: created_in_range)
+        post22 = create(:published_post,
+                        person: people.last, status: :published, created_at: created_in_range + 30.minutes)
         login_as(person)
         get :index, params: { from_date: from, to_date: to }
         expect(response).to be_successful
@@ -192,7 +206,10 @@ RSpec.describe Api::V3::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         people = create_list(:person, 2)
         postloggedin = create(:published_post, person: person, created_at: created_in_range + 31.minutes)
-        post22 = create(:published_post, person: people.last, status: :published, created_at: created_in_range + 30.minutes)
+        post22 = create(:published_post,
+                        person: people.last,
+                        status: :published,
+                        created_at: created_in_range + 30.minutes)
         person.follow(people.last)
 
         login_as(person)
@@ -221,10 +238,12 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         people = create_list(:person, 2)
         person.follow(people.first)
         person.follow(people.last)
-        post11 = create(:published_post, person: people.first, status: :published, created_at: created_in_range - 1.hour)
+        post11 = create(:published_post,
+                        person: people.first,
+                        status: :published, created_at: created_in_range - 1.hour)
         lan = 'es'
 
-        request.headers.add 'Accept-Language', lan + '-spa' # letters dont matter because we should be just using first two characters
+        request.headers.add 'Accept-Language', lan + '-spa'
         translation = 'En espagnol'
         post11.body = { lan => translation }
         post11.save
@@ -297,8 +316,14 @@ RSpec.describe Api::V3::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         people = create_list(:person, 2)
         person.follow(people.first)
-        post11 = create(:published_post, person: people.first, status: :published, created_at: created_in_range - 1.hour)
-        post12 = create(:published_post, person: people.first, status: :published, created_at: created_in_range - 30.minutes)
+        post11 = create(:published_post,
+                        person: people.first,
+                        status: :published,
+                        created_at: created_in_range - 1.hour)
+        post12 = create(:published_post,
+                        person: people.first,
+                        status: :published,
+                        created_at: created_in_range - 30.minutes)
 
         login_as(person)
         get :index, params: { from_date: from, to_date: to, person_id: people.first.id }
@@ -739,7 +764,10 @@ RSpec.describe Api::V3::PostsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        flinkpost = create(:published_post, person: person, starts_at: Time.zone.now - 1.hour, ends_at: Time.zone.now + 1.hour)
+        flinkpost = create(:published_post,
+                           person: person,
+                           starts_at: Time.zone.now - 1.hour,
+                           ends_at: Time.zone.now + 1.hour)
         get :show, params: { id: flinkpost.id }
         expect(response).to be_successful
         expect(post_json(json['post'])).to be true
@@ -905,8 +933,16 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         flinkpost = create(:published_post, person: person)
 
         expect(flinkpost.recommended).to be_falsey
-        patch :update, params: { id: flinkpost.id, post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
-                                                           recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
+        patch :update, params: { id: flinkpost.id, post: {
+          body: newbody,
+          global: global,
+          starts_at: starts_at,
+          ends_at: ends_at,
+          recommended: true,
+          repost_interval: repost_interval,
+          status: status,
+          priority: priority
+        } }
         expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.recommended).to be_falsey
@@ -918,8 +954,16 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person)
         expect(flinkpost.recommended).to be_falsey
-        patch :update, params: { id: flinkpost.id, post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
-                                                           recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
+        patch :update, params: { id: flinkpost.id, post: {
+          body: newbody,
+          global: global,
+          starts_at: starts_at,
+          ends_at: ends_at,
+          recommended: true,
+          repost_interval: repost_interval,
+          status: status,
+          priority: priority
+        } }
         expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.recommended).to be_truthy
