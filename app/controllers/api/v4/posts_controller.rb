@@ -7,12 +7,7 @@ module Api
         ordering = 'DESC'
         if chronological?
           post = Post.find(params[:post_id])
-          if params[:chronologically] == 'after'
-            sign = '>'
-            ordering = 'ASC'
-          else
-            sign = '<'
-          end
+          ordering = 'ASC' if params[:chronologically] == 'after'
         end
         if params[:promoted].present? && params[:promoted] == 'true'
           @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
@@ -137,9 +132,12 @@ module Api
 
       protected
 
+      def sign
+        chronological? && params[:chronologically] == "after" ? ">" : "<"
+      end
+
       def apply_filters
         posts = Post.for_product(ActsAsTenant.current_tenant)
-
         posts = if chronological?
                   posts.chronological(sign, post.created_at, post.id)
                 else
