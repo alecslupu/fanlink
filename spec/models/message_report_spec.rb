@@ -8,7 +8,11 @@ RSpec.describe MessageReport, type: :model do
   context 'Validation' do
     subject { create(:message_report) }
     it { is_expected.to define_enum_for(:status).with(MessageReport.statuses.keys) }
-    it { should validate_length_of(:reason).is_at_most(500).with_message(_('Reason cannot be longer than 500 characters.')) }
+    it {
+      should validate_length_of(:reason)
+        .is_at_most(500)
+        .with_message(_('Reason cannot be longer than 500 characters.'))
+    }
 
     context 'validates inclusion' do
       it do

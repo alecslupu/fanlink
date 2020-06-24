@@ -52,9 +52,21 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         certcourses = create_list(:certcourse, 3)
         entry_certcourse = create(:certcourse, status: 'entry')
 
-        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
-        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.second.id, certcourse_order: 2)
-        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: entry_certcourse.id, certcourse_order: 2)
+        CertificateCertcourse.create(
+          certificate_id: certificate.id,
+          certcourse_id: certcourses.first.id,
+          certcourse_order: 1
+        )
+        CertificateCertcourse.create(
+          certificate_id: certificate.id,
+          certcourse_id: certcourses.second.id,
+          certcourse_order: 2
+        )
+        CertificateCertcourse.create(
+          certificate_id: certificate.id,
+          certcourse_id: entry_certcourse.id,
+          certcourse_order: 2
+        )
 
         get :index, params: { person_id: person1.id, certificate_id: certificate.id }
 
@@ -79,15 +91,33 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         certcourses = create_list(:certcourse, 3)
         entry_certcourse = create(:certcourse, status: 'entry')
 
-        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
-        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.second.id, certcourse_order: 2)
-        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: entry_certcourse.id, certcourse_order: 3)
-        CertificateCertcourse.create(certificate_id: certificate2.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
-        CertificateCertcourse.create(certificate_id: certificate2.id, certcourse_id: certcourses.second.id, certcourse_order: 2)
-        CertificateCertcourse.create(certificate_id: certificate2.id, certcourse_id: entry_certcourse.id, certcourse_order: 3)
-        CertificateCertcourse.create(certificate_id: certificate3.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
-        CertificateCertcourse.create(certificate_id: certificate3.id, certcourse_id: certcourses.second.id, certcourse_order: 2)
-        CertificateCertcourse.create(certificate_id: certificate3.id, certcourse_id: entry_certcourse.id, certcourse_order: 3)
+        CertificateCertcourse.create(certificate_id: certificate.id,
+                                     certcourse_id: certcourses.first.id,
+                                     certcourse_order: 1)
+        CertificateCertcourse.create(certificate_id: certificate.id,
+                                     certcourse_id: certcourses.second.id,
+                                     certcourse_order: 2)
+        CertificateCertcourse.create(certificate_id: certificate.id,
+                                     certcourse_id: entry_certcourse.id,
+                                     certcourse_order: 3)
+        CertificateCertcourse.create(certificate_id: certificate2.id,
+                                     certcourse_id: certcourses.first.id,
+                                     certcourse_order: 1)
+        CertificateCertcourse.create(certificate_id: certificate2.id,
+                                     certcourse_id: certcourses.second.id,
+                                     certcourse_order: 2)
+        CertificateCertcourse.create(certificate_id: certificate2.id,
+                                     certcourse_id: entry_certcourse.id,
+                                     certcourse_order: 3)
+        CertificateCertcourse.create(certificate_id: certificate3.id,
+                                     certcourse_id: certcourses.first.id,
+                                     certcourse_order: 1)
+        CertificateCertcourse.create(certificate_id: certificate3.id,
+                                     certcourse_id: certcourses.second.id,
+                                     certcourse_order: 2)
+        CertificateCertcourse.create(certificate_id: certificate3.id,
+                                     certcourse_id: entry_certcourse.id,
+                                     certcourse_order: 3)
 
         get :index, params: { person_id: person1.id, certificate_id: certificate.id }
         expect(response).to be_successful
@@ -112,17 +142,25 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         certcourse_pages = create_list(:certcourse_page, 2, certcourse: certcourse, content_type: 'quiz')
 
         quiz_page1 = create(:quiz_page, is_optional: true, is_survey: false)
-        # quiz_page1.update(certcourse_page_id: certcourse_pages.first.id) # can't create a quizpage with desired certcorse page
 
         quiz_page2 = create(:quiz_page, is_optional: false, is_survey: false)
-        quiz_page2.update(certcourse_page_id: certcourse_pages.second.id) # can't create a quizpage with desired certcorse page
+        quiz_page2.update(certcourse_page_id: certcourse_pages.second.id)
 
         correct_answer = Answer.find_by(quiz_page_id: quiz_page2.id, is_correct: true)
         correct_answer.update(description: 'Correct answer')
 
-        create(:person_quiz, answer: Answer.where(quiz_page_id: quiz_page2.id).second, quiz_page: quiz_page2, person: person1)
-        create(:person_quiz, answer: Answer.where(quiz_page_id: quiz_page2.id).third, quiz_page: quiz_page2, person: person1)
-        create(:person_quiz, answer: correct_answer, quiz_page: quiz_page2, person: person1)
+        create(:person_quiz,
+               answer: Answer.where(quiz_page_id: quiz_page2.id).second,
+               quiz_page: quiz_page2,
+               person: person1)
+        create(:person_quiz,
+               answer: Answer.where(quiz_page_id: quiz_page2.id).third,
+               quiz_page: quiz_page2,
+               person: person1)
+        create(:person_quiz,
+               answer: correct_answer,
+               quiz_page: quiz_page2,
+               person: person1)
 
         get :show, params: { person_id: person1.id, certificate_id: certificate.id, id: certcourse.id }
 

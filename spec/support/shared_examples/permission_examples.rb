@@ -71,7 +71,8 @@ RSpec.shared_examples 'enforces the history permission' do |klass, module_name|
     }
 
     before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_history": true))
+      allow_any_instance_of(Person).to receive(:individual_access)
+        .and_return(PortalAccess.new("#{module_name}_history": true))
     end
     describe 'permissions' do
       permission_list.each do |policy, value|
@@ -110,7 +111,8 @@ RSpec.shared_examples 'enforces the export permission' do |klass, module_name|
 
     describe 'permissions' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_export": true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new("#{module_name}_export": true))
       end
       permission_list.each do |policy, value|
         if value
@@ -148,7 +150,8 @@ RSpec.shared_examples 'enforces the read permission' do |klass, module_name|
 
     describe 'permissions' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_read": true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new("#{module_name}_read": true))
       end
       permission_list.each do |policy, value|
         if value
@@ -186,7 +189,8 @@ RSpec.shared_examples 'enforces the update permission' do |klass, module_name|
 
     describe 'permissions' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_update": true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new("#{module_name}_update": true))
       end
       permission_list.each do |policy, value|
         if value
@@ -224,7 +228,8 @@ RSpec.shared_examples 'enforces the delete permission' do |klass, module_name|
 
     describe 'permissions' do
       before :each do
-        allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new("#{module_name}_delete": true))
+        allow_any_instance_of(Person).to receive(:individual_access)
+          .and_return(PortalAccess.new("#{module_name}_delete": true))
       end
       permission_list.each do |policy, value|
         if value
@@ -241,4 +246,3 @@ RSpec.shared_examples 'enforces the delete permission' do |klass, module_name|
     end
   end
 end
-

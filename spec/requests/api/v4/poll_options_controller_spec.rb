@@ -30,12 +30,12 @@ RSpec.describe 'Api::V4::PollOptionsController', type: :request, swagger_doc: 'v
       response '401', '' do
         run_test!
       end
-      #response "404", "" do
+      # response "404", "" do
       #  let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
       #  let(:id) { Time.zone.now.to_i }
       #
       #  run_test!
-      #end
+      # end
       response 500, 'Internal server error' do
         document_response_without_test!
       end

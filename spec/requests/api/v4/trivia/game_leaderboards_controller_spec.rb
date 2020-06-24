@@ -3,7 +3,7 @@
 require 'swagger_helper'
 
 RSpec.describe 'Api::V4::Trivia::RoundLeaderboardsController', type: :request, swagger_doc: 'v4/swagger.json' do
-  #path "/trivia/games/{game_id}/leaderboard/me" do
+  # path "/trivia/games/{game_id}/leaderboard/me" do
   #  get "displays my possition leaderboard" do
   #    tags "Trivia"
   #    security [Bearer: []]
@@ -45,8 +45,8 @@ RSpec.describe 'Api::V4::Trivia::RoundLeaderboardsController', type: :request, s
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/trivia/games/{game_id}/leaderboard" do
+  # end
+  # path "/trivia/games/{game_id}/leaderboard" do
   #  get "displays complete leaderboard" do
   #    tags "Trivia"
   #    security [Bearer: []]
@@ -89,5 +89,5 @@ RSpec.describe 'Api::V4::Trivia::RoundLeaderboardsController', type: :request, s
   #      run_test!
   #    end
   #  end
-  #end
+  # end
 end

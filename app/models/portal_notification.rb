@@ -14,7 +14,6 @@
 #
 
 class PortalNotification < ApplicationRecord
-
   LANGS = {
     'en' => 'English*',
     'es' => 'Spanish',
@@ -22,6 +21,7 @@ class PortalNotification < ApplicationRecord
   }.freeze
 
   attr_accessor :trigger_admin_notification
+
   after_commit -> { enqueue_push }, on: :create, if: proc { |record| record.trigger_admin_notification }
   after_commit -> { enqueue_push }, on: :update, if: proc { |record|
     record.trigger_admin_notification == true && record.previous_changes.keys.include?('send_me_at')

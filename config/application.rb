@@ -57,7 +57,6 @@ module Fanlink
       url: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension'
     } if Rails.env.test?
 
-
     config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
       allow do
         origins do |source, env|
@@ -87,9 +86,9 @@ module Fanlink
       }
     }
 
-    #Use a real queuing backend for Active Job (and separate queues per environment)
+    # Use a real queuing backend for Active Job (and separate queues per environment)
     config.active_job.queue_adapter = :sidekiq
-    #config.active_job.queue_name_prefix = "fanlink_#{Rails.env}"
+    # config.active_job.queue_name_prefix = "fanlink_#{Rails.env}"
     #
 
     config.i18n.fallbacks = [I18n.default_locale]

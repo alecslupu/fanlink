@@ -40,8 +40,8 @@ FactoryBot.define do
     validity_duration { Faker::Number.unique(20).between(from: 1, to: 500) }
     access_duration { Faker::Number.unique(20).between(from: 1, to: 500) }
     is_free { false }
-    sku_ios { Faker::Code.ean(base:13) }
-    sku_android { Faker::Code.ean(base:13) }
+    sku_ios { Faker::Code.ean(base: 13) }
+    sku_android { Faker::Code.ean(base: 13) }
     template_image_file_name { Faker::File.file_name }
     certificate_issuable { false }
     sequence(:certificate_order) { |n| n }

@@ -17,8 +17,7 @@
 #
 
 class DownloadFilePage < ApplicationRecord
-
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
   acts_as_tenant(:product)
   belongs_to :product
 

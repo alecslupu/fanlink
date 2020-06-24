@@ -17,7 +17,6 @@
 #
 
 class Poll < ApplicationRecord
-
   # after_initialize do
   #   self.end_date = Time.zone.now + 1.month
   # end

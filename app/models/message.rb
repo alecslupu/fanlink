@@ -37,7 +37,7 @@ class Message < ApplicationRecord
     when /^created/
       order("created_at #{direction}")
     when /^person/
-      joins(:person).order("LOWER(people.username) #{ direction }")
+      joins(:person).order("LOWER(people.username) #{direction}")
     when /^room/
       joins(:room).order("LOWER(rooms.name) #{direction}")
     when /^id/
@@ -45,7 +45,7 @@ class Message < ApplicationRecord
     when /^body/
       order("body #{direction}")
     else
-      raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
+      raise(ArgumentError, "Invalid sort option: #{sort_option.inspect}")
     end
   }
 
@@ -147,7 +147,7 @@ class Message < ApplicationRecord
   scope :reported_action_needed, -> { joins(:message_reports).where(message_reports: { status: MessageReport.statuses[:pending] }) }
   scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
 
-  scope :not_reported_by_user, -> (person_id) {
+  scope :not_reported_by_user, ->(person_id) {
     where("NOT EXISTS (
       SELECT 1 FROM message_reports
       WHERE message_reports.message_id = messages.id

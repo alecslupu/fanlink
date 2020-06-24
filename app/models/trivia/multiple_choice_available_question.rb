@@ -19,7 +19,10 @@
 
 module Trivia
   class MultipleChoiceAvailableQuestion < AvailableQuestion
-    has_many :active_questions, class_name: 'Trivia::MultipleChoiceQuestion', inverse_of: :available_question, foreign_key: :available_question_id
+    has_many :active_questions,
+             class_name: 'Trivia::MultipleChoiceQuestion',
+             inverse_of: :available_question,
+             foreign_key: :available_question_id
 
     include AASM
     enum status: {
@@ -56,15 +59,5 @@ module Trivia
         transitions from: :locked, to: :closed
       end
     end
-
-=begin
-    validate :answer_checks
-
-    protected
-    def answer_checks
-      errors.add(:base, _("You need to provide at least 2 answers")) if available_answers.count < 2
-      errors.add(:base, _("You need to provide at least 2 correct answers")) if available_answers.where(is_correct: true).count < 2
-    end
-=end
   end
 end

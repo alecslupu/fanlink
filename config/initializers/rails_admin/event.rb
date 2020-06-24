@@ -18,9 +18,10 @@ RailsAdmin.config do |config|
              :ticket_url
       field :place_identifier, :string do
         def render
+          google_key = ENV['GOOGLE_PLACES_KEY']
           bindings[:view].render partial: 'rails_admin/main/places', locals: {
             field: self, form: bindings[:form], place_info: bindings[:object].place_info,
-            url: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_PLACES_KEY']}&libraries=places&callback=initMap"
+            url: "https://maps.googleapis.com/maps/api/js?key=#{google_key}&libraries=places&callback=initMap"
           }
         end
       end

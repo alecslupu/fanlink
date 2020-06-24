@@ -9,6 +9,5 @@ module Trivia
     def copy_new_game_action?
       generate_game_action?
     end
-
   end
 end

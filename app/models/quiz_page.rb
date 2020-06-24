@@ -21,7 +21,7 @@ class QuizPage < ApplicationRecord
   belongs_to :certcourse_page
 
   has_many :answers, dependent: :destroy
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
   accepts_nested_attributes_for :answers, allow_destroy: true
 
@@ -32,7 +32,9 @@ class QuizPage < ApplicationRecord
   validate :mandatory_checks, unless: Proc.new { |page| page.is_optional }
   validate :answer_checks, unless: Proc.new { |page| page.is_survey }
 
-  validates :is_optional, presence: { message: 'You have set the quiz survey, you must choose to be optional as well' }, if: :is_survey?
+  validates :is_optional, presence: {
+    message: 'You have set the quiz survey, you must choose to be optional as well'
+  }, if: :is_survey?
   validates :answers, presence: true, length: {
     minimum: 2,
     tokenizer: lambda { |assoc| assoc.size },

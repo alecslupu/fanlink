@@ -159,11 +159,11 @@ class Person < ApplicationRecord
 
   after_commit :flush_cache
 
-  scope :username_filter_courseware, -> (query) { where('people.username_canonical ilike ?', "%#{query}%") }
-  scope :username_filter, -> (query, current_user) { where('people.username_canonical ilike ? AND people.username_canonical != ?', "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
+  scope :username_filter_courseware, ->(query) { where('people.username_canonical ilike ?', "%#{query}%") }
+  scope :username_filter, ->(query, current_user) { where('people.username_canonical ilike ? AND people.username_canonical != ?', "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
   # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
-  scope :email_filter, -> (query, current_user) { where('people.email ilike ? AND people.email != ?', "%#{query}%", "#{current_user.email}") }
-  scope :product_account_filter, -> (query, current_user) { where('people.product_account = ?', "#{query}") }
+  scope :email_filter, ->(query, current_user) { where('people.email ilike ? AND people.email != ?', "%#{query}%", "#{current_user.email}") }
+  scope :product_account_filter, ->(query, current_user) { where('people.product_account = ?', "#{query}") }
 
   scope :requested_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_by_id)) }
   scope :received_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_to_id)) }
@@ -177,8 +177,8 @@ class Person < ApplicationRecord
   scope :has_posts, -> { joins(:posts).group(:id) }
   scope :has_no_posts, -> { joins('LEFT JOIN posts ON posts.person_id = people.id').where('posts.id is NULL') }
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
-  scope :has_created_acc_past_24h, -> { where('created_at >= ?',Time.zone.now - 1.day) }
-  scope :has_created_acc_past_7days, -> { where('created_at >= ?',Time.zone.now - 7.day) }
+  scope :has_created_acc_past_24h, -> { where('created_at >= ?', Time.zone.now - 1.day) }
+  scope :has_created_acc_past_7days, -> { where('created_at >= ?', Time.zone.now - 7.day) }
   scope :has_free_certificates_enrolled, -> { joins(:certificates).where('certificates.is_free = ?', true).group(:id) }
   scope :has_no_free_certificates_enrolled, -> { where.not(id: has_free_certificates_enrolled.select(:id)) }
   scope :has_paid_certificates, -> { joins(:person_certificates).where('person_certificates.amount_paid > 0').group(:id) }
@@ -381,6 +381,7 @@ class Person < ApplicationRecord
   def unblock(blocked)
     blocked_people.destroy(blocked)
   end
+
   #
   # Lookup a person via their username.
   #

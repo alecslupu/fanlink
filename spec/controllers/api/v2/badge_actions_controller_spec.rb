@@ -23,7 +23,7 @@ RSpec.describe Api::V2::BadgeActionsController, type: :controller do
         login_as(person)
         action_type = create(:action_type)
         badge1 = create(:badge, action_type: action_type, action_requirement: 3)
-        create(:badge, action_type: action_type, action_requirement: 2, issued_from: Time.zone.now + 1.day) # pre-issue badge
+        create(:badge, action_type: action_type, action_requirement: 2, issued_from: Time.zone.now + 1.day)
         post :create, params: { badge_action: { action_type: action_type.internal_name } }
         expect(response).to have_http_status(200)
         expect(pending_badge_json(json['pending_badge'], badge1)).to be_truthy

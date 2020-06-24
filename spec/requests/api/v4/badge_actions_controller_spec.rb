@@ -35,10 +35,10 @@ RSpec.describe 'Api::V4::BadgeActionsController', type: :request, swagger_doc: '
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: badge_action.person_id)}" }
         run_test!
       end
-      response 429, 'Not enough time since last submission of this action type or duplicate action type, person, identifier combination' do
+      response 429, 'Not enough time since last submission of this action type or duplicate action' do
         document_response_without_test!
       end
-      response 500, "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated." do
+      response 500, "Internal Server Error." do
         document_response_without_test!
       end
     end

@@ -8,7 +8,7 @@ RSpec.describe Api::V4::RecommendedPostsController, type: :controller do
     it 'should get all recommended posts when not providing page param' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        create_list(:recommended_post, 26, status: :published) #default per_page number is 25
+        create_list(:recommended_post, 26, status: :published) # default per_page number is 25
         draft = create(:post)
         published_post = create(:published_post)
         login_as(person)

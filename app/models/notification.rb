@@ -14,7 +14,6 @@
 #
 
 class Notification < ApplicationRecord
-
   def notify
     SimpleNotificationPushJob.perform_later(self.id)
   end

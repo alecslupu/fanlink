@@ -2,7 +2,6 @@
 
 module Push
   class PublicMessage < BasePush
-
     def push(message)
       room = message.room
       room_subscribers = RoomSubscriber.where(room_id: room.id).where('last_notification_time < ?', DateTime.current - 2.minute).where.not(person_id: message.person_id)

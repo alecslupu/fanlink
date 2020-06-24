@@ -11,8 +11,10 @@ RSpec.describe 'Api::V4::Courseware::WishlistController', type: :request, swagge
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
 
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
       let(:person) { create(:person) }
       let(:Authorization) { '' }
 

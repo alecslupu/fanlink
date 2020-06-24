@@ -16,7 +16,7 @@
 class NotificationDeviceId < ApplicationRecord
   belongs_to :person
 
-  scope :for_product, -> (product) { joins(:person).where('people.product_id = ?', product.id) }
+  scope :for_product, ->(product) { joins(:person).where('people.product_id = ?', product.id) }
 
   enum device_type: { unknown: 0, android: 1, ios: 2, web: 3 }
 
@@ -25,5 +25,4 @@ class NotificationDeviceId < ApplicationRecord
   validates :device_identifier,
             uniqueness: { message: _('That device id is already registered.') },
             presence: { message: _('Device identifier is required.') }
-
 end

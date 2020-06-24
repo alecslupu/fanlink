@@ -55,7 +55,11 @@ RSpec.describe 'Api::V4::Courseware::Client::CertcoursesController', type: :requ
       let(:person_certificate) { create(:person_certificate, person: hired) }
       let(:certificate_id) { person_certificate.certificate_id }
       let(:person_id) { hired.id }
-      let(:id) { create(:certificate_certcourse, certificate: person_certificate.certificate, certcourse: certcourse).certcourse_id }
+      let(:id) {
+        create(:certificate_certcourse,
+               certificate: person_certificate.certificate,
+               certcourse: certcourse).certcourse_id
+      }
 
       produces 'application/vnd.api.v4+json'
       response '200', 'HTTP/1.1 200 Ok' do

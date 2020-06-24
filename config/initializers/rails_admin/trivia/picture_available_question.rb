@@ -15,9 +15,9 @@ RailsAdmin.config do |config|
           { draft: bindings[:object].class.statuses[:draft] }
         else
           ha = {}
-          bindings[:object].aasm.states(permitted: true).map(&:name).
-            push(bindings[:object].status).
-            map { |c| ha[c] = bindings[:object].class.statuses[c] }
+          bindings[:object].aasm.states(permitted: true).map(&:name)
+                           .push(bindings[:object].status)
+                           .map { |c| ha[c] = bindings[:object].class.statuses[c] }
           ha
         end
       end

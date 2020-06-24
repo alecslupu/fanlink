@@ -35,7 +35,6 @@ class Badge < ApplicationRecord
   has_many :assigned_rewards, through: :reward
 
   scope :for_product, -> (product) { where(badges: { product_id: product.id }) }
-
   has_paper_trail
   acts_as_tenant(:product)
 
@@ -88,7 +87,7 @@ class Badge < ApplicationRecord
     )
     reward.name = name
 
-    if reward.valid? && self.valid?# check if the new reward and badge are valid
+    if reward.valid? && self.valid? # check if the new reward and badge are valid
       yield # saves the badge
       reward.reward_type_id = id
       reward.save
