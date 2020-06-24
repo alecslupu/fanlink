@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 json =
-Rails.cache.fetch ['v3', event.updated_at, event] do
-  {
-    id: event.id.to_s,
-    name: event.name,
-    description: event.description,
-    starts_at: event.starts_at.to_s,
-    ticket_url: event.ticket_url,
-    place_identifier: event.place_identifier,
-    longitude: event.longitude,
-    latitude: event.latitude,
-    ends_at: event.ends_at.present? ? event.ends_at.to_s : nil
-  }
-end
+  Rails.cache.fetch ['v3', event.updated_at, event] do
+    {
+      id: event.id.to_s,
+      name: event.name,
+      description: event.description,
+      starts_at: event.starts_at.to_s,
+      ticket_url: event.ticket_url,
+      place_identifier: event.place_identifier,
+      longitude: event.longitude,
+      latitude: event.latitude,
+      ends_at: event.ends_at.present? ? event.ends_at.to_s : nil
+    }
+  end
 
 # TODO: n+1 query, but seeing if this works for Travis.
 ci = (current_user.present? ? current_user.event_checkins.where(event_id: event.id).first : nil)

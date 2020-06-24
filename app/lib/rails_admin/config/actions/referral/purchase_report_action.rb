@@ -25,12 +25,12 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-              @objects = Person.
-                         joins(referred_people: :certificates).
-                         select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count, SUM(person_certificates.amount_paid)/100 as amount").
-                         where(certificates: { is_free: false }).
-                         group('people.id').
-                         order('referral_count DESC')
+              @objects = Person
+                         .joins(referred_people: :certificates)
+                         .select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count, SUM(person_certificates.amount_paid)/100 as amount")
+                         .where(certificates: { is_free: false })
+                         .group('people.id')
+                         .order('referral_count DESC')
 
               if params[:f].present?
                 params[:f].each_pair do |field_name, filters_dump|

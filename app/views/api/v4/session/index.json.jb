@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 json = {
-  person: render(partial: 'api/v4/people/person_private', locals: { person: @person, relationships: @person.relationships })
+  person: render(partial: 'api/v4/people/person_private',
+                 locals: { person: @person, relationships: @person.relationships })
 }
 
 json

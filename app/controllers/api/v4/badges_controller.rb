@@ -5,11 +5,13 @@ module Api
     class BadgesController < Api::V3::BadgesController
       def index
         @badges = paginate(Badge.includes(reward: :assigned_rewards))
-        if params.has_key?(:person_id)
-          @badges_awarded = PersonReward.where(person_id: params[:person_id]).order(ordering_params(params)).joins(:reward).where('rewards.reward_type =?', Reward.reward_types['badge'])
-        else
-          @badges_awarded = PersonReward.where(person_id: current_user.id).order(ordering_params(params)).joins(:reward).where('rewards.reward_type =?', Reward.reward_types['badge'])
-        end
+        user_id = params.has_key?(:person_id) ? params[:person_id] : current_user.id
+
+        @badges_awarded = PersonReward.where(person_id: user_id)
+                                      .order(ordering_params(params))
+                                      .joins(:reward)
+                                      .where(rewards: { reward_type: Reward.reward_types['badge'] })
+
         return_the @badges, handler: tpl_handler
       end
 

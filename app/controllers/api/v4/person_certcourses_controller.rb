@@ -50,7 +50,8 @@ module Api
       end
 
       def register_regress
-        certcourse_pages.where('certcourse_page_order > ?', last_certcourse_page.try(:certcourse_page_order).to_i).each do |cp|
+        certcourse_pages
+          .where('certcourse_page_order > ?', last_certcourse_page.try(:certcourse_page_order).to_i).each do |cp|
           next if cp.quiz?
 
           update_progress(cp, false)
@@ -81,7 +82,9 @@ module Api
       end
 
       def wrong_page_position
-        @wrong_page_position ||= certcourse_pages.where(id: certcourse_page.quiz_page.wrong_answer_page_id).first.try(:certcourse_page_order).to_i
+        @wrong_page_position ||= certcourse_pages
+                                 .where(id: certcourse_page.quiz_page.wrong_answer_page_id)
+                                 .first.try(:certcourse_page_order).to_i
       end
 
       def any_answer_allowed?

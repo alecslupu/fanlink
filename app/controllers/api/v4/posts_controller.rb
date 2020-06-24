@@ -10,13 +10,13 @@ module Api
           ordering = 'ASC' if params[:chronologically] == 'after'
         end
         if params[:promoted].present? && params[:promoted] == 'true'
-          @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
+          @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant)
           @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
         else
           if web_request? && some_admin?
             @posts = apply_filters
           else
-            @posts = Post.visible.unblocked(current_user.blocked_people).includes([:poll])
+            @posts = Post.visible.unblocked(current_user.blocked_people)
             @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
           end
           @posts = paginate @posts
@@ -34,13 +34,14 @@ module Api
             end
           else
             unless web_request?
-              @posts = Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).includes([:poll])
+              @posts = Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people)
               @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
               @posts = paginate(@posts)
             end
           end
         end
         @posts = @posts.order(Arel.sql("posts.created_at #{ordering}, posts.id #{ordering} "))
+        @posts = @posts.includes([:poll])
         @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
 
         # @posts = @posts.includes([:person])

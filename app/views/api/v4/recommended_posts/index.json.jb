@@ -6,12 +6,12 @@ json[:recommended_posts] = @posts.map do |post|
   p = render partial: 'api/v4/posts/app', locals: { post: post, lang: @lang, post_reaction: @post_reactions[post.id] }
   if defined?(@post_reactions[post.id]) && @post_reactions[post.id].present?
     p[:post_reaction] =
-    {
-      id: @post_reactions[post.id].id,
-      post_id: @post_reactions[post.id].post_id,
-      person_id: @post_reactions[post.id].person_id,
-      reaction: @post_reactions[post.id].reaction
-    }
+      {
+        id: @post_reactions[post.id].id,
+        post_id: @post_reactions[post.id].post_id,
+        person_id: @post_reactions[post.id].person_id,
+        reaction: @post_reactions[post.id].reaction
+      }
   else
     p[:post_reaction] = nil
   end

@@ -5,7 +5,6 @@ module Migration
     queue_as :migration
 
     def perform(person_id)
-
       langs = ['en', 'es', 'ro']
       person = Person.find(person_id)
       langs.each do |value|

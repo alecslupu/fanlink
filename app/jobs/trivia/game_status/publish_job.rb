@@ -25,7 +25,6 @@ module Trivia
           ::Trivia::RoundStatus::RoundStartAnnouncementJob.set(wait_until: Time.at(round.start_date) - 1.minute).perform_later(round.id, game.id, round_order, '1 minute')
           round_order += 1
         end
-
       end
     end
   end
