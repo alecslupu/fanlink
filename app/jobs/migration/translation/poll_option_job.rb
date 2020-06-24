@@ -1,7 +1,6 @@
 module Migration
   module Translation
     class PollOptionJob < ApplicationJob
-
       queue_as :migration
 
       def perform(id)
@@ -24,7 +23,6 @@ module Migration
           poll_option.set_translations({ en: { description: poll_option.untranslated_description['un'] } })
           # level.save!
         end
-
       end
     end
   end

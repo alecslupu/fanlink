@@ -62,10 +62,10 @@ class PersonCertificate < ApplicationRecord
 
   enum purchased_platform: %i[ios android]
 
-  scope :for_person, -> (person) { where(person_id: person.id) }
-  scope :for_android, -> (person) { where(person_id: person.id, purchased_platform: 'android') }
-  scope :for_ios, -> (person) { where(person_id: person.id, purchased_platform: 'ios') }
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
+  scope :for_person, ->(person) { where(person_id: person.id) }
+  scope :for_android, ->(person) { where(person_id: person.id, purchased_platform: 'android') }
+  scope :for_ios, ->(person) { where(person_id: person.id, purchased_platform: 'ios') }
+  scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
 
   scope :free, -> { joins(:certificate).where(certificates: { is_free: true }) }
   scope :paid, -> { joins(:certificate).where(certificates: { is_free: false }) }

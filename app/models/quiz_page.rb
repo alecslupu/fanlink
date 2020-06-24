@@ -90,5 +90,4 @@ class QuizPage < ApplicationRecord
       end
     end
   end
-
 end

@@ -5,6 +5,7 @@ module Trivia
     def create?
       false
     end
+
     def new?
       create?
     end

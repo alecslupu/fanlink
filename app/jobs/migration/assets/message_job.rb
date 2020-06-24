@@ -13,6 +13,5 @@ module Migration
         end
       end
     end
-
   end
 end

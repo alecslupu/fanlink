@@ -169,18 +169,18 @@ module Flaws
   def self.output_name_for(filename)
     basename = File.basename(filename, File.extname(filename))
     # dirname = video_directory_for(filename)
-    -> (p) { "#{basename}-#{p[:name]}" }
+    ->(p) { "#{basename}-#{p[:name]}" }
   end
 
   def self.thumbnail_name_for(filename)
     basename = File.basename(filename, File.extname(filename))
-    -> (p) { "thumbnails/#{basename}" }
+    ->(p) { "thumbnails/#{basename}" }
   end
 
   def self.outputter_for(filename)
     output_name = output_name_for(filename)
     thumbnail_name = thumbnail_name_for(filename)
-    -> (p) {
+    ->(p) {
       { key: output_name[p], preset_id: p[:id] }.merge(
         p[:thumbnails] ? { thumbnail_pattern: "#{thumbnail_name[p]}-{count}" } : {}
       ).merge(

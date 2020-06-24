@@ -22,7 +22,7 @@ class Following < ApplicationRecord
 
   validate :people_from_same_product
 
-  scope :for_product, -> (product) { joins('JOIN people ON people.id = followings.follower_id').where('people.product_id = ?', product.id) }
+  scope :for_product, ->(product) { joins('JOIN people ON people.id = followings.follower_id').where('people.product_id = ?', product.id) }
 
   private
 

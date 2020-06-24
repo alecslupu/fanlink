@@ -1,7 +1,6 @@
 module Migration
   module Translation
     class RoomJob < ApplicationJob
-
       queue_as :migration
 
       def perform(room_id)

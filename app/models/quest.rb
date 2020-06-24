@@ -45,7 +45,7 @@ class Quest < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-  scope :for_product, -> (product) { where(quests: { product_id: product.id }) }
+  scope :for_product, ->(product) { where(quests: { product_id: product.id }) }
 
   has_one_attached :picture
 
@@ -98,7 +98,7 @@ class Quest < ApplicationRecord
                                 start_date.beginning_of_day, end_date.end_of_day)
                         }
   scope :ordered, -> { includes(:quest_activities).order('quest_activities.created_at DESC') }
-  scope :for_product, -> (product) { includes(:product).where(product: product) }
+  scope :for_product, ->(product) { includes(:product).where(product: product) }
   scope :in_testing, -> { where(status: [:enabled, :active]) }
   scope :running, -> { where('quests.starts_at >= ? AND quests.ends_at <= ?', Time.zone.now, Time.zone.now) }
 

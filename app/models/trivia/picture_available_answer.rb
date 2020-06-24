@@ -19,7 +19,6 @@
 
 module Trivia
   class PictureAvailableAnswer < ApplicationRecord
-
     acts_as_tenant(:product)
     scope :for_product, ->(product) { where(product_id: product.id) }
 
@@ -80,6 +79,5 @@ module Trivia
       opts = { resize: '1000', auto_orient: true, quality: 75 }
       picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
     end
-
   end
 end

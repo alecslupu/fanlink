@@ -5,7 +5,6 @@ module Api
     module Courseware
       module Client
         class CertcoursesController < BaseController
-
           def index
             if PersonCertificate.where(person_id: params[:person_id], certificate_id: params[:certificate_id]).present?
               @certificate = Certificate.find(params[:certificate_id])

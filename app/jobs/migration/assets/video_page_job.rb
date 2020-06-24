@@ -10,6 +10,5 @@ module Migration
         video.save!
       end
     end
-
   end
 end

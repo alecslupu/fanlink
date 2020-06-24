@@ -45,7 +45,7 @@ class PortalNotification < ApplicationRecord
 
   validate :sensible_send_time
 
-  scope :for_product, -> (product) { where(portal_notifications: { product_id: product.id }) }
+  scope :for_product, ->(product) { where(portal_notifications: { product_id: product.id }) }
 
   def ignore_translation_lang?(field, lang)
     IGNORE_TRANSLATION_LANGS.has_key?(field) && IGNORE_TRANSLATION_LANGS[field].include?(lang)

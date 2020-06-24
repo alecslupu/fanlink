@@ -40,13 +40,13 @@
 class Post < ApplicationRecord
   # include Post::PortalFilters
 
-  scope :id_filter, -> (query) { where(id: query.to_i) }
-  scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
-  scope :person_filter, -> (query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
-  scope :body_filter, -> (query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
-  scope :posted_after_filter, -> (query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
-  scope :posted_before_filter, -> (query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
-  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :id_filter, ->(query) { where(id: query.to_i) }
+  scope :person_id_filter, ->(query) { where(person_id: query.to_i) }
+  scope :person_filter, ->(query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
+  scope :body_filter, ->(query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
+  scope :posted_after_filter, ->(query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
+  scope :posted_before_filter, ->(query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
+  scope :status_filter, ->(query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { sign == '>' ? after_post(created_at, id) : before_post(created_at, id) }
   scope :after_post, ->(created_at, id) { where('posts.created_at > ? AND posts.id > ?', created_at, id) }
   scope :before_post, ->(created_at, id) { where('posts.created_at < ? AND posts.id < ?', created_at, id) }
@@ -143,15 +143,15 @@ class Post < ApplicationRecord
                      left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
                    }
 
-  scope :for_person, -> (person) { includes(:person).where(person: person) }
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
-  scope :in_date_range, -> (start_date, end_date) {
+  scope :for_person, ->(person) { includes(:person).where(person: person) }
+  scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
+  scope :in_date_range, ->(start_date, end_date) {
                           where('posts.created_at >= ? and posts.created_at <= ?',
                                 start_date.beginning_of_day, end_date.end_of_day)
                         }
 
-  scope :for_category, -> (categories) { joins(:category).where('categories.name IN (?)', categories) }
-  scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
+  scope :for_category, ->(categories) { joins(:category).where('categories.name IN (?)', categories) }
+  scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
                     published.where('(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)',
                                     Time.zone.now, Time.zone.now)

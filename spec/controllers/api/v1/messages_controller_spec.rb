@@ -46,7 +46,8 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
                                                                           length: 8 },
                                                                         { person_id: mentioned2.id,
                                                                           location: 14,
-                                                                          length: 4 },] } }
+                                                                          length: 4 },
+                                                             ] } }
         expect(response).to be_successful
         msg = Message.last
         expect(msg.mentions.count).to eq(2)

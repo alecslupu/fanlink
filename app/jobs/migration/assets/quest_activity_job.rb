@@ -1,7 +1,6 @@
 module Migration
   module Assets
     class QuestActivityJob < ::Migration::Assets::ApplicationJob
-
       def perform(quest_id)
         require 'open-uri'
         quest = ::QuestActivity.find(quest_id)
@@ -9,6 +8,5 @@ module Migration
         quest.picture.attach(io: open(url), filename: quest.picture_file_name, content_type: quest.picture_content_type)
       end
     end
-
   end
 end

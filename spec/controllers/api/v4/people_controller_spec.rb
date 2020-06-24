@@ -30,7 +30,7 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
         get :index
 
         expect(response).to be_successful
-        expect(json['people'].count).to eq(3) # current user is not included
+        expect(json['people'].count).to eq(3)
         json['people'].each do |person|
           expect(person['picture_url']).to_not eq(nil)
         end
