@@ -25,11 +25,11 @@ class VideoPage < ApplicationRecord
 
   has_one_attached :video
 
-  validates :video, size: {less_than: 10.megabytes},
-            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+  validates :video, size: { less_than: 10.megabytes },
+                    content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
 
   def video_url
-    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
+    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/') : nil
   end
 
   def video_content_type
@@ -60,6 +60,7 @@ class VideoPage < ApplicationRecord
            end
     Integer(FFMPEG::Movie.new(file).duration) + 1
   end
+
   private
 
   def just_me

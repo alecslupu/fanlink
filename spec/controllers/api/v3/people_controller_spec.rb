@@ -93,7 +93,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"
         post :create, params:
-          {product: product.internal_name,
+          { product: product.internal_name,
             person: {
               username: username,
               email: email,

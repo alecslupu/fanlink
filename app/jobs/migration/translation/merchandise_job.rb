@@ -20,6 +20,7 @@ module Migration
         unless Merchandise.with_translations('en').where(id: merchandise.id).first.present?
           return if merchandise.untranslated_name['un'].nil?
           return if merchandise.untranslated_name['un'].empty?
+
           I18n.locale = 'en'
           merchandise.name = merchandise.untranslated_name['un']
           merchandise.description = merchandise.untranslated_description['un']

@@ -19,6 +19,7 @@ module Migration
         unless Interest.with_translations('en').where(id: interest.id).first.present?
           return if interest.untranslated_title['un'].nil?
           return if interest.untranslated_title['un'].empty?
+
           I18n.locale = 'en'
           interest.set_translations({ en: { title: interest.untranslated_title['un'] } })
           # level.save!

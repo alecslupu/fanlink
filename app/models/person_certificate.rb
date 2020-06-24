@@ -38,20 +38,20 @@ class PersonCertificate < ApplicationRecord
 
   has_one_attached :issued_certificate_image
 
-  validates :issued_certificate_image,  size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg]}
+  validates :issued_certificate_image, size: { less_than: 5.megabytes },
+                                       content_type: { in: %w[image/jpeg] }
 
   def issued_certificate_image_url
-    issued_certificate_image.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_image.key].join('/')  : nil
+    issued_certificate_image.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_image.key].join('/') : nil
   end
 
   has_one_attached :issued_certificate_pdf
   validates :issued_certificate_pdf,
-            size: {less_than: 5.megabytes},
-            content_type: {in: %w[application/pdf]}
+            size: { less_than: 5.megabytes },
+            content_type: { in: %w[application/pdf] }
 
   def issued_certificate_pdf_url
-    issued_certificate_pdf.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_pdf.key].join('/')  : nil
+    issued_certificate_pdf.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_pdf.key].join('/') : nil
   end
 
   belongs_to :person, touch: true

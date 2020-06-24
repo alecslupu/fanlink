@@ -41,15 +41,15 @@ class Product < ApplicationRecord
   has_paper_trail
 
   has_one_attached :logo
-  validates :logo, size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png]}
+  validates :logo, size: { less_than: 5.megabytes },
+                   content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def logo_url
     logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.key].join('/') : nil
   end
 
   def logo_optimal_url
-    opts = {resize: [1000, 5000], auto_orient: true, quality: 75}
+    opts = { resize: [1000, 5000], auto_orient: true, quality: 75 }
     logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.variant(opts).processed.key].join('/') : nil
   end
 

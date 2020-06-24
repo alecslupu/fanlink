@@ -30,15 +30,15 @@ module Trivia
 
     has_one_attached :photo
 
-    validates :photo, size: {less_than: 5.megabytes},
-              content_type: {in: %w[image/jpeg image/gif image/png]}
+    validates :photo, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
 
     def photo_url
       photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.key].join('/') : nil
     end
 
     def photo_optimal_url
-      opts = { resize: '1000', auto_orient: true, quality: 75}
+      opts = { resize: '1000', auto_orient: true, quality: 75 }
       photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.variant(opts).processed.key].join('/') : nil
     end
 

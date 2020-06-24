@@ -54,7 +54,6 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
         expect(response).to be_successful
         expect(Quest.last.picture.attached?).to be_truthy
         expect(json['quest']['picture_url']).to be_present
-
       end
     end
   end

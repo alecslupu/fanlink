@@ -26,8 +26,8 @@ class DownloadFilePage < ApplicationRecord
   has_one_attached :document
 
   validates :document, attached: true,
-            size: {less_than: 5.megabytes},
-            content_type: {in: %w[application/pdf]}
+                       size: { less_than: 5.megabytes },
+                       content_type: { in: %w[application/pdf] }
 
   def document_url
     document.attached? ? [Rails.application.secrets.cloudfront_url, document.key].join('/') : nil
