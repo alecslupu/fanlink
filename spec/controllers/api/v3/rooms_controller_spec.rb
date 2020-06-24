@@ -5,20 +5,19 @@ require 'rails_helper'
 RSpec.describe Api::V3::RoomsController, type: :controller do
   # TODO: auto-generated
   describe 'POST create' do
-
     it 'shold attach picture to public rooms when provided' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
         post :create,
-          params: {
-            room: {
-              name: 'name',
-              public: true,
-              picture: fixture_file_upload('images/better.png', 'image/png')
-            }
-          }
+             params: {
+               room: {
+                 name: 'name',
+                 public: true,
+                 picture: fixture_file_upload('images/better.png', 'image/png')
+               }
+             }
         expect(response).to be_successful
         expect(json['room']['picture_url']).not_to eq(nil)
         expect(Room.last.picture).not_to eq(nil)
@@ -36,7 +35,8 @@ RSpec.describe Api::V3::RoomsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        create_list(:room, 3, public: true, status: :active, picture: fixture_file_upload('images/better.png', 'image/png'))
+        fixture_file = fixture_file_upload('images/better.png', 'image/png')
+        create_list(:room, 3, public: true, status: :active, picture: fixture_file)
         get :index
 
         expect(response).to be_successful
@@ -54,7 +54,8 @@ RSpec.describe Api::V3::RoomsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         public_room = create(:room, public: true, status: :active)
-        put :update, params: { id: public_room.id, room: { picture: fixture_file_upload('images/better.png', 'image/png') } }
+        fixture_file = fixture_file_upload('images/better.png', 'image/png')
+        put :update, params: { id: public_room.id, room: { picture: fixture_file } }
 
         expect(response).to be_successful
         expect(json['room']['picture_url']).not_to eq(nil)
@@ -68,7 +69,8 @@ RSpec.describe Api::V3::RoomsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         public_room = create(:room, public: true, status: :active, created_by: person)
-        put :update, params: { id: public_room.id, room: { picture: fixture_file_upload('images/better.png', 'image/png') } }
+        fixture_file = fixture_file_upload('images/better.png', 'image/png')
+        put :update, params: { id: public_room.id, room: { picture: fixture_file } }
 
         expect(response).to be_successful
         expect(Room.find(public_room.id).picture.attached?).to eq(false)

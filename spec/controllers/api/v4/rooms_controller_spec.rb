@@ -9,7 +9,10 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        create_list(:room, 3, public: true, status: :active, picture: fixture_file_upload('images/better.png', 'image/png'))
+        create_list(:room, 3,
+                    public: true,
+                    status: :active,
+                    picture: fixture_file_upload('images/better.png', 'image/png'))
         get :index
 
         expect(response).to be_successful
@@ -20,15 +23,15 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
     end
 
-   it 'should get a list of active public rooms in order based on activity' do
+    it 'should get a list of active public rooms in order based on activity' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
         room1 = create(:room, public: true, status: :active)
-        message_room1 =  msg = create(:message, person: person, room: room1)
+        message_room1 = msg = create(:message, person: person, room: room1)
         room2 = create(:room, public: true, status: :active)
-        message_room1 =  msg = create(:message, person: person, room: room2)
+        message_room1 = msg = create(:message, person: person, room: room2)
         inactive_room = create(:room, public: true, status: :inactive)
         deleted_room = create(:room, public: true, status: :deleted)
         private_room = create(:room, public: false, status: :active, created_by: @person)
@@ -97,7 +100,10 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        room = create(:room, public: true, status: :active, picture: fixture_file_upload('images/better.png', 'image/png'))
+        room = create(:room,
+                      public: true,
+                      status: :active,
+                      picture: fixture_file_upload('images/better.png', 'image/png'))
         get :show, params: { id: room.id }
 
         expect(response).to be_successful
@@ -133,7 +139,6 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
   end
 
   describe 'POST create' do
-
     it 'should attach picture to public rooms when provided' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -214,7 +219,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
     end
 
-   it 'should not set public room timestamp' do
+    it 'should not set public room timestamp' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -232,9 +237,9 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         expect(json['room']['last_message_timestamp']).to be >= current_timestamp
         expect(Room.last.picture).not_to eq(nil)
       end
-   end
+    end
 
-   it 'should set private room timestamp' do
+    it 'should set private room timestamp' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -260,7 +265,9 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         public_room = create(:room, public: true, status: :active)
-        put :update, params: { id: public_room.id, room: { picture: fixture_file_upload('images/better.png', 'image/png') } }
+        put :update, params: { id: public_room.id, room: {
+          picture: fixture_file_upload('images/better.png', 'image/png')
+        } }
 
         expect(response).to be_successful
         expect(json['room']['picture_url']).not_to eq(nil)
@@ -274,7 +281,9 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         public_room = create(:room, public: true, status: :active, created_by: person)
-        put :update, params: { id: public_room.id, room: { picture: fixture_file_upload('images/better.png', 'image/png') } }
+        put :update, params: { id: public_room.id, room: {
+          picture: fixture_file_upload('images/better.png', 'image/png')
+        } }
 
         expect(response).to be_successful
         expect(Room.find(public_room.id).picture.attached?).to eq(false)

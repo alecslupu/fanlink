@@ -15,7 +15,7 @@ RSpec.describe Api::V4::NotificationsController, type: :controller do
         expect(response).to be_successful
         notification = Notification.last
         expect(notification.body).to eq(body)
-        expect(notification.person_id). to eq(person.id)
+        expect(notification.person_id).to eq(person.id)
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe Api::V4::NotificationsController, type: :controller do
         expect(response).to be_successful
         notification = Notification.last
         expect(notification.body).to eq(body)
-        expect(notification.person_id). to eq(person.id)
+        expect(notification.person_id).to eq(person.id)
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe Api::V4::NotificationsController, type: :controller do
       person = create(:person, pin_messages_from: true)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        expect{
+        expect {
           post :create, params: { notification: { body: 'body' } }
         }.to change(Notification, :count).by(1)
       end

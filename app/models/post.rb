@@ -40,13 +40,13 @@
 class Post < ApplicationRecord
   # include Post::PortalFilters
 
-  scope :id_filter, -> (query) { where(id: query.to_i) }
-  scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
-  scope :person_filter, -> (query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
-  scope :body_filter, -> (query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
-  scope :posted_after_filter, -> (query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
-  scope :posted_before_filter, -> (query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
-  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :id_filter, ->(query) { where(id: query.to_i) }
+  scope :person_id_filter, ->(query) { where(person_id: query.to_i) }
+  scope :person_filter, ->(query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
+  scope :body_filter, ->(query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
+  scope :posted_after_filter, ->(query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
+  scope :posted_before_filter, ->(query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
+  scope :status_filter, ->(query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { where("posts.created_at #{sign} ? AND posts.id #{sign} ?", created_at, id) }
   # include Post::PortalFilters
 
@@ -129,29 +129,33 @@ class Post < ApplicationRecord
   after_save :expire_cache
   before_destroy :expire_cache, prepend: true
 
-  scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
+  scope :following_and_own, ->(follower) { includes(:person).where(person: follower.following + [follower]) }
+
+  scope :in_date_range, ->(start_date, end_date) {
+    where('posts.created_at >= ? and posts.created_at <= ?',
+          start_date.beginning_of_day, end_date.end_of_day)
+  }
 
   scope :promoted, -> {
-          left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
-        }
+                     left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
+                   }
 
-  scope :for_person, -> (person) { includes(:person).where(person: person) }
-  scope :for_product, -> (product) { joins(:person).where( people: { product_id: product.id } ) }
   scope :in_date_range, -> (start_date, end_date) {
-          where('posts.created_at >= ? and posts.created_at <= ?',
-                start_date.beginning_of_day, end_date.end_of_day)
-        }
-
+    where('posts.created_at >= ? and posts.created_at <= ?',
+          start_date.beginning_of_day, end_date.end_of_day)
+  }
+  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
+  scope :for_person, -> (person) { includes(:person).where(person: person) }
   scope :for_category, -> (categories) { joins(:category).where('categories.name IN (?)', categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
-          published.where('(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)',
-                          Time.zone.now, Time.zone.now)
-        }
+                    published.where('(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)',
+                                    Time.zone.now, Time.zone.now)
+                  }
   scope :not_promoted, -> { left_joins(:poll).where('poll_type_id IS NULL or end_date < NOW()') }
 
   scope :reported, -> { joins(:post_reports) }
-  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }
+  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil }) }
 
   def cache_key
     [super, person.cache_key].join('/')
@@ -193,6 +197,7 @@ class Post < ApplicationRecord
     # We assume that the post has been deleted if we can't find it.
     #
     raise msg.inspect if (msg['state'] != 'COMPLETED')
+
     post = self.find_by(:id => msg['userMetadata']['post_id'].to_i)
     return if post.blank?
 
@@ -244,6 +249,7 @@ class Post < ApplicationRecord
 
   def start_listener
     return if (!Flaws.transcoding_queue?)
+
     Rails.logger.error("Listening to #{self.video_job_id}")
     PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(self.video_job_id)
   end
@@ -257,13 +263,14 @@ class Post < ApplicationRecord
   def start_transcoding
     # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
     return if (self.video_job_id || Rails.env.test?)
+
     PostTranscoderJob.set(wait_until: 1.minutes.from_now).perform_later(self.id)
     true
   end
 
   def merge_new_videos(new_videos)
-    by_src = -> (e) { e[:src] }
-    by_m3u8 = -> (e) { e[:src].to_s.end_with?('v.m3u8') }
+    by_src = ->(e) { e[:src] }
+    by_m3u8 = ->(e) { e[:src].to_s.end_with?('v.m3u8') }
 
     m3u8, the_rest = (self.video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
     m3u8 + the_rest.sort_by(&by_src)

@@ -24,7 +24,6 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
         get :index, params: { person_id: person1.id }
 
         expect(response).to be_unauthorized
-
       end
     end
 
@@ -57,7 +56,11 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
       Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
       certificate = create(:certificate)
       person1.certificates << certificate
-      pc = PersonCertificate.create(person_id: person1.id, certificate_id: certificate.id, issued_certificate_image: nil)
+      pc = PersonCertificate.create(
+        person_id: person1.id,
+        certificate_id: certificate.id,
+        issued_certificate_image: nil
+      )
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         get :download, params: { person_id: person1.id, id: certificate.id }

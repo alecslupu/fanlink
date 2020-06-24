@@ -17,7 +17,8 @@
 
 class VideoPage < ApplicationRecord
   scope :for_product, -> (product) { where(product_id: product.id) }
-  require 'streamio-ffmpeg'
+
+  # require 'streamio-ffmpeg'
 
   acts_as_tenant(:product)
   belongs_to :product
@@ -63,6 +64,7 @@ class VideoPage < ApplicationRecord
 
   def just_me
     return if certcourse_page.new_record?
+
     target_course_page = CertcoursePage.find(certcourse_page.id)
     child = target_course_page.child
     if child && child != self

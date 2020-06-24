@@ -12,7 +12,6 @@ RailsAdmin.config do |config|
     end
 
     include_fields :locale, :name, :description
-    #
     edit do
       field :name do
         help do
@@ -37,13 +36,13 @@ RailsAdmin.config do |config|
 
       field :name do
         visible false
-        searchable [{quest_translations: :name }]
+        searchable [{ quest_translations: :name }]
         queryable true
         filterable true
       end
       field :description do
         visible false
-        searchable [{quest_translations: :description }]
+        searchable [{ quest_translations: :description }]
         queryable true
         filterable true
       end

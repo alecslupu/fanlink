@@ -10,7 +10,6 @@ RailsAdmin.config do |config|
         searchable [:username, referral_user_codes: :unique_code]
       end
       fields :invited, :created_at
-
     end
     edit do
     end

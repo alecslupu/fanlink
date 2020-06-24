@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Trivia::RoundPolicy, type: :policy do
-
   args = [Trivia::Round, 'trivia']
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args

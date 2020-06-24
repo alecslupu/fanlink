@@ -16,7 +16,7 @@ RSpec.describe AwsController, type: :controller do
         TopicArn: arn,
         Message: "You have chosen to subscribe to the topic arn:aws:sns:us-west-2:123456789012:MyTopic.
 To confirm the subscription, visit the SubscribeURL included in this message.",
-        SubscribeURL: "https://sns.us-west-2.amazonaws.com/?Action=ConfirmSubscription&TopicArn=#{arn}&Token=2336412f37...",
+        SubscribeURL: "https://sns.us-west-2.amazonaws.com/?Action=ConfirmSubscription&TopicArn=#{arn}&Token=2336412f3",
         Timestamp: '2012-04-26T20:45:04.751Z',
         SignatureVersion: '1',
         Signature: 'EXAMPLEpH+...',
@@ -24,9 +24,9 @@ To confirm the subscription, visit the SubscribeURL included in this message.",
       }.to_json
 
       request.headers.merge!({
-        'x-amz-sns-message-type' => 'SubscriptionConfirmation',
-        'x-amz-sns-topic-arn' => arn
-      })
+                               'x-amz-sns-message-type' => 'SubscriptionConfirmation',
+                               'x-amz-sns-topic-arn' => arn
+                             })
       post :video_transcoded, body: data
     end
     it 'SubscriptionConfirmation' do
@@ -61,14 +61,23 @@ To confirm the subscription, visit the SubscribeURL included in this message.",
         }.to_json,
         Timestamp: '2020-05-23T12:06:23.016Z',
         SignatureVersion: '1',
-        Signature: 'n6kQwO+5GYwc+facBU6/VgUJosm2czJlti85vPVGHMHwK/ZibP/vXfsb43uamNJ5rgOKYuypWe3TyqJ8e9WDAJd/1O6aZFCoBRzJ+gYJuXH8FmsT+TCOzNLCZCwN7+VmrVeripus5uRuPanFeOiOlFLz9yRd821J/96TiFalZiAP2dKd9I8dziG83anNG+zjNWVituX8OkWOzouosqaL7PnDRcsmtCY0zslTIhsWN0my4lfT0MtcgS1AS3N4n66rCQ+Q3nYqcvsSZ7uGL+wRHOXQ4aXs6yAPyC0n/YavEGfUqsh3uEKw6Y2KH21wwjbEye5+d2YqPTOPyngIeonODg==',
+        Signature: %w(
+          n6kQwO+5GYwc
+          facBU6/VgUJosm2czJlti85vPVGHMHwK/ZibP/vXfsb43uamNJ5rgOKYuypWe3TyqJ8e9WDAJd/1O6aZFCoBRzJ
+          gYJuXH8FmsT+TCOzNLCZCwN7
+          VmrVeripus5uRuPanFeOiOlFLz9yRd821J/96TiFalZiAP2dKd9I8dziG83anNG
+          zjNWVituX8OkWOzouosqaL7PnDRcsmtCY0zslTIhsWN0my4lfT0MtcgS1AS3N4n66rCQ
+          Q3nYqcvsSZ7uGL
+          wRHOXQ4aXs6yAPyC0n/YavEGfUqsh3uEKw6Y2KH21wwjbEye5
+          d2YqPTOPyngIeonODg==
+        ).join("+"),
         SigningCertURL: 'https://sns.us-east-1.amazonaws.com/SimpleNotificationService-a86cb10b4e1f29c941702d737128f7b6.pem',
         UnsubscribeURL: 'https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:390209539631:fanlink-staging-video:1ad3650a-6a92-4726-a348-134913df6abb'
       }
       request.headers.merge!({
-        'x-amz-sns-message-type' => 'notification',
-        'x-amz-sns-topic-arn' => arn
-      })
+                               'x-amz-sns-message-type' => 'notification',
+                               'x-amz-sns-topic-arn' => arn
+                             })
       post :video_transcoded, body: data.to_json
     end
   end

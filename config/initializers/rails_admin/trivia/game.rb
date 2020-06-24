@@ -4,7 +4,7 @@ RailsAdmin.config do |config|
   config.included_models.push('Trivia::Game')
 
   config.model 'Trivia::Game' do
-  #   navigation_label "Trivia"
+    #   navigation_label "Trivia"
     label_plural 'Trivia Games'
 
     configure :status, :enum do
@@ -13,12 +13,12 @@ RailsAdmin.config do |config|
       # enum_method :rails_admin_status_field
       enum do
         if bindings[:object].new_record?
-          {draft: bindings[:object].class.statuses[:draft]}
+          { draft: bindings[:object].class.statuses[:draft] }
         else
           ha = {}
-          bindings[:object].aasm.states(permitted: true).map(&:name).
-            push(bindings[:object].status).
-            map { |c| ha[c] = bindings[:object].class.statuses[c] }
+          bindings[:object].aasm.states(permitted: true).map(&:name)
+                           .push(bindings[:object].status)
+                           .map { |c| ha[c] = bindings[:object].class.statuses[c] }
           ha
         end
       end
@@ -49,5 +49,4 @@ RailsAdmin.config do |config|
       fields :prizes, :rounds
     end
   end
-
 end

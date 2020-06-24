@@ -92,7 +92,7 @@ module Api
         room = Room.find(params[:room_id])
         if room.active?
           if room.public && current_user.chat_banned?
-            render json: {errors: 'You are banned from chat.'}, status: :unprocessable_entity
+            render json: { errors: 'You are banned from chat.' }, status: :unprocessable_entity
           else
             @message = room.messages.create(message_params.merge(person_id: current_user.id))
             if @message.valid?

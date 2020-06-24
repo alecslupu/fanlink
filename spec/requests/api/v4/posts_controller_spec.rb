@@ -13,26 +13,41 @@ RSpec.describe 'Api::V4::PostsController', type: :request, swagger_doc: 'v4/swag
 
       let(:Authorization) { '' }
       let(:person) { create(:person) }
-      let!(:posts) { create_list(:published_post, 2, person: person)}
+      let!(:posts) { create_list(:published_post, 2, person: person) }
 
-      parameter name: :page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
-      parameter name: :per_page, in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
+      parameter name: :page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 1, minimum: 1
+      parameter name: :per_page,
+                in: :query, type: :integer, required: false, description: ' Lorem ipsum', default: 25
 
-      parameter name: :promoted, in: :query, type: :string, required: false, enum: [:true, :false]
-      parameter name: :post_id, in: :query, type: :string, required: false
-      parameter name: :chronologically, in: :query, type: :string, required: false, enum: [:before, :after], default: :after
+      parameter name: :promoted,
+                in: :query, type: :string, required: false, enum: [:true, :false]
+      parameter name: :post_id,
+                in: :query, type: :string, required: false
+      parameter name: :chronologically,
+                in: :query, type: :string, required: false, enum: [:before, :after], default: :after
 
-      parameter name: :tag, in: :query, type: :string, required: false
-      parameter name: :categories, in: :query, type: :string, required: false
-      parameter name: :person_id, in: :query, type: :string, required: false
+      parameter name: :tag,
+                in: :query, type: :string, required: false
+      parameter name: :categories,
+                in: :query, type: :string, required: false
+      parameter name: :person_id,
+                in: :query, type: :string, required: false
 
-      parameter name: :id_filter, in: :query, type: :string, required: false
-      parameter name: :person_id_filter, in: :query, type: :string, required: false
-      parameter name: :person_filter, in: :query, type: :string, required: false
-      parameter name: :body_filter, in: :query, type: :string, required: false
-      parameter name: :posted_after_filter, in: :query, type: :string, required: false
-      parameter name: :posted_before_filter, in: :query, type: :string, required: false
-      parameter name: :status_filter, in: :query, type: :string, required: false
+      parameter name: :id_filter,
+                in: :query, type: :string, required: false
+      parameter name: :person_id_filter,
+                in: :query, type: :string, required: false
+      parameter name: :person_filter,
+                in: :query, type: :string, required: false
+      parameter name: :body_filter,
+                in: :query, type: :string, required: false
+      parameter name: :posted_after_filter,
+                in: :query, type: :string, required: false
+      parameter name: :posted_before_filter,
+                in: :query, type: :string, required: false
+      parameter name: :status_filter,
+                in: :query, type: :string, required: false
 
       let(:tag) { '' }
       response '200', 'HTTP/1.1 200 Ok' do
@@ -185,5 +200,4 @@ RSpec.describe 'Api::V4::PostsController', type: :request, swagger_doc: 'v4/swag
       end
     end
   end
-
 end

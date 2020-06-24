@@ -37,10 +37,7 @@ FactoryBot.define do
   factory :person_certificate do
     person { create(:person) }
     certificate { create(:certificate) }
-    # issued_certificate_image { File.open("#{Rails.root}/") }
     issued_certificate_image {  fixture_file_upload('spec/fixtures/images/large.jpg', 'image/jpeg') }
     issued_certificate_pdf { fixture_file_upload('spec/fixtures/pdfs/dummy.pdf', 'application/pdf') }
-    # issued_certificate_pdf { File.open("#{Rails.root}/spec/fixtures/pdfs/dummy.pdf") }
-
   end
 end

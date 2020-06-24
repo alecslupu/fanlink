@@ -37,7 +37,7 @@ module Messaging
   def delete_post(post, to_be_notified, version = nil)
     return true if to_be_notified.empty?
 
-    client_update_call( generic_bulk_payload_user('deleted_post_id', to_be_notified, post.id, version) )
+    client_update_call(generic_bulk_payload_user('deleted_post_id', to_be_notified, post.id, version))
   end
 
   def post_post(post, to_be_notified, version = nil)
@@ -64,7 +64,7 @@ module Messaging
     payload = {}
     payload["#{user_path(member)}/#{fragment}"] = value
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{user_path(member, v)}/#{fragment}"] = value
       }
     end
@@ -77,7 +77,7 @@ module Messaging
     payload = {}
     payload["#{room_path(message.room)}/#{fragment}"] = message.as_json
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{room_path(message.room, v)}/#{fragment}"] = msg
       }
     end
@@ -88,7 +88,7 @@ module Messaging
     payload = {}
     payload["#{room_path(msg.room)}/#{fragment}"] = value
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{room_path(msg.room, v)}/#{fragment}"] = value
       }
     end
@@ -100,7 +100,7 @@ module Messaging
     to_be_notified.each do |member|
       payload["#{user_path(member)}/#{fragment}"] = value
       if version.present?
-        version.downto(1) {|v|
+        version.downto(1) { |v|
           payload["#{user_path(member, v)}/#{fragment}"] = value
         }
       end
@@ -113,7 +113,7 @@ module Messaging
     room.room_memberships.each do |mem|
       payload[message_counter_path(mem)] = mem.message_count + 1 unless mem.person == except_user
       if version.present?
-        version.downto(1) {|v|
+        version.downto(1) { |v|
           payload[message_counter_path(mem, v)] = mem.message_count + 1 unless mem.person == except_user
         }
       end
@@ -182,7 +182,7 @@ module Messaging
         picture_url: message.person.picture_url
       }
     }
-    client_update_call( payload_for_post_public_message(message, msg, version))
+    client_update_call(payload_for_post_public_message(message, msg, version))
   end
 
   def room_path(room, version = nil)

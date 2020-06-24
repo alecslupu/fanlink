@@ -17,7 +17,6 @@
 #
 
 class Poll < ApplicationRecord
-
   # after_initialize do
   #   self.end_date = Time.zone.now + 1.month
   # end
@@ -49,8 +48,8 @@ class Poll < ApplicationRecord
   accepts_nested_attributes_for :poll_options, allow_destroy: true
 
   scope :assignable, -> {
-          where(poll_type_id: nil).where('end_date > ?', Time.zone.now)
-        }
+                       where(poll_type_id: nil).where('end_date > ?', Time.zone.now)
+                     }
 
   def closed?
     end_date.to_time.to_i <= Time.now.to_time.to_i
@@ -73,11 +72,12 @@ class Poll < ApplicationRecord
   end
 
   private
-    def add_end_date
-      if duration.zero?
-        self.duration = end_date.to_datetime.to_i - start_date.to_datetime.to_i
-      else
-        self.end_date = start_date.to_datetime + duration.seconds
-      end
+
+  def add_end_date
+    if duration.zero?
+      self.duration = end_date.to_datetime.to_i - start_date.to_datetime.to_i
+    else
+      self.end_date = start_date.to_datetime + duration.seconds
     end
+  end
 end

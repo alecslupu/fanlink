@@ -46,7 +46,7 @@ module Api
           end
           # Tell the user instructions have been sent whether or not email was found.
           # This is to not leak information about which emails exist in the system.
-          render json: {message: 'Reset password instructions have been sent to your email, if it exists in our system'}, status: :ok
+          render json: { message: 'Reset password instructions have been sent to your email, if it exists in our system' }, status: :ok
         else
           render_error(_('Required parameter missing.'))
         end

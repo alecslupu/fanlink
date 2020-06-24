@@ -15,7 +15,7 @@ module Api
 
       def create
         if current_user.chat_banned?
-          render json: {errors: 'You are banned.'}, status: :unprocessable_entity
+          render json: { errors: 'You are banned.' }, status: :unprocessable_entity
         else
           @post_comment = @post.post_comments.create(post_comment_params)
           if @post_comment.valid?

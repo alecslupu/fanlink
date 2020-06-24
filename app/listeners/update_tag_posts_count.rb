@@ -10,6 +10,7 @@ class UpdateTagPostsCount
   end
 
   private
+
   def self.update_post_count(pt)
     tag = Tag.find(pt.tag_id)
     if tag

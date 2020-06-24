@@ -11,10 +11,10 @@ RSpec.describe CertificateCertcourse, type: :model do
     it 'uniqueness to tenant' do
       cc = create(:certificate_certcourse)
       cc2 = build(:certificate_certcourse,
-                   product: cc.product,
-                   certcourse: create(:certcourse),
-                   certificate: cc.certificate,
-                   certcourse_order: cc.certcourse_order)
+                  product: cc.product,
+                  certcourse: create(:certcourse),
+                  certificate: cc.certificate,
+                  certcourse_order: cc.certcourse_order)
       #   validates_uniqueness_to_tenant :certcourse_order, scope: %i[ certificate_id certcourse_id ]
       expect(cc2.valid?).to be_falsey
       cc2.certcourse_order += 1

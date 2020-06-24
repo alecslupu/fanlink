@@ -50,18 +50,16 @@ RailsAdmin.config do |config|
     end
 
     list do
-
       scopes [nil, :inactive, :active, :disabled]
 
       fields :id, :poll_type, :poll_type_id, :start_date, :end_date, :duration, :poll_status
 
       field :description do
         visible false
-        searchable [{poll_translations: :description }]
+        searchable [{ poll_translations: :description }]
         queryable true
         filterable true
       end
-
     end
   end
 end

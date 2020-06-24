@@ -33,7 +33,7 @@ class Badge < ApplicationRecord
   has_one :reward, -> { where('rewards.reward_type = ?', Reward.reward_types['badge']) }, foreign_key: 'reward_type_id', dependent: :destroy
   has_many :assigned_rewards, through: :reward
 
-  scope :for_product, -> (product) { where( badges: { product_id: product.id } ) }
+  scope :for_product, ->(product) { where(badges: { product_id: product.id }) }
 
   has_paper_trail
   acts_as_tenant(:product)
@@ -67,7 +67,7 @@ class Badge < ApplicationRecord
             uniqueness: { scope: :product_id, message: _('There is already a badge with that internal name.') }
 
   validates :action_requirement, presence: { message: _('Action requirement is required.') },
-            numericality: { greater_than: 0, message: _('Action requirement must be greater than zero.') }
+                                 numericality: { greater_than: 0, message: _('Action requirement must be greater than zero.') }
 
   around_create :create_reward
   after_update :update_reward
@@ -101,7 +101,7 @@ class Badge < ApplicationRecord
     )
     reward.name = name
 
-    if reward.valid? && self.valid?# check if the new reward and badge are valid
+    if reward.valid? && self.valid? # check if the new reward and badge are valid
       yield # saves the badge
       reward.reward_type_id = id
       reward.save

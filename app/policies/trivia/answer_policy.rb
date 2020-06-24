@@ -2,7 +2,6 @@
 
 module Trivia
   class AnswerPolicy < TriviaModulePolicy
-
     def create?
       false
     end

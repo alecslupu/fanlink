@@ -6,6 +6,7 @@ else
   json.events do
     json.array!(@events) do |event|
       next if event.deleted
+
       json.partial! 'event', locals: { event: event, lang: @lang }
     end
   end

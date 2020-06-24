@@ -116,5 +116,3 @@ RSpec.describe MessageReportPolicy, type: :policy do
     end
   end
 end
-
-

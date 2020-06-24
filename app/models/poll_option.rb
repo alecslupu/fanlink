@@ -13,7 +13,6 @@
 #
 
 class PollOption < ApplicationRecord
-
   belongs_to :poll
 
   has_many :person_poll_options
@@ -25,7 +24,7 @@ class PollOption < ApplicationRecord
   translates :description, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
-  scope :for_product, -> (product) { joins(:poll).where(polls: { product_id: product.id } ) }
+  scope :for_product, ->(product) { joins(:poll).where(polls: { product_id: product.id }) }
 
   def voted?(person)
     people.present? && people.exists?(person.id)

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Block, type: :model do
-
   context 'Validation' do
     it { expect(build(:block)).to be_valid }
   end

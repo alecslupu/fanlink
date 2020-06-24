@@ -36,9 +36,12 @@ class Relationship < ApplicationRecord
   validate :check_non_self
   validate :valid_status_transition
 
-  scope :pending_to_person, -> (person) { where(status: :requested).where(requested_to: person) }
-  scope :for_people, -> (source_person, target_person) { where(requested_to: [source_person, target_person]).where(requested_by: [source_person, target_person]) }
-  scope :for_person, -> (person) { where(requested_to: person).or(where(requested_by: person)) }
+  scope :pending_to_person, ->(person) { where(status: :requested).where(requested_to: person) }
+  scope :for_people, ->(source_person, target_person) {
+    where(requested_to: [source_person, target_person])
+      .where(requested_by: [source_person, target_person])
+  }
+  scope :for_person, ->(person) { where(requested_to: person).or(where(requested_by: person)) }
 
   def person_involved?(person)
     requested_to == person || requested_by == person
@@ -54,7 +57,8 @@ class Relationship < ApplicationRecord
 
   def check_outstanding
     if requested? && Relationship.where.not(id: id).for_people(requested_by, requested_to).exists?
-      errors.add(:base, :existing_friendship, message: _('You already have an existing friendship or friend request to or from that person.'))
+      errors.add(:base, :existing_friendship,
+                 message: _('You already have an existing friendship or friend request to or from that person.'))
     end
   end
 

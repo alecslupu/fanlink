@@ -26,6 +26,7 @@ module Referral
     end
 
     protected
+
     def module_name
       'root'
     end

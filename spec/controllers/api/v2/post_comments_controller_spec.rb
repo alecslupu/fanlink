@@ -164,7 +164,6 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         get :index, params: { post_id: po.id, page: 1, per_page: pp }
         expect(response).to be_successful
         expect(json['post_comments'].count).to eq(pp)
-        # expect(json["post_comments"].first).to eq(post_comment_json(@post.comments.visible.order(created_at: :desc).first))
         expect(post_comment_json(json['post_comments'].first)).to be true
       end
     end

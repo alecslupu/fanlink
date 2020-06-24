@@ -26,6 +26,7 @@ class BadgeAward < ApplicationRecord
     already_earned = badge_action.person.badges
     badge_action.action_type.badges.each do |badge|
       next if already_earned.include?(badge) || !badge.current?
+
       achieved = badge.action_count_earned_by(badge_action.person)
       required = badge.action_requirement
       if achieved >= required
@@ -46,9 +47,9 @@ class BadgeAward < ApplicationRecord
 
   private
 
-    def product_match
-      if badge.product_id != person.product_id
-        errors.add(:base, :product_mismatch, message: _('Product mismatch!'))
-      end
+  def product_match
+    if badge.product_id != person.product_id
+      errors.add(:base, :product_mismatch, message: _('Product mismatch!'))
     end
+  end
 end

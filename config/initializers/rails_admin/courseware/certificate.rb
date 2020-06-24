@@ -42,7 +42,8 @@ RailsAdmin.config do |config|
              :template_image
       field :certificate_order do
         help do
-          "Last order set-up is: #{abstract_model.model.certificate_order_max_value}. You may set lower value, but setting an already used value, will result in error"
+          "Last order set-up is: #{abstract_model.model.certificate_order_max_value}. " \
+            "You may set lower value, but setting an already used value, will result in error"
         end
       end
       fields :color_hex,
@@ -69,7 +70,7 @@ RailsAdmin.config do |config|
         column_width 100
       end
       field :is_paid, :boolean do
-       column_width 100
+        column_width 100
       end
       field :status do
         column_width 100
@@ -81,7 +82,6 @@ RailsAdmin.config do |config|
         pretty_value do
           bindings[:object].is_paid?
         end
-
       end
     end
   end

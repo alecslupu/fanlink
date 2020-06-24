@@ -6,7 +6,9 @@ class PortalNotificationPolicy < ApplicationPolicy
       super.includes(:translations).for_product(ActsAsTenant.current_tenant)
     end
   end
+
   protected
+
   def module_name
     'portal_notification'
   end

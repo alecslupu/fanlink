@@ -17,8 +17,7 @@
 #
 
 class DownloadFilePage < ApplicationRecord
-
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
   acts_as_tenant(:product)
   belongs_to :product
   belongs_to :certcourse_page, autosave: true
@@ -55,6 +54,7 @@ class DownloadFilePage < ApplicationRecord
 
   def just_me
     return if certcourse_page.new_record?
+
     target_course_page = CertcoursePage.find(certcourse_page.id)
     child = target_course_page.child
     if child && child != self

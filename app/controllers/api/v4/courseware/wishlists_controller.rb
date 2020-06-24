@@ -4,7 +4,6 @@ module Api
   module V4
     module Courseware
       class WishlistsController < ApiController
-
         def index
           @wishlist = paginate(current_user.courseware_wishlists.includes(:certificate))
           render :index, handler: :jb
