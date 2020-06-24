@@ -169,13 +169,13 @@ stages:
 include:
   - local: .gitlab/ruby25/base.yml
   - local: .gitlab/ruby25/standards.yml
-  - local: .gitlab/ruby25/rubocops.yml
   - local: .gitlab/ruby25/rails60.yml
   - local: .gitlab/ruby25/pages.yml
   - local: .gitlab/ruby25/deployment.yml
-  - local: .gitlab/ruby26/base.yml
-  - local: .gitlab/ruby26/standards.yml
-  - local: .gitlab/ruby26/rails60.yml
+  #  - local: .gitlab/ruby26/base.yml
+  #  - local: .gitlab/ruby26/standards.yml
+  #  - local: .gitlab/ruby26/rails60.yml
+  # - local: .gitlab/ruby25/rubocops.yml
   # - local: .gitlab/ruby27/base.yml
   # - local: .gitlab/ruby27/standards.yml
   # - local: .gitlab/ruby27/rails60.yml
