@@ -3,7 +3,7 @@
 json = {
   id: message.id,
   room_id: message.room_id,
-  body: message.parse_content(),
+  body: message.parse_content,
   picture_url: message.picture_url,
   audio_url: message.audio_url,
   audio_size: message.audio_file_size,
@@ -11,6 +11,6 @@ json = {
   pinned: message.pinned,
   create_time: message.created_at.to_s
 }
-json[:person] = render(partial: "api/v4/people/#{@req_source}", locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }, handlers: 'jb')
+json[:person] = render(partial: 'api/v4/people/app', locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }, handlers: :jb)
 
 json

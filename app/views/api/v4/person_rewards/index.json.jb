@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-json = {}
-
-json[:person_rewards] = @person_rewards.map do |reward|
-  render partial: @req_source, locals: { reward: reward }, handlers: 'jb'
-end
-
-json
+{
+  person_rewards: render(partial: 'app', collection: @person_rewards, as: :reward, handlers: :jb)
+}

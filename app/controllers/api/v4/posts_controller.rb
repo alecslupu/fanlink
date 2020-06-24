@@ -3,7 +3,6 @@
 module Api
   module V4
     class PostsController < Api::V3::PostsController
-
       def index
         ordering = 'DESC'
         if chronological?

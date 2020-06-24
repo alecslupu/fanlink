@@ -3,8 +3,8 @@
 last_person_certcourse = certcourse.person_certcourses.for_person(person).last
 json = {
   id: certcourse.id,
-  certificate_id: @certificate.id,
-  order: certcourse.certificate_certcourses.for_certificate(@certificate).first.certcourse_order,
+  certificate_id: certificate.id,
+  order: certcourse.certificate_certcourses.for_certificate(certificate).first.certcourse_order,
   long_name: certcourse.long_name,
   short_name: certcourse.short_name,
   description: certcourse.description,

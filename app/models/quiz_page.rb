@@ -94,5 +94,5 @@ class QuizPage < ApplicationRecord
     page = CertcoursePage.find(self.certcourse_page_id)
     page.content_type = content_type
     page.save
-    end
+  end
 end

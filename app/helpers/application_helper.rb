@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-
   def parse_node(node)
     if node.is_a?(ArrayConfigItem)
       data = []

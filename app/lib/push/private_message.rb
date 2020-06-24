@@ -46,7 +46,7 @@ module Push
         member_ids << member.id
       end
 
-      return member_ids
+      member_ids
     end
   end
 end

@@ -1,6 +1,5 @@
 module ActsAsTaggableOn
   class TagPolicy < ApplicationPolicy
-
     def history?
       false
     end
