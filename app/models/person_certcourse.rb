@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: person_certcourses
@@ -15,12 +16,10 @@
 class PersonCertcourse < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   belongs_to :person
   belongs_to :certcourse
   validates_uniqueness_of :certcourse_id, scope: :person_id
 
-  scope :for_person, -> (person) { where(person_id: person.id) }
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id } ) }
-
+  scope :for_person, ->(person) { where(person_id: person.id) }
+  scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
 end

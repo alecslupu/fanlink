@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-assigned_locals = {
-  ActionType: "action",
-  Quest: "quest",
-  Step: "step",
-  QuestActivity: "activity",
-  Badge: "badge"
-}
 
+assigned_locals = {
+  ActionType: 'action',
+  Quest: 'quest',
+  Step: 'step',
+  QuestActivity: 'activity',
+  Badge: 'badge'
+}
 
 json = {
   id: reward.id,
@@ -25,10 +25,9 @@ json = {
 }
 
 reward.assigned_rewards.each do |assigned|
-  # json[:locals] = Hash[assigned_locals[assigned.assigned_type.to_sym].to_sym, assigned.assigned]
-  # locals[assigned_locals[assigned.assigned_type.to_sym]] = assigned.assigned
-
-  a_ob = render partial: "api/v4/#{assigned.assigned_type.tableize}/#{@req_source}", locals: Hash[assigned_locals[assigned.assigned_type.to_sym].to_sym, assigned.assigned], handler: "jb"
+  a_ob = render partial: "api/v4/#{assigned.assigned_type.tableize}/#{@req_source}",
+                locals: Hash[assigned_locals[assigned.assigned_type.to_sym].to_sym, assigned.assigned],
+                handler: :jb
   a_ob[:max_times] = assigned.max_times
   json[assigned.assigned_type.tableize.to_sym] ||= []
   json[assigned.assigned_type.tableize.to_sym] << a_ob

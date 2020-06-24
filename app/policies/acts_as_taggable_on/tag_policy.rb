@@ -1,6 +1,5 @@
 module ActsAsTaggableOn
   class TagPolicy < ApplicationPolicy
-
     def history?
       false
     end
@@ -8,7 +7,7 @@ module ActsAsTaggableOn
     protected
 
     def module_name
-      "root"
+      'root'
     end
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_games
@@ -24,31 +25,30 @@
 
 module Trivia
   class Game < ApplicationRecord
-
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
 
     has_paper_trail ignore: [:created_at, :updated_at]
 
     has_one_attached :picture
 
-    validates :picture, size: {less_than: 5.megabytes},
-              content_type: {in: %w[image/jpeg image/gif image/png]}
+    validates :picture, size: { less_than: 5.megabytes },
+                        content_type: { in: %w[image/jpeg image/gif image/png] }
 
     def picture_url
       picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
     end
 
     def picture_optimal_url
-      opts = { resize: "1000", auto_orient: true, quality: 75}
+      opts = { resize: '1000', auto_orient: true, quality: 75 }
       picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
     end
 
-    belongs_to :room, class_name: "Room", optional: true
-    has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :leaderboards, class_name: "Trivia::GameLeaderboard", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :subscribers, class_name: "Trivia::Subscriber", foreign_key: :trivia_game_id, dependent: :destroy
+    belongs_to :room, class_name: 'Room', optional: true
+    has_many :prizes, class_name: 'Trivia::Prize', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :rounds, -> { order(:start_date) }, class_name: 'Round', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :leaderboards, class_name: 'Trivia::GameLeaderboard', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :subscribers, class_name: 'Trivia::Subscriber', foreign_key: :trivia_game_id, dependent: :destroy
 
     accepts_nested_attributes_for :prizes, allow_destroy: true
     accepts_nested_attributes_for :rounds, allow_destroy: true
@@ -102,9 +102,13 @@ module Trivia
       end
     end
 
-    scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
-    scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
-    scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
+    scope :enabled, -> { where(status: [:published, :locked, :running, :closed]) }
+    scope :completed, -> { where(status: [:closed]).order(end_date: :desc).where('end_date < ?', DateTime.now.to_i) }
+    scope :upcomming, -> {
+      where(status: [:published, :locked, :running])
+        .order(:start_date)
+        .where('end_date > ?', DateTime.now.to_i)
+    }
 
     after_save :handle_status_changes, if: -> { status_changed_to_publish? }
     before_validation :compute_gameplay_parameters, if: -> { published? }
@@ -131,47 +135,46 @@ module Trivia
 
     private
 
-      def handle_status_changes
-        game = Trivia::Game.find(self.id)
+    def handle_status_changes
+      game = Trivia::Game.find(self.id)
 
-        ::Trivia::PublishToEngine.perform_later(game.id)
-        ::Trivia::GameStatus::LockedJob.set(wait_until: Time.at(game.start_date) - 10.minutes).perform_later(game.id)
-        ::Trivia::GameStatus::RunningJob.set(wait_until: Time.at(game.start_date)).perform_later(game.id)
-        ::Trivia::GameStatus::CloseJob.set(wait_until: Time.at(game.end_date)).perform_later(game.id)
+      ::Trivia::PublishToEngine.perform_later(game.id)
+      ::Trivia::GameStatus::LockedJob.set(wait_until: Time.at(game.start_date) - 10.minutes).perform_later(game.id)
+      ::Trivia::GameStatus::RunningJob.set(wait_until: Time.at(game.start_date)).perform_later(game.id)
+      ::Trivia::GameStatus::CloseJob.set(wait_until: Time.at(game.end_date)).perform_later(game.id)
 
-        game.rounds.each do |round|
-          ::Trivia::RoundStatus::LockedJob.set(wait_until: Time.at(round.start_date) - 30.minutes).perform_later(round.id)
-          ::Trivia::RoundStatus::RunningJob.set(wait_until: Time.at(round.start_date)).perform_later(round.id)
-          ::Trivia::RoundStatus::CloseJob.set(wait_until: Time.at(round.end_date)).perform_later(round.id)
-        end
+      game.rounds.each do |round|
+        ::Trivia::RoundStatus::LockedJob.set(wait_until: Time.at(round.start_date) - 30.minutes).perform_later(round.id)
+        ::Trivia::RoundStatus::RunningJob.set(wait_until: Time.at(round.start_date)).perform_later(round.id)
+        ::Trivia::RoundStatus::CloseJob.set(wait_until: Time.at(round.end_date)).perform_later(round.id)
       end
+    end
 
-      def status_changed_to_publish?
-        (saved_change_to_attribute?(:status) && published?) ? true : false
-      end
+    def status_changed_to_publish?
+      (saved_change_to_attribute?(:status) && published?) ? true : false
+    end
 
-      def check_start_date_when_publishing
-         errors.add(:start_date, "must be higher than current date.") if is_valid_start_date?
-      end
+    def check_start_date_when_publishing
+      errors.add(:start_date, 'must be higher than current date.') if is_valid_start_date?
+    end
 
-      def is_valid_start_date?
-        start_date.nil? || start_date.to_i < Time.zone.now.to_i
-      end
+    def is_valid_start_date?
+      start_date.nil? || start_date.to_i < Time.zone.now.to_i
+    end
 
-      def start_date_in_future?
-        if is_valid_start_date?
-          errors.add(:start_date, "must be higher than current date")
-          return false
-        else
-          return true
-        end
+    def start_date_in_future?
+      if is_valid_start_date?
+        errors.add(:start_date, 'must be higher than current date')
+        return false
+      else
+        return true
       end
+    end
 
-      def check_rounds_start_time
-        if rounds.where('start_date < ? ', (Time.zone.now).to_i).present?
-          errors.add(:start_date, "of the rounds must be higher than current date" )
-        end
+    def check_rounds_start_time
+      if rounds.where('start_date < ? ', (Time.zone.now).to_i).present?
+        errors.add(:start_date, 'of the rounds must be higher than current date')
       end
+    end
   end
 end
-

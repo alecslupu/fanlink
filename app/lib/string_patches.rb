@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class String
   #
   # Ruby's standard `String#scan` has a somewhat crappy interface: it
@@ -14,7 +15,7 @@ class String
   #   of the found `MatchData` objects.
   #
   def scanm(re)
-    matches = [ ]
+    matches = []
     start   = 0
     while (m = re.match(self, start))
       block_given? ? yield(m) : matches.push(m)
@@ -35,7 +36,7 @@ class String
     # and cryptic form is documented.
     #
     # ActiveSupport::Multibyte::Unicode.normalize(self, :kd).chars.grep(/\p{^Mn}/).join("")
-    self.unicode_normalize(:nfkd).chars.grep(/\p{^Mn}/).join("")
+    self.unicode_normalize(:nfkd).chars.grep(/\p{^Mn}/).join('')
   end
 
   #

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PostPostJob < ApplicationJob
   queue_as :default
   include RealTimeHelpers
@@ -6,7 +7,8 @@ class PostPostJob < ApplicationJob
   def perform(post_id, version = 0)
     post = Post.find(post_id)
     followers = post.person.followers
-    return if  followers.size == 0
+    return if followers.size == 0
+
     payload = {}
     followers.each do |f|
       payload["#{user_path(f)}/last_post_id"] = post_id
@@ -16,6 +18,6 @@ class PostPostJob < ApplicationJob
         }
       end
     end
-    client.update("", payload)
+    client.update('', payload)
   end
 end

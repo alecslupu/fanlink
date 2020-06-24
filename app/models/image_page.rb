@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: image_pages
@@ -17,25 +18,25 @@
 class ImagePage < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
   acts_as_tenant(:product)
   belongs_to :product
 
-  belongs_to :certcourse_page
+  belongs_to :certcourse_page, autosave: true
   # include AttachmentSupport
   has_one_attached :image
 
   validates :image, attached: true,
-            size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png application/pdf]}
+                    size: { less_than: 5.megabytes },
+                    content_type: { in: %w[image/jpeg image/gif image/png application/pdf] }
 
   def image_url
     image.attached? ? [Rails.application.secrets.cloudfront_url, image.key].join('/') : nil
   end
 
   def image_optimal_url
-    opts = {resize: "1920x1080", auto_orient: true, quality: 90}
+    opts = { resize: '1920x1080', auto_orient: true, quality: 90 }
     image.attached? ? [Rails.application.secrets.cloudfront_url, image.variant(opts).processed.key].join('/') : nil
   end
 
@@ -45,7 +46,6 @@ class ImagePage < ApplicationRecord
 
   validates_uniqueness_of :certcourse_page_id
 
-  after_save :set_certcourse_page_content_type
   validate :just_me
 
   def course_name
@@ -58,18 +58,13 @@ class ImagePage < ApplicationRecord
 
   private
 
-    def just_me
-      return if certcourse_page.new_record?
-      target_course_page = CertcoursePage.find(certcourse_page.id)
-      child = target_course_page.child
-      if child && child != self
-        errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
-      end
-    end
+  def just_me
+    return if certcourse_page.new_record?
 
-    def set_certcourse_page_content_type
-      page = CertcoursePage.find(self.certcourse_page_id)
-      page.content_type = content_type
-      page.save
+    target_course_page = CertcoursePage.find(certcourse_page.id)
+    child = target_course_page.child
+    if child && child != self
+      errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
     end
+  end
 end

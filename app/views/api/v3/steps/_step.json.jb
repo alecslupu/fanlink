@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-json = Rails.cache.fetch ["v3", step.updated_at, step] do
+
+json = Rails.cache.fetch ['v3', step.updated_at, step] do
   {
     id: step.id,
     quest_id: step.quest_id,
@@ -8,11 +9,13 @@ json = Rails.cache.fetch ["v3", step.updated_at, step] do
     display: ((step.display.present?) ? step.display : "Step #{step.id}")
   }
 end
+json[:activities] = nil
 
 if step.quest_activities.count > 0
-  json[:activities] = render partial: "api/v3/quest_activities/activity", collection: step.quest_activities.where(deleted: false), as: :activity, handlers: "jb"
-else
-  json[:activities] = nil
+  json[:activities] = render partial: 'api/v3/quest_activities/activity',
+                             collection: step.quest_activities.where(deleted: false),
+                             as: :activity,
+                             handlers: :jb
 end
 
 unlocks_at = step.unlocks_at || nil
@@ -23,7 +26,7 @@ else
   json[:status] = step.initial_status
 end
 unlocks_at ||= Time.zone.now.to_s
-if @req_source == "web"
+if @req_source == 'web'
   json[:delay_unlock] = step.delay_unlock || 0
 end
 json[:unlocks_at] = unlocks_at.to_datetime().utc.iso8601

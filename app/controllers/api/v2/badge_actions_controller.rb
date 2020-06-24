@@ -1,3 +1,8 @@
 # frozen_string_literal: true
-class Api::V2::BadgeActionsController < Api::V1::BadgeActionsController
+
+module Api
+  module V2
+    class BadgeActionsController < Api::V1::BadgeActionsController
+    end
+  end
 end

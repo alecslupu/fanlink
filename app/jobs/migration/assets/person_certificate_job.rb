@@ -7,19 +7,16 @@ module Migration
 
         url = paperclip_asset_url(post, what, post.product)
         case what
-        when "issued_certificate_image"
+        when 'issued_certificate_image'
           post.issued_certificate_image.attach(io: open(url),
                                                filename: post.issued_certificate_image_file_name,
-                                               content_type: post.issued_certificate_image_content_type
-          )
-        when "issued_certificate_pdf"
+                                               content_type: post.issued_certificate_image_content_type)
+        when 'issued_certificate_pdf'
           post.issued_certificate_pdf.attach(io: open(url),
                                              filename: post.issued_certificate_pdf_file_name,
-                                             content_type: post.issued_certificate_pdf_content_type
-          )
+                                             content_type: post.issued_certificate_pdf_content_type)
         end
       end
     end
-
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: progress.id,
   reward_id: progress.reward_id,

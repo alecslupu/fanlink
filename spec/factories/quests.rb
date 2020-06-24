@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: quests
@@ -24,15 +25,15 @@
 #  reward_id            :integer
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :quest do
     product { current_product }
-    name { "Quest 1" }
-    internal_name { "quest_1" }
+    name { 'Quest 1' }
+    internal_name { 'quest_1' }
     description { Faker::Lorem.paragraph }
     starts_at { Time.zone.now }
-    picture { fixture_file_upload("spec/fixtures/images/better.png", "image/png") }
+    picture { fixture_file_upload('spec/fixtures/images/better.png', 'image/png') }
   end
 end

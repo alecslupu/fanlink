@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: notification_device_ids
@@ -12,7 +13,7 @@
 #  not_registered    :boolean          default(FALSE), not null
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :notification_device_id do

@@ -21,7 +21,7 @@ FactoryBot.define do
   factory :download_file_page do
     product { current_product }
     certcourse_page { create(:certcourse_page) }
-    document { fixture_file_upload(Rails.root.join("spec", "fixtures", "documents", "blank_test.pdf"), "application/pdf") }
+    document { fixture_file_upload(Rails.root.join('spec/fixtures/documents/blank_test.pdf'), 'application/pdf') }
     caption { Faker::Lorem.words(number: 3) }
   end
 end

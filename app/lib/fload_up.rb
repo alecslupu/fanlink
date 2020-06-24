@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module FloadUp
   extend ActiveSupport::Concern
 
@@ -39,19 +40,19 @@ module FloadUp
     #
     def load_up_the(klass, options = nil)
       options = {
-          from: :id,
-          using: :find_by_id,
-          into: "@#{klass.name.underscore}",
-          alias: {},
-          except: []
+        from: :id,
+        using: :find_by_id,
+        into: "@#{klass.name.underscore}",
+        alias: {},
+        except: []
       }.merge(options.to_h)
 
-      id       = options[:from ]
+      id       = options[:from]
       find     = options[:using]
-      obj_name = options[:into ]
+      obj_name = options[:into]
       actions  = extract_actions_from(options)
 
-      before_action except: options[:except]  do
+      before_action except: options[:except] do
         if params.has_key?(id)
           obj = klass.send(find, params[id])
           if !obj
@@ -65,10 +66,10 @@ module FloadUp
 
     private
 
-      def extract_actions_from(options)
-        actions = (options[:alias] || {}).with_indifferent_access
-        actions.default_proc = ->(_, k) { k }
-        actions
-      end
+    def extract_actions_from(options)
+      actions = (options[:alias] || {}).with_indifferent_access
+      actions.default_proc = ->(_, k) { k }
+      actions
+    end
   end
 end

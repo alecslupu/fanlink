@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if activity.deleted?
   {}
 else
@@ -20,7 +21,7 @@ else
   json[:step] = activity.step
   if activity.activity_types.count > 0
     json[:requirements] = activity.activity_types.map do |atype|
-      render partial: "api/v4/activity_types/app", locals: {activity: atype}, handlers: "jb"
+      render partial: 'api/v4/activity_types/app', locals: { activity: atype }, handlers: :jb
     end
   else
     json[:requirements] = nil

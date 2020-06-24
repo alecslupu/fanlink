@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_rounds
@@ -23,10 +24,13 @@ module Trivia
 
     has_paper_trail ignore: [:created_at, :updated_at]
 
-    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id, counter_cache: :round_count
+    belongs_to :game, class_name: 'Trivia::Game', foreign_key: :trivia_game_id, counter_cache: :round_count
 
-    has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id, dependent: :destroy
-    has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id, dependent: :destroy
+    has_many :questions, -> { order('question_order') },
+             class_name: 'Trivia::Question',
+             foreign_key: :trivia_round_id,
+             dependent: :destroy
+    has_many :leaderboards, class_name: 'RoundLeaderboard', foreign_key: :trivia_round_id, dependent: :destroy
     accepts_nested_attributes_for :questions, allow_destroy: true
 
     validates :start_date, presence: true, if: -> { locked? || published? || running? }
@@ -73,7 +77,7 @@ module Trivia
 
     def copy_to_new
       new_entry = dup
-      new_entry.update!(status: :draft, start_date: nil, end_date: nil )
+      new_entry.update!(status: :draft, start_date: nil, end_date: nil)
       new_entry.questions = questions.collect(&:copy_to_new)
       self.class.reset_counters(id, :questions, touch: true)
       self.class.reset_counters(new_entry.id, :questions, touch: true)
@@ -108,19 +112,20 @@ module Trivia
     end
 
     private
-      def avalaible_questions_status_check
-        questions.map(&:available_question).each do |available_question|
-          if !available_question.published?
-            errors.add(:base, "All available questions used must have 'published' status before publishing")
-            break
-          end
-        end
-      end
 
-      def start_date_type
-        if start_date.present?
-          errors.add(:start_date, "must be an integer") unless start_date.integer?
+    def avalaible_questions_status_check
+      questions.map(&:available_question).each do |available_question|
+        if !available_question.published?
+          errors.add(:base, "All available questions used must have 'published' status before publishing")
+          break
         end
       end
+    end
+
+    def start_date_type
+      if start_date.present?
+        errors.add(:start_date, 'must be an integer') unless start_date.integer?
+      end
+    end
   end
 end

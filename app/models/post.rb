@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: posts
@@ -39,17 +40,16 @@
 class Post < ApplicationRecord
   # include Post::PortalFilters
 
-  scope :id_filter, -> (query) { where(id: query.to_i) }
-  scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
-  scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
-  scope :body_filter, -> (query) { joins(:translations).where("post_translations.body ilike ?", "%#{query}%") }
-  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.zone.parse(query)) }
-  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.zone.parse(query)) }
-  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :id_filter, ->(query) { where(id: query.to_i) }
+  scope :person_id_filter, ->(query) { where(person_id: query.to_i) }
+  scope :person_filter, ->(query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
+  scope :body_filter, ->(query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
+  scope :posted_after_filter, ->(query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
+  scope :posted_before_filter, ->(query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
+  scope :status_filter, ->(query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { sign == '>' ? after_post(created_at, id) : before_post(created_at, id) }
-  scope :after_post, ->(created_at, id) { where("posts.created_at > ? AND posts.id > ?", created_at, id) }
-  scope :before_post, ->(created_at, id) { where("posts.created_at < ? AND posts.id < ?", created_at, id) }
-
+  scope :after_post, ->(created_at, id) { where('posts.created_at > ? AND posts.id > ?', created_at, id) }
+  scope :before_post, ->(created_at, id) { where('posts.created_at < ? AND posts.id < ?', created_at, id) }
 
   # include Post::PortalFilters
 
@@ -66,7 +66,7 @@ class Post < ApplicationRecord
     end
   end
   #   include Post::RealTime
-  enum status: %i[ pending published deleted rejected errored ]
+  enum status: %i[pending published deleted rejected errored]
 
   after_save :adjust_priorities
 
@@ -74,22 +74,22 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_one_attached :picture
-  validates :picture, size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png]}
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
   has_one_attached :audio
 
-  validates :audio, size: {less_than: 10.megabytes},
-            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+  validates :audio, size: { less_than: 10.megabytes },
+                    content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
 
   def audio_url
     audio.attached? ? [Rails.application.secrets.cloudfront_url, audio.key].join('/')  : nil
@@ -98,7 +98,7 @@ class Post < ApplicationRecord
   has_one_attached :video
 
   validates :video,
-            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts video/quicktime]}
+            content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts video/quicktime] }
 
   def video_url
     video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
@@ -115,7 +115,7 @@ class Post < ApplicationRecord
   has_many :post_reports, dependent: :destroy
   has_many :post_reactions
 
-  has_one :poll, -> { where("polls.poll_type = ?", Poll.poll_types["post"]) }, foreign_key: "poll_type_id", dependent: :destroy
+  has_one :poll, -> { where('polls.poll_type = ?', Poll.poll_types['post']) }, foreign_key: 'poll_type_id', dependent: :destroy
   has_many :poll_options, through: :poll
 
   belongs_to :person, touch: true
@@ -132,33 +132,32 @@ class Post < ApplicationRecord
   after_save :expire_cache
   before_destroy :expire_cache, prepend: true
 
-  scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
+  scope :following_and_own, ->(follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
-          left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.zone.now, Time.zone.now)
-        }
+                     left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
+                   }
 
-  scope :for_person, -> (person) { includes(:person).where(person: person) }
-  scope :for_product, -> (product) { joins(:person).where( people: { product_id: product.id } ) }
-  scope :in_date_range, -> (start_date, end_date) {
-          where("posts.created_at >= ? and posts.created_at <= ?",
-                start_date.beginning_of_day, end_date.end_of_day)
-        }
+  scope :for_person, ->(person) { includes(:person).where(person: person) }
+  scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
+  scope :for_category, ->(categories) { joins(:category).where('categories.name IN (?)', categories) }
+  scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
+  scope :in_date_range, ->(start_date, end_date) {
+    where('posts.created_at >= ? and posts.created_at <= ?',
+          start_date.beginning_of_day, end_date.end_of_day)
+  }
 
-  scope :for_category, -> (categories) { joins(:category).where("categories.name IN (?)", categories) }
-  scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
-          published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
-                          Time.zone.now, Time.zone.now)
-        }
-  scope :not_promoted, -> { left_joins(:poll).where("poll_type_id IS NULL or end_date < NOW()") }
-
+                    published.where('(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)',
+                                    Time.zone.now, Time.zone.now)
+                  }
+  scope :not_promoted, -> { left_joins(:poll).where('poll_type_id IS NULL or end_date < NOW()') }
 
   scope :reported, -> { joins(:post_reports) }
-  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }
+  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil }) }
 
   def cache_key
-    [super, person.cache_key].join("/")
+    [super, person.cache_key].join('/')
   end
 
   def comments
@@ -189,13 +188,15 @@ class Post < ApplicationRecord
     #
     # We assume that the post has been deleted if we can't find it.
     #
-    raise msg.inspect if (msg["state"] != "COMPLETED")
-    post = self.find_by(:id => msg["userMetadata"]["post_id"].to_i)
+    raise msg.inspect if (msg['state'] != 'COMPLETED')
+
+    post = self.find_by(:id => msg['userMetadata']['post_id'].to_i)
     return if post.blank?
 
-    if msg["userMetadata"]["sizer"]
+    if msg['userMetadata']['sizer']
       # There should be exactly one entry in `outputs`.
-      width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
+      #
+      width, height = msg['outputs'][0].values_at('width', 'height').map(&:to_i)
       job = Flaws.finish_transcoding(post.video.key,
                                      width, height,
                                      post_id: post.id.to_s)
@@ -203,13 +204,14 @@ class Post < ApplicationRecord
       post.save!
       post.send(:start_listener)
     else
-      presets = ([msg["userMetadata"]["presets"]] + msg["outputs"].to_a.map { |output| output["presetId"] }).compact
+      presets = ([msg['userMetadata']['presets']] + msg['outputs'].to_a.map { |output| output['presetId'] }).compact
       post.send(:youve_been_transcoded!, presets)
     end
   end
 
   def video_thumbnail
     return if video_transcoded.empty?
+
     video.attached? ? "#{Rails.application.secrets.cloudfront_url}/thumbnails/#{video.key}-00001.jpg" : nil
   end
 
@@ -221,27 +223,38 @@ class Post < ApplicationRecord
     post_reactions.count > 0 ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
   end
 
+  # def reaction_breakdown
+  #   Rails.cache.fetch([cache_key, __method__]) {
+  #     (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
+  #   }
+  # end
+
+  # def cached_reaction_count
+  #   Rails.cache.fetch([cache_key, __method__]) { post_reactions.count }
+  # end
+
   def reactions
-    Rails.cache.fetch([self, "post_reactions"]) { post_reactions }
+    Rails.cache.fetch([self, 'post_reactions']) { post_reactions }
   end
 
   def reported?
-    post_reports.size > 0 ? "Yes" : "No"
+    post_reports.size > 0 ? 'Yes' : 'No'
   end
   alias :reported :reported?
 
   def visible?
-    status == "published" && ((starts_at.nil? || starts_at < Time.zone.now) && (ends_at.nil? || ends_at > Time.zone.now)) ? self : nil
+    status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) ? self : nil
   end
 
   def start_listener
     return if (!Flaws.transcoding_queue?)
+
     Rails.logger.error("Listening to #{self.video_job_id}")
     PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(self.video_job_id)
   end
 
   def published?
-    status == "published" && ((starts_at.nil? || starts_at < Time.zone.now) && (ends_at.nil? || ends_at > Time.zone.now)) && poll.nil?
+    status == 'published' && ((starts_at.nil? || starts_at < Time.zone.now) && (ends_at.nil? || ends_at > Time.zone.now)) && poll.nil?
   end
 
   private
@@ -249,13 +262,14 @@ class Post < ApplicationRecord
   def start_transcoding
     # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
     return if (self.video_job_id || Rails.env.test?)
+
     PostTranscoderJob.set(wait_until: 1.minutes.from_now).perform_later(self.id)
     true
   end
 
   def merge_new_videos(new_videos)
-    by_src = -> (e) { e[:src] }
-    by_m3u8 = -> (e) { e[:src].to_s.end_with?("v.m3u8") }
+    by_src = ->(e) { e[:src] }
+    by_m3u8 = ->(e) { e[:src].to_s.end_with?('v.m3u8') }
 
     m3u8, the_rest = (self.video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
     m3u8 + the_rest.sort_by(&by_src)
@@ -275,7 +289,7 @@ class Post < ApplicationRecord
     if priority > 0 && saved_change_to_attribute?(:priority)
       same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
       if same_priority.count > 0
-        person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |post|
+        person.posts.where.not(id: self.id).where('priority >= ?', self.priority).each do |post|
           post.increment!(:priority)
         end
       end
@@ -284,7 +298,7 @@ class Post < ApplicationRecord
 
   def sensible_dates
     if starts_at.present? && ends_at.present? && starts_at > ends_at
-      errors.add(:starts_at, :sensible_dates, message: _("Start date cannot be after end date."))
+      errors.add(:starts_at, :sensible_dates, message: _('Start date cannot be after end date.'))
     end
   end
 

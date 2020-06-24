@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: products
@@ -40,15 +41,15 @@ class Product < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
   has_one_attached :logo
-  validates :logo, size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png]}
+  validates :logo, size: { less_than: 5.megabytes },
+                   content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def logo_url
     logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.key].join('/') : nil
   end
 
   def logo_optimal_url
-    opts = {resize: [1000, 5000], auto_orient: true, quality: 75}
+    opts = { resize: [1000, 5000], auto_orient: true, quality: 75 }
     logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.variant(opts).processed.key].join('/') : nil
   end
 
@@ -56,12 +57,12 @@ class Product < ApplicationRecord
     logo.attached? ? logo.blob.byte_size : nil
   end
 
-  validates :name, length: { in: 3..60, message: _("Name must be between 3 and 60 characters.") }, uniqueness: { message: _("Product %{product_name} already exists.") % { product_name: name } }
+  validates :name, length: { in: 3..60, message: _('Name must be between 3 and 60 characters.') }, uniqueness: { message: _('Product %{product_name} already exists.') % { product_name: name } }
 
-  validates :internal_name, format: { with: /\A[a-zA-Z0-9_]+\z/, allow_blank: true, message: _("Internal name can only contain letters, numbers and underscores.") },
-            presence: { message: _("Internal name is required.") },
-            length: { in: 3..30, message: _("Internal name must be between 3 and 63 characters."), allow_blank: true },
-            uniqueness: { message: _("Internal name already exists.") }
+  validates :internal_name, format: { with: /\A[a-zA-Z0-9_]+\z/, allow_blank: true, message: _('Internal name can only contain letters, numbers and underscores.') },
+                            presence: { message: _('Internal name is required.') },
+                            length: { in: 3..30, message: _('Internal name must be between 3 and 63 characters.'), allow_blank: true },
+                            uniqueness: { message: _('Internal name already exists.') }
 
   has_many :people, dependent: :restrict_with_error
   has_many :quests, dependent: :restrict_with_error
@@ -69,10 +70,10 @@ class Product < ApplicationRecord
   has_many :events, dependent: :restrict_with_error
   has_many :levels, dependent: :restrict_with_error
   has_many :polls, dependent: :restrict_with_error
-  has_many :web_contents, class_name: "Static::WebContent", dependent: :restrict_with_error
-  has_many :system_emails, class_name: "Static::SystemEmail", dependent: :restrict_with_error
+  has_many :web_contents, class_name: 'Static::WebContent', dependent: :restrict_with_error
+  has_many :system_emails, class_name: 'Static::SystemEmail', dependent: :restrict_with_error
 
-  has_many :trivia_games, class_name: "Trivia::Game", dependent: :restrict_with_error
+  has_many :trivia_games, class_name: 'Trivia::Game', dependent: :restrict_with_error
 
   has_many :config_items, dependent: :destroy
 

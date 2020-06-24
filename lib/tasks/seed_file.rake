@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # lib/tasks/custom_seed.rake
 # from https://stackoverflow.com/a/19872375
 namespace :db do
   namespace :seed do
-    Dir[Rails.root.join("db", "seeds", "*.rb")].each do |filename|
-      task_name = File.basename(filename, ".rb")
-      desc "Seed " + task_name + ", based on the file with the same name in `db/seeds/*.rb`"
+    Dir[Rails.root.join('db', 'seeds', '*.rb')].each do |filename|
+      task_name = File.basename(filename, '.rb')
+      desc 'Seed ' + task_name + ', based on the file with the same name in `db/seeds/*.rb`'
       task task_name.to_sym => :environment do
         puts "Seeding #{filename}..."
         load(filename) if File.exist?(filename)

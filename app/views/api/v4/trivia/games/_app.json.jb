@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {
   id: game.id,
   start_date: (game.start_date.to_i rescue nil),

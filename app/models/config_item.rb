@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: config_items
@@ -38,13 +39,13 @@ class ConfigItem < ApplicationRecord
   end
 
   validates :type, inclusion: { in: %w[
-            StringConfigItem
-            ArrayConfigItem
-            BooleanConfigItem
-            RootConfigItem
-            IntegerConfigItem
-            ColorConfigItem
-  ], message: "%{value} is not a valid type" }
+    StringConfigItem
+    ArrayConfigItem
+    BooleanConfigItem
+    RootConfigItem
+    IntegerConfigItem
+    ColorConfigItem
+  ], message: '%{value} is not a valid type' }
 
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }

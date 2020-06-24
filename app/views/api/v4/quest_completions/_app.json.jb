@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: completion.id,
   person_id: completion.person_id,

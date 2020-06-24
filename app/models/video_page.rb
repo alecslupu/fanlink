@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: video_pages
@@ -17,19 +18,20 @@
 class VideoPage < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  scope :for_product, -> (product) { where(product_id: product.id) }
-  require 'streamio-ffmpeg'
+  scope :for_product, ->(product) { where(product_id: product.id) }
+
+  # require 'streamio-ffmpeg'
 
   acts_as_tenant(:product)
   belongs_to :product
 
   has_one_attached :video
 
-  validates :video, size: {less_than: 10.megabytes},
-            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+  validates :video, size: { less_than: 10.megabytes },
+                    content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
 
   def video_url
-    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
+    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/') : nil
   end
 
   def video_content_type
@@ -38,11 +40,9 @@ class VideoPage < ApplicationRecord
 
   validates_uniqueness_of :certcourse_page_id
 
-  belongs_to :certcourse_page
+  belongs_to :certcourse_page, autosave: true
 
   validate :just_me
-  after_save :set_certcourse_page_content_type
-  before_save :set_certcourse_page_duration
 
   def course_name
     certcourse_page.certcourse.to_s
@@ -52,28 +52,26 @@ class VideoPage < ApplicationRecord
     :video
   end
 
+  def duration
+    attachable = video.attachment.record.attachment_changes['video'].attachable
+    file = case attachable
+           when ActionDispatch::Http::UploadedFile, Rack::Test::UploadedFile
+             attachable.path
+           when Hash
+             attachable[:io].path
+           end
+    Integer(FFMPEG::Movie.new(file).duration) + 1
+  end
+
   private
 
-    def just_me
-      return if certcourse_page.new_record?
-      target_course_page = CertcoursePage.find(certcourse_page.id)
-      child = target_course_page.child
-      if child && child != self
-        errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
-      end
-    end
+  def just_me
+    return if certcourse_page.new_record?
 
-    def set_certcourse_page_content_type
-      page = CertcoursePage.find(certcourse_page_id)
-      page.content_type = content_type
-      page.save
+    target_course_page = CertcoursePage.find(certcourse_page.id)
+    child = target_course_page.child
+    if child && child != self
+      errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
     end
-
-    def video_duration
-      FFMPEG::Movie.new(video.attachment.record.attachment_changes["video"].attachable[:io].path).duration.to_i + 1
-    end
-
-    def set_certcourse_page_duration
-      duration = video_duration
-    end
+  end
 end

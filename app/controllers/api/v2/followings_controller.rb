@@ -1,3 +1,8 @@
 # frozen_string_literal: true
-class Api::V2::FollowingsController < Api::V1::FollowingsController
+
+module Api
+  module V2
+    class FollowingsController < Api::V1::FollowingsController
+    end
+  end
 end

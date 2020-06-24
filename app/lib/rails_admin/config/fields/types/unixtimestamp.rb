@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RailsAdmin
   module Config
     module Fields
@@ -8,12 +9,12 @@ module RailsAdmin
           RailsAdmin::Config::Fields::Types.register(self)
 
           def parse_value(value)
-            Rails.logger.debug("got here #{__LINE__ }")
+            Rails.logger.debug("got here #{__LINE__}")
             super
           end
 
           def parse_input(params)
-            Rails.logger.debug("got here #{__LINE__ }")
+            Rails.logger.debug("got here #{__LINE__}")
             super
           end
 

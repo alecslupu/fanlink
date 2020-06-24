@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 json = {}
 json[:lessons] = @lessons.map do |lesson|
-  render partial: "lesson", locals: { lesson: lesson }, handlers: "jb"
+  render partial: 'lesson', locals: { lesson: lesson }, handlers: 'jb'
 end
 
 json

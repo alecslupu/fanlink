@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: polls
@@ -22,7 +23,7 @@ FactoryBot.define do
     end_date { DateTime.now + 2.day }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     product { current_product }
-    poll_type { "post" }
+    poll_type { 'post' }
     poll_status { :active }
     poll_type_id { create(:post).id }
   end

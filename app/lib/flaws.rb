@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # Wrappers for interfacing with AWS.
 #
@@ -9,11 +10,11 @@ module Flaws
   # as we care about).
   #
   VIDEO_PRESETS = [
-    { id: "1542983455511-yqngpd", mime: "video/mp4", name: "v-1080p.mp4", w: 1920, h: 1080, thumbnails: true },
-    { id: "1351620000001-000010", mime: "video/mp4", name: "v-720p.mp4", w: 1280, h: 720 },
-    { id: "1351620000001-000020", mime: "video/mp4", name: "v.mp4", w: 854, h: 480, always: true },
-    { id: "1351620000001-000040", mime: "video/mp4", name: "v-360p.mp4", w: 640, h: 320, always: true },
-    { id: "1351620000001-000061", mime: "video/mp4", name: "v-240p.mp4", w: 320, h: 240, always: true },
+    { id: '1542983455511-yqngpd', mime: 'video/mp4', name: 'v-1080p.mp4', w: 1920, h: 1080, thumbnails: true },
+    { id: '1351620000001-000010', mime: 'video/mp4', name: 'v-720p.mp4', w: 1280, h: 720 },
+    { id: '1351620000001-000020', mime: 'video/mp4', name: 'v.mp4', w: 854, h: 480, always: true },
+    { id: '1351620000001-000040', mime: 'video/mp4', name: 'v-360p.mp4', w: 640, h: 320, always: true },
+    { id: '1351620000001-000061', mime: 'video/mp4', name: 'v-240p.mp4', w: 320, h: 240, always: true },
     # We are not using streaming just yet
     # {id: "1351620000001-200010", mime: "application/x-mpegurl", name: "v-hls20M", w: 1024, h: 768, playlist: true},
     # {id: "1351620000001-200020", mime: "application/x-mpegurl", name: "v-hls15M", w: 960, h: 640, playlist: true},
@@ -36,7 +37,8 @@ module Flaws
   #   If AWS doesn't like the token.
   #
   def self.sns_confirm(topic_arn, token)
-    raise ArgumentError.new("Missing token for subscription confirmation") if (token.blank?)
+    raise ArgumentError.new('Missing token for subscription confirmation') if (token.blank?)
+
     sns_client.confirm_subscription(topic_arn: topic_arn, token: token)
   end
 
@@ -65,14 +67,14 @@ module Flaws
   end
 
   def self.start_transcoding(filename, data)
-    filename = filename.gsub(/^\//, "")
+    filename = filename.gsub(/^\//, '')
     to_output = outputter_for(filename)
 
     transcoder_client.create_job(
       pipeline_id: pipeline_id,
       input: { key: filename },
       outputs: [SIZER].map(&to_output),
-      user_metadata: data.merge('sizer': "t"),
+      user_metadata: data.merge('sizer': 't'),
     ).job
   end
 
@@ -80,15 +82,15 @@ module Flaws
     the_sizer = lambda { |p| p[:id] == SIZER[:id] }
     the_ones_that_fit = lambda { |p| p[:always] || (p[:w] <= width && p[:h] <= height) }
     presets = VIDEO_PRESETS.reject(&the_sizer).select(&the_ones_that_fit)
-    filename = filename.gsub(/^\//, "")
+    filename = filename.gsub(/^\//, '')
     to_output = outputter_for(filename)
     playlists = lambda { |p| p[:playlist] }
     to_output_name = output_name_for(filename)
 
     if (width < SIZER[:w] && height < SIZER[:h])
-      s3_client.delete_object(bucket: bucket,  key: to_output_name[SIZER])
+      s3_client.delete_object(bucket: bucket, key: to_output_name[SIZER])
     else
-      data = data.merge("presets" => SIZER[:id])
+      data = data.merge('presets' => SIZER[:id])
     end
 
     transcoder_client.create_job(
@@ -127,7 +129,7 @@ module Flaws
   #   The raw exception (if any) from the transcoder.
   #
   def self.extract_from_transcoding_queue(&block)
-    unpack = lambda { |m| { rh: m.receipt_handle, body: JSON.parse(JSON.parse(m.body)["Message"]) } }
+    unpack = lambda { |m| { rh: m.receipt_handle, body: JSON.parse(JSON.parse(m.body)['Message']) } }
     the_one = lambda { |m| block[m[:body]] }
     sqs = sqs_client
     if (msg = sqs.receive_message(queue_url: queue_url, max_number_of_messages: 10).messages.map(&unpack).find(&the_one))
@@ -149,7 +151,7 @@ module Flaws
   #   MIME type, the `:src` is the URL for the video.
   #
   def self.transcoded_summary_for(filename, preset_ids)
-    directory = video_directory_for(filename)
+    # directory = video_directory_for(filename)
     basename = File.basename(filename, File.extname(filename))
 
     presets = VIDEO_PRESETS.select { |p| preset_ids.include?(p[:id]) }
@@ -157,7 +159,7 @@ module Flaws
     # hls_entry = [] if (presets.all? { |p| !p[:playlist] })
 
     non_hls = lambda { |p| !p[:playlist] }
-    to_summary = lambda { |p| { type: p[:mime], src: "#{s3_server}#{directory}/#{basename}-#{p[:name]}" } }
+    to_summary = lambda { |p| { type: p[:mime], src: "#{s3_server}/#{basename}-#{p[:name]}" } }
     # hls_entry + presets.select(&non_hls).map(&to_summary)
     presets.select(&non_hls).map(&to_summary)
   end
@@ -166,27 +168,29 @@ module Flaws
 
   def self.output_name_for(filename)
     basename = File.basename(filename, File.extname(filename))
-    dirname = File.dirname(filename).gsub("original", "transcoded")
-    -> (p) { "#{dirname}/#{basename}-#{p[:name]}" }
+    # dirname = video_directory_for(filename)
+    ->(p) { "#{basename}-#{p[:name]}" }
   end
 
   def self.thumbnail_name_for(filename)
     basename = File.basename(filename, File.extname(filename))
-    -> (p) { "thumbnails/#{basename}" }
+    ->(p) { "thumbnails/#{basename}" }
   end
 
   def self.outputter_for(filename)
     output_name = output_name_for(filename)
     thumbnail_name = thumbnail_name_for(filename)
-    -> (p) {
+    ->(p) {
       { key: output_name[p], preset_id: p[:id] }.merge(
-        p[:thumbnails] ? { thumbnail_pattern: "#{thumbnail_name[p]}-{count}" } : {}).merge(
-          p[:playlist] ? { segment_duration: "10" } : {})
+        p[:thumbnails] ? { thumbnail_pattern: "#{thumbnail_name[p]}-{count}" } : {}
+      ).merge(
+        p[:playlist] ? { segment_duration: '10' } : {}
+      )
     }
   end
 
   def self.video_directory_for(filename)
-    File.dirname(filename).gsub("original", "transcoded")
+    File.dirname(filename).gsub('original', 'transcoded')
   end
 
   def self.region

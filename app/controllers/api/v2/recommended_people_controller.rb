@@ -1,3 +1,8 @@
 # frozen_string_literal: true
-class Api::V2::RecommendedPeopleController < Api::V1::RecommendedPeopleController
+
+module Api
+  module V2
+    class RecommendedPeopleController < Api::V1::RecommendedPeopleController
+    end
+  end
 end

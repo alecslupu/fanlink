@@ -69,8 +69,8 @@ RSpec.configure do |config|
         #  name: "Base",
         # },
         {
-          name: "Blocks",
-          description: "Block a person"
+          name: 'Blocks',
+          description: 'Block a person'
         },
         {
           name: 'Categories',
@@ -202,13 +202,13 @@ RSpec.configure do |config|
         BadgeJson: {
           type: :object,
           properties: {
-            id: {type: :string},
-            name: {type: :string},
-            internal_name: {type: :string},
-            description: {type: :string, 'x-nullable': true},
-            picture_url: {type: :string},
-            action_requirement: {type: :integer},
-            point_value: {type: :integer}
+            id: { type: :string },
+            name: { type: :string },
+            internal_name: { type: :string },
+            description: { type: :string, 'x-nullable': true },
+            picture_url: { type: :string },
+            action_requirement: { type: :integer },
+            point_value: { type: :integer }
           },
           description: 'Badge Response'
         },
@@ -218,13 +218,13 @@ RSpec.configure do |config|
             pending_badge: {
               type: :object,
               properties: {
-                badge_action_count: {type: :integer},
-                badge: {"$ref": '#/definitions/BadgeJson'}
+                badge_action_count: { type: :integer },
+                badge: { "$ref": '#/definitions/BadgeJson' }
               }
             },
             badges_awarded: {
               type: :array,
-              items: {"$ref": '#/definitions/BadgeJson'}
+              items: { "$ref": '#/definitions/BadgeJson' }
             }
           }
         },
@@ -236,7 +236,7 @@ RSpec.configure do |config|
               items: {
                 type: :object,
                 properties: {
-                  badge: {"$ref": '#/definitions/BadgeJson'}
+                  badge: { "$ref": '#/definitions/BadgeJson' }
                 }
               }
             }
@@ -251,7 +251,7 @@ RSpec.configure do |config|
               items: {
                 type: :object,
                 properties: {
-                  person: {"$ref": '#/definitions/PersonJson'}
+                  person: { "$ref": '#/definitions/PersonJson' }
                 }
               }
             }
@@ -270,7 +270,7 @@ RSpec.configure do |config|
         PersonObject: {
           type: :object,
           properties: {
-            person: {"$ref": '#/definitions/PersonJson'}
+            person: { "$ref": '#/definitions/PersonJson' }
           }
         },
         PostCommentReportsArray: {
@@ -293,13 +293,13 @@ RSpec.configure do |config|
         PostCommentReportJson: {
           type: :object,
           properties: {
-            id: {type: :integer},
-            created_at: {type: :string, format: 'date-time'},
-            post_comment_id: {type: :integer},
-            commenter: {type: :string},
-            reporter: {type: :string},
-            reason: {type: :string},
-            status: {type: :string}
+            id: { type: :integer },
+            created_at: { type: :string, format: 'date-time' },
+            post_comment_id: { type: :integer },
+            commenter: { type: :string },
+            reporter: { type: :string },
+            reason: { type: :string },
+            status: { type: :string }
           },
           description: 'Post Comment Report Response'
         },
@@ -312,7 +312,7 @@ RSpec.configure do |config|
               items: {
                 type: :object,
                 properties: {
-                  post_comment: {"$ref": '#/definitions/PostCommentJson'}
+                  post_comment: { "$ref": '#/definitions/PostCommentJson' }
                 }
               }
             }
@@ -321,51 +321,51 @@ RSpec.configure do |config|
         PostCommentJson: {
           type: :object,
           properties: {
-            id: {type: :string},
-            create_time: {type: :string, format: 'date-time'},
-            body: {type: :string},
+            id: { type: :string },
+            create_time: { type: :string, format: 'date-time' },
+            body: { type: :string },
             mentions: {
               type: :array,
               'x-nullable': true,
-              items: {"$ref": '#/definitions/MentionJson'}
+              items: { "$ref": '#/definitions/MentionJson' }
             },
-            person: {"$ref": '#/definitions/PersonJson'}
+            person: { "$ref": '#/definitions/PersonJson' }
           },
           description: 'Post Comment Response'
         },
         MentionJson: {
           type: :object,
           properties: {
-            id: {type: :integer},
-            person_id: {type: :integer},
-            location: {type: :integer},
-            length: {type: :integer}
+            id: { type: :integer },
+            person_id: { type: :integer },
+            location: { type: :integer },
+            length: { type: :integer }
           },
           description: 'Notification Type ID Response'
         },
         PostCommentsObject: {
           type: :object,
           properties: {
-            post_comment: {"$ref": '#/definitions/PostCommentJson'}
+            post_comment: { "$ref": '#/definitions/PostCommentJson' }
           }
         },
         PostReactionJson: {
           type: :object,
           properties: {
-            id: {type: :string},
-            post_id: {type: :integer},
-            person_id: {type: :integer},
-            reaction: {type: :string}
+            id: { type: :string },
+            post_id: { type: :integer },
+            person_id: { type: :integer },
+            reaction: { type: :string }
           },
           description: 'Post Reaction Response'
         },
         PollOptionVoteJson: {
           type: :object,
           properties: {
-            id: {type: :string},
-            description: {type: :string},
-            numberOfVotes: {type: :integer},
-            voted: {type: :boolean}
+            id: { type: :string },
+            description: { type: :string },
+            numberOfVotes: { type: :integer },
+            voted: { type: :boolean }
           }
         },
         PollOptionObject: {
@@ -373,28 +373,28 @@ RSpec.configure do |config|
           properties: {
             poll: {
               type: :array,
-              items: {"$ref": '#/definitions/PollOptionVoteJson'}
+              items: { "$ref": '#/definitions/PollOptionVoteJson' }
             }
           }
         },
         PostReactionsObject: {
           type: :object,
           properties: {
-            post_reaction: {"$ref": '#/definitions/PostReactionJson'}
+            post_reaction: { "$ref": '#/definitions/PostReactionJson' }
           }
         },
         FollowingObject: {
           type: :object,
           properties: {
-            following: {"$ref": '#/definitions/FollowingJson'}
+            following: { "$ref": '#/definitions/FollowingJson' }
           }
         },
         FollowingJson: {
           type: :object,
           properties: {
-            id: {type: :string},
-            follower: {"$ref": '#/definitions/PersonJson'},
-            followed: {"$ref": '#/definitions/PersonJson'}
+            id: { type: :string },
+            follower: { "$ref": '#/definitions/PersonJson' },
+            followed: { "$ref": '#/definitions/PersonJson' }
           },
           description: 'Following Response'
         },
@@ -406,7 +406,7 @@ RSpec.configure do |config|
               items: {
                 type: :object,
                 properties: {
-                  follower: {"$ref": '#/definitions/FollowingJson'}
+                  follower: { "$ref": '#/definitions/FollowingJson' }
                 }
               }
             }
@@ -418,7 +418,7 @@ RSpec.configure do |config|
           properties: {
             levels: {
               type: :array,
-              items: {"$ref": '#/definitions/LevelJson'}
+              items: { "$ref": '#/definitions/LevelJson' }
             }
           }
         },
@@ -426,12 +426,12 @@ RSpec.configure do |config|
         LevelJson: {
           type: :object,
           properties: {
-            id: {type: :integer},
-            name: {type: :string},
-            internal_name: {type: :string},
-            description: {type: :string},
-            points: {type: :integer},
-            picture_url: {type: :string}
+            id: { type: :integer },
+            name: { type: :string },
+            internal_name: { type: :string },
+            description: { type: :string },
+            points: { type: :integer },
+            picture_url: { type: :string }
           },
           description: 'Level Response'
         },
@@ -440,7 +440,7 @@ RSpec.configure do |config|
           properties: {
             message_reports: {
               type: :array,
-              items: {"$ref": '#/definitions/MessageReportJson'}
+              items: { "$ref": '#/definitions/MessageReportJson' }
             }
           }
         },
@@ -867,7 +867,7 @@ RSpec.configure do |config|
               type: :object,
               'x-nullable': true,
               properties: {
-                "id": {type: :integer},
+                "id": { type: :integer },
                 "name": {
                   type: :string
                 },
@@ -906,11 +906,11 @@ RSpec.configure do |config|
             "name": {
               type: :string
             },
-            "product_id": {type: :integer},
-            "color": {type: :string},
-            "role": {type: :string},
+            "product_id": { type: :integer },
+            "color": { type: :string },
+            "role": { type: :string },
             "posts": {
-              type: :array, items: {"$ref": '#/definitions/PostJson'}
+              type: :array, items: { "$ref": '#/definitions/PostJson' }
             }
           },
           description: 'Category Reponse'
@@ -918,8 +918,8 @@ RSpec.configure do |config|
         ReferralCode: {
           type: :object,
           properties: {
-            person_id: {type: :integer},
-            unique_code: {type: :string}
+            person_id: { type: :integer },
+            unique_code: { type: :string }
           }
         },
         CategoryArray: {
@@ -930,7 +930,7 @@ RSpec.configure do |config|
               items: {
                 type: :object,
                 properties: {
-                  category: {"$ref": '#/definitions/CategoryJson'}
+                  category: { "$ref": '#/definitions/CategoryJson' }
                 }
               }
             }
@@ -939,12 +939,12 @@ RSpec.configure do |config|
         personMini: {
           type: :object,
           properties: {
-            id: {type: :string},
-            username: {type: :string},
-            picture_url: {type: :string, 'x-nullable': true},
-            designation: {type: :string, 'x-nullable': true},
-            facebook_picture_url: {type: :string, 'x-nullable': true},
-            badge_points: {type: :integer}
+            id: { type: :string },
+            username: { type: :string },
+            picture_url: { type: :string, 'x-nullable': true },
+            designation: { type: :string, 'x-nullable': true },
+            facebook_picture_url: { type: :string, 'x-nullable': true },
+            badge_points: { type: :integer }
           }
         },
         MiniPeopleArray: {
@@ -952,7 +952,7 @@ RSpec.configure do |config|
           properties: {
             people: {
               type: :array,
-              items: {'$ref' => '#/definitions/personMini'}
+              items: { '$ref' => '#/definitions/personMini' }
             }
           }
         },
@@ -961,23 +961,23 @@ RSpec.configure do |config|
           properties: {
             certcourse_pages: {
               type: :array,
-              items: {"$ref": '#/definitions/CertcoursePageJson'}
+              items: { "$ref": '#/definitions/CertcoursePageJson' }
             }
           }
         },
         CertcoursePageJson: {
           type: :object,
           properties: {
-            id: {type: :integer},
-            course_id: {type: :integer},
-            order: {type: :integer},
-            content_type: {type: :string},
-            timer: {type: :integer},
-            media_content_type: {type: :string},
-            media_url: {type: :string},
-            media_url_large: {type: :string},
-            background_color_hex: {type: :string},
-            is_passed: {type: :boolean}
+            id: { type: :integer },
+            course_id: { type: :integer },
+            order: { type: :integer },
+            content_type: { type: :string },
+            timer: { type: :integer },
+            media_content_type: { type: :string },
+            media_url: { type: :string },
+            media_url_large: { type: :string },
+            background_color_hex: { type: :string },
+            is_passed: { type: :boolean }
           }
         },
         CertificatesArray: {
@@ -985,28 +985,28 @@ RSpec.configure do |config|
           properties: {
             certificates: {
               type: :array,
-              items: {"$ref": '#/definitions/CertificateJson'}
+              items: { "$ref": '#/definitions/CertificateJson' }
             }
           }
         },
         CertificateJson: {
           type: :object,
           properties: {
-            id: {type: :integer},
-            order: {type: :integer},
-            long_name: {type: :string},
-            short_name: {type: :string},
-            description: {type: :string},
-            color_hex: {type: :string},
-            chat_room_id: {type: :integer, 'x-nullable': true},
-            sku_android: {type: :string},
-            sku_ios: {type: :string},
-            is_free: {type: :boolean},
-            is_issuable: {type: :boolean},
-            is_completed: {type: :boolean},
-            is_purchased: {type: :boolean},
-            certificate_image_url: {type: :string, 'x-nullable': true},
-            issued_certificate_image_url: {type: :string, 'x-nullable': true}
+            id: { type: :integer },
+            order: { type: :integer },
+            long_name: { type: :string },
+            short_name: { type: :string },
+            description: { type: :string },
+            color_hex: { type: :string },
+            chat_room_id: { type: :integer, 'x-nullable': true },
+            sku_android: { type: :string },
+            sku_ios: { type: :string },
+            is_free: { type: :boolean },
+            is_issuable: { type: :boolean },
+            is_completed: { type: :boolean },
+            is_purchased: { type: :boolean },
+            certificate_image_url: { type: :string, 'x-nullable': true },
+            issued_certificate_image_url: { type: :string, 'x-nullable': true }
           },
           description: 'Certificate Response'
         },
@@ -1015,22 +1015,22 @@ RSpec.configure do |config|
           properties: {
             quizzes: {
               type: :array,
-              items: {"$ref": '#/definitions/ClientCertcourseQuizzJson'}
+              items: { "$ref": '#/definitions/ClientCertcourseQuizzJson' }
             }
           }
         },
         ClientCertcourseQuizzJson: {
           type: :object,
           properties: {
-            id: {type: :integer},
-            is_optional: {type: :boolean},
-            is_survey: {type: :boolean},
-            quiz_text: {type: :string},
-            certcourse_pages_count: {type: :integer},
-            page_order: {type: :integer},
-            no_of_failed_attempts: {type: :integer},
-            answer_text: {type: :string},
-            is_correct: {type: :boolean}
+            id: { type: :integer },
+            is_optional: { type: :boolean },
+            is_survey: { type: :boolean },
+            quiz_text: { type: :string },
+            certcourse_pages_count: { type: :integer },
+            page_order: { type: :integer },
+            no_of_failed_attempts: { type: :integer },
+            answer_text: { type: :string },
+            is_correct: { type: :boolean }
           }
         },
         ClientCertcoursesArray: {
@@ -1038,28 +1038,28 @@ RSpec.configure do |config|
           properties: {
             certcourses: {
               type: :array,
-              items: {"$ref": '#/definitions/ClientCertcoursesJson'}
+              items: { "$ref": '#/definitions/ClientCertcoursesJson' }
             }
           }
         },
         Certificate: {
           type: :object,
           properties: {
-            id: {type: :integer},
-            order: {type: :integer},
-            long_name: {type: :string},
-            short_name: {type: :string},
-            description: {type: :string},
-            color_hex: {type: :string},
-            chat_room_id: {type: :integer},
-            sku_android: {type: :string},
-            sku_ios: {type: :string},
-            is_free: {type: :boolean},
-            is_issuable: {type: :boolean},
-            is_completed: {type: :boolean},
-            is_purchased: {type: :boolean},
-            certificate_image_url: {type: :string, 'x-nullable': true},
-            issued_certificate_image_url: {type: :string, 'x-nullable': true}
+            id: { type: :integer },
+            order: { type: :integer },
+            long_name: { type: :string },
+            short_name: { type: :string },
+            description: { type: :string },
+            color_hex: { type: :string },
+            chat_room_id: { type: :integer },
+            sku_android: { type: :string },
+            sku_ios: { type: :string },
+            is_free: { type: :boolean },
+            is_issuable: { type: :boolean },
+            is_completed: { type: :boolean },
+            is_purchased: { type: :boolean },
+            certificate_image_url: { type: :string, 'x-nullable': true },
+            issued_certificate_image_url: { type: :string, 'x-nullable': true }
           }
         },
         CertificateWishlist: {
@@ -1070,7 +1070,7 @@ RSpec.configure do |config|
               items: {
                 type: :object,
                 properties: {
-                  id: {type: :integer},
+                  id: { type: :integer },
                   certificate: {
                     type: :object,
                     "$ref": '#/definitions/Certificate'
@@ -1083,20 +1083,20 @@ RSpec.configure do |config|
         ClientCertcoursesJson: {
           type: :object,
           properties: {
-            id: {type: :integer},
-            certificate_id: {type: :integer},
-            order: {type: :integer},
-            long_name: {type: :string},
-            short_name: {type: :string},
-            description: {type: :string},
-            duration: {type: :integer},
-            color_hex: {type: :string},
-            page_count: {type: :integer},
-            is_completed: {type: :boolean},
-            last_completed_page_id: {type: :integer, 'x-nullable': true},
-            copyright_text: {type: :string},
-            is_started: {type: :boolean},
-            last_completed_page_order: {type: :integer}
+            id: { type: :integer },
+            certificate_id: { type: :integer },
+            order: { type: :integer },
+            long_name: { type: :string },
+            short_name: { type: :string },
+            description: { type: :string },
+            duration: { type: :integer },
+            color_hex: { type: :string },
+            page_count: { type: :integer },
+            is_completed: { type: :boolean },
+            last_completed_page_id: { type: :integer, 'x-nullable': true },
+            copyright_text: { type: :string },
+            is_started: { type: :boolean },
+            last_completed_page_order: { type: :integer }
           }
         },
         ClientCertificateDownloadJson: {
@@ -1105,7 +1105,7 @@ RSpec.configure do |config|
             certificate: {
               type: :object,
               properties: {
-                image_url: {type: :string}
+                image_url: { type: :string }
               }
             }
           }
@@ -1113,8 +1113,8 @@ RSpec.configure do |config|
         PersonCertcourseCreateJson: {
           type: :object,
           properties: {
-            certcourse_id: {type: :integer},
-            last_completed_page_id: {type: :integer}
+            certcourse_id: { type: :integer },
+            last_completed_page_id: { type: :integer }
           }
         },
 
@@ -1131,7 +1131,7 @@ RSpec.configure do |config|
           properties: {
             events: {
               type: :array,
-              items: {"$ref": '#/definitions/EventJson'}
+              items: { "$ref": '#/definitions/EventJson' }
             }
           }
         },
@@ -1140,7 +1140,7 @@ RSpec.configure do |config|
           properties: {
             certcourses: {
               type: :array,
-              items: {"$ref": '#/definitions/CertcourseJson'}
+              items: { "$ref": '#/definitions/CertcourseJson' }
             }
           }
         },
@@ -1150,65 +1150,65 @@ RSpec.configure do |config|
           properties: {
             event_checkins: {
               type: :array,
-              items: {"$ref": '#/definitions/EventCheckinJson'}
+              items: { "$ref": '#/definitions/EventCheckinJson' }
             }
           }
         },
         EventCheckinJson: {
           type: :object,
           properties: {
-            id: {type: :string},
-            checkin_at: {type: :string, format: "date-time"},
+            id: { type: :string },
+            checkin_at: { type: :string, format: 'date-time' },
             person: { "$ref": '#/definitions/personMini' }
           }
         },
         EventJson: {
           type: :object,
           "properties": {
-            id: {type: :string},
-            name: {type: :string},
-            description: {type: :string},
-            starts_at: {type: :string, format: "date-time"},
-            ends_at: {type: :string,  format: "date-time"},
-            ticket_url: {type: :string},
-            place_identifier: {type: :string}
+            id: { type: :string },
+            name: { type: :string },
+            description: { type: :string },
+            starts_at: { type: :string, format: 'date-time' },
+            ends_at: { type: :string, format: 'date-time' },
+            ticket_url: { type: :string },
+            place_identifier: { type: :string }
           },
-          description: "Event Response"
+          description: 'Event Response'
         },
         CertcourseJson: {
           type: :object,
           properties: {
-            id: {type: :integer},
-            certificate_id: {type: :integer},
-            order: {type: :integer},
-            long_name: {type: :string},
-            short_name: {type: :string},
-            description: {type: :string},
-            duration: {type: :integer},
-            color_hex: {type: :string},
-            page_count: {type: :integer},
-            is_completed: {type: :boolean},
-            last_completed_page_id: {type: :integer, 'x-nullable': true},
-            copyright_text: {type: :string},
-            is_started: {type: :boolean}
+            id: { type: :integer },
+            certificate_id: { type: :integer },
+            order: { type: :integer },
+            long_name: { type: :string },
+            short_name: { type: :string },
+            description: { type: :string },
+            duration: { type: :integer },
+            color_hex: { type: :string },
+            page_count: { type: :integer },
+            is_completed: { type: :boolean },
+            last_completed_page_id: { type: :integer, 'x-nullable': true },
+            copyright_text: { type: :string },
+            is_started: { type: :boolean }
           }
         },
         QuestObject: {
           type: :object,
           properties: {
-            quest: {"$ref": "#/definitions/QuestJson"}
+            quest: { "$ref": '#/definitions/QuestJson' }
           }
         },
         QuestsArray: {
-          "type": "object",
+          "type": 'object',
           "properties": {
             "quests": {
-              "type": "array",
+              "type": 'array',
               "items": {
-                "type": "object",
+                "type": 'object',
                 "properties": {
                   "quest": {
-                    "$ref": "#/definitions/QuestJson"
+                    "$ref": '#/definitions/QuestJson'
                   }
                 }
               }
@@ -1220,169 +1220,169 @@ RSpec.configure do |config|
           "type": :object,
           "properties": {
             "id": {
-              "type": "string"
+              "type": 'string'
             },
             "product_id": {
-              "type": "string"
+              "type": 'string'
             },
             "event_id": {
-              "type": "string"
+              "type": 'string'
             },
             "name": {
-              "type": "string"
+              "type": 'string'
             },
             "internal_name": {
-              "type": "string"
+              "type": 'string'
             },
             "description": {
-              "type": "string"
+              "type": 'string'
             },
             "picture_url": {
-              "type": "string", 'x-nullable': true
+              "type": 'string', 'x-nullable': true
             },
             "picture_width": {
-              "type": "integer", 'x-nullable': true
+              "type": 'integer', 'x-nullable': true
             },
             "picture_height": {
-              "type": "integer", 'x-nullable': true
+              "type": 'integer', 'x-nullable': true
             },
             "status": {
-              "type": "string"
+              "type": 'string'
             },
             "starts_at": {
-              "type": "string",
-              "format": "date-time"
+              "type": 'string',
+              "format": 'date-time'
             },
             "ends_at": {
-              "type": "string",
-              "format": "date-time", 'x-nullable': true
+              "type": 'string',
+              "format": 'date-time', 'x-nullable': true
             },
             "create_time": {
-              "type": "string",
-              "format": "date-time", 'x-nullable': true
+              "type": 'string',
+              "format": 'date-time', 'x-nullable': true
             },
             "steps": {
-              "type": "array",
+              "type": 'array',
               'x-nullable': true,
               "items": {
-                "$ref": "#/definitions/StepJson"
+                "$ref": '#/definitions/StepJson'
               }
             }
           },
-          "description": "Quest Response"
+          "description": 'Quest Response'
         },
         "StepJson": {
-          "type": "object",
+          "type": 'object',
           "properties": {
             "id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "quest_id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "unlocks": {
-              "type": "array",
+              "type": 'array',
               "items": {
-                "type": "integer"
+                "type": 'integer'
               }
             },
             "display": {
-              "type": "string"
+              "type": 'string'
             },
             "status": {
-              "type": "string"
+              "type": 'string'
             },
             "quest_activities": {
-              "type": "array",
+              "type": 'array',
               "items": {
-                "$ref": "#/definitions/QuestActivityJson"
+                "$ref": '#/definitions/QuestActivityJson'
               }
             },
             "delay_unlock": {
-              "type": "integer"
+              "type": 'integer'
             },
             "unlocks_at": {
-              "type": "string",
-              "format": "date-time"
+              "type": 'string',
+              "format": 'date-time'
             }
           },
-          "description": "Step Response"
+          "description": 'Step Response'
         },
 
         "QuestActivityJson": {
-          "type": "object",
+          "type": 'object',
           "properties": {
             "id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "quest_id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "step_id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "description": {
-              "type": "string"
+              "type": 'string'
             },
             "hint": {
-              "type": "string"
+              "type": 'string'
             },
             "picture_url": {
-              "type": "string"
+              "type": 'string'
             },
             "picture_width": {
-              "type": "integer"
+              "type": 'integer'
             },
             "picture_height": {
-              "type": "integer"
+              "type": 'integer'
             },
             "completed": {
-              "type": "boolean"
+              "type": 'boolean'
             },
             "requirements": {
-              "type": "array",
+              "type": 'array',
               "items": {
-                "$ref": "#/definitions/ActivityTypeJson"
+                "$ref": '#/definitions/ActivityTypeJson'
               }
             },
             "deleted": {
-              "type": "boolean"
+              "type": 'boolean'
             },
             "step": {
-              "$ref": "#/definitions/StepJson"
+              "$ref": '#/definitions/StepJson'
             },
             "created_at": {
-              "type": "string",
-              "format": "date-time"
+              "type": 'string',
+              "format": 'date-time'
             }
           },
-          "description": "Quest Activity Response"
+          "description": 'Quest Activity Response'
         },
         "ActivityTypeJson": {
-          "type": "object",
+          "type": 'object',
           "properties": {
             "id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "atype": {
-              "type": "string"
+              "type": 'string'
             },
             "activity_id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "value": {
-              "type": "object",
+              "type": 'object',
               "properties": {
                 "id": {
-                  "type": "string"
+                  "type": 'string'
                 },
                 "description": {
-                  "type": "string"
+                  "type": 'string'
                 }
               }
             }
           },
-          "description": "Activity Type Reponse"
+          "description": 'Activity Type Reponse'
         }
       }
 

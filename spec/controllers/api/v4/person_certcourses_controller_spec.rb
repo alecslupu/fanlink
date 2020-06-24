@@ -1,9 +1,10 @@
 # frozen_string_literal: true
-require "rails_helper"
+
+require 'rails_helper'
 
 RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
-  describe "#create" do
-    it "succesfuly logs the user reply" do
+  describe '#create' do
+    it 'succesfuly logs the user reply' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -16,8 +17,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
         expect(response).to have_http_status(200)
       end
     end
-    describe "fixes FLAPI-864" do
-      it "marks the certificate as complete when the last step is not quiz" do
+    describe 'fixes FLAPI-864' do
+      it 'marks the certificate as complete when the last step is not quiz' do
         person = create(:person)
         ActsAsTenant.with_tenant(person.product) do
           login_as(person)
@@ -37,7 +38,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           expect(PersonCertificate.last.is_completed).to eq(false)
         end
       end
-      it "marks the certificate as complete when the last step is quiz, and a wrong answer is submitted" do
+      it 'marks the certificate as complete when the last step is quiz, and a wrong answer is submitted' do
         person = create(:person)
         ActsAsTenant.with_tenant(person.product) do
           login_as(person)
@@ -49,8 +50,11 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certcourse_page = create(:certcourse_page, certcourse: certcourse)
           quiz_page = create(:quiz_page, certcourse_page: certcourse_page, that_is_mandatory: true)
 
-          person_certcourse = create(:person_certcourse, certcourse: certcourse, person: person,
-                                                         is_completed: false, last_completed_page_id: quiz_page.wrong_answer_page_id)
+          person_certcourse = create(:person_certcourse,
+                                     certcourse: certcourse,
+                                     person: person,
+                                     is_completed: false,
+                                     last_completed_page_id: quiz_page.wrong_answer_page_id)
 
           post :create, params: { person_certcourse: {
             certcourse_id: certcourse.id
@@ -64,8 +68,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
       end
     end
 
-    describe "fixes FLAPI-779" do
-      it "marks the certificate as incomplete when one course is not complete" do
+    describe 'fixes FLAPI-779' do
+      it 'marks the certificate as incomplete when one course is not complete' do
         person = create(:person)
         ActsAsTenant.with_tenant(person.product) do
           login_as(person)
@@ -90,7 +94,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           expect(PersonCertificate.last.is_completed).to eq(false)
         end
       end
-      it "marks the certificate as incomplete when one course is started but not complete" do
+      it 'marks the certificate as incomplete when one course is started but not complete' do
         person = create(:person)
         ActsAsTenant.with_tenant(person.product) do
           login_as(person)
@@ -98,7 +102,10 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certificate = create(:certificate)
           certcourse = create(:certcourse)
           certificate_certcourse = create(:certificate_certcourse, certificate: certificate)
-          create(:person_certcourse, person: person, certcourse: certificate_certcourse.certcourse, is_completed: false)
+          create(:person_certcourse,
+                 person: person,
+                 certcourse: certificate_certcourse.certcourse,
+                 is_completed: false)
 
           create(:certificate_certcourse, certificate: certificate, certcourse: certcourse)
 
@@ -116,7 +123,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           expect(PersonCertificate.last.is_completed).to eq(false)
         end
       end
-      it "marks the certificate as complete when both courses are completed" do
+      it 'marks the certificate as complete when both courses are completed' do
         person = create(:person)
         ActsAsTenant.with_tenant(person.product) do
           login_as(person)

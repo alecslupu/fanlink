@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AddRoomJob < ApplicationJob
   include RealTimeHelpers
 
@@ -7,6 +8,7 @@ class AddRoomJob < ApplicationJob
   def perform(room_id, version = 0)
     room = Room.find(room_id)
     return unless room.private?
+
     payload = {}
     room.members.each do |m|
       payload["#{user_path(m)}/new_room_id"] = room_id
@@ -16,6 +18,6 @@ class AddRoomJob < ApplicationJob
         end
       end
     end
-    client.update("", payload)
+    client.update('', payload)
   end
 end

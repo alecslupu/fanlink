@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_picture_available_answers
@@ -18,13 +19,12 @@
 
 module Trivia
   class PictureAvailableAnswer < ApplicationRecord
-
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
 
     has_paper_trail ignore: [:created_at, :updated_at]
 
-    belongs_to :question, class_name: "Trivia::PictureAvailableQuestion", foreign_key: :question_id, optional: true
+    belongs_to :question, class_name: 'Trivia::PictureAvailableQuestion', foreign_key: :question_id, optional: true
 
     include AASM
     enum status: {
@@ -66,20 +66,18 @@ module Trivia
       new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end
 
-
     has_one_attached :picture
 
-    validates :picture, size: {less_than: 5.megabytes},
-              content_type: {in: %w[image/jpeg image/gif image/png]}
+    validates :picture, size: { less_than: 5.megabytes },
+                        content_type: { in: %w[image/jpeg image/gif image/png] }
 
     def picture_url
       picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
     end
 
     def picture_optimal_url
-      opts = { resize: "1000", auto_orient: true, quality: 75}
+      opts = { resize: '1000', auto_orient: true, quality: 75 }
       picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
     end
-
   end
 end

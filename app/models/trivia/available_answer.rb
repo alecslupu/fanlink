@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_available_answers
@@ -18,7 +19,7 @@ module Trivia
   class AvailableAnswer < ApplicationRecord
     has_paper_trail ignore: [:created_at, :updated_at]
 
-    belongs_to :question, class_name: "Trivia::AvailableQuestion", foreign_key: :trivia_question_id, optional: true
+    belongs_to :question, class_name: 'Trivia::AvailableQuestion', foreign_key: :trivia_question_id, optional: true
 
     validates :name, presence: true
     validates :hint, presence: true
@@ -62,23 +63,19 @@ module Trivia
     end
 
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
 
     private
 
-      # an answer which is assigned to a published available question
-      # cannot be unpublished
-      def available_question_status?
-        if question.published?
-          errors.add(:status, "unable to unpublish answer if assigned available question is still published")
-          false
-        else
-          true
-        end
+    # an answer which is assigned to a published available question
+    # cannot be unpublished
+    def available_question_status?
+      if question.published?
+        errors.add(:status, 'unable to unpublish answer if assigned available question is still published')
+        false
+      else
+        true
       end
-
-      # def assigned_available_question_status
-
-      # end
+    end
   end
 end

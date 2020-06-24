@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 json = { games: [] }
 @games.each do |game|
-  result = render(partial: "app", locals: { game: game }, handler: :jb)
+  result = render(partial: 'app', locals: { game: game }, handler: :jb)
   user_info = game.subscribers.where(person_id: current_user.id).first_or_initialize
   result[:user_enroled] = user_info.persisted?
   result[:user_notification] = user_info.subscribed?

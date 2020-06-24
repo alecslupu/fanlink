@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: merchandise
@@ -23,20 +24,19 @@
 #
 
 class Merchandise < ApplicationRecord
-
   after_save :adjust_priorities
 
   has_one_attached :picture
 
-  validates :picture, size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png]}
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -56,13 +56,13 @@ class Merchandise < ApplicationRecord
   # validates :name, presence: { message: _("Name is required.") }
   # validates :description, presence: { message: _("Description is required.") }
 
-private
+  private
 
   def adjust_priorities
     if priority > 0 && saved_change_to_attribute?(:priority)
       same_priority = Merchandise.where.not(id: self.id).where(priority: self.priority)
       if same_priority.count > 0
-        Merchandise.where.not(id: self.id).where("priority >= ?", self.priority).each do |merchandise|
+        Merchandise.where.not(id: self.id).where('priority >= ?', self.priority).each do |merchandise|
           merchandise.increment!(:priority)
         end
       end

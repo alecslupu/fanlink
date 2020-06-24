@@ -7,7 +7,9 @@
 #   require File.join(Rails.root, 'docs/oas/v1/base_doc.rb')
 #   require File.join(Rails.root, 'docs/oas/v2/base_doc.rb')
 #   require File.join(Rails.root, 'docs/oas/v3/base_doc.rb')
-#   Dir[File.join('docs/oas', "**", "*.rb")].each { |file| require File.join(Rails.root, file) unless %w[ api_doc.rb base_doc.rb ].include?(file) }
+#   Dir[File.join('docs/oas', "**", "*.rb")].each do |file|
+#     require File.join(Rails.root, file) unless %w[ api_doc.rb base_doc.rb ].include?(file)
+#   end
 
 #   #https://github.com/zhandao/zero-rails_openapi/blob/master/documentation/examples/open_api.rb
 #   OpenApi::Config.tap do |c|

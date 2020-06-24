@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe PersonQuizPolicy, type: :policy do
-  args = PersonQuiz, "courseware"
+  args = PersonQuiz, 'courseware'
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
@@ -12,8 +12,8 @@ RSpec.describe PersonQuizPolicy, type: :policy do
   include_examples 'enforces the history permission', args
   include_examples 'enforces the export permission', args
 
-  context "Scope" do
-    it "should only return the person quiz in current product" do
+  context 'Scope' do
+    it 'should only return the person quiz in current product' do
       person = build(:person)
 
       post2 = ActsAsTenant.with_tenant(create(:product)) { create(:person_quiz) }

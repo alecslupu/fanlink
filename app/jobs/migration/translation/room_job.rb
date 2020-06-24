@@ -1,11 +1,10 @@
 module Migration
   module Translation
     class RoomJob < ApplicationJob
-
       queue_as :migration
 
       def perform(room_id)
-        langs = ["en", "es", "ro"]
+        langs = ['en', 'es', 'ro']
         room = Room.find(room_id)
 
         langs.each do |value|
@@ -19,11 +18,12 @@ module Migration
           room.save!
         end
         unless Room.with_translations('en').where(id: room.id).first.present?
-          return if room.untranslated_name["un"].nil?
-          return if room.untranslated_name["un"].empty?
-          I18n.locale = "en"
-          room.name = room.untranslated_name["un"]
-          room.description = room.untranslated_description["un"]
+          return if room.untranslated_name['un'].nil?
+          return if room.untranslated_name['un'].empty?
+
+          I18n.locale = 'en'
+          room.name = room.untranslated_name['un']
+          room.description = room.untranslated_description['un']
           room.save!
         end
       end

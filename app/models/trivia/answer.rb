@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_answers
@@ -18,10 +19,10 @@ module Trivia
   class Answer < ApplicationRecord
     has_paper_trail ignore: [:created_at, :updated_at]
 
-    belongs_to :person, class_name: "Person"
-    belongs_to :question, class_name: "Trivia::Question", foreign_key: :trivia_question_id
+    belongs_to :person, class_name: 'Person'
+    belongs_to :question, class_name: 'Trivia::Question', foreign_key: :trivia_question_id
 
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
   end
 end

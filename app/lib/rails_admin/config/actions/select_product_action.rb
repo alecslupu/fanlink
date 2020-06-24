@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_admin/config/actions'
 require 'rails_admin/config/actions/base'
 module RailsAdmin
@@ -10,7 +11,7 @@ module RailsAdmin
         register_instance_option :authorized? do
           enabled? && (
           bindings[:controller].try(:authorization_adapter).nil? || bindings[:controller].authorization_adapter.authorized?(authorization_key)
-          )
+        )
         end
 
         register_instance_option :authorization_key do
@@ -61,7 +62,6 @@ module RailsAdmin
             redirect_to dashboard_url
           end
         end
-
       end
     end
   end

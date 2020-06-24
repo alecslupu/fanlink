@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: config_items
@@ -29,13 +30,14 @@ class StringConfigItem < ConfigItem
   protected
 
   def downcase
-    item_value.downcase! if item_key == "tab_id"
+    item_value.downcase! if item_key == 'tab_id'
   end
 
   def custom_validation
-    if item_key == "tab_id"
-      valid_options = %w{ education chat discover feed profile product events trivia menu client_settings client_menu client_users }
-      errors.add(:item_value, "Please specify any of the #{valid_options.inspect}") unless valid_options.include?(item_value)
+    if item_key == 'tab_id'
+      valid_opt = %w{education chat discover feed profile product events
+                     trivia menu client_settings client_menu client_users}
+      errors.add(:item_value, "Please specify any of the #{valid_opt.inspect}") unless valid_opt.include?(item_value)
     end
   end
 end

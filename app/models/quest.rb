@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: quests
@@ -28,35 +29,35 @@ class Quest < ApplicationRecord
   # include Quest::PortalFilters
   scope :id_filter, ->(query) { where(id: query.to_i) }
   scope :product_id_filter, ->(query) { where(product_id: query.to_i) }
-  scope :product_filter, ->(query) { joins(:product).where("product.internal_name ilike ? or product.name ilike ?", "%#{query}%", "%#{query}%") }
+  scope :product_filter, ->(query) { joins(:product).where('product.internal_name ilike ? or product.name ilike ?', "%#{query}%", "%#{query}%") }
   scope :name_filter, ->(query) { where("quests.name->>'en' ilike ? or quests.name->>'un' ilike ?", "%#{query}%", "%#{query}%") }
   scope :description_filter, ->(query) { where("quests.description->>'en' ilike ? or quests.descriptions->>'un' ilike ?", "%#{query}%", "%#{query}%") }
-  scope :starts_at_filter, ->(query) { where("quests.starts_at >= ?", Time.zone.parse(query)) }
-  scope :ends_at_filter, ->(query) { where("quests.ends_at <= ?", Time.zone.parse(query)) }
-  scope :posted_after_filter, ->(query) { where("quests.created_at >= ?", Time.zone.parse(query)) }
-  scope :posted_before_filter, ->(query) { where("quests.created_at <= ?", Time.zone.parse(query)) }
+  scope :starts_at_filter, ->(query) { where('quests.starts_at >= ?', Time.zone.parse(query)) }
+  scope :ends_at_filter, ->(query) { where('quests.ends_at <= ?', Time.zone.parse(query)) }
+  scope :posted_after_filter, ->(query) { where('quests.created_at >= ?', Time.zone.parse(query)) }
+  scope :posted_before_filter, ->(query) { where('quests.created_at <= ?', Time.zone.parse(query)) }
   scope :status_filter, ->(query) { where(status: query.to_sym) }
   # include Quest::PortalFilters
 
   # enum status: %i[ in_development in_testing published deleted ]
-  enum status: %i[ disabled enabled active deleted ]
+  enum status: %i[disabled enabled active deleted]
 
   acts_as_tenant(:product)
   belongs_to :product
 
-  scope :for_product, -> (product) { where( quests: { product_id: product.id } ) }
+  scope :for_product, ->(product) { where(quests: { product_id: product.id }) }
 
   has_one_attached :picture
 
-  validates :picture, size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png]}
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -84,34 +85,32 @@ class Quest < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   validate :date_sanity
   validates_associated :translations
 
-  validates :name, presence: { message: _("Name is required.") }
-  validates :description, presence: { message: _("A quest description is required.") }
+  validates :name, presence: { message: _('Name is required.') }
+  validates :description, presence: { message: _('A quest description is required.') }
 
-  validates :starts_at, presence: { message: _("Starting date and time is required.") }
+  validates :starts_at, presence: { message: _('Starting date and time is required.') }
 
   scope :in_date_range, ->(start_date, end_date) {
-      where("quests.starts_at >= ? and quests.ends_at <= ?",
-        start_date.beginning_of_day, end_date.end_of_day)
-    }
-
-  scope :ordered, -> { includes(:quest_activities).order("quest_activities.created_at DESC") }
+                          where('quests.starts_at >= ? and quests.ends_at <= ?',
+                                start_date.beginning_of_day, end_date.end_of_day)
+                        }
+  scope :ordered, -> { includes(:quest_activities).order('quest_activities.created_at DESC') }
+  scope :for_product, ->(product) { includes(:product).where(product: product) }
   scope :in_testing, -> { where(status: [:enabled, :active]) }
-  scope :running, -> { where("quests.starts_at >= ? AND quests.ends_at <= ?", Time.zone.now, Time.zone.now) }
+  scope :running, -> { where('quests.starts_at >= ? AND quests.ends_at <= ?', Time.zone.now, Time.zone.now) }
 
   def running?
     starts_at >= Time.zone.now && (ends_at.nil? || ends_at <= Time.zone.now)
   end
 
-
-private
+  private
 
   def date_sanity
     if ends_at.present? && ends_at < starts_at
-      errors.add(:ends_at, :date_sanity, message: _("Start date cannot be after end date."))
+      errors.add(:ends_at, :date_sanity, message: _('Start date cannot be after end date.'))
     end
   end
 end

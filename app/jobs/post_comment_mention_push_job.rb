@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PostCommentMentionPushJob < ApplicationJob
   queue_as :default
   include Push
@@ -10,5 +11,4 @@ class PostCommentMentionPushJob < ApplicationJob
       post_comment_mention_push(post_comment_mention, post_comment_mention.person)
     end
   end
-
 end

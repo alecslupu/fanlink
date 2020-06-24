@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {
   id: interest.id.to_s,
   title: interest.title,
@@ -6,7 +7,7 @@ json = {
 }
 
 if interest.children.present?
-  json[:sub_interests] =  render(partial: "app", collection: interest.children, as: :interest, handlers: :jb)
+  json[:sub_interests] = render(partial: 'app', collection: interest.children, as: :interest, handlers: :jb)
 else
   json[:sub_interests] = nil
 end

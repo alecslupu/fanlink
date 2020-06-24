@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: quest_activities
@@ -30,23 +31,23 @@ class QuestActivity < ApplicationRecord
 
   belongs_to :step, inverse_of: :quest_activities, touch: true
 
-  has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, dependent: :destroy, foreign_key: "activity_id", inverse_of: :quest_activity
-  has_many :activity_types, -> { order(created_at: :asc) }, dependent: :destroy, foreign_key: "activity_id", inverse_of: :quest_activity
+  has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, dependent: :destroy, foreign_key: 'activity_id', inverse_of: :quest_activity
+  has_many :activity_types, -> { order(created_at: :asc) }, dependent: :destroy, foreign_key: 'activity_id', inverse_of: :quest_activity
   has_many :assigned_rewards, as: :assigned, inverse_of: :quest_activity
 
-  has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: "QuestActivity"
+  has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: 'QuestActivity'
 
   has_one_attached :picture
 
-  validates :picture, size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg image/gif image/png]}
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -60,7 +61,7 @@ class QuestActivity < ApplicationRecord
 
   accepts_nested_attributes_for :activity_types
 
-  scope :with_completion, -> (person) { where("quest_completions.person_id = ?", person.id) }
+  scope :with_completion, ->(person) { where('quest_completions.person_id = ?', person.id) }
 
   def product
     step.quest.product

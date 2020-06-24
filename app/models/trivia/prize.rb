@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_prizes
@@ -22,23 +23,22 @@
 module Trivia
   class Prize < ApplicationRecord
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
 
     has_paper_trail ignore: [:created_at, :updated_at]
-
-    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
+    belongs_to :game, class_name: 'Trivia::Game', foreign_key: :trivia_game_id
 
     has_one_attached :photo
 
-    validates :photo, size: {less_than: 5.megabytes},
-              content_type: {in: %w[image/jpeg image/gif image/png]}
+    validates :photo, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
 
     def photo_url
       photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.key].join('/') : nil
     end
 
     def photo_optimal_url
-      opts = { resize: "1000", auto_orient: true, quality: 75}
+      opts = { resize: '1000', auto_orient: true, quality: 75 }
       photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.variant(opts).processed.key].join('/') : nil
     end
 

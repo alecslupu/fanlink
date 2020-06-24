@@ -1,9 +1,10 @@
 # frozen_string_literal: true
-RailsAdmin.config do |config|
-  config.included_models.push("CertcoursePage")
 
-  config.model "CertcoursePage" do
-    parent "Certificate"
+RailsAdmin.config do |config|
+  config.included_models.push('CertcoursePage')
+
+  config.model 'CertcoursePage' do
+    parent 'Certificate'
 
     show do
       fields :id,
@@ -28,7 +29,7 @@ RailsAdmin.config do |config|
     end
 
     list do
-      scopes [ nil, :quizes, :videos, :images, :download_files ]
+      scopes [nil, :quizes, :videos, :images, :download_files]
       fields :id,
              :certcourse,
              :content_type,

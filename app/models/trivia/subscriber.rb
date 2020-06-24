@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_subscribers
@@ -15,12 +16,12 @@
 module Trivia
   class Subscriber < ApplicationRecord
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
 
     has_paper_trail ignore: [:created_at, :updated_at]
 
     belongs_to :person
-    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
+    belongs_to :game, class_name: 'Trivia::Game', foreign_key: :trivia_game_id
 
     def game_id
       trivia_game_id

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :papertrail do
-  desc "Clean Up the PaperTrail::Versions"
+  desc 'Clean Up the PaperTrail::Versions'
   task clean: :environment do
     protected_models = %w[
       Certcourse
@@ -17,7 +17,7 @@ namespace :papertrail do
       ImagePage
       VideoPage
     ]
-    PaperTrail::Version.where("item_type not in (?)", protected_models).where("created_at < ?", 12.months.ago).find_each do |version|
+    PaperTrail::Version.where('item_type not in (?)', protected_models).where('created_at < ?', 12.months.ago).find_each do |version|
       version.destroy
     end
   end

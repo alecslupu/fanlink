@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: certcourse_pages
@@ -38,16 +39,20 @@ class CertcoursePage < ApplicationRecord
   scope :images, -> { joins(:image_page) }
   scope :download_files, -> { joins(:download_file_page) }
   scope :ordered, -> { order(:certcourse_page_order) }
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
   # validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
   validates :duration, numericality: { greater_than: 0 }
   validate :single_child_validator
 
-  def content_type
-    child.content_type
-    # return "image" if image?
-    # return "download_file" if download?
+  before_save :set_properties_from_child
+
+  def set_properties_from_child
+    return if child.blank?
+
+    self.content_type = child.content_type
+
+    self.duration = child.duration if video?
   end
 
   def media_content_type
@@ -68,14 +73,6 @@ class CertcoursePage < ApplicationRecord
     nil
   end
 
-  def download?
-    download_file_page.present?
-  end
-
-  def video?
-    video_page.present?
-  end
-
   def child
     quiz_page || image_page || video_page || download_file_page
   end
@@ -88,11 +85,20 @@ class CertcoursePage < ApplicationRecord
     image_page.present?
   end
 
+  def download?
+    download_file_page.present?
+  end
+
+  def video?
+    video_page.present?
+  end
+
   protected
+
   def single_child_validator
-    errors.add(:base, _("You cannot add a question and a video or imaage on the same certcourse")) if quiz? && (download? || video? || image?)
-    errors.add(:base, _("You cannot add an image and a video or question on the same certcourse")) if image? && (download? || quiz? || video?)
-    errors.add(:base, _("You cannot add a video and a question or imaage on the same certcourse")) if video? && (download? || quiz? || image?)
-    errors.add(:base, _("You cannot add a download and a question or imaage on the same certcourse")) if download? && (video? || quiz? || image?)
+    errors.add(:base, _('You cannot add a question and a video or image on the same certcourse')) if quiz? && (download? || video? || image?)
+    errors.add(:base, _('You cannot add an image and a video or question on the same certcourse')) if image? && (download? || quiz? || video?)
+    errors.add(:base, _('You cannot add a video and a question or image on the same certcourse')) if video? && (download? || quiz? || image?)
+    errors.add(:base, _('You cannot add a download and a question or image on the same certcourse')) if download? && (video? || quiz? || image?)
   end
 end

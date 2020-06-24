@@ -11,7 +11,7 @@ module Trivia
       generate_game!
 
       start_date = 5.minutes.from_now
-      questions = Trivia::AvailableQuestion.published.order(Arel.sql "random()").first(150)
+      questions = Trivia::AvailableQuestion.published.order(Arel.sql 'random()').first(150)
 
       5.times do |index|
         start_date = game.rounds.reload.last.end_date + 5.minutes unless index.zero?
@@ -51,8 +51,8 @@ module Trivia
         status: :draft,
         leaderboard_size: 10,
         long_name: "Generated Game #{DateTime.now.to_i}",
-        short_name: "Generated Game",
-        description: "Generated description for the game ",
+        short_name: 'Generated Game',
+        description: 'Generated description for the game ',
         start_date: 5.minutes.from_now
       )
     end

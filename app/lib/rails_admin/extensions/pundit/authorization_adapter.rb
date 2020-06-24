@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RailsAdmin
   module Extensions
     module Pundit
@@ -28,6 +29,7 @@ module RailsAdmin
           if action && !policy(record).send(action_for_pundit(action))
             raise ::Pundit::NotAuthorizedError.new("not allowed to #{action} this #{record}")
           end
+
           @controller.instance_variable_set(:@_pundit_policy_authorized, true)
         end
 

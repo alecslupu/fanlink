@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Trivia
   module RoundStatus
     class RunningJob < ::ApplicationJob
@@ -12,7 +13,6 @@ module Trivia
           ::Trivia::QuestionStatus::CloseJob.set(wait_until: Time.at(question.end_date) + 1.second).perform_later(question.id)
         end
       end
-
     end
   end
 end

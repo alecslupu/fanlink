@@ -1,22 +1,28 @@
 # frozen_string_literal: true
-json = render(partial: "api/v4/people/app", locals: { person: person }, handlers: "jb")
+
+json = render(partial: 'api/v4/people/app', locals: { person: person }, handlers: :jb)
 json[:email] = person.email
 json[:product] = {
   id: person.product.id,
   internal_name: person.product.internal_name,
   name: person.product.name
 }
-
-json[:level_progress] = if person.level_progresses.present?
-  render(partial: "api/v4/level_progresses/app", collection: person.level_progresses, as: :level, handlers: "jb")
+if person.level_progresses.present?
+  json[:level_progress] = render(partial: 'api/v4/level_progresses/app',
+                                 collection: person.level_progresses,
+                                 as: :level,
+                                 handlers: :jb)
 end
 
-json[:rewards] = if person.person_rewards.present?
-  render(partial: "api/v4/person_rewards/app", collection: person.person_rewards, as: :reward, handlers: "jb")
+if person.person_rewards.present?
+  json[:rewards] = render(partial: 'api/v4/person_rewards/app',
+                          collection: person.person_rewards,
+                          as: :reward,
+                          handlers: :jb)
 end
 
-json[:blocked_people] = if person.blocked_people.present?
-  person.blocked_people.map do |blocked|
+if person.blocked_people.present?
+  json[:blocked_people] = person.blocked_people.map do |blocked|
     {
       id: blocked.id,
       username: blocked.username
@@ -26,8 +32,8 @@ end
 
 json[:permissions] = person.summarize_permissions
 
-json[:pin_messages_to] = if person.pinned_to.present?
-  person.pin_messages.map do |pin|
+if person.pinned_to.present?
+  json[:pin_messages_to] = person.pin_messages.map do |pin|
     {
       id: pin.id,
       room_id: pin.room.id,

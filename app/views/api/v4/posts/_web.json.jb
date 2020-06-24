@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 json = {
   id: post.id,
-  person: render(partial: "api/v4/people/person_mini", locals: { person: post.person }),
+  person: render(partial: 'api/v4/people/person_mini', locals: { person: post.person }),
   body: post.body,
   picture_url: post.picture_optimal_url,
   audio_url: post.audio_url,
@@ -24,12 +25,12 @@ json = {
 }
 if post.category.present?
   json[:category] =
-  {
-    id: post.category.id,
-    name: post.category.name,
-    color: post.category.color,
-    role: post.category.role
-  }
+    {
+      id: post.category.id,
+      name: post.category.name,
+      color: post.category.color,
+      role: post.category.role
+    }
 else
   json[:category] = nil
 end

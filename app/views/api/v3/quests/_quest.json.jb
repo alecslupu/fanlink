@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-json = Rails.cache.fetch ["v3", quest.updated_at, @lang, quest] do
+
+json = Rails.cache.fetch ['v3', quest.updated_at, @lang, quest] do
   {
     id: quest.id,
     product_id: quest.product_id,
@@ -22,8 +23,8 @@ json[:completed] = ((quest_completed) ? true : false)
 json[:completed_at] = ((quest_completed) ? quest_completed.created_at : nil)
 if quest.steps.present?
   json[:steps] = quest.steps.map do |step|
-    Rails.cache.fetch ["v3", step.updated_at, current_user.id, step] do
-      render partial: "api/v3/steps/step", locals: { step: step }, handlers: "jb"
+    Rails.cache.fetch ['v3', step.updated_at, current_user.id, step] do
+      render partial: 'api/v3/steps/step', locals: { step: step }, handlers: 'jb'
     end
   end
 else
@@ -33,7 +34,7 @@ if quest.rewards.present?
   quest.rewards.each do |assigned|
     if assigned.badge.present?
       json[:assigned_badge] = assigned.badge
-      json[:badge] = render partial: "api/v3/badges/badge", locals: { badge: assigned.badge }, handlers: "jb"
+      json[:badge] = render partial: 'api/v3/badges/badge', locals: { badge: assigned.badge }, handlers: 'jb'
     else
       json[:badge] = nil
     end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller do
   describe 'GET index' do
-
-    it "return error code 401 for a non client user" do
+    it 'return error code 401 for a non client user' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -31,7 +31,7 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
       end
     end
 
-    it "paginates the answer" do
+    it 'paginates the answer' do
       person = create(:client_user)
       ActsAsTenant.with_tenant(person.product) do
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
@@ -63,7 +63,7 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
 
         expect(response).to be_successful
         expect(json['people'].count).to eq(2)
-        listed_ids = json['people'].map { |p| p["id"].to_i }
+        listed_ids = json['people'].map { |p| p['id'].to_i }
         expect(listed_ids.sort).to eq([person1.id, person2.id].sort)
       end
     end

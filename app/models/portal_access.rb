@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: portal_accesses
@@ -28,6 +29,6 @@ class PortalAccess < ApplicationRecord
 
   include PermissionMatrix
 
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
+  scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
   belongs_to :person
 end

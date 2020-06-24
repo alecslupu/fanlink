@@ -1,13 +1,14 @@
 # frozen_string_literal: true
-require "spec_helper"
+
+require 'spec_helper'
 
 RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
   before(:each) do
     logout
   end
 
-  describe "#create" do
-    it "should make someone a member if current user owns the room" do
+  describe '#create' do
+    it 'should make someone a member if current user owns the room' do
       owner = create(:person)
       ActsAsTenant.with_tenant(owner.product) do
         login_as(owner)
@@ -21,7 +22,7 @@ RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
         expect(lm.person).to eq(person2)
       end
     end
-    it "should not create membership if already a member" do
+    it 'should not create membership if already a member' do
       owner = create(:person)
       ActsAsTenant.with_tenant(owner.product) do
         login_as(owner)
@@ -34,7 +35,7 @@ RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
         expect(RoomMembership.count - precount).to eq(0)
       end
     end
-    it "should not make someone a member if room is inactive" do
+    it 'should not make someone a member if room is inactive' do
       owner = create(:person)
       ActsAsTenant.with_tenant(owner.product) do
         login_as(owner)
@@ -45,7 +46,7 @@ RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
         expect(response).to be_not_found
       end
     end
-    it "should not make someone a member if room is public" do
+    it 'should not make someone a member if room is public' do
       owner = create(:person)
       ActsAsTenant.with_tenant(owner.product) do
         login_as(owner)

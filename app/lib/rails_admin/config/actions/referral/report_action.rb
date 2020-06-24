@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RailsAdmin
   module Config
     module Actions
@@ -24,30 +25,30 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-              @objects = Person.
-                joins(:referrals).
-                select("people.*, COUNT(#{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count").
-                group("people.id").
-                order("referral_count DESC")
+              @objects = Person
+                         .joins(:referrals)
+                         .select("people.*, COUNT(#{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count")
+                         .group('people.id')
+                         .order('referral_count DESC')
 
               if params[:f].present?
                 params[:f].each_pair do |field_name, filters_dump|
                   filters_dump.each do |_, filter_dump|
-                    if field_name == "referral_referred_people.created_at"
-                      value = if filter_dump[:v].is_a?(Array)
-                        filter_dump[:v].map { |v| RailsAdmin::Support::Datetime.new("%B %d, %Y %H:%M").parse_string(v) }
+                    if field_name == 'referral_referred_people.created_at'
+                      if filter_dump[:v].is_a?(Array)
+                        value = filter_dump[:v].map { |v| RailsAdmin::Support::Datetime.new('%B %d, %Y %H:%M').parse_string(v) }
                       else
-                        RailsAdmin::Support::Datetime.new(strftime_format).parse_string(filter_dump[:v])
+                        value = RailsAdmin::Support::Datetime.new(strftime_format).parse_string(filter_dump[:v])
                       end
                       conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :datetime, value, (filter_dump[:o] || 'default')).to_statement
 
                       @objects = @objects.send(:where, conditions)
 
                     end
-                    if field_name == "inviter"
+                    if field_name == 'inviter'
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
-                      conditions1 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new("people.username", :string, value, (filter_dump[:o] || 'default')).to_statement
-                      conditions2 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new("referral_user_codes.unique_code", :string, value, (filter_dump[:o] || 'default')).to_statement
+                      conditions1 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new('people.username', :string, value, (filter_dump[:o] || 'default')).to_statement
+                      conditions2 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new('referral_user_codes.unique_code', :string, value, (filter_dump[:o] || 'default')).to_statement
 
                       # Not a pretty one
                       if conditions1.present? && conditions2.present?
@@ -60,14 +61,12 @@ module RailsAdmin
               end
 
               # if params[:page] && params[:per]
-                @objects = @objects.send(Kaminari.config.page_method_name, params[:page]).per(params[:per])
+              @objects = @objects.send(Kaminari.config.page_method_name, params[:page]).per(params[:per])
               # end
-
 
               # @objects = paginate @objects
             end
           end
-
         end
       end
     end

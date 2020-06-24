@@ -1,10 +1,11 @@
 # frozen_string_literal: true
-RailsAdmin.config do |config|
-  config.included_models.push("Trivia::AvailableQuestion")
-  config.model "Trivia::AvailableQuestion" do
-    parent "Trivia::Game"
 
-    label_plural "Available questions"
+RailsAdmin.config do |config|
+  config.included_models.push('Trivia::AvailableQuestion')
+  config.model 'Trivia::AvailableQuestion' do
+    parent 'Trivia::Game'
+
+    label_plural 'Available questions'
 
     configure :status, :enum do
       queryable false
@@ -12,12 +13,12 @@ RailsAdmin.config do |config|
       # enum_method :rails_admin_status_field
       enum do
         if bindings[:object].new_record?
-          {draft: bindings[:object].class.statuses[:draft]}
+          { draft: bindings[:object].class.statuses[:draft] }
         else
           ha = {}
-          bindings[:object].aasm.states(permitted: true).map(&:name).
-            push(bindings[:object].status).
-            map { |c| ha[c] = bindings[:object].class.statuses[c] }
+          bindings[:object].aasm.states(permitted: true).map(&:name)
+                           .push(bindings[:object].status)
+                           .map { |c| ha[c] = bindings[:object].class.statuses[c] }
           ha
         end
       end
@@ -30,11 +31,11 @@ RailsAdmin.config do |config|
       field :type, :enum do
         enum do
           [
-            ["Single Choice", "Trivia::SingleChoiceAvailableQuestion"],
-            ["Multiple Choice", "Trivia::MultipleChoiceAvailableQuestion"],
-            ["Picture Choice", "Trivia::PictureAvailableQuestion"],
-            ["True or False", "Trivia::BooleanChoiceAvailableQuestion"],
-            ["Fill in the blanks", "Trivia::HangmanAvailableQuestion"],
+            ['Single Choice', 'Trivia::SingleChoiceAvailableQuestion'],
+            ['Multiple Choice', 'Trivia::MultipleChoiceAvailableQuestion'],
+            ['Picture Choice', 'Trivia::PictureAvailableQuestion'],
+            ['True or False', 'Trivia::BooleanChoiceAvailableQuestion'],
+            ['Fill in the blanks', 'Trivia::HangmanAvailableQuestion'],
           ]
         end
         read_only { bindings[:object].persisted? }

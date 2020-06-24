@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Push
   include ActionView::Helpers::TextHelper
 
@@ -110,7 +111,7 @@ module Push
     android_token_notification_push(
       device_identifiers,
       ttl_hours * 3600,
-      context: "marketing",
+      context: 'marketing',
       title: title,
       message_short: body,
     )
@@ -123,19 +124,18 @@ module Push
       body,
       nil,
       ttl_hours * 3600,
-      context: "marketing",
+      context: 'marketing',
     )
   end
 
-
-private
+  private
 
   # WHAAA ?
   def get_topic(device_type)
-    if device_type == "ios"
-      return "marketing_en_ios-US"
-    elsif device_type == "android"
-      return "marketing_en_android-US"
+    if device_type == 'ios'
+      return 'marketing_en_ios-US'
+    elsif device_type == 'android'
+      return 'marketing_en_android-US'
     end
   end
 
@@ -150,7 +150,7 @@ private
   end
   module_function :push_client
 
-  #moved
+  # moved
   def disconnect
     @fbcm = nil
   end
@@ -161,11 +161,11 @@ private
       options[:notification] = {}
       options[:notification][:title] = title
       options[:notification][:body] = body
-      options[:notification][:sound] = "default"
+      options[:notification][:sound] = 'default'
       options[:content_available] = true
       options[:data] = data
       options[:data][:notification_type] = type
-      options[:data][:priority] = "high"
+      options[:data][:priority] = 'high'
       push_with_retry(options, tokens, nil)
     end
   end
@@ -236,21 +236,21 @@ private
   # TODO Remove
   def android_token_notification_push(tokens, ttl, data = {})
     notification_body = build_android_notification(ttl, data)
-    push_with_retry(notification_body, tokens, "android")
+    push_with_retry(notification_body, tokens, 'android')
   end
 
   # TODO remove
   def ios_token_notification_push(tokens, title, body, click_action, ttl, data = {})
     notification_body = build_ios_notification(title, body, click_action, ttl, data)
-    push_with_retry(notification_body, tokens, "ios")
+    push_with_retry(notification_body, tokens, 'ios')
   end
 
   # TODO Remove
   def build_android_notification(ttl, data = {})
     options = {}
-    data[:type] = "user"
+    data[:type] = 'user'
     options[:data] = data
-    options[:priority] = "high"
+    options[:priority] = 'high'
     options[:content_available] = true
     options[:mutable_content] = true
     options[:time_to_live] = ttl
@@ -269,11 +269,11 @@ private
     options[:notification][:title] = title
     options[:notification][:body] = body
     options[:notification][:click_action] = click_action
-    options[:notification][:sound] = "default"
-    options[:notification][:mutable_content] = "true"
+    options[:notification][:sound] = 'default'
+    options[:notification][:mutable_content] = 'true'
 
     options[:data] = data
-    options[:data][:priority] = "high"
+    options[:data][:priority] = 'high'
     options[:data][:time_to_live] = ttl
 
     return options
@@ -286,6 +286,7 @@ private
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
       next if blocks_with.include?(m.id)
+
       android_tokens += m.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
       ios_tokens += m.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
     end
@@ -344,49 +345,49 @@ private
   def unsubscribe_to_topic(tokens, phone_os)
     case phone_os
     when nil
-      ["marketing_en_ios-US", "marketing_en_android-US"].each do |topic|
+      ['marketing_en_ios-US', 'marketing_en_android-US'].each do |topic|
         response = push_client.batch_topic_unsubscription(topic, make_array(tokens))
       end
-    when "android"
-      response = push_client.batch_topic_unsubscription("marketing_en_android-US", make_array(tokens))
-    when "ios"
-      response = push_client.batch_topic_unsubscription("marketing_en_ios-US", make_array(tokens))
+    when 'android'
+      response = push_client.batch_topic_unsubscription('marketing_en_android-US', make_array(tokens))
+    when 'ios'
+      response = push_client.batch_topic_unsubscription('marketing_en_ios-US', make_array(tokens))
     end
   end
 
   def get_person_ids(notification)
     case notification.person_filter
-    when "has_certificate_enrolled"
+    when 'has_certificate_enrolled'
       person_ids = Person.has_enrolled_certificate.select(:id)
-    when "has_no_certificate_enrolled"
+    when 'has_no_certificate_enrolled'
       person_ids = Person.has_no_enrolled_certificate.select(:id)
-    when "has_certificate_generated"
+    when 'has_certificate_generated'
       person_ids = Person.has_certificate_generated.select(:id)
-    when "has_paid_certificate"
+    when 'has_paid_certificate'
       person_ids = Person.has_paid_certificate.select(:id)
-    when "has_no_paid_certificate"
+    when 'has_no_paid_certificate'
       person_ids = Person.has_no_paid_certificate.select(:id)
-    when "has_friends"
+    when 'has_friends'
       person_ids = Person.with_friendships.select(:id)
-    when "has_no_friends"
+    when 'has_no_friends'
       person_ids = Person.without_friendships.select(:id)
-    when "has_followings"
+    when 'has_followings'
       person_ids = Person.has_followings.select(:id)
-    when "has_no_followings"
+    when 'has_no_followings'
       person_ids = Person.has_no_followings.select(:id)
-    when "has_interests"
+    when 'has_interests'
       person_ids = Person.has_interests.select(:id)
-    when "has_no_interests"
+    when 'has_no_interests'
       person_ids = Person.has_no_interests.select(:id)
-    when "has_created_posts"
+    when 'has_created_posts'
       person_ids = Person.has_posts.select(:id)
-    when "has_no_created_posts"
+    when 'has_no_created_posts'
       person_ids = Person.has_no_posts.select(:id)
-    when "has_facebook_id"
+    when 'has_facebook_id'
       person_ids = Person.has_facebook_id.select(:id)
-    when "account_created_past_24h"
+    when 'account_created_past_24h'
       person_ids = Person.has_created_acc_past_24h.select(:id)
-    when "accoount_created_past_7_days"
+    when 'accoount_created_past_7_days'
       person_ids = Person.has_created_acc_past_7days.select(:id)
     end
 
@@ -403,5 +404,4 @@ private
 
   #   return android
   # end
-
 end

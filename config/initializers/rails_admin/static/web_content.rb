@@ -1,7 +1,9 @@
-RailsAdmin.config do |config|
-  config.included_models.push("Static::WebContent")
+# frozen_string_literal: true
 
-  config.included_models.push("Static::WebContent::Translation")
+RailsAdmin.config do |config|
+  config.included_models.push('Static::WebContent')
+
+  config.included_models.push('Static::WebContent::Translation')
 
   config.model 'Static::WebContent::Translation' do
     visible false
@@ -17,7 +19,7 @@ RailsAdmin.config do |config|
       fields :locale, :title, :content
     end
   end
-  config.model "Static::WebContent" do
+  config.model 'Static::WebContent' do
     configure :translations, :globalize_tabs
 
     list do

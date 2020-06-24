@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: client_to_people
@@ -12,12 +13,9 @@
 #  type       :string           not null
 #
 
-
-
 module Courseware
   module Client
     class Designated < ClientToPerson
-
     end
   end
 end

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-require "swagger_helper"
 
-RSpec.describe "Api::V4::Trivia::RoundsController", type: :request, swagger_doc: "v4/swagger.json" do
-  #path "/trivia/games/{game_id}/rounds" do
+require 'swagger_helper'
+
+RSpec.describe 'Api::V4::Trivia::RoundsController', type: :request, swagger_doc: 'v4/swagger.json' do
+  # path "/trivia/games/{game_id}/rounds" do
   #  get "displays complete leaderboard" do
   #    tags "Trivia"
   #    security [Bearer: []]
@@ -35,8 +36,8 @@ RSpec.describe "Api::V4::Trivia::RoundsController", type: :request, swagger_doc:
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/trivia/games/{game_id}/rounds/{round_id}/change_status" do
+  # end
+  # path "/trivia/games/{game_id}/rounds/{round_id}/change_status" do
   #  post "Changes the status of a round" do
   #    tags "Trivia"
   #    produces "application/vnd.api.v4+json"
@@ -65,5 +66,5 @@ RSpec.describe "Api::V4::Trivia::RoundsController", type: :request, swagger_doc:
   #      run_test!
   #    end
   #  end
-  #end
+  # end
 end

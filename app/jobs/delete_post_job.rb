@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class DeletePostJob < ApplicationJob
   queue_as :default
   include RealTimeHelpers
@@ -6,6 +7,7 @@ class DeletePostJob < ApplicationJob
   def perform(post_id, version = 0)
     post = Post.find(post_id)
     return unless post.deleted?
+
     followers = post.person.followers
 
     return if followers.size == 0
@@ -19,7 +21,6 @@ class DeletePostJob < ApplicationJob
         end
       end
     end
-    client.update("", payload)
-
+    client.update('', payload)
   end
 end

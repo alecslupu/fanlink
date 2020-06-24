@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.post do
   json.id @post.id
   json.body @post.body
@@ -8,5 +9,4 @@ json.post do
     json.username @post.person.username
     json.picture_url @post.person.picture_url
   end
-
 end
