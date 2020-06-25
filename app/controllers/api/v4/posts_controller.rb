@@ -139,7 +139,6 @@ module Api
 
       def apply_filters
         posts = Post.for_product(ActsAsTenant.current_tenant)
-
         posts = if chronological?
                   posts.chronological(sign, post.created_at, post.id)
                 else
