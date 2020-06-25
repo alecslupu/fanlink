@@ -1,7 +1,6 @@
 module Migration
   module Translation
     class LevelJob < ApplicationJob
-
       queue_as :migration
 
       def perform(level_id)

@@ -1,7 +1,6 @@
 module Migration
   module Assets
     class CertificateJob < ::Migration::Assets::ApplicationJob
-
       def perform(certificate_id)
         require 'open-uri'
         certificate = ::Certificate.find(certificate_id)

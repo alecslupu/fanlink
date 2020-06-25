@@ -25,7 +25,6 @@
 #
 
 class Badge < ApplicationRecord
-
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 

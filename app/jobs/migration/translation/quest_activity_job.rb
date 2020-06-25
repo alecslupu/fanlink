@@ -1,7 +1,6 @@
 module Migration
   module Translation
     class QuestActivityJob < ApplicationJob
-
       queue_as :migration
 
       def perform(quest_activity_id)

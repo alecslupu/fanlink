@@ -1,7 +1,6 @@
 module Migration
   module Translation
     class MerchandiseJob < ApplicationJob
-
       queue_as :migration
 
       def perform(merchandise_id)

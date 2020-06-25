@@ -24,7 +24,6 @@
 #
 
 class Merchandise < ApplicationRecord
-
   after_save :adjust_priorities
 
   has_one_attached :picture

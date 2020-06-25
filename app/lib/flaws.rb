@@ -169,7 +169,7 @@ module Flaws
   def self.output_name_for(filename)
     basename = File.basename(filename, File.extname(filename))
     # dirname = video_directory_for(filename)
-    -> (p) { "#{basename}-#{p[:name]}" }
+    ->(p) { "#{basename}-#{p[:name]}" }
   end
 
   def self.thumbnail_name_for(filename)

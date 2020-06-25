@@ -16,7 +16,7 @@
 #
 
 class VideoPage < ApplicationRecord
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
   # require 'streamio-ffmpeg'
 

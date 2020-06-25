@@ -24,7 +24,6 @@
 #
 
 class QuestActivity < ApplicationRecord
-
   translates :description, :name, :hint, :title, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 

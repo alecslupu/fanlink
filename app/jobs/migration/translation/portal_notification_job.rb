@@ -1,7 +1,6 @@
 module Migration
   module Translation
     class PortalNotificationJob < ApplicationJob
-
       queue_as :migration
 
       def perform(portal_notification_id)

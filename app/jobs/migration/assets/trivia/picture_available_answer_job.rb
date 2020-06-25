@@ -1,7 +1,6 @@
 module Migration
   module Assets
     module Trivia
-
       class PictureAvailableAnswerJob < ::Migration::Assets::ApplicationJob
         queue_as :migration
 
