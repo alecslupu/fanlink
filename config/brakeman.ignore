@@ -32,6 +32,126 @@
       "note": "The post body needs to be displayed as raw html, therefore we are ignoring this"
     },
     {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "17d899adaac71fe33069e9738f202b047df0e3d28525c7cc23f2ce7883da644c",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/person_job.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Person.find(person_id), \"picture\", ::Person.find(person_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::PersonJob",
+        "method": "perform"
+      },
+      "user_input": "::Person.find(person_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "1f8e906f56a54ad7a5accf2a94cd17ca66c7bc3c336bac5ea82b5223a63c9242",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/person_certificate_job.rb",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::PersonCertificate.find(post_id), what, ::PersonCertificate.find(post_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::PersonCertificateJob",
+        "method": "perform"
+      },
+      "user_input": "::PersonCertificate.find(post_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "1f8e906f56a54ad7a5accf2a94cd17ca66c7bc3c336bac5ea82b5223a63c9242",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/person_certificate_job.rb",
+      "line": 15,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::PersonCertificate.find(post_id), what, ::PersonCertificate.find(post_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::PersonCertificateJob",
+        "method": "perform"
+      },
+      "user_input": "::PersonCertificate.find(post_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "2a24d3fdf3072b6c00f155c02b6c3dcc8d7888ba1b327a0b3b3e94d47487663c",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/video_page_job.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::VideoPage.find(post_id), \"video\", ::VideoPage.find(post_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::VideoPageJob",
+        "method": "perform"
+      },
+      "user_input": "::VideoPage.find(post_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "696e8926bb784bd646eeb701ae17d22b85b9da6782e7f4ec950436c408a2777a",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/message_job.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Message.find(product_id), \"picture\", ::Message.find(product_id).room.product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::MessageJob",
+        "method": "perform"
+      },
+      "user_input": "::Message.find(product_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "6d112e7c46810c7369574ddf4eec6252ddf1a857d77833c62dc0677570cf6989",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/level_job.rb",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Level.find(level_id), \"picture\", ::Level.find(level_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::LevelJob",
+        "method": "perform"
+      },
+      "user_input": "::Level.find(level_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 105,
       "fingerprint": "89030d6707b5c1879855363a6a7ad5d958f904db7801b1f0fef44b9b67382352",
@@ -49,6 +169,66 @@
       },
       "user_input": ":role",
       "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "9156ac1b0cdd79a1acbe5d658e5a9ffca1c32ca996b633d298752f872a2c2167",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/message_job.rb",
+      "line": 12,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Message.find(product_id), \"audio\", ::Message.find(product_id).room.product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::MessageJob",
+        "method": "perform"
+      },
+      "user_input": "::Message.find(product_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "9669e9b695cb858b3a4c737c0445784494db3497466ab9185570df781abf32ff",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/quest_activity_job.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::QuestActivity.find(quest_id), \"picture\", ::QuestActivity.find(quest_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::QuestActivityJob",
+        "method": "perform"
+      },
+      "user_input": "::QuestActivity.find(quest_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "9d36bd5d59c14534ba6a1c8f8daae9a81c49244da03b4f46418fc766f6e8237f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/certificate_job.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Certificate.find(certificate_id), \"template_image\", ::Certificate.find(certificate_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::CertificateJob",
+        "method": "perform"
+      },
+      "user_input": "::Certificate.find(certificate_id)",
+      "confidence": "Weak",
       "note": ""
     },
     {
@@ -70,8 +250,208 @@
       "user_input": ":role",
       "confidence": "Medium",
       "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "abdfa382283046143a1fc6199a01cf2f867bb3e76a3ed8195c0345a8cf1fa5d8",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/download_file_page_job.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::DownloadFilePage.find(file_id), \"document\", ::DownloadFilePage.find(file_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::DownloadFilePageJob",
+        "method": "perform"
+      },
+      "user_input": "::DownloadFilePage.find(file_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "b2c27e03429106d11739aaa6d8dce8cd4ebe7cdb06004bd7deceeda7a335c89f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/badge_job.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Badge.find(badge_id), \"picture\", ::Badge.find(badge_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::BadgeJob",
+        "method": "perform"
+      },
+      "user_input": "::Badge.find(badge_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "cb585f0762e0db42f3cb825d380f428f35881c8c3493661569efaa7de12c874f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/quest_job.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Quest.find(quest_id), \"picture\", ::Quest.find(quest_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::QuestJob",
+        "method": "perform"
+      },
+      "user_input": "::Quest.find(quest_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "d3820200fd55c9a515af4403583e7572ae7c97bd3f75879c6d89106678954306",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/product_job.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Product.find(product_id), \"logo\", ::Product.find(product_id)))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::ProductJob",
+        "method": "perform"
+      },
+      "user_input": "::Product.find(product_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "d662f64aa00c17bf6ee826d9dedb5eea45a3fa49d98f8ed84a162374557e12e2",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/room_job.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Room.find(room_id), \"picture\", ::Room.find(room_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::RoomJob",
+        "method": "perform"
+      },
+      "user_input": "::Room.find(room_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "ec93aeb65a46319c8e3a98014f2cefcfc0a04ffe7e80122b919898b04fdca523",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/merchandise_job.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Merchandise.find(merchandise_id), \"picture\", ::Merchandise.find(merchandise_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::MerchandiseJob",
+        "method": "perform"
+      },
+      "user_input": "::Merchandise.find(merchandise_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "f1b918b17745ce4ea42cb2ac7bccab5d635a3cc01d5ac4a0b0eff94a7b1b7b5f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/post_job.rb",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Post.find(post_id), what, ::Post.find(post_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::PostJob",
+        "method": "perform"
+      },
+      "user_input": "::Post.find(post_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "f1b918b17745ce4ea42cb2ac7bccab5d635a3cc01d5ac4a0b0eff94a7b1b7b5f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/post_job.rb",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Post.find(post_id), what, ::Post.find(post_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::PostJob",
+        "method": "perform"
+      },
+      "user_input": "::Post.find(post_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "f1b918b17745ce4ea42cb2ac7bccab5d635a3cc01d5ac4a0b0eff94a7b1b7b5f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/post_job.rb",
+      "line": 19,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::Post.find(post_id), what, ::Post.find(post_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::PostJob",
+        "method": "perform"
+      },
+      "user_input": "::Post.find(post_id)",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "fc21410a9203bdf4f69524c57d6280a0563d04d56cc9020b4c3816500ec0686a",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/jobs/migration/assets/image_page_job.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "open(paperclip_asset_url(::ImagePage.find(file_id), \"image\", ::ImagePage.find(file_id).product))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Migration::Assets::ImagePageJob",
+        "method": "perform"
+      },
+      "user_input": "::ImagePage.find(file_id)",
+      "confidence": "Weak",
+      "note": ""
     }
   ],
-  "updated": "2020-06-23 23:31:52 +0300",
+  "updated": "2020-06-25 10:23:51 +0300",
   "brakeman_version": "4.8.2"
 }

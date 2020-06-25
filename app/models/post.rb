@@ -223,16 +223,6 @@ class Post < ApplicationRecord
     post_reactions.count > 0 ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
   end
 
-  # def reaction_breakdown
-  #   Rails.cache.fetch([cache_key, __method__]) {
-  #     (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
-  #   }
-  # end
-
-  # def cached_reaction_count
-  #   Rails.cache.fetch([cache_key, __method__]) { post_reactions.count }
-  # end
-
   def reactions
     Rails.cache.fetch([self, 'post_reactions']) { post_reactions }
   end

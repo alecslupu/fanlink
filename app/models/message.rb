@@ -180,7 +180,7 @@ class Message < ApplicationRecord
     super(only: %i[id body picture_id], methods: %i[create_time picture_url pinned],
           include: { message_mentions: { except: %i[message_id] },
                      person: { only: %i[ id username name designation product_account chat_banned badge_points
-                                         level do_not_message_me pin_messages_from ], methods: %i[level picture_url] } })
+                                       level do_not_message_me pin_messages_from ], methods: %i[level picture_url] } })
   end
 
   def create_time
