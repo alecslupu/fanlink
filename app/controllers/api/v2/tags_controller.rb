@@ -29,7 +29,7 @@ module Api
       #
       # *
       def show
-        @posts = Posts.includes(:tags).where('tags.name = ?', params[:tag_name])
+        @posts = Posts.tagged_with(params[:tag_name])
         return_the @posts
       end
     end

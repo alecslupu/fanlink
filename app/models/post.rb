@@ -82,8 +82,8 @@ class Post < ApplicationRecord
 
   acts_as_taggable
 
-  has_many :post_tags
-  has_many :old_tags, through: :post_tags, source: :tag
+  # has_many :post_tags
+  # has_many :old_tags, through: :post_tags, source: :tag
 
   has_many :post_comments, dependent: :destroy
   has_many :post_reports, dependent: :destroy
@@ -117,14 +117,14 @@ class Post < ApplicationRecord
                      left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
                    }
 
+  scope :for_person, ->(person) { includes(:person).where(person: person) }
+  scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
+  scope :for_category, ->(categories) { joins(:category).where('categories.name IN (?)', categories) }
+  scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
   scope :in_date_range, ->(start_date, end_date) {
     where('posts.created_at >= ? and posts.created_at <= ?',
           start_date.beginning_of_day, end_date.end_of_day)
   }
-  scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
-  scope :for_person, ->(person) { includes(:person).where(person: person) }
-  scope :for_category, ->(categories) { joins(:category).where('categories.name IN (?)', categories) }
-  scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
 
   scope :visible, -> {
                     published.where('(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)',
@@ -150,13 +150,6 @@ class Post < ApplicationRecord
   def cached_person
     Person.cached_find(person_id)
   end
-
-  #
-  # def self.cached_for_person(person)
-  #   Rails.cache.fetch([name, person]) {
-  #     for_person(person)
-  #   }
-  # end
 
   def self.cached_for_product(product)
     Rails.cache.fetch([name, product]) {
@@ -206,11 +199,7 @@ class Post < ApplicationRecord
   end
 
   def reaction_breakdown
-    (post_reactions.count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
-  end
-
-  def cached_tags
-    Rails.cache.fetch([self, 'tags']) { old_tags }
+    post_reactions.count > 0 ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
   end
 
   def reactions
@@ -218,12 +207,12 @@ class Post < ApplicationRecord
   end
 
   def reported?
-    (post_reports.size > 0) ? 'Yes' : 'No'
+    post_reports.size > 0 ? 'Yes' : 'No'
   end
   alias :reported :reported?
 
   def visible?
-    (status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))) ? self : nil
+    status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) ? self : nil
   end
 
   def start_listener
@@ -234,7 +223,7 @@ class Post < ApplicationRecord
   end
 
   def published?
-    status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) && poll == nil
+    status == 'published' && ((starts_at.nil? || starts_at < Time.zone.now) && (ends_at.nil? || ends_at > Time.zone.now)) && poll.nil?
   end
 
   private
