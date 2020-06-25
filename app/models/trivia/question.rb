@@ -48,10 +48,10 @@ module Trivia
     validates :cooldown_period, numericality: { greater_than: 5 },
                                 presence: true
 
-    validates :type, inclusion: { in: %w[Trivia::SingleChoiceQuestion
-                                         Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
-                                         Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion],
-                                  message: '%{value} is not a valid type' }
+    validates :type, inclusion: { in: %w(Trivia::SingleChoiceQuestion
+                Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
+                Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion
+              ), message: '%{value} is not a valid type' }
 
     validates :available_question, presence: {
       message: 'Please make sure selected question type is the compatible with available question type'

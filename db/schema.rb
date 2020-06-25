@@ -637,17 +637,6 @@ ActiveRecord::Schema.define(version: 2020_05_30_202223) do
     t.index ["person_id"], name: "index_notifications_on_person_id"
   end
 
-  create_table "old_tags", force: :cascade do |t|
-    t.text "name", null: false
-    t.integer "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "deleted", default: false, null: false
-    t.integer "posts_count", default: 0
-    t.index ["name"], name: "idx_tag_names"
-    t.index ["product_id"], name: "idx_tag_products"
-  end
-
   create_table "people", force: :cascade do |t|
     t.text "username", null: false
     t.text "username_canonical", null: false
@@ -966,13 +955,6 @@ ActiveRecord::Schema.define(version: 2020_05_30_202223) do
     t.index ["person_id"], name: "index_post_reports_on_person_id"
     t.index ["post_id"], name: "idx_post_reports_post"
     t.index ["status"], name: "index_post_reports_on_status"
-  end
-
-  create_table "post_tags", id: false, force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "tag_id", null: false
-    t.index ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id"
-    t.index ["tag_id", "post_id"], name: "index_post_tags_on_tag_id_and_post_id"
   end
 
   create_table "post_translations", force: :cascade do |t|
@@ -1684,7 +1666,10 @@ ActiveRecord::Schema.define(version: 2020_05_30_202223) do
     t.text "object"
     t.datetime "created_at"
     t.string "locale"
+    t.text "object_changes"
+    t.integer "transaction_id"
     t.index ["item_type", "item_id"], name: "ind_versions_item_type_item_id"
+    t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
   create_table "video_pages", force: :cascade do |t|

@@ -9,7 +9,6 @@ json[:product] = {
   internal_name: person.product.internal_name,
   name: person.product.name
 }
-
 if person.level_progresses.present?
   json[:level_progress] = render(partial: "api/v4/level_progresses/app",
                                  collection: person.level_progresses,
