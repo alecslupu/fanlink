@@ -184,6 +184,66 @@ module Api
         return_the @posts
       end
 
+      # **
+      # @api {get} /posts/list Get a list of posts (ADMIN ONLY).
+      # @apiName ListPosts
+      # @apiGroup Posts
+      # @apiVersion 1.0.0
+      #
+      # @apiDescription
+      #   This gets a list of posts with optional filters and pagination.
+      #
+      # @apiParam (query) {Integer} [page]
+      #   The page number to get. Default is 1.
+      #
+      # @apiParam (query) {Integer} [per_page]
+      #   The pagination division. Default is 25.
+      #
+      # @apiParam (query) {Integer} [id_filter]
+      #   Full match on post.id. Will return either a one element array or an empty array.
+      #
+      # @apiParam (query) {Integer} [person_id_filter]
+      #   Full match on person id.
+      #
+      # @apiParam (query) {String} [person_filter]
+      #   Full or partial match on person username or email.
+      #
+      # @apiParam (query) {String} [body_filter]
+      #   Full or partial match on post body.
+      #
+      # @apiParam (query) {String} [posted_after_filter]
+      #   Posted at or after timestamp. Format: "2018-01-08T12:13:42Z"
+      #
+      # @apiParam (query) {String} [posted_before_filter]
+      #   Posted at or before timestamp. Format: "2018-01-08T12:13:42Z"
+      #
+      # @apiParam (query) {String} [status_filter]
+      #   Post status. Valid values: pending published deleted rejected errored
+      #
+      # @apiSuccessExample {json} Success-Response:
+      #     HTTP/1.1 200 Ok
+      #     "posts": [
+      #       {
+      #         "id": "123",
+      #         "person_id": 123,
+      #         "body": "Do you like my body?",
+      #         "picture_url": "http://example.com/pic.jpg",
+      #         "global": false,
+      #         "starts_at":  "2018-01-01T00:00:00Z",
+      #         "ends_at":    "2018-01-31T23:59:59Z",
+      #         "repost_interval": 0,
+      #         "status": "published",
+      #         "priority": 0,
+      #         "recommended": false,
+      #         "created_at": "2017-12-31T12:13:42Z",
+      #         "updated_at": "2017-12-31T12:13:42Z"
+      #       },...
+      #     ]
+      #
+      # @apiErrorExample {json} Error-Response:
+      #     HTTP/1.1 401 Unauthorized
+      # *
+
       def list
         @posts = paginate apply_filters
         @posts = @posts.tagged_with(params[:tag]) if params[:tag]
