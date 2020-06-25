@@ -31,7 +31,7 @@ module Api
       def index
         if params[:tag_name].present?
           @posts = Post.for_product(ActsAsTenant.current_tenant).visible
-                     .tagged_with(params[:tag_name].try(:downcase), match_all: true)
+                       .tagged_with(params[:tag_name].try(:downcase), match_all: true)
           return_the @posts
         else
           render_422 _('Parameter tag_name is required.')
