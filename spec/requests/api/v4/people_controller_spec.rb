@@ -19,6 +19,7 @@ RSpec.describe 'Api::V4::PeopleController', type: :request, swagger_doc: 'v4/swa
                 in: :query, required: false, type: :string
       parameter name: :username_filter,
                 in: :query, required: false, type: :string
+
       let(:product) { create(:product).internal_name }
       let(:Authorization) { '' }
 
