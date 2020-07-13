@@ -9,7 +9,7 @@
         "eslint-config-prettier": "^3.3.0",
         "redoc-cli": "^0.5.0",
         "replace": "^1.0.0",
-        "standard-version": "^4.4.0"
+        "standard-version": "^8.0.1"
     },
     "scripts": {
         "fix-history": "replace 'https://flink/' 'https://bitbucket.org/' HISTORY.md",
