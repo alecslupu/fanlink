@@ -1,4 +1,17 @@
 GIT
+  remote: https://deployer:_vtAEze_8ZLAcFzF5PCm@gitlab.fan.link/fanlink/fanlink-static
+  revision: 3a0e5861488700d722c8a83ebdf89869c3fa4dd5
+  specs:
+    fanlink-static (0.1.0)
+      activestorage
+      acts_as_tenant
+      globalize
+      globalize-versioning
+      paper_trail
+      rails (~> 6.0.3, >= 6.0.3.2)
+      rails_admin
+
+GIT
   remote: https://github.com/alecslupu/wisper-activerecord.git
   revision: 02de378dd388813e2ed230b841963351253f18aa
   specs:
@@ -22,18 +35,6 @@ GIT
   specs:
     shoulda-matchers (3.1.2)
       activesupport (>= 4.2.0)
-
-PATH
-  remote: ../fanlink-static
-  specs:
-    fanlink-static (0.1.0)
-      activestorage
-      acts_as_tenant
-      globalize
-      globalize-versioning
-      paper_trail
-      rails (~> 6.0.3, >= 6.0.3.2)
-      rails_admin
 
 GEM
   remote: https://rubygems.org/
