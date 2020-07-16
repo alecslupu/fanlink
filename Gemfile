@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 git_source(:fanlink) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://gitlab.fan.link/#{repo_name}"
+  "https://deployer:#{ENV['DEPLOYER_KEY']}@gitlab.fan.link/#{repo_name}"
 end
 
 ruby ENV['CUSTOM_RUBY_VERSION'] || "2.5.1"
@@ -215,7 +215,9 @@ gem "unicode_utils"
 gem "uuidtools"
 gem "wisper", "> 2.0.0"
 gem "wisper-activejob"
-gem "wisper-activerecord", github: "alecslupu/wisper-activerecord"
+
+# remove the git stuff https://github.com/krisleech/wisper-activerecord/pull/30 is approved
+gem "wisper-activerecord", github: 'alecslupu/wisper-activerecord'
 
 # To get video's length
 gem "streamio-ffmpeg"
@@ -257,3 +259,6 @@ gem 'acts-as-taggable-on'
 gem 'globalize'
 gem 'globalize-versioning'
 gem 'rails_admin_globalize_field'
+
+
+gem 'fanlink-static', fanlink: 'fanlink/fanlink-static'

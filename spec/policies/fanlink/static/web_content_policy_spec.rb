@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Static::SystemEmailPolicy, type: :policy do
-  args = [Static::SystemEmail, 'root']
+RSpec.describe Fanlink::Static::WebContentPolicy, type: :policy do
+  args = [Static::WebContent, 'root']
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

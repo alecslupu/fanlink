@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_30_202223) do
+ActiveRecord::Schema.define(version: 2020_07_16_204916) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
@@ -471,6 +472,7 @@ ActiveRecord::Schema.define(version: 2020_05_30_202223) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order", default: 0, null: false
+    t.integer "children_count", default: 0
     t.index ["parent_id"], name: "idx_interests_parent"
     t.index ["product_id"], name: "idx_interests_product"
   end
@@ -1383,6 +1385,7 @@ ActiveRecord::Schema.define(version: 2020_05_30_202223) do
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "public", default: false
     t.index ["slug"], name: "index_static_web_contents_on_slug", unique: true
   end
 
