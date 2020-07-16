@@ -23,6 +23,18 @@ GIT
     shoulda-matchers (3.1.2)
       activesupport (>= 4.2.0)
 
+PATH
+  remote: ../fanlink-static
+  specs:
+    fanlink-static (0.1.0)
+      activestorage
+      acts_as_tenant
+      globalize
+      globalize-versioning
+      paper_trail
+      rails (~> 6.0.3, >= 6.0.3.2)
+      rails_admin
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -814,6 +826,7 @@ DEPENDENCIES
   erubis
   factory_bot_rails (>= 5.2.0)
   faker (>= 2.12.0)
+  fanlink-static!
   fcm
   firebase!
   flag_shih_tzu

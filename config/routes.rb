@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     root to: redirect('/admin_portal')
   end
   get ':product/share_post/:post_id', to: 'posts#share', as: 'cache_post'
-  get '/:product_id/static_content/:slug' => 'static_contents#show'
+
 
   mount Sidekiq::Web, at: '/sidekiq'
 
@@ -39,5 +39,6 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin_portal', as: 'rails_admin'
 
+  mount Fanlink::Static::Engine, at: '/static'
   root to: redirect('https://fan.link')
 end

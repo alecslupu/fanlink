@@ -4,7 +4,7 @@ class PersonMailer < ApplicationMailer
   def onboarding
     @person = Person.find(params[:id])
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'onboarding').first!
+    email = Fanlink::Static::SystemEmail.published_for_product(@person.product).where(slug: 'onboarding').first!
 
     mail_params = {
       from: "#{email.from_name} <#{email.from_email}>",
@@ -21,7 +21,7 @@ class PersonMailer < ApplicationMailer
   def reset_password
     @person = Person.find(params[:id])
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'password-reset').first!
+    email = Fanlink::Static::SystemEmail.published_for_product(@person.product).where(slug: 'password-reset').first!
 
     mail_params = {
       from: "#{email.from_name} <#{email.from_email}>",
@@ -43,7 +43,7 @@ class PersonMailer < ApplicationMailer
     @person = Person.find(params[:id])
     @certcourse_page = CertcoursePage.find(params[:certcourse_page_id])
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'document-download').first!
+    email = Fanlink::Static::SystemEmail.published_for_product(@person.product).where(slug: 'document-download').first!
 
     mail_params = {
       from: "#{email.from_name} <#{email.from_email}>",
@@ -68,7 +68,7 @@ class PersonMailer < ApplicationMailer
     @person_certificate = PersonCertificate.find(params[:person_certificate])
     @email = params[:email]
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'download-certificate').first!
+    email = Fanlink::Static::SystemEmail.published_for_product(@person.product).where(slug: 'download-certificate').first!
     @link = "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{@person.product.internal_name}/#{@person.name}"
 
     attachments.inline[@person_certificate.issued_certificate_pdf.blob.filename.to_s] = @person_certificate.issued_certificate_pdf.download
@@ -92,7 +92,7 @@ class PersonMailer < ApplicationMailer
     @person_certificate = PersonCertificate.find(params[:person_certificate])
     @email = params[:email]
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'assignee-certificate').first!
+    email = Fanlink::Static::SystemEmail.published_for_product(@person.product).where(slug: 'assignee-certificate').first!
     @link = "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{@person.product.internal_name}/#{@person.name}"
 
     attachments.inline[@person_certificate.issued_certificate_pdf.blob.filename.to_s] = @person_certificate.issued_certificate_pdf.download
