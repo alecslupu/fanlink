@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_28_041747) do
+ActiveRecord::Schema.define(version: 2020_07_14_110037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -56,8 +56,8 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -288,7 +288,8 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.integer "person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "type", null: false
+    t.string "type", default: "Courseware::Client::Designated", null: false
+    t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
 
@@ -533,7 +534,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.integer "ttl_hours", default: 672, null: false
     t.integer "person_filter", null: false
     t.string "deep_link", default: "", null: false
-    t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "date", default: -> { "now()" }, null: false
     t.integer "timezone", default: 0, null: false
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
@@ -1383,6 +1384,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "public", default: false
     t.index ["slug"], name: "index_static_web_contents_on_slug", unique: true
   end
 

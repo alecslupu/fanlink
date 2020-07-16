@@ -59,9 +59,11 @@ module Api
               # TODO: simplify this mess
               if new_status == 'friended'
                 if old_status == 'requested' && @relationship.requested_to == current_user
-                  @relationship.friended!
-                  update_relationship_count(current_user, @api_version)
-                  @relationship.friend_request_accepted_push
+                  ActiveRecord::Base.connection_pool.with_connection do
+                    @relationship.friended!
+                    update_relationship_count(current_user, @api_version)
+                    @relationship.friend_request_accepted_push
+                  end
                 else
                   can_status = false
                 end

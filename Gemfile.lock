@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/alecslupu/wisper-activerecord.git
+  revision: 02de378dd388813e2ed230b841963351253f18aa
+  specs:
+    wisper-activerecord (1.0.1)
+      activerecord (>= 3.0.0)
+      wisper (~> 2.0)
+
+GIT
   remote: https://github.com/oscardelben/firebase-ruby.git
   revision: f700437b4a3e3ed8b073c48aacedf8808cf884b6
   specs:
@@ -14,6 +22,18 @@ GIT
   specs:
     shoulda-matchers (3.1.2)
       activesupport (>= 4.2.0)
+
+PATH
+  remote: ../fanlink-static
+  specs:
+    fanlink-static (0.1.0)
+      activestorage
+      acts_as_tenant
+      globalize
+      globalize-versioning
+      paper_trail
+      rails (~> 6.0.3, >= 6.0.3.2)
+      rails_admin
 
 GEM
   remote: https://rubygems.org/
@@ -753,9 +773,6 @@ GEM
     wisper-activejob (1.0.0)
       activejob (>= 4.0.0)
       wisper
-    wisper-activerecord (1.0.0)
-      activerecord (>= 3.0.0)
-      wisper (~> 2.0)
     wisper-rspec (1.1.0)
     zeitwerk (2.3.0)
 
@@ -796,6 +813,7 @@ DEPENDENCIES
   erubis
   factory_bot_rails (>= 5.2.0)
   faker (>= 2.12.0)
+  fanlink-static!
   fcm
   filterrific
   firebase!
@@ -884,7 +902,7 @@ DEPENDENCIES
   whenever
   wisper (> 2.0.0)
   wisper-activejob
-  wisper-activerecord
+  wisper-activerecord!
   wisper-rspec
 
 RUBY VERSION
