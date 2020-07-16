@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 git_source(:fanlink) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "git@gitlab.fan.link:#{repo_name}.git"
+  "https://deployer:#{ENV['DEPLOYER_KEY']}@gitlab.fan.link/#{repo_name}"
 end
 
 ruby ENV['CUSTOM_RUBY_VERSION'] || "2.5.1"

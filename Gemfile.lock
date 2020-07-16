@@ -1,5 +1,5 @@
 GIT
-  remote: git@gitlab.fan.link:fanlink/fanlink-static.git
+  remote: https://deployer:_vtAEze_8ZLAcFzF5PCm@gitlab.fan.link/fanlink/fanlink-static
   revision: 3a0e5861488700d722c8a83ebdf89869c3fa4dd5
   specs:
     fanlink-static (0.1.0)
