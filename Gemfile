@@ -207,6 +207,8 @@ gem "unicode_utils"
 gem "uuidtools"
 gem "wisper", "> 2.0.0"
 gem "wisper-activejob"
+
+# remove the git stuff https://github.com/krisleech/wisper-activerecord/pull/30 is approved
 gem "wisper-activerecord", github: 'alecslupu/wisper-activerecord'
 
 # To get video's length
