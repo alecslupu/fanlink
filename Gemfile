@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 git_source(:fanlink) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://gitlab.fan.link/#{repo_name}"
+  "git@gitlab.fan.link:#{repo_name}.git"
 end
 
 ruby ENV['CUSTOM_RUBY_VERSION'] || "2.5.1"
@@ -251,4 +251,4 @@ gem 'globalize-versioning'
 gem 'rails_admin_globalize_field'
 
 
-gem 'fanlink-static', path: '../fanlink-static'
+gem 'fanlink-static', fanlink: 'fanlink/fanlink-static'
