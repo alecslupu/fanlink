@@ -52,6 +52,7 @@ RailsAdmin.config do |config|
         queryable true
         filterable true
       end
+      field :children_count
       field :children
     end
 

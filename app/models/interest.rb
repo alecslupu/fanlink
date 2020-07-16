@@ -22,7 +22,7 @@ class Interest < ApplicationRecord
   acts_as_tenant(:product)
 
   belongs_to :product
-  belongs_to :parent, class_name: 'Interest', primary_key: :id, optional: true
+  belongs_to :parent, class_name: 'Interest', primary_key: :id, optional: true, counter_cache: :children_count
   has_many :children, class_name: 'Interest', foreign_key: :parent_id, dependent: :destroy
   has_many :person_interests, dependent: :destroy
 
