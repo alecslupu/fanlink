@@ -25,6 +25,17 @@ stages:
     LANG: en_US.UTF-8
     LC_ALL: en_US.UTF-8
   before_script:
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -yqq && apt-get install openssh-client -yqq )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
     - apt-get update -yqq && DEBIAN_FRONTEND=noninteractive apt-get install -yqq locales
     - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
     - dpkg-reconfigure --frontend=noninteractive locales
@@ -48,6 +59,17 @@ stages:
     LC_ALL: en_US.UTF-8
     CUSTOM_RUBY_VERSION: "~> 2.6"
   before_script:
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -yqq && apt-get install openssh-client -yqq )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
     - apt-get update -yqq && DEBIAN_FRONTEND=noninteractive apt-get install -yqq locales
     - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
     - dpkg-reconfigure --frontend=noninteractive locales
@@ -71,6 +93,17 @@ stages:
     LC_ALL: en_US.UTF-8
     CUSTOM_RUBY_VERSION: "~> 2.7"
   before_script:
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -yqq && apt-get install openssh-client -yqq )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
     - apt-get update -yqq && DEBIAN_FRONTEND=noninteractive apt-get install -yqq locales
     - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
     - dpkg-reconfigure --frontend=noninteractive locales
