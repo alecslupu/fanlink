@@ -17,17 +17,6 @@ deploy:staging:
   only:
     - staging
   script:
-    - mkdir ~/.ssh/
-    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
-    - chmod 400 ~/.ssh/id_rsa
-    - echo "Host *" >> ~/.ssh/config
-    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
-    - which ssh-agent || ( apt-get update -yqq && apt-get install openssh-client -yqq )
-    - eval $(ssh-agent -s)
-    - ssh-add
-    - ssh-add -l
-    - export USER="$GITLAB_USER_LOGIN via gitlab"
-    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
     - bundle exec cap staging deploy
 
 deploy:production:
@@ -49,15 +38,4 @@ deploy:production:
   only:
     - tags
   script:
-    - mkdir ~/.ssh/
-    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
-    - chmod 400 ~/.ssh/id_rsa
-    - echo "Host *" >> ~/.ssh/config
-    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
-    - which ssh-agent || ( apt-get update -yqq && apt-get install openssh-client -yqq )
-    - eval $(ssh-agent -s)
-    - ssh-add
-    - ssh-add -l
-    - export USER="$GITLAB_USER_LOGIN via gitlab"
-    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
     - bundle exec cap production deploy
