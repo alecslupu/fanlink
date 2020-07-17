@@ -4,7 +4,7 @@
 #
 # Table name: steps
 #
-#  id             :bigint(8)        not null, primary key
+#  id             :bigint           not null, primary key
 #  quest_id       :integer          not null
 #  display        :text
 #  deleted        :boolean          default(FALSE), not null

@@ -4,7 +4,7 @@
 #
 # Table name: assigned_rewards
 #
-#  id            :bigint(8)        not null, primary key
+#  id            :bigint           not null, primary key
 #  reward_id     :integer          not null
 #  assigned_id   :integer          not null
 #  assigned_type :text             not null

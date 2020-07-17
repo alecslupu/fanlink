@@ -4,15 +4,18 @@
 #
 # Table name: marketing_notifications
 #
-#  id                :bigint(8)        not null, primary key
-#  title             :string           not null
-#  body              :text             not null
-#  person_id         :integer          not null, foreign key
-#  ttl_hours         :integer          not null, default: 672
-#  person_filter     :integer          not null
-#  date              :datetime         not null, default: current timestamp
-#  timezone          :integer          not null, default: 0
-#  product_id        :integer          not null, foreign key
+#  id            :bigint           not null, primary key
+#  title         :string           not null
+#  body          :text             not null
+#  person_id     :bigint           not null
+#  product_id    :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  ttl_hours     :integer          default(672), not null
+#  person_filter :integer          not null
+#  deep_link     :string           default(""), not null
+#  date          :datetime         not null
+#  timezone      :integer          default("UTC -12:00"), not null
 #
 
 class MarketingNotification < ApplicationRecord

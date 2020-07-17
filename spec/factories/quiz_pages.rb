@@ -4,7 +4,7 @@
 #
 # Table name: quiz_pages
 #
-#  id                   :bigint(8)        not null, primary key
+#  id                   :bigint           not null, primary key
 #  certcourse_page_id   :integer
 #  is_optional          :boolean          default(FALSE)
 #  quiz_text            :string           default(""), not null

@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: trivia_subscribers
+#
+#  id             :bigint           not null, primary key
+#  person_id      :bigint
+#  trivia_game_id :bigint
+#  subscribed     :boolean          default(FALSE)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  product_id     :integer          not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Trivia::Subscriber, type: :model do

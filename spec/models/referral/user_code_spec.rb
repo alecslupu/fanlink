@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: referral_user_codes
+#
+#  id          :bigint           not null, primary key
+#  person_id   :bigint
+#  unique_code :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Referral::UserCode, type: :model do

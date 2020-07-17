@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: portal_notifications
+#
+#  id                :bigint           not null, primary key
+#  product_id        :integer          not null
+#  untranslated_body :jsonb            not null
+#  send_me_at        :datetime         not null
+#  sent_status       :integer          default("pending"), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
+
+
 RSpec.describe PortalNotification, type: :model do
   before(:each) do
     ActsAsTenant.current_tenant = create(:product)

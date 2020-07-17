@@ -4,13 +4,13 @@
 #
 # Table name: portal_notifications
 #
-#  id          :bigint(8)        not null, primary key
-#  product_id  :integer          not null
-#  body        :jsonb            not null
-#  send_me_at  :datetime         not null
-#  sent_status :integer          default("pending"), not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                :bigint           not null, primary key
+#  product_id        :integer          not null
+#  untranslated_body :jsonb            not null
+#  send_me_at        :datetime         not null
+#  sent_status       :integer          default("pending"), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 
 class PortalNotification < ApplicationRecord

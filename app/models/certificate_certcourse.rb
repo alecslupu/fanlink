@@ -4,7 +4,7 @@
 #
 # Table name: certificate_certcourses
 #
-#  id               :bigint(8)        not null, primary key
+#  id               :bigint           not null, primary key
 #  certificate_id   :integer
 #  certcourse_id    :integer
 #  certcourse_order :integer          not null
@@ -14,6 +14,7 @@
 #
 
 class CertificateCertcourse < ApplicationRecord
+  self.table_name = :courseware_certificates_courses
   has_paper_trail
 
   acts_as_tenant(:product)

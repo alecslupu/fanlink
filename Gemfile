@@ -6,10 +6,10 @@ git_source(:github) do |repo_name|
 end
 git_source(:fanlink) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://gitlab.fan.link/#{repo_name}"
+  "https://deployer:#{ENV['DEPLOYER_KEY']}@gitlab.fan.link/#{repo_name}.git"
 end
 
-ruby ENV['CUSTOM_RUBY_VERSION'] || "2.5.1"
+ruby ENV["CUSTOM_RUBY_VERSION"] || "2.5.1"
 
 if ENV["RAILS_EDGE"]
   # gem "rails", github: "rails/rails"
@@ -17,22 +17,22 @@ if ENV["RAILS_EDGE"]
 else
   gem "rails", "~> 6.0.3"
   # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 6.0'
+  gem "sass-rails", "~> 6.0"
 end
 
 # gem 'sprockets', '>= 4.0.2'
 # SegFault Bug ... needs investigationbug https://github.com/rails/sprockets/issues/633
-gem 'sprockets', '~> 3.7.2'
+gem "sprockets", "~> 3.7.2"
 
 # gem "rack-cache"
 # Use Puma as the app server
-gem 'puma', '>= 4.3.4'
+gem "puma", ">= 4.3.4"
 
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '>= 2.10.0'
+gem "jbuilder", ">= 2.10.0"
 
 # Use CoffeeScript for .coffee assets and views
 gem "coffee-rails"
@@ -63,7 +63,7 @@ gem "httparty", ">= 0.18.1"
 #
 
 group :production, :staging do
-  gem 'elastic-apm', '>= 3.7.0'
+  gem "elastic-apm", ">= 3.7.0"
 end
 
 group :staging, :development do
@@ -106,8 +106,8 @@ group :development do
   gem "gettext", ">=3.0.2", require: false
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem "spring"
+  gem "spring-watcher-listen", "~> 2.0.0"
   gem "lol_dba"
   gem "seed_dump"
   gem "awesome_print", require: "ap"
@@ -164,14 +164,14 @@ gem "api-pagination"
 # gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
 gem "attribute_normalizer"
 
-gem 'aws-sdk-s3', '>= 1.68.0'
-gem 'aws-sdk-sns', '>= 1.25.1'
-gem 'aws-sdk-sqs', '>= 1.27.1'
-gem 'aws-sdk-elastictranscoder', '>= 1.22.1'
+gem "aws-sdk-s3", ">= 1.68.0"
+gem "aws-sdk-sns", ">= 1.25.1"
+gem "aws-sdk-sqs", ">= 1.27.1"
+gem "aws-sdk-elastictranscoder", ">= 1.22.1"
 
 gem "countries"
 gem "daemons", "~>1.3.1"
-gem 'sidekiq', ">= 6.0.7"
+gem "sidekiq", ">= 6.0.7"
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"
@@ -207,8 +207,9 @@ gem "unicode_utils"
 gem "uuidtools"
 gem "wisper", "> 2.0.0"
 gem "wisper-activejob"
+
 # remove the git stuff https://github.com/krisleech/wisper-activerecord/pull/30 is approved
-gem "wisper-activerecord", github: 'alecslupu/wisper-activerecord'
+gem "wisper-activerecord", github: "alecslupu/wisper-activerecord"
 
 # To get video's length
 gem "streamio-ffmpeg"
@@ -241,10 +242,14 @@ gem "actionpack-page_caching", ">= 1.2.3"
 gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
-gem 'whenever', require: false
+gem "whenever", require: false
 
-gem 'acts-as-taggable-on'
+gem "acts-as-taggable-on"
 
-gem 'globalize'
-gem 'globalize-versioning'
-gem 'rails_admin_globalize_field'
+gem "globalize"
+gem "globalize-versioning"
+gem "rails_admin_globalize_field"
+
+gem "fanlink-static", git: "git@gitlab.fan.link:fanlink/fanlink-static.git", branch: 'master'
+
+gem "fanlink-courseware", path: "../fanlink-courseware"

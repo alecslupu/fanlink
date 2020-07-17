@@ -4,7 +4,7 @@
 #
 # Table name: roles
 #
-#  id                     :bigint(8)        not null, primary key
+#  id                     :bigint           not null, primary key
 #  name                   :string           not null
 #  internal_name          :string           not null
 #  created_at             :datetime         not null
@@ -25,8 +25,8 @@
 #  root                   :integer          default(0), not null
 #  user                   :integer          default(0), not null
 #  portal_notification    :integer          default(0), not null
-#  marketing_notification :integer          default(0), not null
 #  automated_notification :integer          default(0), not null
+#  marketing_notification :integer          default(0), not null
 #
 
 class Role < ApplicationRecord

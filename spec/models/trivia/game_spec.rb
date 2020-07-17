@@ -1,5 +1,29 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: trivia_games
+#
+#  id                   :bigint           not null, primary key
+#  description          :text             default(""), not null
+#  round_count          :integer
+#  long_name            :string           not null
+#  short_name           :string           not null
+#  room_id              :bigint
+#  product_id           :bigint
+#  status               :integer          default("draft"), not null
+#  leaderboard_size     :integer          default(100)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  start_date           :integer
+#  end_date             :integer
+#  picture_file_name    :string
+#  picture_content_type :string
+#  picture_file_size    :integer
+#  picture_updated_at   :datetime
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Trivia::Game, type: :model do

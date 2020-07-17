@@ -1,5 +1,18 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: badge_actions
+#
+#  id             :bigint           not null, primary key
+#  action_type_id :integer          not null
+#  person_id      :integer          not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  identifier     :text
+#
+
+
 RSpec.describe BadgeAction, type: :model do
   subject {
     create(:badge_action,

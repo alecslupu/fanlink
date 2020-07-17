@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: video_pages
+#
+#  id                 :bigint           not null, primary key
+#  certcourse_page_id :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  video_file_name    :string
+#  video_content_type :string
+#  video_file_size    :integer
+#  video_updated_at   :datetime
+#  product_id         :integer          not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe VideoPage, type: :model do

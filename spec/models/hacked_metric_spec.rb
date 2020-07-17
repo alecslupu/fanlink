@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: hacked_metrics
+#
+#  id             :bigint           not null, primary key
+#  product_id     :integer          not null
+#  person_id      :integer          not null
+#  action_type_id :integer          not null
+#  identifier     :integer
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe HackedMetric, type: :model do

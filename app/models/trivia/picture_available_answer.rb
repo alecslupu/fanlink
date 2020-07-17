@@ -4,8 +4,8 @@
 #
 # Table name: trivia_picture_available_answers
 #
-#  id                   :bigint(8)        not null, primary key
-#  question_id          :bigint(8)
+#  id                   :bigint           not null, primary key
+#  question_id          :bigint
 #  is_correct           :boolean          default(FALSE), not null
 #  status               :integer          default("draft"), not null
 #  created_at           :datetime         not null

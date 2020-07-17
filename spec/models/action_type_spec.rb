@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: action_types
+#
+#  id                  :bigint           not null, primary key
+#  name                :text             not null
+#  internal_name       :text             not null
+#  seconds_lag         :integer          default(0), not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  active              :boolean          default(TRUE), not null
+#  badge_actions_count :integer
+#  badges_count        :integer
+#
+
+
 RSpec.describe ActionType, type: :model do
   context 'Valid factory' do
     it { expect(build(:action_type)).to be_valid }

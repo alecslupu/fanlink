@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: urls
+#
+#  id            :bigint           not null, primary key
+#  product_id    :integer          not null
+#  displayed_url :text             not null
+#  protected     :boolean          default(FALSE)
+#  deleted       :boolean          default(FALSE)
+#
+
+
 RSpec.describe Url, type: :model do
   context 'Associations' do
     describe 'should belong to' do

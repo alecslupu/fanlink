@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: referral_referred_people
+#
+#  id         :bigint           not null, primary key
+#  inviter_id :bigint
+#  invited_id :bigint
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+
 module Referral
   class ReferredPerson < ApplicationRecord
     belongs_to :inviter, class_name: 'Person', foreign_key: :inviter_id, primary_key: :id

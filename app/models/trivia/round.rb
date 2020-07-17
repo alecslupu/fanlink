@@ -4,9 +4,9 @@
 #
 # Table name: trivia_rounds
 #
-#  id               :bigint(8)        not null, primary key
+#  id               :bigint           not null, primary key
 #  question_count   :integer
-#  trivia_game_id   :bigint(8)
+#  trivia_game_id   :bigint
 #  leaderboard_size :integer          default(100)
 #  status           :integer          default("draft"), not null
 #  complexity       :integer          default(1)

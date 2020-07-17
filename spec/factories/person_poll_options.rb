@@ -4,7 +4,7 @@
 #
 # Table name: person_poll_options
 #
-#  id             :bigint(8)        not null, primary key
+#  id             :bigint           not null, primary key
 #  person_id      :integer          not null
 #  poll_option_id :integer          not null
 #  created_at     :datetime         not null

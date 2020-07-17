@@ -4,15 +4,17 @@
 #
 # Table name: automated_notifications
 #
-#  id                :bigint(8)        not null, primary key
-#  title             :string           not null
-#  body              :text             not null
-#  person_id         :integer          not null, foreign key
-#  criteria          :integer          not null
-#  enabled           :boolean          not null
-#  product_id        :integer          not null, foreign key
-#  last_sent_at      :datetime
-#  ttl_hours         :integer          not null, default: 672
+#  id           :bigint           not null, primary key
+#  title        :string           not null
+#  body         :text             not null
+#  person_id    :bigint           not null
+#  criteria     :integer          not null
+#  enabled      :boolean          default(FALSE), not null
+#  product_id   :integer          not null
+#  last_sent_at :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  ttl_hours    :integer          default(672), not null
 #
 
 class AutomatedNotification < ApplicationRecord

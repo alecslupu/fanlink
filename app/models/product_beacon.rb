@@ -4,7 +4,7 @@
 #
 # Table name: product_beacons
 #
-#  id          :bigint(8)        not null, primary key
+#  id          :bigint           not null, primary key
 #  product_id  :integer          not null
 #  beacon_pid  :text             not null
 #  attached_to :integer

@@ -4,7 +4,7 @@
 #
 # Table name: certcourses
 #
-#  id                     :bigint(8)        not null, primary key
+#  id                     :bigint           not null, primary key
 #  long_name              :string           not null
 #  short_name             :string           not null
 #  description            :text             default(""), not null
@@ -20,7 +20,7 @@
 #
 
 FactoryBot.define do
-  factory :certcourse do
+  factory :certcourse, class: Certcourse do
     product { current_product }
     long_name { Faker::Lorem.sentence(word_count: 3) }
     short_name { Faker::Lorem.sentence }

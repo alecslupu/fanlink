@@ -4,8 +4,8 @@
 #
 # Table name: trivia_available_answers
 #
-#  id                 :bigint(8)        not null, primary key
-#  trivia_question_id :bigint(8)
+#  id                 :bigint           not null, primary key
+#  trivia_question_id :bigint
 #  name               :string
 #  hint               :string
 #  is_correct         :boolean          default(FALSE), not null

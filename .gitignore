@@ -30,7 +30,7 @@ docs/**/*.json
 FanLink-API-Docs/
 
 coverage
-
+erd.pdf
 .env
 fanlink-*.json
 latest.dump*

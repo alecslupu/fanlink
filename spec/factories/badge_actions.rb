@@ -4,7 +4,7 @@
 #
 # Table name: badge_actions
 #
-#  id             :bigint(8)        not null, primary key
+#  id             :bigint           not null, primary key
 #  action_type_id :integer          not null
 #  person_id      :integer          not null
 #  created_at     :datetime         not null

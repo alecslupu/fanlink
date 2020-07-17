@@ -1,5 +1,18 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: trivia_topics
+#
+#  id         :bigint           not null, primary key
+#  name       :string
+#  status     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  product_id :integer          not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Trivia::Topic, type: :model do

@@ -1,5 +1,18 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: room_memberships
+#
+#  id            :bigint           not null, primary key
+#  room_id       :integer          not null
+#  person_id     :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  message_count :integer          default(0), not null
+#
+
+
 RSpec.describe RoomMembership, type: :model do
   before(:each) do
     ActsAsTenant.current_tenant = create(:product)

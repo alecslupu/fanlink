@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: certificate_certcourses
+#
+#  id               :bigint           not null, primary key
+#  certificate_id   :integer
+#  certcourse_id    :integer
+#  certcourse_order :integer          not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  product_id       :integer          not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe CertificateCertcourse, type: :model do

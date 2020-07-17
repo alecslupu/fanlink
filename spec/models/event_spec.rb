@@ -1,5 +1,25 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: events
+#
+#  id               :bigint           not null, primary key
+#  product_id       :integer          not null
+#  name             :text             not null
+#  description      :text
+#  starts_at        :datetime         not null
+#  ends_at          :datetime
+#  ticket_url       :text
+#  place_identifier :text
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  deleted          :boolean          default(FALSE), not null
+#  latitude         :decimal(10, 6)
+#  longitude        :decimal(10, 6)
+#
+
+
 RSpec.describe Event, type: :model do
   context 'Valid' do
     it { expect(build(:event)).to be_valid }

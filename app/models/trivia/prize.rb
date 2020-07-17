@@ -4,8 +4,8 @@
 #
 # Table name: trivia_prizes
 #
-#  id                 :bigint(8)        not null, primary key
-#  trivia_game_id     :bigint(8)
+#  id                 :bigint           not null, primary key
+#  trivia_game_id     :bigint
 #  status             :integer          default("draft"), not null
 #  description        :text
 #  position           :integer          default(1), not null

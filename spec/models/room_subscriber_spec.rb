@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: room_subscribers
+#
+#  id                     :bigint           not null, primary key
+#  room_id                :bigint           not null
+#  person_id              :bigint           not null
+#  last_message_id        :bigint
+#  last_notification_time :datetime         not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe RoomSubscriber, type: :model do

@@ -4,10 +4,10 @@
 #
 # Table name: course_page_progresses
 #
-#  id                 :bigint(8)        not null, primary key
+#  id                 :bigint           not null, primary key
 #  passed             :boolean          default(FALSE)
-#  certcourse_page_id :bigint(8)
-#  person_id          :bigint(8)
+#  certcourse_page_id :bigint
+#  person_id          :bigint
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #

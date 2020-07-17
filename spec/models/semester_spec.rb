@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: semesters
+#
+#  id          :bigint           not null, primary key
+#  product_id  :integer          not null
+#  name        :text             not null
+#  description :text             not null
+#  start_date  :datetime         not null
+#  end_date    :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  deleted     :boolean          default(FALSE)
+#
+
+
 RSpec.describe Semester, type: :model do
   context 'Associations' do
     describe 'should belong to' do

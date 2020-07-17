@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: post_reactions
+#
+#  id        :bigint           not null, primary key
+#  post_id   :integer          not null
+#  person_id :integer          not null
+#  reaction  :text             not null
+#
+
+
 RSpec.describe PostReaction, type: :model do
   context 'Valid' do
     it 'should create a valid post reaction' do

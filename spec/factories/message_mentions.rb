@@ -4,7 +4,7 @@
 #
 # Table name: message_mentions
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  message_id :integer          not null
 #  person_id  :integer          not null
 #  location   :integer          default(0), not null

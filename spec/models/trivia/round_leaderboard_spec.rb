@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: trivia_round_leaderboards
+#
+#  id              :bigint           not null, primary key
+#  trivia_round_id :bigint
+#  points          :integer
+#  position        :integer
+#  person_id       :bigint
+#  average_time    :integer          default(0)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  product_id      :integer          not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Trivia::RoundLeaderboard, type: :model do

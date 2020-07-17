@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_28_041747) do
+ActiveRecord::Schema.define(version: 2020_07_17_202305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -56,8 +56,8 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -219,60 +219,6 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.index ["product_id"], name: "idx_certcourse_pages_product"
   end
 
-  create_table "certcourses", force: :cascade do |t|
-    t.string "long_name", null: false
-    t.string "short_name", null: false
-    t.text "description", default: "", null: false
-    t.string "color_hex", default: "#000000", null: false
-    t.integer "status", default: 0, null: false
-    t.integer "duration", default: 0, null: false
-    t.boolean "is_completed", default: false
-    t.text "copyright_text", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
-    t.integer "certcourse_pages_count", default: 0
-    t.index ["product_id"], name: "idx_certcourses_product"
-  end
-
-  create_table "certificate_certcourses", force: :cascade do |t|
-    t.integer "certificate_id"
-    t.integer "certcourse_id"
-    t.integer "certcourse_order", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
-    t.index ["certcourse_id", "certificate_id"], name: "idx_uniq_cid_cid", unique: true
-    t.index ["certcourse_id"], name: "idx_certificate_certcourses_certcourse"
-    t.index ["certificate_id"], name: "idx_certificate_certcourses_certificate"
-    t.index ["product_id"], name: "idx_certificate_certcourses_product"
-  end
-
-  create_table "certificates", force: :cascade do |t|
-    t.string "long_name", null: false
-    t.string "short_name", null: false
-    t.text "description", default: "", null: false
-    t.integer "certificate_order", null: false
-    t.string "color_hex", default: "#000000", null: false
-    t.integer "status", default: 0, null: false
-    t.integer "room_id"
-    t.boolean "is_free", default: false
-    t.string "sku_ios", default: "", null: false
-    t.string "sku_android", default: "", null: false
-    t.integer "validity_duration", default: 0, null: false
-    t.integer "access_duration", default: 0, null: false
-    t.boolean "certificate_issuable", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "template_image_file_name"
-    t.string "template_image_content_type"
-    t.integer "template_image_file_size"
-    t.datetime "template_image_updated_at"
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "idx_certificates_product"
-    t.index ["room_id"], name: "idx_certificates_room"
-  end
-
   create_table "client_infos", force: :cascade do |t|
     t.integer "client_id", null: false
     t.string "code", null: false
@@ -288,7 +234,8 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.integer "person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "type", null: false
+    t.string "type", default: "Courseware::Client::Designated", null: false
+    t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
 
@@ -353,6 +300,60 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
     t.index ["semester_id"], name: "index_courses_on_semester_id"
+  end
+
+  create_table "courseware_certificates", force: :cascade do |t|
+    t.string "long_name", null: false
+    t.string "short_name", null: false
+    t.text "description", default: "", null: false
+    t.integer "certificate_order", null: false
+    t.string "color_hex", default: "#000000", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "room_id"
+    t.boolean "is_free", default: false
+    t.string "sku_ios", default: "", null: false
+    t.string "sku_android", default: "", null: false
+    t.integer "validity_duration", default: 0, null: false
+    t.integer "access_duration", default: 0, null: false
+    t.boolean "certificate_issuable", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "template_image_file_name"
+    t.string "template_image_content_type"
+    t.integer "template_image_file_size"
+    t.datetime "template_image_updated_at"
+    t.integer "product_id", null: false
+    t.index ["product_id"], name: "idx_certificates_product"
+    t.index ["room_id"], name: "idx_certificates_room"
+  end
+
+  create_table "courseware_certificates_courses", force: :cascade do |t|
+    t.integer "certificate_id"
+    t.integer "certcourse_id"
+    t.integer "certcourse_order", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["certcourse_id", "certificate_id"], name: "idx_uniq_cid_cid", unique: true
+    t.index ["certcourse_id"], name: "idx_certificate_certcourses_certcourse"
+    t.index ["certificate_id"], name: "idx_certificate_certcourses_certificate"
+    t.index ["product_id"], name: "idx_certificate_certcourses_product"
+  end
+
+  create_table "courseware_courses", force: :cascade do |t|
+    t.string "long_name", null: false
+    t.string "short_name", null: false
+    t.text "description", default: "", null: false
+    t.string "color_hex", default: "#000000", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "duration", default: 0, null: false
+    t.boolean "is_completed", default: false
+    t.text "copyright_text", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.integer "certcourse_pages_count", default: 0
+    t.index ["product_id"], name: "idx_certcourses_product"
   end
 
   create_table "courseware_wishlist_wishlists", force: :cascade do |t|
@@ -471,6 +472,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order", default: 0, null: false
+    t.integer "children_count", default: 0
     t.index ["parent_id"], name: "idx_interests_parent"
     t.index ["product_id"], name: "idx_interests_product"
   end
@@ -533,7 +535,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.integer "ttl_hours", default: 672, null: false
     t.integer "person_filter", null: false
     t.string "deep_link", default: "", null: false
-    t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "date", default: -> { "now()" }, null: false
     t.integer "timezone", default: 0, null: false
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
@@ -1383,6 +1385,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "public", default: false
     t.index ["slug"], name: "index_static_web_contents_on_slug", unique: true
   end
 
@@ -1700,16 +1703,16 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
   add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
-  add_foreign_key "certcourse_pages", "certcourses", name: "fk_certcourse_pages_certcourse"
+  add_foreign_key "certcourse_pages", "courseware_courses", column: "certcourse_id", name: "fk_certcourse_pages_certcourse"
   add_foreign_key "certcourse_pages", "products", name: "fk_certcourse_pages_products", on_delete: :cascade
-  add_foreign_key "certcourses", "products", name: "fk_certcourses_products", on_delete: :cascade
-  add_foreign_key "certificate_certcourses", "certcourses", name: "fk_certificate_certcourses_certcourse"
-  add_foreign_key "certificate_certcourses", "certificates", name: "fk_certificate_certcourses_certificate"
-  add_foreign_key "certificate_certcourses", "products", name: "fk_certificate_certcourses_products", on_delete: :cascade
-  add_foreign_key "certificates", "products", name: "fk_certificates_products", on_delete: :cascade
-  add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
   add_foreign_key "config_items", "products"
-  add_foreign_key "courseware_wishlist_wishlists", "certificates"
+  add_foreign_key "courseware_certificates", "products", name: "fk_certificates_products", on_delete: :cascade
+  add_foreign_key "courseware_certificates", "rooms", name: "fk_certificates_room"
+  add_foreign_key "courseware_certificates_courses", "courseware_certificates", column: "certificate_id", name: "fk_certificate_certcourses_certificate"
+  add_foreign_key "courseware_certificates_courses", "courseware_courses", column: "certcourse_id", name: "fk_certificate_certcourses_certcourse"
+  add_foreign_key "courseware_certificates_courses", "products", name: "fk_certificate_certcourses_products", on_delete: :cascade
+  add_foreign_key "courseware_courses", "products", name: "fk_certcourses_products", on_delete: :cascade
+  add_foreign_key "courseware_wishlist_wishlists", "courseware_certificates", column: "certificate_id"
   add_foreign_key "courseware_wishlist_wishlists", "people"
   add_foreign_key "download_file_pages", "certcourse_pages"
   add_foreign_key "download_file_pages", "products"
@@ -1734,9 +1737,9 @@ ActiveRecord::Schema.define(version: 2020_05_28_041747) do
   add_foreign_key "notifications", "people"
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
   add_foreign_key "people", "roles"
-  add_foreign_key "person_certcourses", "certcourses", name: "fk_person_certcourses_certcourse"
+  add_foreign_key "person_certcourses", "courseware_courses", column: "certcourse_id", name: "fk_person_certcourses_certcourse"
   add_foreign_key "person_certcourses", "people", name: "fk_person_certcourses_person"
-  add_foreign_key "person_certificates", "certificates", name: "fk_person_certificates_certificate"
+  add_foreign_key "person_certificates", "courseware_certificates", column: "certificate_id", name: "fk_person_certificates_certificate"
   add_foreign_key "person_certificates", "people", name: "fk_person_certificates_person"
   add_foreign_key "person_interests", "interests", name: "fk_person_interests_interest"
   add_foreign_key "person_interests", "people", name: "fk_event_checkins_person"

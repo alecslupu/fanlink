@@ -1,5 +1,25 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: levels
+#
+#  id                       :bigint           not null, primary key
+#  product_id               :integer          not null
+#  name_text_old            :text
+#  internal_name            :text             not null
+#  points                   :integer          default(1000), not null
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  picture_file_name        :string
+#  picture_content_type     :string
+#  picture_file_size        :integer
+#  picture_updated_at       :datetime
+#  untranslated_description :jsonb            not null
+#  untranslated_name        :jsonb            not null
+#
+
+
 RSpec.describe Level, type: :model do
   context 'Valid' do
     it { expect(build(:level)).to be_valid }

@@ -4,7 +4,7 @@
 #
 # Table name: certcourse_pages
 #
-#  id                    :bigint(8)        not null, primary key
+#  id                    :bigint           not null, primary key
 #  certcourse_id         :integer
 #  certcourse_page_order :integer          default(0), not null
 #  duration              :integer          default(0), not null

@@ -1,5 +1,28 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: rooms
+#
+#  id                       :bigint           not null, primary key
+#  product_id               :integer          not null
+#  name_text_old            :text
+#  created_by_id            :integer
+#  status                   :integer          default("inactive"), not null
+#  public                   :boolean          default(FALSE), not null
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  picture_file_name        :string
+#  picture_content_type     :string
+#  picture_file_size        :integer
+#  picture_updated_at       :datetime
+#  untranslated_name        :jsonb            not null
+#  untranslated_description :jsonb            not null
+#  order                    :integer          default(0), not null
+#  last_message_timestamp   :bigint           default(0)
+#
+
+
 RSpec.describe Room, type: :model do
   before(:each) do
     @name = 'abc'

@@ -4,7 +4,7 @@
 #
 # Table name: relationships
 #
-#  id              :bigint(8)        not null, primary key
+#  id              :bigint           not null, primary key
 #  requested_by_id :integer          not null
 #  requested_to_id :integer          not null
 #  status          :integer          default("requested"), not null

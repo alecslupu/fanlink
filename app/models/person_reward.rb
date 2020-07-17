@@ -4,7 +4,7 @@
 #
 # Table name: person_rewards
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  person_id  :integer          not null
 #  reward_id  :integer          not null
 #  source     :text             not null

@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: step_unlocks
+#
+#  id        :bigint           not null, primary key
+#  step_id   :uuid             not null
+#  unlock_id :uuid             not null
+#
+
+
 RSpec.describe StepUnlock, type: :model do
   context 'Associations' do
     describe '#should belong to' do

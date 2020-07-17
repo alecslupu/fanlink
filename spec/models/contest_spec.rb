@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: contests
+#
+#  id            :bigint           not null, primary key
+#  product_id    :integer          not null
+#  name          :text             not null
+#  internal_name :text
+#  description   :text             not null
+#  rules_url     :text
+#  contest_url   :text
+#  status        :integer          default(0)
+#  deleted       :boolean          default(FALSE)
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Contest, type: :model do

@@ -4,7 +4,7 @@
 #
 # Table name: activity_types
 #
-#  id          :bigint(8)        not null, primary key
+#  id          :bigint           not null, primary key
 #  activity_id :integer          not null
 #  atype_old   :text
 #  value       :jsonb            not null

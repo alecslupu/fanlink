@@ -4,13 +4,13 @@
 #
 # Table name: trivia_games
 #
-#  id                   :bigint(8)        not null, primary key
+#  id                   :bigint           not null, primary key
 #  description          :text             default(""), not null
 #  round_count          :integer
 #  long_name            :string           not null
 #  short_name           :string           not null
-#  room_id              :bigint(8)
-#  product_id           :bigint(8)
+#  room_id              :bigint
+#  product_id           :bigint
 #  status               :integer          default("draft"), not null
 #  leaderboard_size     :integer          default(100)
 #  created_at           :datetime         not null

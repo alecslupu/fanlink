@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: trivia_rounds
+#
+#  id               :bigint           not null, primary key
+#  question_count   :integer
+#  trivia_game_id   :bigint
+#  leaderboard_size :integer          default(100)
+#  status           :integer          default("draft"), not null
+#  complexity       :integer          default(1)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  start_date       :integer
+#  end_date         :integer
+#  product_id       :integer          not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Trivia::Round, type: :model do

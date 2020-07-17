@@ -4,7 +4,7 @@
 #
 # Table name: people
 #
-#  id                              :bigint(8)        not null, primary key
+#  id                              :bigint           not null, primary key
 #  username                        :text             not null
 #  username_canonical              :text             not null
 #  email                           :text
@@ -29,8 +29,8 @@
 #  reset_password_email_sent_at    :datetime
 #  product_account                 :boolean          default(FALSE), not null
 #  chat_banned                     :boolean          default(FALSE), not null
+#  untranslated_designation        :jsonb            not null
 #  recommended                     :boolean          default(FALSE), not null
-#  designation                     :jsonb            not null
 #  gender                          :integer          default("unspecified"), not null
 #  birthdate                       :date
 #  city                            :text
@@ -40,8 +40,9 @@
 #  terminated                      :boolean          default(FALSE)
 #  terminated_reason               :text
 #  deleted                         :boolean          default(FALSE)
-#  role_id                         :bigint(8)
+#  role_id                         :bigint
 #  authorized                      :boolean          default(TRUE), not null
+#  last_activity_at                :datetime
 #
 
 require 'faker'

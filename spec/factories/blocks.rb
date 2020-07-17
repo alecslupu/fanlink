@@ -4,7 +4,7 @@
 #
 # Table name: blocks
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  blocker_id :integer          not null
 #  blocked_id :integer          not null
 #  created_at :datetime         not null

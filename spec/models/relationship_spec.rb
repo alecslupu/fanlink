@@ -1,5 +1,18 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: relationships
+#
+#  id              :bigint           not null, primary key
+#  requested_by_id :integer          not null
+#  requested_to_id :integer          not null
+#  status          :integer          default("requested"), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+
 RSpec.describe Relationship, type: :model do
   context 'Associations' do
     describe 'should belong to' do

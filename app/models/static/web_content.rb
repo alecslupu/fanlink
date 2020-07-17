@@ -4,13 +4,12 @@
 #
 # Table name: static_web_contents
 #
-#  id         :bigint(8)        not null, primary key
-#  content    :jsonb            not null
-#  title      :jsonb            not null
+#  id         :bigint           not null, primary key
 #  slug       :string           not null
 #  product_id :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  public     :boolean          default(FALSE)
 #
 module Static
   class WebContent < ApplicationRecord

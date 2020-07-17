@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: blocks
+#
+#  id         :bigint           not null, primary key
+#  blocker_id :integer          not null
+#  blocked_id :integer          not null
+#  created_at :datetime         not null
+#
+
+
 RSpec.describe Block, type: :model do
   context 'Validation' do
     it { expect(build(:block)).to be_valid }

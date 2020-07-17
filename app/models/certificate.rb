@@ -27,7 +27,10 @@
 #  product_id                  :integer          not null
 #
 
-class Certificate < ApplicationRecord
+class Certificate < Fanlink::Courseware::Certificate
+
+  self.table_name = :courseware_certificates
+
   has_paper_trail
 
   include AttachmentSupport
@@ -41,6 +44,18 @@ class Certificate < ApplicationRecord
 
   has_many :certificate_certcourses
   has_many :certcourses, through: :certificate_certcourses, dependent: :destroy
+
+  #
+  # def self.certcourses
+  #   ActiveSupport::Deprecation.warn(" certcourses association in #{class_name} is deprecated. Use certificates_courses")
+  #   courses
+  # end
+  #
+  # def self.certificate_certcourses
+  #   ActiveSupport::Deprecation.warn(" certificate_certcourses association in #{class_name} is deprecated. Use certificates_courses")
+  #   certificates_courses
+  # end
+
 
   has_many :person_certificates
   has_many :people, through: :person_certificates, dependent: :destroy

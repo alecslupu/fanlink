@@ -4,8 +4,8 @@
 #
 # Table name: config_items
 #
-#  id               :bigint(8)        not null, primary key
-#  product_id       :bigint(8)
+#  id               :bigint           not null, primary key
+#  product_id       :bigint
 #  item_key         :string
 #  item_value       :string
 #  type             :string

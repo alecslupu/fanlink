@@ -4,13 +4,13 @@
 #
 # Table name: client_to_people
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  status     :integer          not null
 #  client_id  :integer          not null
 #  person_id  :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  type       :string           not null
+#  type       :string           default("Courseware::Client::Designated"), not null
 #
 
 module Courseware

@@ -4,7 +4,7 @@
 #
 # Table name: badge_awards
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  person_id  :integer          not null
 #  badge_id   :integer          not null
 #  created_at :datetime         not null

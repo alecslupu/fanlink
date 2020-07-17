@@ -4,7 +4,7 @@
 #
 # Table name: certcourses
 #
-#  id                     :bigint(8)        not null, primary key
+#  id                     :bigint           not null, primary key
 #  long_name              :string           not null
 #  short_name             :string           not null
 #  description            :text             default(""), not null
@@ -20,6 +20,9 @@
 #
 
 class Certcourse < ApplicationRecord
+
+  self.table_name = :courseware_courses
+
   has_paper_trail
   acts_as_tenant(:product)
   belongs_to :product

@@ -4,7 +4,7 @@
 #
 # Table name: posts
 #
-#  id                   :bigint(8)        not null, primary key
+#  id                   :bigint           not null, primary key
 #  person_id            :integer          not null
 #  body_text_old        :text
 #  global               :boolean          default(FALSE), not null
@@ -18,7 +18,7 @@
 #  picture_content_type :string
 #  picture_file_size    :integer
 #  picture_updated_at   :datetime
-#  body                 :jsonb            not null
+#  untranslated_body    :jsonb            not null
 #  priority             :integer          default(0), not null
 #  recommended          :boolean          default(FALSE), not null
 #  notify_followers     :boolean          default(FALSE), not null
@@ -35,6 +35,7 @@
 #  video_transcoded     :jsonb            not null
 #  post_comments_count  :integer          default(0)
 #  pinned               :boolean          default(FALSE)
+#  post_reports_count   :integer          default(0)
 #
 
 FactoryBot.define do

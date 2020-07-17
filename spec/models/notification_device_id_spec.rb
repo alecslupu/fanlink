@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: notification_device_ids
+#
+#  id                :bigint           not null, primary key
+#  person_id         :integer          not null
+#  device_identifier :text             not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  device_type       :integer          default("unknown"), not null
+#  not_registered    :boolean          default(FALSE), not null
+#
+
+
 RSpec.describe NotificationDeviceId, type: :model do
   # before(:each) do
   #   @product = create(:product)

@@ -4,7 +4,7 @@
 #
 # Table name: person_certcourses
 #
-#  id                     :bigint(8)        not null, primary key
+#  id                     :bigint           not null, primary key
 #  person_id              :integer          not null
 #  certcourse_id          :integer          not null
 #  last_completed_page_id :integer

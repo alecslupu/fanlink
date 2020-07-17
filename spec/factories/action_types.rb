@@ -4,7 +4,7 @@
 #
 # Table name: action_types
 #
-#  id                  :bigint(8)        not null, primary key
+#  id                  :bigint           not null, primary key
 #  name                :text             not null
 #  internal_name       :text             not null
 #  seconds_lag         :integer          default(0), not null

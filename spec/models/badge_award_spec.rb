@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: badge_awards
+#
+#  id         :bigint           not null, primary key
+#  person_id  :integer          not null
+#  badge_id   :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+
 RSpec.describe BadgeAward, type: :model do
   context 'Valid factory' do
     it { expect(create(:badge_award)).to be_valid }

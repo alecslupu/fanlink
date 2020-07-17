@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: certcourse_pages
+#
+#  id                    :bigint           not null, primary key
+#  certcourse_id         :integer
+#  certcourse_page_order :integer          default(0), not null
+#  duration              :integer          default(0), not null
+#  background_color_hex  :string           default("#000000"), not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  content_type          :string
+#  product_id            :integer          not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe CertcoursePage, type: :model do

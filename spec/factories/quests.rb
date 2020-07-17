@@ -4,25 +4,25 @@
 #
 # Table name: quests
 #
-#  id                   :bigint(8)        not null, primary key
-#  product_id           :integer          not null
-#  event_id             :integer
-#  name_text_old        :text
-#  internal_name        :text             not null
-#  description_text_old :text
-#  status               :integer          default("active"), not null
-#  starts_at            :datetime         not null
-#  ends_at              :datetime
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  picture_file_name    :string
-#  picture_content_type :string
-#  picture_file_size    :integer
-#  picture_updated_at   :datetime
-#  picture_meta         :text
-#  name                 :jsonb            not null
-#  description          :jsonb            not null
-#  reward_id            :integer
+#  id                       :bigint           not null, primary key
+#  product_id               :integer          not null
+#  event_id                 :integer
+#  name_text_old            :text
+#  internal_name            :text             not null
+#  description_text_old     :text
+#  status                   :integer          default("active"), not null
+#  starts_at                :datetime         not null
+#  ends_at                  :datetime
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  picture_file_name        :string
+#  picture_content_type     :string
+#  picture_file_size        :integer
+#  picture_updated_at       :datetime
+#  picture_meta             :text
+#  untranslated_name        :jsonb            not null
+#  untranslated_description :jsonb            not null
+#  reward_id                :integer
 #
 
 require 'faker'

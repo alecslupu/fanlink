@@ -4,9 +4,9 @@
 #
 # Table name: trivia_answers
 #
-#  id                 :bigint(8)        not null, primary key
-#  person_id          :bigint(8)
-#  trivia_question_id :bigint(8)
+#  id                 :bigint           not null, primary key
+#  person_id          :bigint
+#  trivia_question_id :bigint
 #  answered           :string
 #  time               :integer
 #  is_correct         :boolean          default(FALSE)

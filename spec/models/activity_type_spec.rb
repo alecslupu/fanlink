@@ -1,5 +1,20 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: activity_types
+#
+#  id          :bigint           not null, primary key
+#  activity_id :integer          not null
+#  atype_old   :text
+#  value       :jsonb            not null
+#  deleted     :boolean          default(FALSE), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  atype       :integer          default("beacon"), not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe ActivityType, type: :model do

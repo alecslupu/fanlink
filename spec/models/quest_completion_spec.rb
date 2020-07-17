@@ -1,5 +1,20 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: quest_completions
+#
+#  id          :bigint           not null, primary key
+#  person_id   :integer          not null
+#  activity_id :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  status_old  :text             default("0"), not null
+#  step_id     :integer          not null
+#  status      :integer          default("locked"), not null
+#
+
+
 RSpec.describe QuestCompletion, type: :model do
   context 'Associations' do
     describe 'it should validation associatations for' do

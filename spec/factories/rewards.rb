@@ -4,9 +4,9 @@
 #
 # Table name: rewards
 #
-#  id                     :bigint(8)        not null, primary key
+#  id                     :bigint           not null, primary key
 #  product_id             :integer          not null
-#  name                   :jsonb            not null
+#  untranslated_name      :jsonb            not null
 #  internal_name          :text             not null
 #  reward_type            :integer          default("badge"), not null
 #  reward_type_id         :integer          not null

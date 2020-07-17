@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: answers
+#
+#  id           :bigint           not null, primary key
+#  quiz_page_id :integer
+#  description  :string           default(""), not null
+#  is_correct   :boolean          default(FALSE)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  product_id   :integer          not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do

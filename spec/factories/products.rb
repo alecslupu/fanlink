@@ -4,7 +4,7 @@
 #
 # Table name: products
 #
-#  id                   :bigint(8)        not null, primary key
+#  id                   :bigint           not null, primary key
 #  name                 :string           not null
 #  internal_name        :string           not null
 #  enabled              :boolean          default(FALSE), not null

@@ -4,10 +4,10 @@
 #
 # Table name: trivia_available_questions
 #
-#  id              :bigint(8)        not null, primary key
+#  id              :bigint           not null, primary key
 #  title           :string
-#  cooldown_period :integer
-#  time_limit      :integer
+#  cooldown_period :integer          default(6)
+#  time_limit      :integer          default(30)
 #  status          :integer
 #  type            :string
 #  topic_id        :integer

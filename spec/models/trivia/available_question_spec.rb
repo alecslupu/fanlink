@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: trivia_available_questions
+#
+#  id              :bigint           not null, primary key
+#  title           :string
+#  cooldown_period :integer          default(6)
+#  time_limit      :integer          default(30)
+#  status          :integer
+#  type            :string
+#  topic_id        :integer
+#  complexity      :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  product_id      :integer          not null
+#
+
+
 require 'rails_helper'
 
 RSpec.describe Trivia::AvailableQuestion, type: :model do

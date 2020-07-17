@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-# == Schema Informationr_digits
+# == Schema Information
 #
 # Table name: trivia_round_leaderboards
 #
-#  id              :bigint(8)        not null, primary key
-#  trivia_round_id :bigint(8)
+#  id              :bigint           not null, primary key
+#  trivia_round_id :bigint
 #  points          :integer
 #  position        :integer
-#  person_id       :bigint(8)
+#  person_id       :bigint
 #  average_time    :integer          default(0)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

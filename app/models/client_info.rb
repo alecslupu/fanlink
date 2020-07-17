@@ -4,7 +4,7 @@
 #
 # Table name: client_infos
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  client_id  :integer          not null
 #  code       :string           not null
 #  created_at :datetime         not null

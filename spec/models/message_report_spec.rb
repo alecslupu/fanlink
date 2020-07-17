@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: message_reports
+#
+#  id         :bigint           not null, primary key
+#  message_id :integer          not null
+#  person_id  :integer          not null
+#  reason     :text
+#  status     :integer          default("pending"), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+
 RSpec.describe MessageReport, type: :model do
   context 'Associations' do
     it { should belong_to(:message) }

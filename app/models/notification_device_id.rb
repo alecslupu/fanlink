@@ -4,7 +4,7 @@
 #
 # Table name: notification_device_ids
 #
-#  id                :bigint(8)        not null, primary key
+#  id                :bigint           not null, primary key
 #  person_id         :integer          not null
 #  device_identifier :text             not null
 #  created_at        :datetime         not null

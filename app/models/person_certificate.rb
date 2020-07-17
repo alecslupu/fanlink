@@ -4,13 +4,13 @@
 #
 # Table name: person_certificates
 #
-#  id                                    :bigint(8)        not null, primary key
+#  id                                    :bigint           not null, primary key
 #  person_id                             :integer          not null
 #  certificate_id                        :integer          not null
 #  full_name                             :string           default(""), not null
 #  issued_date                           :datetime
 #  validity_duration                     :integer          default(0), not null
-#  amount_paid                           :bigint(8)        default(0), not null
+#  amount_paid                           :bigint           default(0), not null
 #  currency                              :string           default(""), not null
 #  fee_waived                            :boolean          default(FALSE)
 #  purchased_waived_date                 :datetime
