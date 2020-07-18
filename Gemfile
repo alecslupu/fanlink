@@ -253,4 +253,3 @@ gem 'globalize-versioning'
 gem 'rails_admin_globalize_field'
 
 gem "fanlink-static", git: "git@gitlab.fan.link:fanlink/fanlink-static.git", branch: 'master'
-gem 'fanlink-courseware', path: '../fanlink-courseware'

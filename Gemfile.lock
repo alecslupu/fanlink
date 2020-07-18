@@ -37,14 +37,6 @@ GIT
     shoulda-matchers (3.1.2)
       activesupport (>= 4.2.0)
 
-PATH
-  remote: ../fanlink-courseware
-  specs:
-    fanlink-courseware (0.1.0)
-      acts_as_tenant
-      paper_trail
-      rails (~> 6.0.3, >= 6.0.3.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -827,7 +819,6 @@ DEPENDENCIES
   erubis
   factory_bot_rails (>= 5.2.0)
   faker (>= 2.12.0)
-  fanlink-courseware!
   fanlink-static!
   fcm
   firebase!
