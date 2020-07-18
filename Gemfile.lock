@@ -1,18 +1,4 @@
 GIT
-  remote: git@gitlab.fan.link:fanlink/fanlink-static.git
-  revision: 3a0e5861488700d722c8a83ebdf89869c3fa4dd5
-  branch: master
-  specs:
-    fanlink-static (0.1.0)
-      activestorage
-      acts_as_tenant
-      globalize
-      globalize-versioning
-      paper_trail
-      rails (~> 6.0.3, >= 6.0.3.2)
-      rails_admin
-
-GIT
   remote: https://github.com/alecslupu/wisper-activerecord.git
   revision: 02de378dd388813e2ed230b841963351253f18aa
   specs:
@@ -819,7 +805,6 @@ DEPENDENCIES
   erubis
   factory_bot_rails (>= 5.2.0)
   faker (>= 2.12.0)
-  fanlink-static!
   fcm
   firebase!
   flag_shih_tzu
