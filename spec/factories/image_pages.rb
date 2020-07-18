@@ -19,6 +19,6 @@ FactoryBot.define do
   factory :image_page do
     certcourse_page { create(:certcourse_page) }
     product { current_product }
-    image { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
+    image { fixture_file_upload('spec/fixtures/images/large.jpg', 'image/jpeg') }
   end
 end

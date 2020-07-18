@@ -20,7 +20,7 @@ RSpec.describe Api::V3::LevelsController, type: :controller do
         expect(json['levels'].size).to eq(3)
         json['levels'].each do |level|
           expect(level['picture_url']).not_to eq(nil)
-          expect(Level.find(level['id']).picture.exists?).to eq(true)
+          expect(Level.find(level['id']).picture.attached?).to eq(true)
         end
       end
     end

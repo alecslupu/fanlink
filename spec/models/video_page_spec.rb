@@ -12,18 +12,16 @@ RSpec.describe VideoPage, type: :model do
     let(:certcourse_page) { create(:certcourse_page, duration: duration + 1) }
 
     it "changes the duration of the certcourse's page" do
-      allow_any_instance_of(described_class).to receive(:video_duration) {
-        duration
-      }
+      allow_any_instance_of(described_class).to receive(:duration) { duration }
 
-      create(
-        :video_page,
-        certcourse_page: certcourse_page,
-        product: Product.find(certcourse_page.product_id),
-        video: fixture_file_upload(
-          Rails.root.join('spec', 'fixtures', 'videos', 'short_video.mp4')
+      ActsAsTenant.with_tenant(certcourse_page.product) do
+        VideoPage.create(
+          certcourse_page: certcourse_page,
+          video: fixture_file_upload(
+            Rails.root.join('spec', 'fixtures', 'videos', 'short_video.mp4')
+          )
         )
-      )
+      end
 
       expect(certcourse_page.duration).to eq(duration)
     end

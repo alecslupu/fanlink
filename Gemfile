@@ -109,7 +109,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "lol_dba"
-  gem "seed_dump"
+  # gem "seed_dump"
   gem "awesome_print", require: "ap"
   #
   gem "memory_profiler"
@@ -174,7 +174,7 @@ gem "daemons", "~>1.3.1"
 gem 'sidekiq', ">= 6.0.7"
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
-gem "filterrific"
+# gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "flag_shih_tzu"
 gem "gettext_i18n_rails"
@@ -212,6 +212,9 @@ gem "wisper-activerecord", github: 'alecslupu/wisper-activerecord'
 
 # To get video's length
 gem "streamio-ffmpeg"
+
+gem 'active_storage_validations'
+gem "image_processing"
 
 gem "mini_magick"
 # gem "rmagick"

@@ -109,5 +109,7 @@ module Fanlink
       :port => Rails.application.secrets.smtp_port,
       :authentication => Rails.application.secrets.smtp_authentication
     }
+
+    config.active_storage.variant_processor = :mini_magick
   end
 end

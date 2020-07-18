@@ -30,10 +30,9 @@ RSpec.describe Api::V4::QuestActivitiesController, type: :controller do
             picture: fixture_file_upload('images/better.png', 'image/png')
           }
         }
-
         expect(response).to be_successful
-        expect(QuestActivity.last.picture.exists?).to be_truthy
-        expect(json['activity']['picture_url']).to include('better.png')
+        expect(QuestActivity.last.picture.attached?).to be_truthy
+        expect(json['activity']['picture_url']).to be_present
       end
     end
   end

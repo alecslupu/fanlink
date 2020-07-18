@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 json = render(partial: 'api/v4/people/app', locals: { person: person }, handlers: :jb)
 
 json[:email] = person.email

@@ -18,7 +18,7 @@
 class QuizPage < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
-  belongs_to :certcourse_page
+  belongs_to :certcourse_page, autosave: true
 
   has_many :answers, dependent: :destroy
   scope :for_product, ->(product) { where(product_id: product.id) }
@@ -27,7 +27,6 @@ class QuizPage < ApplicationRecord
 
   validate :just_me
   validates :quiz_text, presence: true
-  after_save :set_certcourse_page_content_type
 
   validate :mandatory_checks, unless: Proc.new { |page| page.is_optional }
   validate :answer_checks, unless: Proc.new { |page| page.is_survey }
@@ -88,11 +87,5 @@ class QuizPage < ApplicationRecord
         errors.add(:wrong_answer_page_id, _('Wrong page needs to come before this page.'))
       end
     end
-  end
-
-  def set_certcourse_page_content_type
-    page = CertcoursePage.find(self.certcourse_page_id)
-    page.content_type = content_type
-    page.save
   end
 end

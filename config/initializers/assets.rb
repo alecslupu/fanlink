@@ -18,5 +18,5 @@ if Rails::VERSION::MAJOR < 6
   Rails.application.config.assets.precompile += %w(rails_admin/custom/theming.css rails_admin/custom/ui.js)
 else
   ActiveSupport::Deprecation.warn("Rails.application.config.assets.precompile should be removed on rails 6 #{__FILE__}")
-
 end
+Rails.application.config.assets.precompile += %w(bootstrap-notify.js)

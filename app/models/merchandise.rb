@@ -24,11 +24,21 @@
 #
 
 class Merchandise < ApplicationRecord
-  include AttachmentSupport
-
   after_save :adjust_priorities
 
-  has_image_called :picture
+  has_one_attached :picture
+
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
+
+  def picture_url
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
+  end
+
+  def picture_optimal_url
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
+  end
 
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true

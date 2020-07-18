@@ -140,7 +140,6 @@ RSpec.configure do |config|
   config.include RSpec::Rails::RequestExampleGroup, type: :request
   config.include RSpec::Rails::RequestExampleGroup, type: :feature, file_path: /spec\/(step|feature)/
 
-  config.include MandrillMailerHelper
   config.include ProductHelpers
   config.include SessionHelpers
   config.include RequestHelpers
