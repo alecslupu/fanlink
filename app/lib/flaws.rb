@@ -151,7 +151,7 @@ module Flaws
   #   MIME type, the `:src` is the URL for the video.
   #
   def self.transcoded_summary_for(filename, preset_ids)
-    directory = video_directory_for(filename)
+    # directory = video_directory_for(filename)
     basename = File.basename(filename, File.extname(filename))
 
     presets = VIDEO_PRESETS.select { |p| preset_ids.include?(p[:id]) }
@@ -159,7 +159,7 @@ module Flaws
     # hls_entry = [] if (presets.all? { |p| !p[:playlist] })
 
     non_hls = lambda { |p| !p[:playlist] }
-    to_summary = lambda { |p| { type: p[:mime], src: "#{s3_server}#{directory}/#{basename}-#{p[:name]}" } }
+    to_summary = lambda { |p| { type: p[:mime], src: "#{s3_server}/#{basename}-#{p[:name]}" } }
     # hls_entry + presets.select(&non_hls).map(&to_summary)
     presets.select(&non_hls).map(&to_summary)
   end
@@ -168,8 +168,8 @@ module Flaws
 
   def self.output_name_for(filename)
     basename = File.basename(filename, File.extname(filename))
-    dirname = File.dirname(filename).gsub('original', 'transcoded')
-    ->(p) { "#{dirname}/#{basename}-#{p[:name]}" }
+    # dirname = video_directory_for(filename)
+    ->(p) { "#{basename}-#{p[:name]}" }
   end
 
   def self.thumbnail_name_for(filename)

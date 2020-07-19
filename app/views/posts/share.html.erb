@@ -1,8 +1,8 @@
 <body>
   <div class="post">
-    <%= image_tag(@post.person.picture.exists? ? @post.person.picture.url :  "https://fanlinkmusic.com/static/img/pattern-2.487c258.jpg" , class: "profile-picture") %>
+    <%= image_tag(@post.person.picture.attached? ? @post.person.picture_url :  "https://fanlinkmusic.com/static/img/pattern-2.487c258.jpg" , class: "profile-picture") %>
     <h2><%= @post.person.username %></h2>
-    <%= image_tag(@post.picture.exists? ? @post.picture.url :  "https://fanlinkmusic.com/static/img/pattern-2.487c258.jpg" , class: "post-picture") %>
+    <%= image_tag(@post.picture.attached? ? @post.picture_url :  "https://fanlinkmusic.com/static/img/pattern-2.487c258.jpg" , class: "post-picture") %>
     <p> <%= @post.body.present? ? @post.body.html_safe : "" %> </p>
   </div>
 </body>

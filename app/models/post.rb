@@ -39,16 +39,15 @@
 #
 
 class Post < ApplicationRecord
-  include AttachmentSupport
   # include Post::PortalFilters
 
-  scope :id_filter, -> (query) { where(id: query.to_i) }
-  scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
-  scope :person_filter, -> (query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
-  scope :body_filter, -> (query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
-  scope :posted_after_filter, -> (query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
-  scope :posted_before_filter, -> (query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
-  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :id_filter, ->(query) { where(id: query.to_i) }
+  scope :person_id_filter, ->(query) { where(person_id: query.to_i) }
+  scope :person_filter, ->(query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
+  scope :body_filter, ->(query) { joins(:translations).where('post_translations.body ilike ?', "%#{query}%") }
+  scope :posted_after_filter, ->(query) { where('posts.created_at >= ?', Time.zone.parse(query)) }
+  scope :posted_before_filter, ->(query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
+  scope :status_filter, ->(query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { sign == '>' ? after_post(created_at, id) : before_post(created_at, id) }
   scope :after_post, ->(created_at, id) { where("posts.created_at > ? AND posts.id > ?", created_at, id) }
   scope :before_post, ->(created_at, id) { where("posts.created_at < ? AND posts.id < ?", created_at, id) }
@@ -75,9 +74,36 @@ class Post < ApplicationRecord
   translates :body, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
-  has_image_called :picture
-  has_audio_called :audio
-  has_video_called :video
+  has_one_attached :picture
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
+
+  def picture_url
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
+  end
+
+  def picture_optimal_url
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
+  end
+
+  has_one_attached :audio
+
+  validates :audio, size: { less_than: 10.megabytes },
+                    content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
+
+  def audio_url
+    audio.attached? ? [Rails.application.secrets.cloudfront_url, audio.key].join('/')  : nil
+  end
+
+  has_one_attached :video
+
+  validates :video,
+            content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts video/quicktime] }
+
+  def video_url
+    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
+  end
 
   has_paper_trail
 
@@ -102,7 +128,7 @@ class Post < ApplicationRecord
 
   validate :sensible_dates
 
-  after_create :start_transcoding, if: :video_file_name
+  after_create :start_transcoding, if: proc { |record| record.video.attached? }
 
   after_save :expire_cache
   before_destroy :expire_cache, prepend: true
@@ -175,8 +201,9 @@ class Post < ApplicationRecord
 
     if msg['userMetadata']['sizer']
       # There should be exactly one entry in `outputs`.
+
       width, height = msg['outputs'][0].values_at('width', 'height').map(&:to_i)
-      job = Flaws.finish_transcoding(post.video.path,
+      job = Flaws.finish_transcoding(post.video.key,
                                      width, height,
                                      post_id: post.id.to_s)
       post.video_job_id = job.id
@@ -191,8 +218,7 @@ class Post < ApplicationRecord
   def video_thumbnail
     return if video_transcoded.empty?
 
-    id = File.basename(self.video.path, File.extname(self.video.path))
-    url = "#{self.video.s3_bucket.url}/thumbnails/#{id}-00001.jpg"
+    video.attached? ? "#{Rails.application.secrets.cloudfront_url}/thumbnails/#{video.key}-00001.jpg" : nil
   end
 
   def flush_cache
@@ -250,7 +276,7 @@ class Post < ApplicationRecord
   # listener use this to tell the Post that it is all finished.
   #
   def youve_been_transcoded!(preset_ids)
-    self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(self.video.path, preset_ids))
+    self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(self.video.key, preset_ids))
     self.video_job_id = nil
     self.save!
   end

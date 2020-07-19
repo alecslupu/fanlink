@@ -46,9 +46,11 @@
 #
 
 class Person < ApplicationRecord
+  include Courseware::Wishlist::PersonRelation
+  include Referral::PersonRelation
+
   attr_accessor :trigger_admin
 
-  include AttachmentSupport
   authenticates_with_sorcery!
 
   attr_accessor :app
@@ -58,7 +60,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum old_role: %i[normal staff admin super_admin root client client_portal]
+  enum old_role: %i[normal staff admin super_admin root client client_portal marketingrole]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -66,7 +68,20 @@ class Person < ApplicationRecord
 
   belongs_to :product
 
-  has_image_called :picture
+  has_one_attached :picture
+
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
+
+  def picture_url
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
+  end
+
+  def picture_optimal_url
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
+  end
+
   has_many :message_reports, dependent: :destroy
   has_many :notification_device_ids, dependent: :destroy
   has_many :post_reactions, dependent: :destroy

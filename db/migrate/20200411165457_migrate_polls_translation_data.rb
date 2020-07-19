@@ -4,7 +4,7 @@ class MigratePollsTranslationData < ActiveRecord::Migration[5.2]
       Poll::Translation.destroy_all
       PaperTrail.enabled = false
       Poll.where.not(untranslated_description: nil).find_each do |poll|
-        Migration::PollJob.set(wait_until: 30.minutes.from_now).perform_later(poll.id)
+        Migration::Translation::PollJob.set(wait_until: 30.minutes.from_now).perform_later(poll.id)
       end
       PaperTrail.enabled = true
     end

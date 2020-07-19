@@ -33,10 +33,9 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
             picture: fixture_file_upload('images/better.png', 'image/png')
           }
         }
-
         expect(response).to have_http_status(200)
-        expect(Badge.last.picture.exists?).to be_truthy
-        expect(json['badge']['picture_url']).to include('better.png')
+        expect(Badge.last.picture.attached?).to be_truthy
+        expect(json['badge']['picture_url']).to include(Rails.application.secrets.cloudfront_url)
       end
     end
 
@@ -78,10 +77,9 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
             picture: fixture_file_upload('images/better.png', 'image/png')
           }
         }
-
         expect(response).to have_http_status(200)
-        expect(Badge.last.picture.exists?).to be_truthy
-        expect(json['badge']['picture_url']).to include('better.png')
+        expect(Badge.last.picture.attached?).to be_truthy
+        expect(json['badge']['picture_url']).to include(Rails.application.secrets.cloudfront_url)
       end
     end
   end

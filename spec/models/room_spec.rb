@@ -57,9 +57,10 @@ RSpec.describe Room, type: :model do
         expect(build(:room)).to be_valid
       end
     end
+
     describe 'should not allow private rooms to have pictures' do
       it do
-        room = build(:room, public: false, picture_file_name: 'foo.jpg')
+        room = build(:room, public: false, picture: fixture_file_upload('spec/fixtures/images/large.jpg', 'image/jpeg'))
         expect(room).not_to be_valid
         expect(room.errors[:picture]).not_to be_empty
       end

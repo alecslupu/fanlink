@@ -20,21 +20,27 @@ class DownloadFilePage < ApplicationRecord
   scope :for_product, ->(product) { where(product_id: product.id) }
   acts_as_tenant(:product)
   belongs_to :product
+  belongs_to :certcourse_page, autosave: true
 
-  belongs_to :certcourse_page
+  # include AttachmentSupport
+  has_one_attached :document
 
-  include AttachmentSupport
+  validates :document, attached: true,
+                       size: { less_than: 5.megabytes },
+                       content_type: { in: %w[application/pdf] }
 
-  has_pdf_file_called :document
+  def document_url
+    document.attached? ? [Rails.application.secrets.cloudfront_url, document.key].join('/') : nil
+  end
 
-  after_save :set_certcourse_page_content_type
+  def document_content_type
+    document.attached? ? document.blob.content_type : nil
+  end
+
   validate :just_me
 
   validates :caption, presence: true
   validates :certcourse_page_id, uniqueness: true
-
-  # validates_uniqueness_of :certcourse_page_id
-  validates_attachment_presence :document
 
   def course_name
     certcourse_page.certcourse.to_s
@@ -54,11 +60,5 @@ class DownloadFilePage < ApplicationRecord
     if child && child != self
       errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
     end
-  end
-
-  def set_certcourse_page_content_type
-    page = CertcoursePage.find(self.certcourse_page_id)
-    page.content_type = content_type
-    page.save
   end
 end

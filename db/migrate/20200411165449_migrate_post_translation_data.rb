@@ -4,7 +4,7 @@ class MigratePostTranslationData < ActiveRecord::Migration[5.2]
       Post::Translation.destroy_all
       Post.includes(:person).where.not(untranslated_body: nil).find_each do |post|
         next unless post.person.present?
-        Migration::PostJob.set(wait_until: 30.minutes.from_now).perform_later(post.id)
+        Migration::Translation::PostJob.set(wait_until: 30.minutes.from_now).perform_later(post.id)
       end
     end
   end

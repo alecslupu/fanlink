@@ -78,5 +78,5 @@ Rails.application.configure do
   # for page caching
   config.action_controller.perform_caching = true
   config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public"
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
 end

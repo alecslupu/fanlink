@@ -59,8 +59,8 @@ RSpec.describe Api::V3::RoomsController, type: :controller do
 
         expect(response).to be_successful
         expect(json['room']['picture_url']).not_to eq(nil)
-        expect(Room.find(public_room.id).picture.exists?).to eq(true)
-        expect(json['room']['picture_url']).to include('better.png')
+        expect(Room.find(public_room.id).picture.attached?).to eq(true)
+        expect(json['room']['picture_url']).not_to be_nil
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe Api::V3::RoomsController, type: :controller do
         put :update, params: { id: public_room.id, room: { picture: fixture_file } }
 
         expect(response).to be_successful
-        expect(Room.find(public_room.id).picture.exists?).to eq(false)
+        expect(Room.find(public_room.id).picture.attached?).to eq(false)
         expect(json['room']['picture_url']).to eq(nil)
       end
     end

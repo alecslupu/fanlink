@@ -62,6 +62,8 @@ RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v
         }
         let!(:video_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
+            allow_any_instance_of(VideoPage).to receive(:duration).and_return(31)
+
             certcourse_page = create(:certcourse_page, certcourse: person_certcourse.certcourse)
             create(:video_page, certcourse_page: certcourse_page)
           }

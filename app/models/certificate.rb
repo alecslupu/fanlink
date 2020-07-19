@@ -31,9 +31,21 @@ class Certificate < Fanlink::Courseware::Certificate
 
   self.table_name = :courseware_certificates
 
-  include AttachmentSupport
+  has_one_attached :template_image
 
-  has_image_called :template_image
+  validates :template_image, size: { less_than: 5.megabytes },
+                             content_type: { in: %w[image/jpeg image/gif image/png] },
+                             dimension: { width: { min: 3840, max: 3840 },
+                                          height: { min: 2967, max: 2967 }, message: 'Must be 3840x2967' }
+
+  def template_image_url
+    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.key].join('/') : nil
+  end
+
+  def template_image_optimal_url
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
+    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.variant(opts).processed.key].join('/') : nil
+  end
 
   belongs_to :room, optional: true
 
@@ -44,8 +56,6 @@ class Certificate < Fanlink::Courseware::Certificate
   has_many :people, through: :person_certificates, dependent: :destroy
 
   validates_uniqueness_to_tenant :certificate_order
-  validates_attachment_presence :template_image
-  validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _('Must be 3840x2967') }
 
   enum status: %i[entry live]
   # validate :certificate_order_validation, if: :certificate_order_changed?

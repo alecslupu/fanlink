@@ -23,7 +23,6 @@
 #
 
 class Message < ApplicationRecord
-  include AttachmentSupport
   # include Message::FilterrificImpl
 
   scope :person_name_query, ->(query) { joins(:person).where('people.name ilike ?', "%#{query}%") }
@@ -58,18 +57,6 @@ class Message < ApplicationRecord
       nil
     end
   }
-
-  filterrific(
-    default_filter_params: { sorted_by: 'created_at desc' },
-    available_filters: [
-      :sorted_by,
-      :person_username_query,
-      :room_query,
-      :id_query,
-      :body_query,
-      :with_reported_status
-    ]
-  )
 
   def self.options_for_reported_status_filter
     %w(Any Yes No)
@@ -129,8 +116,28 @@ class Message < ApplicationRecord
   belongs_to :person, touch: true
   belongs_to :room, touch: true
 
-  has_image_called :picture
-  has_audio_called :audio
+  has_one_attached :picture
+
+  validates :picture, size: { less_than: 5.megabytes },
+                      content_type: { in: %w[image/jpeg image/gif image/png] }
+
+  def picture_url
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
+  end
+
+  def picture_optimal_url
+    opts = { resize: '1000', auto_orient: true, quality: 75 }
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
+  end
+
+  has_one_attached :audio
+
+  validates :audio, size: { less_than: 10.megabytes },
+                    content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
+
+  def audio_url
+    audio.attached? ? [Rails.application.secrets.cloudfront_url, audio.key].join('/') : nil
+  end
 
   has_many :message_mentions, dependent: :destroy
   has_many :message_reports, dependent: :destroy

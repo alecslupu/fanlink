@@ -26,7 +26,7 @@ module Api
       protected
 
       def tpl_handler
-        'jb'
+        :jb
       end
 
       private

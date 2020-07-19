@@ -34,5 +34,6 @@ FactoryBot.define do
     internal_name { 'quest_1' }
     description { Faker::Lorem.paragraph }
     starts_at { Time.zone.now }
+    picture { fixture_file_upload('spec/fixtures/images/better.png', 'image/png') }
   end
 end
