@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: certcourses
+# Table name: courseware_courses
 #
 #  id                     :bigint           not null, primary key
 #  long_name              :string           not null
@@ -11,7 +11,6 @@
 #  color_hex              :string           default("#000000"), not null
 #  status                 :integer          default("entry"), not null
 #  duration               :integer          default(0), not null
-#  is_completed           :boolean          default(FALSE)
 #  copyright_text         :text             default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

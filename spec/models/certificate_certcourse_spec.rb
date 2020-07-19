@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: certificate_certcourses
+# Table name: courseware_certificates_courses
 #
 #  id               :bigint           not null, primary key
 #  certificate_id   :integer

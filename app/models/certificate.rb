@@ -2,9 +2,9 @@
 
 # == Schema Information
 #
-# Table name: certificates
+# Table name: courseware_certificates
 #
-#  id                          :bigint(8)        not null, primary key
+#  id                          :bigint           not null, primary key
 #  long_name                   :string           not null
 #  short_name                  :string           not null
 #  description                 :text             default(""), not null
@@ -31,31 +31,14 @@ class Certificate < Fanlink::Courseware::Certificate
 
   self.table_name = :courseware_certificates
 
-  has_paper_trail
-
   include AttachmentSupport
 
   has_image_called :template_image
 
-  acts_as_tenant(:product)
-  belongs_to :product
-
   belongs_to :room, optional: true
 
-  has_many :certificate_certcourses
-  has_many :certcourses, through: :certificate_certcourses, dependent: :destroy
-
-  #
-  # def self.certcourses
-  #   ActiveSupport::Deprecation.warn(" certcourses association in #{class_name} is deprecated. Use certificates_courses")
-  #   courses
-  # end
-  #
-  # def self.certificate_certcourses
-  #   ActiveSupport::Deprecation.warn(" certificate_certcourses association in #{class_name} is deprecated. Use certificates_courses")
-  #   certificates_courses
-  # end
-
+  # has_many :certificate_certcourses
+  # has_many :certcourses, through: :certificate_certcourses, dependent: :destroy, counter_cache: true
 
   has_many :person_certificates
   has_many :people, through: :person_certificates, dependent: :destroy
@@ -64,19 +47,10 @@ class Certificate < Fanlink::Courseware::Certificate
   validates_attachment_presence :template_image
   validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _('Must be 3840x2967') }
 
-  validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
-
   enum status: %i[entry live]
-  validates :long_name, :short_name, :description, :certificate_order, :status, :sku_ios, :sku_android, :validity_duration, :access_duration, presence: true
-
-  validates :validity_duration, numericality: { greater_than: 0 }
-  validates :access_duration, numericality: { greater_than: 0 }
-
-  validates :certificate_order, numericality: { only_integer: true, greater_than: 0 }
   # validate :certificate_order_validation, if: :certificate_order_changed?
 
   scope :live_status, -> { where(status: 'live') }
-  scope :for_product, ->(product) { where(product_id: product.id) }
 
   def title
     short_name

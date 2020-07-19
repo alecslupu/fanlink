@@ -54,18 +54,18 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
 
         CertificateCertcourse.create(
           certificate_id: certificate.id,
-          certcourse_id: certcourses.first.id,
-          certcourse_order: 1
+          course_id: certcourses.first.id,
+          course_order: 1
         )
         CertificateCertcourse.create(
           certificate_id: certificate.id,
-          certcourse_id: certcourses.second.id,
-          certcourse_order: 2
+          course_id: certcourses.second.id,
+          course_order: 2
         )
         CertificateCertcourse.create(
           certificate_id: certificate.id,
-          certcourse_id: entry_certcourse.id,
-          certcourse_order: 2
+          course_id: entry_certcourse.id,
+          course_order: 2
         )
 
         get :index, params: { person_id: person1.id, certificate_id: certificate.id }
@@ -92,32 +92,32 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         entry_certcourse = create(:certcourse, status: 'entry')
 
         CertificateCertcourse.create(certificate_id: certificate.id,
-                                     certcourse_id: certcourses.first.id,
-                                     certcourse_order: 1)
+                                     course_id: certcourses.first.id,
+                                     course_order: 1)
         CertificateCertcourse.create(certificate_id: certificate.id,
-                                     certcourse_id: certcourses.second.id,
-                                     certcourse_order: 2)
+                                     course_id: certcourses.second.id,
+                                     course_order: 2)
         CertificateCertcourse.create(certificate_id: certificate.id,
-                                     certcourse_id: entry_certcourse.id,
-                                     certcourse_order: 3)
+                                     course_id: entry_certcourse.id,
+                                     course_order: 3)
         CertificateCertcourse.create(certificate_id: certificate2.id,
-                                     certcourse_id: certcourses.first.id,
-                                     certcourse_order: 1)
+                                     course_id: certcourses.first.id,
+                                     course_order: 1)
         CertificateCertcourse.create(certificate_id: certificate2.id,
-                                     certcourse_id: certcourses.second.id,
-                                     certcourse_order: 2)
+                                     course_id: certcourses.second.id,
+                                     course_order: 2)
         CertificateCertcourse.create(certificate_id: certificate2.id,
-                                     certcourse_id: entry_certcourse.id,
-                                     certcourse_order: 3)
+                                     course_id: entry_certcourse.id,
+                                     course_order: 3)
         CertificateCertcourse.create(certificate_id: certificate3.id,
-                                     certcourse_id: certcourses.first.id,
-                                     certcourse_order: 1)
+                                     course_id: certcourses.first.id,
+                                     course_order: 1)
         CertificateCertcourse.create(certificate_id: certificate3.id,
-                                     certcourse_id: certcourses.second.id,
-                                     certcourse_order: 2)
+                                     course_id: certcourses.second.id,
+                                     course_order: 2)
         CertificateCertcourse.create(certificate_id: certificate3.id,
-                                     certcourse_id: entry_certcourse.id,
-                                     certcourse_order: 3)
+                                     course_id: entry_certcourse.id,
+                                     course_order: 3)
 
         get :index, params: { person_id: person1.id, certificate_id: certificate.id }
         expect(response).to be_successful
@@ -138,7 +138,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         person1.certificates << certificate
 
         certcourse = create(:certcourse)
-        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourse.id, certcourse_order: 1)
+        CertificateCertcourse.create(certificate_id: certificate.id, course_id: certcourse.id, course_order: 1)
         certcourse_pages = create_list(:certcourse_page, 2, certcourse: certcourse, content_type: 'quiz')
 
         quiz_page1 = create(:quiz_page, is_optional: true, is_survey: false)
@@ -189,7 +189,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         certificate = create(:certificate)
         person1.certificates << certificate
         certcourse = create(:certcourse)
-        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourse.id, certcourse_order: 1)
+        CertificateCertcourse.create(certificate_id: certificate.id, course_id: certcourse.id, course_order: 1)
         certcourse_pages = create(:certcourse_page, certcourse: certcourse, content_type: 'not_quiz')
         expect(certcourse.certcourse_pages.count).to eq(1)
         get :show, params: { person_id: person1.id, certificate_id: certificate.id, id: certcourse.id }

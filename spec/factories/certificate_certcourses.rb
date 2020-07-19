@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: certificate_certcourses
+# Table name: courseware_certificates_courses
 #
 #  id               :bigint           not null, primary key
 #  certificate_id   :integer
@@ -16,8 +16,8 @@
 FactoryBot.define do
   factory :certificate_certcourse do
     product { current_product }
-    certcourse { create(:certcourse) }
+    course { create(:certcourse) }
     certificate { create(:certificate) }
-    certcourse_order { Faker::Number.unique(20).between(from: 1, to: 500) }
+    course_order { Faker::Number.unique(20).between(from: 1, to: 500) }
   end
 end

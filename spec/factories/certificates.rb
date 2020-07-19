@@ -2,9 +2,9 @@
 
 # == Schema Information
 #
-# Table name: certificates
+# Table name: courseware_certificates
 #
-#  id                          :bigint(8)        not null, primary key
+#  id                          :bigint           not null, primary key
 #  long_name                   :string           not null
 #  short_name                  :string           not null
 #  description                 :text             default(""), not null

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_17_202305) do
+ActiveRecord::Schema.define(version: 2020_07_19_070819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -329,14 +329,14 @@ ActiveRecord::Schema.define(version: 2020_07_17_202305) do
 
   create_table "courseware_certificates_courses", force: :cascade do |t|
     t.integer "certificate_id"
-    t.integer "certcourse_id"
-    t.integer "certcourse_order", null: false
+    t.integer "course_id"
+    t.integer "course_order", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id", null: false
-    t.index ["certcourse_id", "certificate_id"], name: "idx_uniq_cid_cid", unique: true
-    t.index ["certcourse_id"], name: "idx_certificate_certcourses_certcourse"
     t.index ["certificate_id"], name: "idx_certificate_certcourses_certificate"
+    t.index ["course_id", "certificate_id"], name: "idx_uniq_cid_cid", unique: true
+    t.index ["course_id"], name: "idx_certificate_certcourses_certcourse"
     t.index ["product_id"], name: "idx_certificate_certcourses_product"
   end
 
@@ -1709,7 +1709,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_202305) do
   add_foreign_key "courseware_certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "courseware_certificates", "rooms", name: "fk_certificates_room"
   add_foreign_key "courseware_certificates_courses", "courseware_certificates", column: "certificate_id", name: "fk_certificate_certcourses_certificate"
-  add_foreign_key "courseware_certificates_courses", "courseware_courses", column: "certcourse_id", name: "fk_certificate_certcourses_certcourse"
+  add_foreign_key "courseware_certificates_courses", "courseware_courses", column: "course_id", name: "fk_certificate_certcourses_certcourse"
   add_foreign_key "courseware_certificates_courses", "products", name: "fk_certificate_certcourses_products", on_delete: :cascade
   add_foreign_key "courseware_courses", "products", name: "fk_certcourses_products", on_delete: :cascade
   add_foreign_key "courseware_wishlist_wishlists", "courseware_certificates", column: "certificate_id"
