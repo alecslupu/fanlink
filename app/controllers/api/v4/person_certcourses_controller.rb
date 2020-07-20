@@ -26,7 +26,7 @@ module Api
         end
 
         if @person_certcourse.save
-          PersonCertificate.update_certification_status(@person_certcourse.certcourse.certificate_ids, current_user.id)
+          PersonCertificate.update_certification_status(@person_certcourse.course.certificate_ids, current_user.id)
           return_the @person_certcourse, handler: 'jb'
         else
           render_422(_('Something went wrong.'))
@@ -46,7 +46,7 @@ module Api
       end
 
       def person_certcourse
-        @person_certcourse ||= certcourse.person_certcourses.where(person_id: current_user.id).first_or_create!
+        @person_certcourse ||= certcourse.person_courses.where(person_id: current_user.id).first_or_create!
       end
 
       def register_regress

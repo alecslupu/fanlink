@@ -48,6 +48,8 @@
 class Person < ApplicationRecord
   include Courseware::Wishlist::PersonRelation
   include Referral::PersonRelation
+  include Fanlink::Courseware::PersonExtension
+
 
   attr_accessor :trigger_admin
 
@@ -109,13 +111,6 @@ class Person < ApplicationRecord
   has_many :person_poll_options
   has_many :poll_options, through: :person_poll_options, dependent: :destroy
 
-  has_many :person_certificates
-  has_many :certificates, through: :person_certificates, dependent: :destroy
-
-  has_many :course_page_progresses, dependent: :destroy
-
-  has_many :person_certcourses
-  has_many :certcourses, through: :person_certcourses, dependent: :destroy
 
   has_many :badge_actions, dependent: :destroy
   has_many :badge_awards

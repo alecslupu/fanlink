@@ -34,16 +34,4 @@
 #
 
 class PersonCertificate < Fanlink::Courseware::PersonCertificate
-  def issued_certificate_image_url
-    ActiveSupport::Deprecation.warn("PersonCertificate#issued_certificate_image_url is deprecated")
-    AttachmentPresenter.new(issued_certificate_image).url
-  end
-
-  def issued_certificate_pdf_url
-    ActiveSupport::Deprecation.warn("PersonCertificate#issued_certificate_pdf_url is deprecated")
-    AttachmentPresenter.new(issued_certificate_pdf).url
-  end
-
-  scope :for_android, ->(person) { where(person_id: person.id, purchased_platform: 'android') }
-  scope :for_ios, ->(person) { where(person_id: person.id, purchased_platform: 'ios') }
 end

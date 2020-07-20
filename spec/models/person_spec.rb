@@ -185,10 +185,10 @@ RSpec.describe Person, type: :model do
       it { should have_many(:interests).through(:person_interests) }
       it { should have_many(:poll_options).through(:person_poll_options) }
       it { should have_many(:course_page_progresses) }
-      it { should have_many(:person_certificates) }
-      it { should have_many(:certificates).through(:person_certificates) }
-      it { should have_many(:person_certcourses) }
-      it { should have_many(:certcourses).through(:person_certcourses) }
+      # it { should have_many(:person_certificates) }
+      # it { should have_many(:certificates).through(:person_certificates) }
+      # it { should have_many(:person_certcourses) }
+      # it { should have_many(:certcourses).through(:person_certcourses) }
 
       it { should have_many(:badge_actions) }
       it { should have_many(:badge_awards) }

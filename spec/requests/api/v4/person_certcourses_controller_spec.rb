@@ -15,7 +15,7 @@ RSpec.describe 'Api::V4::PersonCertcoursesController', type: :request, swagger_d
       consumes 'multipart/form-data'
 
       parameter name: :page_id, in: :formData, type: :string, required: false
-      let(:certcourse_page) { create(:certcourse_page, certcourse: person_certcourse.certcourse) }
+      let(:certcourse_page) { create(:certcourse_page, certcourse: person_certcourse.course) }
       let(:download_file_page) { create(:download_file_page, certcourse_page: certcourse_page) }
       let(:page_id) { download_file_page.certcourse_page.id }
       let!(:static_system_email) { create(:static_system_email, name: 'document-download') }
@@ -52,7 +52,7 @@ RSpec.describe 'Api::V4::PersonCertcoursesController', type: :request, swagger_d
       let(:quiz_page) { create(:quiz_page) }
       let(:answer_id) { quiz_page.answers.first.id }
       let(:page_id) { quiz_page.certcourse_page.id }
-      let(:person_certcourse) { create(:person_certcourse, certcourse: quiz_page.certcourse_page.certcourse) }
+      let(:person_certcourse) { create(:person_certcourse, course: quiz_page.certcourse_page.certcourse) }
       let('person_certcourse[certcourse_id]') { quiz_page.certcourse_page.certcourse.id }
 
       produces 'application/vnd.api.v4+json'

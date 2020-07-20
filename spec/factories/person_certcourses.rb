@@ -16,6 +16,7 @@
 FactoryBot.define do
   factory :person_certcourse do
     person { create(:person) }
-    certcourse { create(:certcourse) }
+    course { create(:certcourse) }
+    product { current_product }
   end
 end

@@ -51,7 +51,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           quiz_page = create(:quiz_page, certcourse_page: certcourse_page, that_is_mandatory: true)
 
           person_certcourse = create(:person_certcourse,
-                                     certcourse: certcourse,
+                                     course: certcourse,
                                      person: person,
                                      is_completed: false,
                                      last_completed_page_id: quiz_page.wrong_answer_page_id)
@@ -84,7 +84,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certcourse_page = create(:certcourse_page, certcourse: certcourse)
           quiz_page = create(:quiz_page, certcourse_page: certcourse_page)
 
-          create(:person_certcourse, person: person, certcourse: certcourse)
+          create(:person_certcourse, person: person, course: certcourse)
 
           post :create, params: { person_certcourse: {
             certcourse_id: certcourse.id
@@ -104,7 +104,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certificate_certcourse = create(:certificate_certcourse, certificate: certificate)
           create(:person_certcourse,
                  person: person,
-                 certcourse: certificate_certcourse.course,
+                 course: certificate_certcourse.course,
                  is_completed: false)
 
           create(:certificate_certcourse, certificate: certificate, course: certcourse)
@@ -113,7 +113,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certcourse_page = create(:certcourse_page, certcourse: certcourse)
           quiz_page = create(:quiz_page, certcourse_page: certcourse_page)
 
-          create(:person_certcourse, person: person, certcourse: certcourse)
+          create(:person_certcourse, person: person, course: certcourse)
 
           post :create, params: { person_certcourse: {
             certcourse_id: certcourse.id
@@ -131,7 +131,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certificate = create(:certificate)
           certcourse = create(:certcourse)
           certificate_certcourse = create(:certificate_certcourse, certificate: certificate)
-          create(:person_certcourse, person: person, certcourse: certificate_certcourse.course, is_completed: true)
+          create(:person_certcourse, person: person, course: certificate_certcourse.course, is_completed: true)
 
           create(:certificate_certcourse, certificate: certificate, course: certcourse)
 
@@ -139,7 +139,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certcourse_page = create(:certcourse_page, certcourse: certcourse)
           quiz_page = create(:quiz_page, certcourse_page: certcourse_page)
 
-          create(:person_certcourse, person: person, certcourse: certcourse)
+          create(:person_certcourse, person: person, course: certcourse)
 
           post :create, params: { person_certcourse: {
             certcourse_id: certcourse.id

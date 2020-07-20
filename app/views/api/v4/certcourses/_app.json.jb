@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-last_person_certcourse = certcourse.person_certcourses.for_person(person).last
+last_person_certcourse = certcourse.person_courses.for_person(person).last
 json = {
   id: certcourse.id,
   certificate_id: certificate.id,
-  order: certcourse.certificate_certcourses.for_certificate(certificate).first.course_order,
+  order: certcourse.certificates_courses.for_certificate(certificate).first.course_order,
   long_name: certcourse.long_name,
   short_name: certcourse.short_name,
   description: certcourse.description,

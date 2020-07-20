@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_20_072009) do
+ActiveRecord::Schema.define(version: 2020_07_20_085646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -389,6 +389,19 @@ ActiveRecord::Schema.define(version: 2020_07_20_072009) do
     t.index ["person_id"], name: "idx_person_certificates_person"
   end
 
+  create_table "courseware_person_courses", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "course_id", null: false
+    t.integer "last_completed_page_id"
+    t.boolean "is_completed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id"
+    t.index ["course_id"], name: "idx_person_certcourses_certcourse"
+    t.index ["person_id", "course_id"], name: "idx_uniq_pc_pid_cid2", unique: true
+    t.index ["person_id"], name: "idx_person_certcourses_person"
+  end
+
   create_table "courseware_wishlist_wishlists", force: :cascade do |t|
     t.bigint "person_id"
     t.bigint "certificate_id"
@@ -744,18 +757,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_072009) do
     t.string "permissable_type"
     t.bigint "permissable_id"
     t.index ["permissable_type", "permissable_id"], name: "permissable_policies"
-  end
-
-  create_table "person_certcourses", force: :cascade do |t|
-    t.integer "person_id", null: false
-    t.integer "certcourse_id", null: false
-    t.integer "last_completed_page_id"
-    t.boolean "is_completed", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["certcourse_id"], name: "idx_person_certcourses_certcourse"
-    t.index ["person_id", "certcourse_id"], name: "idx_uniq_pc_pid_cid2", unique: true
-    t.index ["person_id"], name: "idx_person_certcourses_person"
   end
 
   create_table "person_interests", force: :cascade do |t|
@@ -1716,6 +1717,9 @@ ActiveRecord::Schema.define(version: 2020_07_20_072009) do
   add_foreign_key "courseware_person_certificates", "courseware_certificates", column: "certificate_id", name: "fk_person_certificates_certificate"
   add_foreign_key "courseware_person_certificates", "people", name: "fk_person_certificates_person"
   add_foreign_key "courseware_person_certificates", "products"
+  add_foreign_key "courseware_person_courses", "courseware_courses", column: "course_id", name: "fk_person_certcourses_certcourse"
+  add_foreign_key "courseware_person_courses", "people", name: "fk_person_certcourses_person"
+  add_foreign_key "courseware_person_courses", "products"
   add_foreign_key "courseware_wishlist_wishlists", "courseware_certificates", column: "certificate_id"
   add_foreign_key "courseware_wishlist_wishlists", "people"
   add_foreign_key "download_file_pages", "certcourse_pages"
@@ -1741,8 +1745,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_072009) do
   add_foreign_key "notifications", "people"
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
   add_foreign_key "people", "roles"
-  add_foreign_key "person_certcourses", "courseware_courses", column: "certcourse_id", name: "fk_person_certcourses_certcourse"
-  add_foreign_key "person_certcourses", "people", name: "fk_person_certcourses_person"
   add_foreign_key "person_interests", "interests", name: "fk_person_interests_interest"
   add_foreign_key "person_interests", "people", name: "fk_event_checkins_person"
   add_foreign_key "person_interests", "people", name: "fk_person_interests_person"
