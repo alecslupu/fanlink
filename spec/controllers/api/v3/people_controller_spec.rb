@@ -144,7 +144,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
 
         expect(response).to be_successful
         expect(json['person']['picture_url']).to_not eq(nil)
-        expect(json['person']['picture_url']).to eq(Person.find(person.id).picture_url)
+        expect(json['person']['picture_url']).to eq(AttachmentPresenter.new(Person.find(person.id).picture).url)
       end
     end
   end
@@ -171,7 +171,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
         expect(response).to be_successful
         expect(Person.find(person.id).picture.attached?).to be_truthy
         expect(json['person']['picture_url']).to include(Rails.application.secrets.cloudfront_url)
-        expect(json['person']['picture_url']).to eq(Person.find(person.id).picture_url)
+        expect(json['person']['picture_url']).to eq(AttachmentPresenter.new(Person.find(person.id).picture).url)
       end
     end
   end

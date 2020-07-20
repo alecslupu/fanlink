@@ -2,7 +2,8 @@
 
 json.id person.id.to_s
 json.(person, :username, :name, :gender, :city, :country_code, :birthdate, :biography,
-      :picture_url, :product_account, :recommended, :chat_banned)
+      :product_account, :recommended, :chat_banned)
+json.picture_url AttachmentPresenter.new(person.picture).url
 json.designation person.designation
 if fol = current_user && current_user.following_for_person(person)
   json.following_id fol.id

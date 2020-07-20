@@ -12,7 +12,7 @@ json = {
   country_code: person.country_code,
   birthdate: person.birthdate,
   biography: person.biography,
-  picture_url: (person.picture_url.presence || person.facebook_picture_url.presence),
+  picture_url: (AttachmentPresenter.new(person.picture).url.presence || person.facebook_picture_url.presence),
   product_account: person.product_account,
   recommended: person.recommended,
   chat_banned: person.chat_banned,

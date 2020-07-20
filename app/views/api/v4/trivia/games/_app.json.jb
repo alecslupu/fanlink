@@ -13,7 +13,7 @@ json = {
   prize_count: game.prizes.size,
   room_id: game.room_id,
   # channel_id: game.uuid,
-  picture: game.picture_url,
+  picture: AttachmentPresenter.new(game.picture).url,
   status: game.status
 }
 json

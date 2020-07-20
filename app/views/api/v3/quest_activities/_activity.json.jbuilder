@@ -7,7 +7,7 @@ if !activity.deleted
     json.step_id activity.step_id
     json.description activity.description
     json.hint activity.hint
-    json.picture_url activity.picture_optimal_url
+    json.picture_url AttachmentPresenter.new(activity.picture).optimal_url
     json.picture_width activity.picture_width
     json.picture_height activity.picture_height
     if activity.activity_types.count > 0
@@ -25,9 +25,5 @@ if !activity.deleted
     json.step activity.step
     json.created_at activity.created_at
   end
-  if QuestCompletion.where(person_id: current_user.id, activity_id: activity.id).exists?
-    json.completed true
-  else
-    json.completed false
-  end
+  json.completed QuestCompletion.where(person_id: current_user.id, activity_id: activity.id).exists?
 end

@@ -4,7 +4,7 @@ json = {
   id: prize.id,
   game_id: prize.trivia_game_id,
   position: prize.position,
-  photo_url: prize.photo_url,
+  photo_url: AttachmentPresenter.new(prize.photo).url,
   description: prize.description
 }
 

@@ -5,6 +5,6 @@ json.name merchandise.name
 json.description merchandise.description
 json.price merchandise.price
 json.purchase_url merchandise.purchase_url
-json.picture_url merchandise.picture_url
+json.picture_url AttachmentPresenter.new(merchandise.picture).url
 json.available merchandise.available
 json.priority merchandise.priority

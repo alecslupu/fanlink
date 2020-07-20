@@ -4,7 +4,7 @@ json = {
   id: room.id.to_s,
   name: room.name,
   description: room.description,
-  picture_url: room.picture_url,
+  picture_url: AttachmentPresenter.new(room.picture).url,
   public: room.public?,
 }
 json[:owned] = (room.created_by_id == current_user.id)

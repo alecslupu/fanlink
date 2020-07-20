@@ -101,7 +101,7 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
         expect(response).to be_successful
         expect(Person.last.picture.attached?).to be_truthy
         expect(json['person']['picture_url']).to include(Rails.application.secrets.cloudfront_url)
-        expect(json['person']['picture_url']).to eq(Person.last.picture_url)
+        expect(json['person']['picture_url']).to eq(AttachmentPresenter.new(Person.last.picture).url)
       end
     end
   end

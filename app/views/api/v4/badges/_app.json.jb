@@ -8,7 +8,7 @@ first_action_type = badge.reward.present? &&
   name: badge.name,
   internal_name: badge.internal_name,
   description: badge.description,
-  picture_url: badge.picture_url,
+  picture_url: AttachmentPresenter.new(badge.picture).url,
   action_type_id: (first_action_type ? badge.reward.assigned_rewards.by_type('ActionType').first.id : nil),
   action_requirement: (badge.reward.present? ? badge.reward.completion_requirement : nil),
   point_value: (badge.reward.present? ? badge.reward.points : nil),

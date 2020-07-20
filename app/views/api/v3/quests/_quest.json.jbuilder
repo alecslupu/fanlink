@@ -7,7 +7,7 @@ json.cache! ['v3', quest.updated_at, @lang, quest] do
   json.name quest.name
   json.internal_name quest.internal_name
   json.description quest.description
-  json.picture_url quest.picture_optimal_url
+  json.picture_url AttachmentPresenter.new(quest.picture).optimal_url
   json.picture_width quest.picture_width
   json.picture_height quest.picture_height
   json.status quest.status.to_s

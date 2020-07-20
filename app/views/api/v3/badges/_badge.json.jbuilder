@@ -4,7 +4,7 @@ json.id badge.id
 json.name badge.name
 json.internal_name badge.internal_name
 json.description badge.description
-json.picture_url badge.picture_url
+json.picture_url AttachmentPresenter.new(badge.picture).url
 if badge.reward.present?
   if badge.reward.assigned_rewards.present? && badge.reward.assigned_rewards.by_type('ActionType').exists?
     json.action_type_id badge.reward.assigned_rewards.by_type('ActionType').first.id

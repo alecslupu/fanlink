@@ -2,5 +2,5 @@
 
 {
   id: answer.id,
-  url: answer.picture_url
+  url: AttachmentPresenter.new(answer.picture).url
 }

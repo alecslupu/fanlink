@@ -4,8 +4,8 @@ json.cache! ['v3', post] do
   json.id post.id
   json.create_time post.created_at.to_s
   json.body post.body
-  json.picture_url post.picture_optimal_url
-  json.audio_url post.audio_url
+  json.picture_url AttachmentPresenter.new(post.picture).optimal_url
+  json.audio_url AttachmentPresenter.new(post.audio).url
   json.audio_size post.audio_file_size
   json.audio_content_type post.audio_content_type
   json.person do
@@ -38,7 +38,7 @@ json.cache! ['v3', post] do
     json.tag nil
   end
 
-  json.video_url post.video_url
+  json.video_url AttachmentPresenter.new(post.video).url
   json.video_transcoded post.video_transcoded
   json.video_thumbnail post.video_thumbnail
 
