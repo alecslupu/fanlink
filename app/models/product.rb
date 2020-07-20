@@ -45,12 +45,13 @@ class Product < ApplicationRecord
                    content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def logo_url
-    logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("Product#logo_url is deprecated")
+    AttachmentPresenter.new(logo).url
   end
 
   def logo_optimal_url
-    opts = { resize: [1000, 5000], auto_orient: true, quality: 75 }
-    logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.variant(opts).processed.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("Product#logo_optimal_url is deprecated")
+    AttachmentPresenter.new(logo).optimal_url
   end
 
   def logo_file_size

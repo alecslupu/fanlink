@@ -30,7 +30,8 @@ class DownloadFilePage < ApplicationRecord
                        content_type: { in: %w[application/pdf] }
 
   def document_url
-    document.attached? ? [Rails.application.secrets.cloudfront_url, document.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("DownloadFilePage#document_url is deprecated")
+    AttachmentPresenter.new(document).url
   end
 
   def document_content_type

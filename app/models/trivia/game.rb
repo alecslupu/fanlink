@@ -36,12 +36,13 @@ module Trivia
                         content_type: { in: %w[image/jpeg image/gif image/png] }
 
     def picture_url
-      picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
+      ActiveSupport::Deprecation.warn("Trivia::Game#picture_url is deprecated")
+      AttachmentPresenter.new(picture).url
     end
 
     def picture_optimal_url
-      opts = { resize: '1000', auto_orient: true, quality: 75 }
-      picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
+      ActiveSupport::Deprecation.warn("Trivia::Game#picture_optimal_url is deprecated")
+      AttachmentPresenter.new(picture).optimal_url
     end
 
     belongs_to :room, class_name: 'Room', optional: true

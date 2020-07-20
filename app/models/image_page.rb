@@ -30,12 +30,13 @@ class ImagePage < ApplicationRecord
                     content_type: { in: %w[image/jpeg image/gif image/png application/pdf] }
 
   def image_url
-    image.attached? ? [Rails.application.secrets.cloudfront_url, image.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("ImagePage#image_url is deprecated")
+    AttachmentPresenter.new(image).url
   end
 
   def image_optimal_url
-    opts = { resize: '1920x1080', auto_orient: true, quality: 90 }
-    image.attached? ? [Rails.application.secrets.cloudfront_url, image.variant(opts).processed.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("ImagePage#image_optimal_url is deprecated")
+    AttachmentPresenter.new(image).quality_optimal_url
   end
 
   def image_content_type

@@ -33,13 +33,15 @@ module Trivia
     validates :photo, size: { less_than: 5.megabytes },
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
+
     def photo_url
-      photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.key].join('/') : nil
+      ActiveSupport::Deprecation.warn("Trivia::Prize#photo_url is deprecated")
+      AttachmentPresenter.new(photo).url
     end
 
     def photo_optimal_url
-      opts = { resize: '1000', auto_orient: true, quality: 75 }
-      photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.variant(opts).processed.key].join('/') : nil
+      ActiveSupport::Deprecation.warn("Trivia::Prize#photo_optimal_url is deprecated")
+      AttachmentPresenter.new(photo).optimal_url
     end
 
     include AASM

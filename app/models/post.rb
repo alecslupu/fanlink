@@ -79,21 +79,22 @@ class Post < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("Post#picture_url is deprecated")
+    AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    opts = { resize: '1000', auto_orient: true, quality: 75 }
-    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("Post#picture_optimal_url is deprecated")
+    AttachmentPresenter.new(picture).optimal_url
   end
-
   has_one_attached :audio
 
   validates :audio, size: { less_than: 10.megabytes },
                     content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
 
   def audio_url
-    audio.attached? ? [Rails.application.secrets.cloudfront_url, audio.key].join('/')  : nil
+    ActiveSupport::Deprecation.warn("Post#audio_url is deprecated")
+    AttachmentPresenter.new(audio).url
   end
 
   has_one_attached :video
@@ -102,7 +103,8 @@ class Post < ApplicationRecord
             content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts video/quicktime] }
 
   def video_url
-    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
+    ActiveSupport::Deprecation.warn("Post#video_url is deprecated")
+    AttachmentPresenter.new(video).url
   end
 
   has_paper_trail

@@ -28,7 +28,8 @@ class VideoPage < ApplicationRecord
   validates :video, content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
 
   def video_url
-    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("VideoPage#video_url is deprecated")
+    AttachmentPresenter.new(video).url
   end
 
   def video_content_type
