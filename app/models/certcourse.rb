@@ -33,17 +33,7 @@ class Certcourse < Fanlink::Courseware::Course
 
   accepts_nested_attributes_for :certcourse_pages, allow_destroy: true
 
-  enum status: %i[entry live]
-
-  scope :live_status, -> { where(status: 'live') }
-
   validate :children_not_empty, if: :status_changed? && :live?
-
-  def to_s
-    short_name
-  end
-
-  alias :title :to_s
 
   protected
 

@@ -59,7 +59,8 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
       pc = PersonCertificate.create(
         person_id: person1.id,
         certificate_id: certificate.id,
-        issued_certificate_image: nil
+        issued_certificate_image: nil,
+        product: certificate.product
       )
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)

@@ -6,7 +6,7 @@ module Api
       load_up_the Certificate, from: :certificate_id
 
       def index
-        @certcourses = paginate @certificate.certcourses.live_status.order(:certcourse_order)
+        @certcourses = paginate @certificate.courses.live.order(:course_order)
         return_the @certcourses, handler: tpl_handler
       end
 

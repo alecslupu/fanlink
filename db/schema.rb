@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_19_070819) do
+ActiveRecord::Schema.define(version: 2020_07_20_072009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -354,6 +354,39 @@ ActiveRecord::Schema.define(version: 2020_07_19_070819) do
     t.integer "product_id", null: false
     t.integer "certcourse_pages_count", default: 0
     t.index ["product_id"], name: "idx_certcourses_product"
+  end
+
+  create_table "courseware_person_certificates", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "certificate_id", null: false
+    t.string "full_name", default: "", null: false
+    t.datetime "issued_date"
+    t.integer "validity_duration", default: 0, null: false
+    t.bigint "amount_paid", default: 0, null: false
+    t.string "currency", default: "", null: false
+    t.boolean "fee_waived", default: false
+    t.datetime "purchased_waived_date"
+    t.integer "access_duration", default: 0, null: false
+    t.string "purchased_order_id"
+    t.integer "purchased_platform", default: 0, null: false
+    t.string "purchased_sku"
+    t.string "unique_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "issued_certificate_image_file_name"
+    t.string "issued_certificate_image_content_type"
+    t.integer "issued_certificate_image_file_size"
+    t.datetime "issued_certificate_image_updated_at"
+    t.string "issued_certificate_pdf_file_name"
+    t.string "issued_certificate_pdf_content_type"
+    t.integer "issued_certificate_pdf_file_size"
+    t.datetime "issued_certificate_pdf_updated_at"
+    t.string "receipt_id"
+    t.boolean "is_completed", default: false
+    t.integer "product_id"
+    t.index ["certificate_id"], name: "idx_person_certificates_certificate"
+    t.index ["person_id", "certificate_id"], name: "idx_uniq_pc_pid_cid", unique: true
+    t.index ["person_id"], name: "idx_person_certificates_person"
   end
 
   create_table "courseware_wishlist_wishlists", force: :cascade do |t|
@@ -723,38 +756,6 @@ ActiveRecord::Schema.define(version: 2020_07_19_070819) do
     t.index ["certcourse_id"], name: "idx_person_certcourses_certcourse"
     t.index ["person_id", "certcourse_id"], name: "idx_uniq_pc_pid_cid2", unique: true
     t.index ["person_id"], name: "idx_person_certcourses_person"
-  end
-
-  create_table "person_certificates", force: :cascade do |t|
-    t.integer "person_id", null: false
-    t.integer "certificate_id", null: false
-    t.string "full_name", default: "", null: false
-    t.datetime "issued_date"
-    t.integer "validity_duration", default: 0, null: false
-    t.bigint "amount_paid", default: 0, null: false
-    t.string "currency", default: "", null: false
-    t.boolean "fee_waived", default: false
-    t.datetime "purchased_waived_date"
-    t.integer "access_duration", default: 0, null: false
-    t.string "purchased_order_id"
-    t.integer "purchased_platform", default: 0, null: false
-    t.string "purchased_sku"
-    t.string "unique_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "issued_certificate_image_file_name"
-    t.string "issued_certificate_image_content_type"
-    t.integer "issued_certificate_image_file_size"
-    t.datetime "issued_certificate_image_updated_at"
-    t.string "issued_certificate_pdf_file_name"
-    t.string "issued_certificate_pdf_content_type"
-    t.integer "issued_certificate_pdf_file_size"
-    t.datetime "issued_certificate_pdf_updated_at"
-    t.string "receipt_id"
-    t.boolean "is_completed", default: false
-    t.index ["certificate_id"], name: "idx_person_certificates_certificate"
-    t.index ["person_id", "certificate_id"], name: "idx_uniq_pc_pid_cid", unique: true
-    t.index ["person_id"], name: "idx_person_certificates_person"
   end
 
   create_table "person_interests", force: :cascade do |t|
@@ -1712,6 +1713,9 @@ ActiveRecord::Schema.define(version: 2020_07_19_070819) do
   add_foreign_key "courseware_certificates_courses", "courseware_courses", column: "course_id", name: "fk_certificate_certcourses_certcourse"
   add_foreign_key "courseware_certificates_courses", "products", name: "fk_certificate_certcourses_products", on_delete: :cascade
   add_foreign_key "courseware_courses", "products", name: "fk_certcourses_products", on_delete: :cascade
+  add_foreign_key "courseware_person_certificates", "courseware_certificates", column: "certificate_id", name: "fk_person_certificates_certificate"
+  add_foreign_key "courseware_person_certificates", "people", name: "fk_person_certificates_person"
+  add_foreign_key "courseware_person_certificates", "products"
   add_foreign_key "courseware_wishlist_wishlists", "courseware_certificates", column: "certificate_id"
   add_foreign_key "courseware_wishlist_wishlists", "people"
   add_foreign_key "download_file_pages", "certcourse_pages"
@@ -1739,8 +1743,6 @@ ActiveRecord::Schema.define(version: 2020_07_19_070819) do
   add_foreign_key "people", "roles"
   add_foreign_key "person_certcourses", "courseware_courses", column: "certcourse_id", name: "fk_person_certcourses_certcourse"
   add_foreign_key "person_certcourses", "people", name: "fk_person_certcourses_person"
-  add_foreign_key "person_certificates", "courseware_certificates", column: "certificate_id", name: "fk_person_certificates_certificate"
-  add_foreign_key "person_certificates", "people", name: "fk_person_certificates_person"
   add_foreign_key "person_interests", "interests", name: "fk_person_interests_interest"
   add_foreign_key "person_interests", "people", name: "fk_event_checkins_person"
   add_foreign_key "person_interests", "people", name: "fk_person_interests_person"

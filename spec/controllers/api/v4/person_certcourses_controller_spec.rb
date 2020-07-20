@@ -78,7 +78,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certcourse = create(:certcourse)
           create(:certificate_certcourse, certificate: certificate)
 
-          create(:certificate_certcourse, certificate: certificate, certcourse: certcourse)
+          create(:certificate_certcourse, certificate: certificate, course: certcourse)
 
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
           certcourse_page = create(:certcourse_page, certcourse: certcourse)
@@ -104,10 +104,10 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certificate_certcourse = create(:certificate_certcourse, certificate: certificate)
           create(:person_certcourse,
                  person: person,
-                 certcourse: certificate_certcourse.certcourse,
+                 certcourse: certificate_certcourse.course,
                  is_completed: false)
 
-          create(:certificate_certcourse, certificate: certificate, certcourse: certcourse)
+          create(:certificate_certcourse, certificate: certificate, course: certcourse)
 
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
           certcourse_page = create(:certcourse_page, certcourse: certcourse)
@@ -131,9 +131,9 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           certificate = create(:certificate)
           certcourse = create(:certcourse)
           certificate_certcourse = create(:certificate_certcourse, certificate: certificate)
-          create(:person_certcourse, person: person, certcourse: certificate_certcourse.certcourse, is_completed: true)
+          create(:person_certcourse, person: person, certcourse: certificate_certcourse.course, is_completed: true)
 
-          create(:certificate_certcourse, certificate: certificate, certcourse: certcourse)
+          create(:certificate_certcourse, certificate: certificate, course: certcourse)
 
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
           certcourse_page = create(:certcourse_page, certcourse: certcourse)

@@ -41,9 +41,12 @@ PATH
   remote: ../fanlink-courseware
   specs:
     fanlink-courseware (0.1.0)
+      active_storage_validations
       acts_as_tenant
+      mini_magick
       paper_trail
       rails (~> 6.0.3, >= 6.0.3.2)
+      rails_admin
 
 GEM
   remote: https://rubygems.org/

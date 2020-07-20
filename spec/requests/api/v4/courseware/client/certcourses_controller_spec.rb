@@ -58,7 +58,7 @@ RSpec.describe 'Api::V4::Courseware::Client::CertcoursesController', type: :requ
       let(:id) {
         create(:certificate_certcourse,
                certificate: person_certificate.certificate,
-               certcourse: certcourse).certcourse_id
+               course: certcourse).course_id
       }
 
       produces 'application/vnd.api.v4+json'
@@ -78,7 +78,7 @@ RSpec.describe 'Api::V4::Courseware::Client::CertcoursesController', type: :requ
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let(:person_certificate) { create(:person_certificate, person: hired) }
         let(:certificate_id) { person_certificate.certificate_id }
-        let(:id) { create(:certificate_certcourse, certificate: person_certificate.certificate).certcourse_id }
+        let(:id) { create(:certificate_certcourse, certificate: person_certificate.certificate).course_id }
 
         run_test!
       end

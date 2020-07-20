@@ -5,6 +5,6 @@
     name: @person_certificate.full_name,
     issued_date: @person_certificate.issued_date,
     # yes, this is certificate_image_url in scope of issued certificate.
-    certificate_image_url: (@person_certificate.issued_certificate_image_url rescue nil)
+    certificate_image_url: (@person_certificate.issued_certificate_image_url)
   }
 }

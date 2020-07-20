@@ -9,7 +9,7 @@ module Api
       end
 
       def index
-        @certificates = paginate Certificate.live_status.order(:certificate_order)
+        @certificates = paginate Certificate.live.order(:certificate_order)
         return_the @certificates, handler: tpl_handler
       end
 

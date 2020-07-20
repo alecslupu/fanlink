@@ -31,20 +31,14 @@ class Certificate < Fanlink::Courseware::Certificate
 
   self.table_name = :courseware_certificates
 
-  has_one_attached :template_image
-
-  validates :template_image, size: { less_than: 5.megabytes },
-                             content_type: { in: %w[image/jpeg image/gif image/png] },
-                             dimension: { width: { min: 3840, max: 3840 },
-                                          height: { min: 2967, max: 2967 }, message: 'Must be 3840x2967' }
-
   def template_image_url
-    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("Certificate#issued_certificate_image_url is deprecated")
+    AttachmentPresenter.new(template_image).url
   end
 
   def template_image_optimal_url
-    opts = { resize: '1000', auto_orient: true, quality: 75 }
-    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.variant(opts).processed.key].join('/') : nil
+    ActiveSupport::Deprecation.warn("Certificate#template_image_optimal_url is deprecated")
+    AttachmentPresenter.new(template_image).optimal_url
   end
 
   belongs_to :room, optional: true
@@ -52,23 +46,10 @@ class Certificate < Fanlink::Courseware::Certificate
   # has_many :certificate_certcourses
   # has_many :certcourses, through: :certificate_certcourses, dependent: :destroy, counter_cache: true
 
-  has_many :person_certificates
-  has_many :people, through: :person_certificates, dependent: :destroy
+  # has_many :person_certificates
+  # has_many :people, through: :person_certificates, dependent: :destroy
 
-  validates_uniqueness_to_tenant :certificate_order
-
-  enum status: %i[entry live]
   # validate :certificate_order_validation, if: :certificate_order_changed?
-
-  scope :live_status, -> { where(status: 'live') }
-
-  def title
-    short_name
-  end
-
-  def is_paid?
-    !is_free?
-  end
 
   def self.certificate_order_max_value
     @maxvalue ||= maximum(:certificate_order).to_i
@@ -81,6 +62,6 @@ class Certificate < Fanlink::Courseware::Certificate
   private
 
   def certificate_order_validation
-    errors.add(:certificate_order, _('The certificate order must be greater than %{size}. Got %{value}' % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
+    errors.add(:certificate_order, _('The certificate order must be greater than %{size}. Got %{value}' % {size: certificate_order_max_value, value: certificate_order})) unless certificate_order.to_i >= certificate_order_max_value
   end
 end

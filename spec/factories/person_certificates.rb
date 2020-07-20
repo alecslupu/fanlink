@@ -37,6 +37,7 @@ FactoryBot.define do
   factory :person_certificate do
     person { create(:person) }
     certificate { create(:certificate) }
+    product { current_product }
     issued_certificate_image { fixture_file_upload('spec/fixtures/images/large.jpg', 'image/jpeg') }
     issued_certificate_pdf { fixture_file_upload('spec/fixtures/pdfs/dummy.pdf', 'application/pdf') }
   end
