@@ -2,45 +2,27 @@
 
 # == Schema Information
 #
-# Table name: certcourse_pages
+# Table name: courseware_course_pages
 #
-#  id                    :bigint           not null, primary key
-#  certcourse_id         :integer
-#  certcourse_page_order :integer          default(0), not null
-#  duration              :integer          default(0), not null
-#  background_color_hex  :string           default("#000000"), not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  content_type          :string
-#  product_id            :integer          not null
+#  id                   :bigint           not null, primary key
+#  course_id            :integer
+#  course_page_order    :integer          default(0), not null
+#  duration             :integer          default(0), not null
+#  background_color_hex :string           default("#000000"), not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  content_type         :string
+#  product_id           :integer          not null
 #
 
-class CertcoursePage < ApplicationRecord
-  has_paper_trail
-  acts_as_tenant(:product)
-  belongs_to :product
+class CertcoursePage < Fanlink::Courseware::CoursePage
 
-  belongs_to :certcourse, counter_cache: true
+  def initialize(attributes = nil)
+    ActiveSupport::Deprecation.warn("CertcoursePage is deprecated and may be removed from future releases, use  Fanlink::Courseware::CoursePage instead.")
+    super
+  end
 
-  has_one :quiz_page, dependent: :destroy
-  has_one :video_page, dependent: :destroy
-  has_one :image_page, dependent: :destroy
-  has_one :download_file_page, dependent: :destroy
-  has_many :course_page_progresses, dependent: :destroy
 
-  accepts_nested_attributes_for :quiz_page, allow_destroy: true
-  accepts_nested_attributes_for :video_page, allow_destroy: true
-  accepts_nested_attributes_for :image_page, allow_destroy: true
-  accepts_nested_attributes_for :download_file_page, allow_destroy: true
-
-  scope :quizes, -> { joins(:quiz_page) }
-  scope :videos, -> { joins(:video_page) }
-  scope :images, -> { joins(:image_page) }
-  scope :download_files, -> { joins(:download_file_page) }
-  scope :ordered, -> { order(:certcourse_page_order) }
-  scope :for_product, ->(product) { where(product_id: product.id) }
-
-  # validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
   validates :duration, numericality: { greater_than: 0 }
   validate :single_child_validator
 
@@ -48,49 +30,11 @@ class CertcoursePage < ApplicationRecord
 
   def set_properties_from_child
     return if child.blank?
-
     self.content_type = child.content_type
-
     self.duration = child.duration if video?
   end
 
-  def media_content_type
-    return image_page.image_content_type if image?
-    return video_page.video_content_type if video?
-    return download_file_page.document_content_type if download?
-
-    nil
-  end
-
   validates_format_of :background_color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
-
-  def media_url
-    return image_page.image_url if image?
-    return video_page.video_url if video?
-    return download_file_page.document_url if download?
-
-    nil
-  end
-
-  def child
-    quiz_page || image_page || video_page || download_file_page
-  end
-
-  def quiz?
-    quiz_page.present?
-  end
-
-  def image?
-    image_page.present?
-  end
-
-  def download?
-    download_file_page.present?
-  end
-
-  def video?
-    video_page.present?
-  end
 
   protected
 

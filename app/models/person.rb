@@ -277,7 +277,7 @@ class Person < ApplicationRecord
   end
 
   def send_certificate_email(certificate_id, email)
-    certificate = PersonCertificate.where(person_id: self.id, certificate_id: certificate_id).last
+    certificate = Fanlink::Courseware::PersonCertificate.where(person_id: self.id, certificate_id: certificate_id).last
     PersonMailer.with(id: self.id, person_certificate: certificate.id, email: email).send_certificate.deliver_later
   end
 

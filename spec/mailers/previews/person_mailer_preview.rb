@@ -16,8 +16,8 @@ class PersonMailerPreview < ActionMailer::Preview
   def send_downloaded_file
     product = Product.where(internal_name: params[:product]).last || Product.last
 
-    certcourse_page = DownloadFilePage.where(product_id: product.id).first.certcourse_page
-    person = certcourse_page.certcourse.people.first
+    certcourse_page = DownloadFilePage.where(product_id: product.id).first.course_page
+    person = certcourse_page.course.people.first
 
     PersonMailer.with(
       id: person.id,

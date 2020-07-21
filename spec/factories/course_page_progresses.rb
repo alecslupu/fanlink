@@ -13,9 +13,10 @@
 #
 
 FactoryBot.define do
-  factory :course_page_progress do
+  factory :course_page_progress, class: 'Fanlink::Courseware::PersonCoursePageProgress' do
     passed { false }
-    certcourse_page { create(:certcourse_page) }
+    course_page { create(:certcourse_page) }
     person { create(:person) }
+    product { current_product }
   end
 end

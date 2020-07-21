@@ -11,7 +11,7 @@ else
       step_id: activity.step_id,
       description: activity.description,
       hint: activity.hint,
-      picture_url: AttachmentPresenter.new(activity.picture_optimal).url,
+      picture_url: AttachmentPresenter.new(activity.picture).optimal_url,
       picture_width: activity.picture_width,
       picture_height: activity.picture_height,
       completed: QuestCompletion.where(person_id: current_user.id, activity_id: activity.id).exists?,

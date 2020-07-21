@@ -34,7 +34,7 @@ module Api
           private
 
           def load_person_certificate
-            @person_certificate = PersonCertificate
+            @person_certificate = Fanlink::Courseware::PersonCertificate
                                   .where(certificate_id: params[:id], person_id: params[:person_id])
                                   .last
             render_404 if @person_certificate.blank?

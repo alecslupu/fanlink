@@ -2,10 +2,10 @@
 
 # == Schema Information
 #
-# Table name: video_pages
+# Table name: courseware_video_pages
 #
 #  id                 :bigint           not null, primary key
-#  certcourse_page_id :integer
+#  course_page_id     :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  video_file_name    :string
@@ -15,17 +15,12 @@
 #  product_id         :integer          not null
 #
 
-class VideoPage < ApplicationRecord
-  scope :for_product, ->(product) { where(product_id: product.id) }
+class VideoPage < Fanlink::Courseware::VideoPage
 
-  # require 'streamio-ffmpeg'
-
-  acts_as_tenant(:product)
-  belongs_to :product
-
-  has_one_attached :video
-
-  validates :video, content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
+  def initialize(attributes = nil)
+    ActiveSupport::Deprecation.warn("VideoPage is deprecated and may be removed from future releases, use  Fanlink::Courseware::VideoPage instead.")
+    super
+  end
 
   def video_url
     ActiveSupport::Deprecation.warn("VideoPage#video_url is deprecated")
@@ -36,9 +31,7 @@ class VideoPage < ApplicationRecord
     video.attached? ? video.blob.content_type : nil
   end
 
-  validates_uniqueness_of :certcourse_page_id
-
-  belongs_to :certcourse_page, autosave: true
+  validates :course_page_id, uniqueness: true
 
   validate :just_me
 
@@ -64,9 +57,9 @@ class VideoPage < ApplicationRecord
   private
 
   def just_me
-    return if certcourse_page.new_record?
+    return if course_page.new_record?
 
-    target_course_page = CertcoursePage.find(certcourse_page.id)
+    target_course_page = CertcoursePage.find(course_page.id)
     child = target_course_page.child
     if child && child != self
       errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))

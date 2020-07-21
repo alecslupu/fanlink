@@ -19,11 +19,11 @@ module Api
             render_422(_('User already completed the full name'))
           end
         else
-          @person_certificate = PersonCertificate.new(person_certificate_params)
+          @person_certificate = Fanlink::Courseware::PersonCertificate.new(person_certificate_params)
           @person_certificate.person_id = @current_user.id
           if @person_certificate.valid?
             @person_certificate.save
-            @certificate = Certificate.find(person_certificate_params[:certificate_id])
+            @certificate = Fanlink::Courseware::Certificate.find(person_certificate_params[:certificate_id])
             return_the @certificate, handler: tpl_handler
           else
             render_422(_('Something went wrong.'))
@@ -32,7 +32,7 @@ module Api
       end
 
       def show
-        @person_certificate = PersonCertificate.where(unique_id: params[:unique_id]).first!
+        @person_certificate = Fanlink::Courseware::PersonCertificate.where(unique_id: params[:unique_id]).first!
         render :show, handler: tpl_handler
       end
 

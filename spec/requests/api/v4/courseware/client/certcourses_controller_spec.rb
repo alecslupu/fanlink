@@ -49,7 +49,7 @@ RSpec.describe 'Api::V4::Courseware::Client::CertcoursesController', type: :requ
       parameter name: :certificate_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
 
-      let(:certcourse) { create(:quiz_page, that_is_mandatory: true).certcourse_page.certcourse }
+      let(:certcourse) { create(:quiz_page, that_is_mandatory: true).course_page.course }
       let(:person) { create(:client_user) }
       let(:hired) { create(:person) }
       let(:person_certificate) { create(:person_certificate, person: hired) }

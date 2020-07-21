@@ -2,10 +2,10 @@
 
 # == Schema Information
 #
-# Table name: quiz_pages
+# Table name: courseware_quiz_pages
 #
 #  id                   :bigint           not null, primary key
-#  certcourse_page_id   :integer
+#  course_page_id       :integer
 #  is_optional          :boolean          default(FALSE)
 #  quiz_text            :string           default(""), not null
 #  wrong_answer_page_id :integer
@@ -16,7 +16,7 @@
 #
 
 FactoryBot.define do
-  factory :quiz_page do
+  factory :quiz_page, class: 'Fanlink::Courseware::QuizPage' do
     transient do
       that_is_mandatory { true }
     end
@@ -27,13 +27,13 @@ FactoryBot.define do
 
     before :create do |qp, evalutator|
       if evalutator.that_is_mandatory
-        cp1 = create(:certcourse_page, certcourse_page_order: 1, image_page: create(:image_page))
-        cp2 = create(:certcourse_page, certcourse_page_order: 2)
-        qp.certcourse_page = cp2
+        cp1 = create(:certcourse_page, course_page_order: 1, image_page: create(:image_page))
+        cp2 = create(:certcourse_page, course_page_order: 2)
+        qp.course_page = cp2
         qp.wrong_answer_page_id = cp1.id
         qp.is_optional = false
       else
-        qp.certcourse_page = create(:certcourse_page)
+        qp.course_page = create(:certcourse_page)
         qp.is_optional = true
       end
     end

@@ -2,10 +2,10 @@
 
 # == Schema Information
 #
-# Table name: video_pages
+# Table name: courseware_video_pages
 #
 #  id                 :bigint           not null, primary key
-#  certcourse_page_id :integer
+#  course_page_id     :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  video_file_name    :string
@@ -16,9 +16,9 @@
 #
 
 FactoryBot.define do
-  factory :video_page do
+  factory :video_page, class: 'Fanlink::Courseware::VideoPage' do
     product { current_product }
-    certcourse_page { create(:certcourse_page) }
+    course_page { create(:certcourse_page) }
     video { fixture_file_upload('spec/fixtures/videos/short_video.mp4') }
   end
 end

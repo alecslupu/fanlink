@@ -1,4 +1,9 @@
 class AddProductIdToPersonCertcourses < ActiveRecord::Migration[6.0]
+  class PersonCertcourse < ApplicationRecord
+    self.table_name = :courseware_person_courses
+    belongs_to :person
+  end
+
   def up
     add_column :courseware_person_courses, :product_id, :integer
     add_foreign_key :courseware_person_courses, :products, column: :product_id

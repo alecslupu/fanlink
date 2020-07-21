@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: answers
+# Table name: courseware_quiz_page_answers
 #
 #  id           :bigint           not null, primary key
 #  quiz_page_id :integer
@@ -13,30 +13,14 @@
 #  product_id   :integer          not null
 #
 
-class Answer < ApplicationRecord
-  has_paper_trail
+class Answer < Fanlink::Courseware::QuizPageAnswer
 
-  acts_as_tenant(:product)
-  belongs_to :product
-  belongs_to :quiz_page
-  has_many :user_answers, class_name: 'PersonQuiz', dependent: :destroy
+  def initialize(attributes = nil)
+    ActiveSupport::Deprecation.warn("Answer is deprecated and may be removed from future releases, use  Fanlink::Courseware::QuizPageAnswer instead.")
+    super
+  end
 
-  validates :description, presence: true
   validate :answer_checks
-
-  scope :for_product, ->(product) { where(product_id: product.id) }
-
-  def is_selected(person)
-    (is_correct || quiz_page.is_optional?) && user_answers.where(quiz_page_id: self.quiz_page_id, person_id: person.id).present?
-  end
-
-  def question
-    quiz_page.quiz_text
-  end
-
-  def certcourse_name
-    quiz_page.certcourse_page.certcourse.short_name
-  end
 
   def to_s
     description

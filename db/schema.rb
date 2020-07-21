@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_20_085646) do
+ActiveRecord::Schema.define(version: 2020_07_21_183125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -60,17 +60,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
-  end
-
-  create_table "answers", force: :cascade do |t|
-    t.integer "quiz_page_id"
-    t.string "description", default: "", null: false
-    t.boolean "is_correct", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "idx_answers_product"
-    t.index ["quiz_page_id"], name: "idx_answers_quiz"
   end
 
   create_table "api_keys", force: :cascade do |t|
@@ -206,19 +195,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "certcourse_pages", force: :cascade do |t|
-    t.integer "certcourse_id"
-    t.integer "certcourse_page_order", default: 0, null: false
-    t.integer "duration", default: 0, null: false
-    t.string "background_color_hex", default: "#000000", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "content_type"
-    t.integer "product_id", null: false
-    t.index ["certcourse_id"], name: "idx_certcourse_pages_certcourse"
-    t.index ["product_id"], name: "idx_certcourse_pages_product"
-  end
-
   create_table "client_infos", force: :cascade do |t|
     t.integer "client_id", null: false
     t.string "code", null: false
@@ -280,16 +256,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.index ["product_id"], name: "index_coupons_on_product_id"
   end
 
-  create_table "course_page_progresses", force: :cascade do |t|
-    t.boolean "passed", default: false
-    t.bigint "certcourse_page_id"
-    t.bigint "person_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["certcourse_page_id"], name: "index_course_page_progresses_on_certcourse_page_id"
-    t.index ["person_id"], name: "index_course_page_progresses_on_person_id"
-  end
-
   create_table "courses", force: :cascade do |t|
     t.integer "semester_id", null: false
     t.text "name", null: false
@@ -340,6 +306,19 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.index ["product_id"], name: "idx_certificate_certcourses_product"
   end
 
+  create_table "courseware_course_pages", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "course_page_order", default: 0, null: false
+    t.integer "duration", default: 0, null: false
+    t.string "background_color_hex", default: "#000000", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "content_type"
+    t.integer "product_id", null: false
+    t.index ["course_id"], name: "idx_certcourse_pages_certcourse"
+    t.index ["product_id"], name: "idx_certcourse_pages_product"
+  end
+
   create_table "courseware_courses", force: :cascade do |t|
     t.string "long_name", null: false
     t.string "short_name", null: false
@@ -352,8 +331,35 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id", null: false
-    t.integer "certcourse_pages_count", default: 0
+    t.integer "course_pages_count", default: 0
     t.index ["product_id"], name: "idx_certcourses_product"
+  end
+
+  create_table "courseware_download_file_pages", force: :cascade do |t|
+    t.bigint "course_page_id"
+    t.bigint "product_id"
+    t.string "document_file_name"
+    t.string "document_content_type"
+    t.integer "document_file_size"
+    t.datetime "document_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "caption"
+    t.index ["course_page_id"], name: "index_courseware_download_file_pages_on_course_page_id"
+    t.index ["product_id"], name: "index_courseware_download_file_pages_on_product_id"
+  end
+
+  create_table "courseware_image_pages", force: :cascade do |t|
+    t.integer "course_page_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer "product_id", null: false
+    t.index ["course_page_id"], name: "idx_image_pages_certcourse_page"
+    t.index ["product_id"], name: "idx_image_pages_product"
   end
 
   create_table "courseware_person_certificates", force: :cascade do |t|
@@ -389,6 +395,17 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.index ["person_id"], name: "idx_person_certificates_person"
   end
 
+  create_table "courseware_person_course_page_progresses", force: :cascade do |t|
+    t.boolean "passed", default: false
+    t.bigint "course_page_id"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id"
+    t.index ["course_page_id"], name: "idx_person_course_page_progresses_on_course_page_id"
+    t.index ["person_id"], name: "idx_person_course_page_progresses_on_person_id"
+  end
+
   create_table "courseware_person_courses", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "course_id", null: false
@@ -400,6 +417,55 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.index ["course_id"], name: "idx_person_certcourses_certcourse"
     t.index ["person_id", "course_id"], name: "idx_uniq_pc_pid_cid2", unique: true
     t.index ["person_id"], name: "idx_person_certcourses_person"
+  end
+
+  create_table "courseware_person_quiz_page_answers", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "quiz_page_id", null: false
+    t.integer "answer_id"
+    t.string "fill_in_response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id"
+    t.index ["person_id"], name: "idx_person_quiz_pages_person"
+    t.index ["quiz_page_id"], name: "idx_person_quiz_pages_quiz_page_id"
+  end
+
+  create_table "courseware_quiz_page_answers", force: :cascade do |t|
+    t.integer "quiz_page_id"
+    t.string "description", default: "", null: false
+    t.boolean "is_correct", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["product_id"], name: "idx_answers_product"
+    t.index ["quiz_page_id"], name: "idx_answers_quiz"
+  end
+
+  create_table "courseware_quiz_pages", force: :cascade do |t|
+    t.integer "course_page_id"
+    t.boolean "is_optional", default: false
+    t.string "quiz_text", default: "", null: false
+    t.integer "wrong_answer_page_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.boolean "is_survey", default: false
+    t.index ["course_page_id"], name: "idx_quiz_pages_certcourse_page"
+    t.index ["product_id"], name: "idx_quiz_pages_product"
+  end
+
+  create_table "courseware_video_pages", force: :cascade do |t|
+    t.integer "course_page_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "video_file_name"
+    t.string "video_content_type"
+    t.integer "video_file_size"
+    t.datetime "video_updated_at"
+    t.integer "product_id", null: false
+    t.index ["course_page_id"], name: "idx_video_pages_certcourse_page"
+    t.index ["product_id"], name: "idx_video_pages_product"
   end
 
   create_table "courseware_wishlist_wishlists", force: :cascade do |t|
@@ -424,20 +490,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
-  end
-
-  create_table "download_file_pages", force: :cascade do |t|
-    t.bigint "certcourse_page_id"
-    t.bigint "product_id"
-    t.string "document_file_name"
-    t.string "document_content_type"
-    t.integer "document_file_size"
-    t.datetime "document_updated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "caption"
-    t.index ["certcourse_page_id"], name: "index_download_file_pages_on_certcourse_page_id"
-    t.index ["product_id"], name: "index_download_file_pages_on_product_id"
   end
 
   create_table "event_checkins", force: :cascade do |t|
@@ -486,19 +538,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.index ["action_type_id"], name: "idx_hacked_metrics_activity_type"
     t.index ["person_id"], name: "idx_hacked_metrics_person"
     t.index ["product_id"], name: "idx_hacked_metrics_product"
-  end
-
-  create_table "image_pages", force: :cascade do |t|
-    t.integer "certcourse_page_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "image_file_name"
-    t.string "image_content_type"
-    t.integer "image_file_size"
-    t.datetime "image_updated_at"
-    t.integer "product_id", null: false
-    t.index ["certcourse_page_id"], name: "idx_image_pages_certcourse_page"
-    t.index ["product_id"], name: "idx_image_pages_product"
   end
 
   create_table "interest_translations", force: :cascade do |t|
@@ -773,17 +812,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.datetime "updated_at", null: false
     t.index ["person_id"], name: "idx_person_poll_options_person"
     t.index ["poll_option_id"], name: "idx_person_poll_options_poll_option"
-  end
-
-  create_table "person_quizzes", force: :cascade do |t|
-    t.integer "person_id", null: false
-    t.integer "quiz_page_id", null: false
-    t.integer "answer_id"
-    t.string "fill_in_response"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "idx_person_quiz_pages_person"
-    t.index ["quiz_page_id"], name: "idx_person_quiz_pages_quiz_page_id"
   end
 
   create_table "person_rewards", force: :cascade do |t|
@@ -1166,19 +1194,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.index ["status"], name: "index_quests_on_status"
     t.index ["untranslated_description"], name: "index_quests_on_untranslated_description", using: :gin
     t.index ["untranslated_name"], name: "index_quests_on_untranslated_name", using: :gin
-  end
-
-  create_table "quiz_pages", force: :cascade do |t|
-    t.integer "certcourse_page_id"
-    t.boolean "is_optional", default: false
-    t.string "quiz_text", default: "", null: false
-    t.integer "wrong_answer_page_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
-    t.boolean "is_survey", default: false
-    t.index ["certcourse_page_id"], name: "idx_quiz_pages_certcourse_page"
-    t.index ["product_id"], name: "idx_quiz_pages_product"
   end
 
   create_table "referral_referred_people", force: :cascade do |t|
@@ -1677,23 +1692,8 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
-  create_table "video_pages", force: :cascade do |t|
-    t.integer "certcourse_page_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "video_file_name"
-    t.string "video_content_type"
-    t.integer "video_file_size"
-    t.datetime "video_updated_at"
-    t.integer "product_id", null: false
-    t.index ["certcourse_page_id"], name: "idx_video_pages_certcourse_page"
-    t.index ["product_id"], name: "idx_video_pages_product"
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activity_types", "quest_activities", column: "activity_id", name: "fk_activity_types_quest_activities"
-  add_foreign_key "answers", "products", name: "fk_answers_products", on_delete: :cascade
-  add_foreign_key "answers", "quiz_pages", name: "fk_answers_quiz"
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
   add_foreign_key "automated_notifications", "people"
   add_foreign_key "badge_actions", "action_types", name: "fk_badge_actions_action_types", on_delete: :restrict
@@ -1705,31 +1705,41 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
   add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
-  add_foreign_key "certcourse_pages", "courseware_courses", column: "certcourse_id", name: "fk_certcourse_pages_certcourse"
-  add_foreign_key "certcourse_pages", "products", name: "fk_certcourse_pages_products", on_delete: :cascade
   add_foreign_key "config_items", "products"
   add_foreign_key "courseware_certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "courseware_certificates", "rooms", name: "fk_certificates_room"
   add_foreign_key "courseware_certificates_courses", "courseware_certificates", column: "certificate_id", name: "fk_certificate_certcourses_certificate"
   add_foreign_key "courseware_certificates_courses", "courseware_courses", column: "course_id", name: "fk_certificate_certcourses_certcourse"
   add_foreign_key "courseware_certificates_courses", "products", name: "fk_certificate_certcourses_products", on_delete: :cascade
+  add_foreign_key "courseware_course_pages", "courseware_courses", column: "course_id", name: "fk_certcourse_pages_certcourse"
+  add_foreign_key "courseware_course_pages", "products", name: "fk_certcourse_pages_products", on_delete: :cascade
   add_foreign_key "courseware_courses", "products", name: "fk_certcourses_products", on_delete: :cascade
+  add_foreign_key "courseware_download_file_pages", "courseware_course_pages", column: "course_page_id"
+  add_foreign_key "courseware_download_file_pages", "products"
+  add_foreign_key "courseware_image_pages", "courseware_course_pages", column: "course_page_id", name: "fk_image_pages_certcourse_page"
+  add_foreign_key "courseware_image_pages", "products", name: "fk_image_products", on_delete: :cascade
   add_foreign_key "courseware_person_certificates", "courseware_certificates", column: "certificate_id", name: "fk_person_certificates_certificate"
   add_foreign_key "courseware_person_certificates", "people", name: "fk_person_certificates_person"
   add_foreign_key "courseware_person_certificates", "products"
+  add_foreign_key "courseware_person_course_page_progresses", "products"
   add_foreign_key "courseware_person_courses", "courseware_courses", column: "course_id", name: "fk_person_certcourses_certcourse"
   add_foreign_key "courseware_person_courses", "people", name: "fk_person_certcourses_person"
   add_foreign_key "courseware_person_courses", "products"
+  add_foreign_key "courseware_person_quiz_page_answers", "courseware_quiz_pages", column: "quiz_page_id", name: "fk_person_quiz_pages_quiz_page_id"
+  add_foreign_key "courseware_person_quiz_page_answers", "people", name: "fk_person_quiz_pages_person"
+  add_foreign_key "courseware_person_quiz_page_answers", "products"
+  add_foreign_key "courseware_quiz_page_answers", "courseware_quiz_pages", column: "quiz_page_id", name: "fk_answers_quiz"
+  add_foreign_key "courseware_quiz_page_answers", "products", name: "fk_answers_products", on_delete: :cascade
+  add_foreign_key "courseware_quiz_pages", "courseware_course_pages", column: "course_page_id", name: "fk_quiz_pages_certcourse_page"
+  add_foreign_key "courseware_quiz_pages", "products", name: "fk_quiz_products", on_delete: :cascade
+  add_foreign_key "courseware_video_pages", "courseware_course_pages", column: "course_page_id", name: "fk_video_pages_certcourse_page"
+  add_foreign_key "courseware_video_pages", "products", name: "fk_video_products", on_delete: :cascade
   add_foreign_key "courseware_wishlist_wishlists", "courseware_certificates", column: "certificate_id"
   add_foreign_key "courseware_wishlist_wishlists", "people"
-  add_foreign_key "download_file_pages", "certcourse_pages"
-  add_foreign_key "download_file_pages", "products"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
   add_foreign_key "events", "products", name: "fk_events_products"
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
-  add_foreign_key "image_pages", "certcourse_pages", name: "fk_image_pages_certcourse_page"
-  add_foreign_key "image_pages", "products", name: "fk_image_products", on_delete: :cascade
   add_foreign_key "interests", "products", name: "fk_interests_products"
   add_foreign_key "levels", "products", name: "fk_levels_products"
   add_foreign_key "marketing_notifications", "people"
@@ -1750,8 +1760,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
   add_foreign_key "person_interests", "people", name: "fk_person_interests_person"
   add_foreign_key "person_poll_options", "people", name: "fk_person_poll_options_person"
   add_foreign_key "person_poll_options", "poll_options", name: "fk_person_poll_options_poll_option"
-  add_foreign_key "person_quizzes", "people", name: "fk_person_quiz_pages_person"
-  add_foreign_key "person_quizzes", "quiz_pages", name: "fk_person_quiz_pages_quiz_page_id"
   add_foreign_key "poll_options", "polls", name: "idx_poll_options_poll"
   add_foreign_key "polls", "products", name: "fk_polls_products", on_delete: :cascade
   add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
@@ -1775,8 +1783,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
   add_foreign_key "quest_completions", "steps", name: "fk_completions_steps"
   add_foreign_key "quests", "products", name: "fk_quests_products"
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
-  add_foreign_key "quiz_pages", "certcourse_pages", name: "fk_quiz_pages_certcourse_page"
-  add_foreign_key "quiz_pages", "products", name: "fk_quiz_products", on_delete: :cascade
   add_foreign_key "referral_referred_people", "people", column: "invited_id"
   add_foreign_key "referral_referred_people", "people", column: "inviter_id"
   add_foreign_key "referral_user_codes", "people"
@@ -1827,6 +1833,4 @@ ActiveRecord::Schema.define(version: 2020_07_20_085646) do
   add_foreign_key "trivia_subscribers", "products", name: "fk_trivia_subscribers_products", on_delete: :cascade
   add_foreign_key "trivia_subscribers", "trivia_games"
   add_foreign_key "trivia_topics", "products", name: "fk_trivia_topics_products", on_delete: :cascade
-  add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
-  add_foreign_key "video_pages", "products", name: "fk_video_products", on_delete: :cascade
 end

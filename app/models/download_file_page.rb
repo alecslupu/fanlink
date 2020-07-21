@@ -2,10 +2,10 @@
 
 # == Schema Information
 #
-# Table name: download_file_pages
+# Table name: courseware_download_file_pages
 #
 #  id                    :bigint           not null, primary key
-#  certcourse_page_id    :bigint
+#  course_page_id        :bigint
 #  product_id            :bigint
 #  document_file_name    :string
 #  document_content_type :string
@@ -16,18 +16,12 @@
 #  caption               :text
 #
 
-class DownloadFilePage < ApplicationRecord
-  scope :for_product, ->(product) { where(product_id: product.id) }
-  acts_as_tenant(:product)
-  belongs_to :product
-  belongs_to :certcourse_page, autosave: true
+class DownloadFilePage < Fanlink::Courseware::DownloadFilePage
 
-  # include AttachmentSupport
-  has_one_attached :document
-
-  validates :document, attached: true,
-                       size: { less_than: 5.megabytes },
-                       content_type: { in: %w[application/pdf] }
+  def initialize(attributes = nil)
+    ActiveSupport::Deprecation.warn("DownloadFilePage is deprecated and may be removed from future releases, use  Fanlink::Courseware::DownloadFilePage instead.")
+    super
+  end
 
   def document_url
     ActiveSupport::Deprecation.warn("DownloadFilePage#document_url is deprecated")
@@ -41,7 +35,7 @@ class DownloadFilePage < ApplicationRecord
   validate :just_me
 
   validates :caption, presence: true
-  validates :certcourse_page_id, uniqueness: true
+  validates :course_page_id, uniqueness: true
 
   def course_name
     certcourse_page.certcourse.to_s
@@ -54,9 +48,9 @@ class DownloadFilePage < ApplicationRecord
   private
 
   def just_me
-    return if certcourse_page.new_record?
+    return if course_page.new_record?
 
-    target_course_page = CertcoursePage.find(certcourse_page.id)
+    target_course_page = CertcoursePage.find(course_page.id)
     child = target_course_page.child
     if child && child != self
       errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))

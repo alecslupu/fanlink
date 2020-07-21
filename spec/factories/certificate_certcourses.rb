@@ -4,17 +4,17 @@
 #
 # Table name: courseware_certificates_courses
 #
-#  id               :bigint           not null, primary key
-#  certificate_id   :integer
-#  certcourse_id    :integer
-#  certcourse_order :integer          not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  product_id       :integer          not null
+#  id             :bigint           not null, primary key
+#  certificate_id :integer
+#  course_id      :integer
+#  course_order   :integer          not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  product_id     :integer          not null
 #
 
 FactoryBot.define do
-  factory :certificate_certcourse do
+  factory :certificate_certcourse, class: 'Fanlink::Courseware::CertificatesCourse' do
     product { current_product }
     course { create(:certcourse) }
     certificate { create(:certificate) }

@@ -34,8 +34,8 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
         person1.certificates << create_list(:certificate, 2)
         another_certificate = create(:certificate)
         Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
-        PersonCertificate.create(person_id: person1.id, certificate_id: person1.certificates.first.id)
-        PersonCertificate.create(person_id: person1.id, certificate_id: person1.certificates.second.id)
+        Fanlink::Courseware::PersonCertificate.create(person_id: person1.id, certificate_id: person1.certificates.first.id)
+        Fanlink::Courseware::PersonCertificate.create(person_id: person1.id, certificate_id: person1.certificates.second.id)
 
         login_as(person)
 
@@ -56,7 +56,7 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
       Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
       certificate = create(:certificate)
       person1.certificates << certificate
-      pc = PersonCertificate.create(
+      pc = Fanlink::Courseware::PersonCertificate.create(
         person_id: person1.id,
         certificate_id: certificate.id,
         issued_certificate_image: nil,

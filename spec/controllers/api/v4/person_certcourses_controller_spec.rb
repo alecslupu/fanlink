@@ -11,8 +11,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
         quiz_page = create(:quiz_page)
 
         post :create, params: { person_certcourse: {
-          certcourse_id: quiz_page.certcourse_page.certcourse.id
-        }, page_id: quiz_page.certcourse_page.id, answer_id: quiz_page.answers.first.id }
+          certcourse_id: quiz_page.course_page.course_id
+        }, page_id: quiz_page.course_page.id, answer_id: quiz_page.answers.first.id }
 
         expect(response).to have_http_status(200)
       end
@@ -27,15 +27,15 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           create(:certificate_certcourse, certificate: certificate)
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
 
-          certcourse_page = create(:certcourse_page, certcourse: certcourse)
-          image_page = create(:image_page, certcourse_page: certcourse_page)
+          certcourse_page = create(:certcourse_page, course: certcourse)
+          image_page = create(:image_page, course_page: certcourse_page)
 
           post :create, params: { person_certcourse: {
             certcourse_id: certcourse.id
           }, page_id: certcourse_page.id }
 
           expect(response).to have_http_status(200)
-          expect(PersonCertificate.last.is_completed).to eq(false)
+          expect(Fanlink::Courseware::PersonCertificate.last.is_completed).to eq(false)
         end
       end
       it 'marks the certificate as complete when the last step is quiz, and a wrong answer is submitted' do
@@ -47,8 +47,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           create(:certificate_certcourse, certificate: certificate)
           pc = create(:person_certificate, certificate: certificate, person: person)
 
-          certcourse_page = create(:certcourse_page, certcourse: certcourse)
-          quiz_page = create(:quiz_page, certcourse_page: certcourse_page, that_is_mandatory: true)
+          certcourse_page = create(:certcourse_page, course: certcourse)
+          quiz_page = create(:quiz_page, course_page: certcourse_page, that_is_mandatory: true)
 
           person_certcourse = create(:person_certcourse,
                                      course: certcourse,
@@ -58,12 +58,12 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
 
           post :create, params: { person_certcourse: {
             certcourse_id: certcourse.id
-          }, page_id: quiz_page.certcourse_page_id, answer_id: quiz_page.answers.last.id }
+          }, page_id: quiz_page.course_page_id, answer_id: quiz_page.answers.last.id }
 
           expect(response).to have_http_status(200)
-          expect(PersonCertificate.last.is_completed).to eq(false)
-          expect(PersonCertcourse.last.is_completed).not_to eq(true)
-          expect(PersonCertcourse.last.last_completed_page_id).not_to eq(quiz_page.certcourse_page_id)
+          expect(Fanlink::Courseware::PersonCertificate.last.is_completed).to eq(false)
+          expect(Fanlink::Courseware::PersonCourse.last.is_completed).not_to eq(true)
+          expect(Fanlink::Courseware::PersonCourse.last.last_completed_page_id).not_to eq(quiz_page.course_page_id)
         end
       end
     end
@@ -81,8 +81,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           create(:certificate_certcourse, certificate: certificate, course: certcourse)
 
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
-          certcourse_page = create(:certcourse_page, certcourse: certcourse)
-          quiz_page = create(:quiz_page, certcourse_page: certcourse_page)
+          certcourse_page = create(:certcourse_page, course: certcourse)
+          quiz_page = create(:quiz_page, course_page: certcourse_page)
 
           create(:person_certcourse, person: person, course: certcourse)
 
@@ -91,7 +91,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           }, page_id: certcourse_page.id, answer_id: quiz_page.answers.first.id }
 
           expect(response).to have_http_status(200)
-          expect(PersonCertificate.last.is_completed).to eq(false)
+          expect(Fanlink::Courseware::PersonCertificate.last.is_completed).to eq(false)
         end
       end
       it 'marks the certificate as incomplete when one course is started but not complete' do
@@ -110,8 +110,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           create(:certificate_certcourse, certificate: certificate, course: certcourse)
 
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
-          certcourse_page = create(:certcourse_page, certcourse: certcourse)
-          quiz_page = create(:quiz_page, certcourse_page: certcourse_page)
+          certcourse_page = create(:certcourse_page, course: certcourse)
+          quiz_page = create(:quiz_page, course_page: certcourse_page)
 
           create(:person_certcourse, person: person, course: certcourse)
 
@@ -120,7 +120,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           }, page_id: certcourse_page.id, answer_id: quiz_page.answers.first.id }
 
           expect(response).to have_http_status(200)
-          expect(PersonCertificate.last.is_completed).to eq(false)
+          expect(Fanlink::Courseware::PersonCertificate.last.is_completed).to eq(false)
         end
       end
       it 'marks the certificate as complete when both courses are completed' do
@@ -136,8 +136,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           create(:certificate_certcourse, certificate: certificate, course: certcourse)
 
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
-          certcourse_page = create(:certcourse_page, certcourse: certcourse)
-          quiz_page = create(:quiz_page, certcourse_page: certcourse_page)
+          certcourse_page = create(:certcourse_page, course: certcourse)
+          quiz_page = create(:quiz_page, course_page: certcourse_page)
 
           create(:person_certcourse, person: person, course: certcourse)
 
@@ -146,7 +146,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           }, page_id: certcourse_page.id, answer_id: quiz_page.answers.first.id }
 
           expect(response).to have_http_status(200)
-          expect(PersonCertificate.last.is_completed).to eq(true)
+          expect(Fanlink::Courseware::PersonCertificate.last.is_completed).to eq(true)
         end
       end
     end

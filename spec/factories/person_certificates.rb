@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: person_certificates
+# Table name: courseware_person_certificates
 #
 #  id                                    :bigint           not null, primary key
 #  person_id                             :integer          not null
@@ -31,10 +31,11 @@
 #  issued_certificate_pdf_updated_at     :datetime
 #  receipt_id                            :string
 #  is_completed                          :boolean          default(FALSE)
+#  product_id                            :integer
 #
 
 FactoryBot.define do
-  factory :person_certificate do
+  factory :person_certificate, class: "Fanlink::Courseware::PersonCertificate" do
     person { create(:person) }
     certificate { create(:certificate) }
     product { current_product }

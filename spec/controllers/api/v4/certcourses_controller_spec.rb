@@ -21,9 +21,9 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.last.id, quiz_page: qp)
 
-        allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.certcourse_page.certcourse_id)
+        allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.course_page.course_id)
 
-        get :show, params: { id: qp.certcourse_page.certcourse_id }
+        get :show, params: { id: qp.course_page.course_id }
         expect(response).to have_http_status(200)
 
         expect(qp).to exist_in_database
@@ -43,8 +43,8 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.first.id, quiz_page: qp)
 
-        allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.certcourse_page.certcourse_id)
-        get :show, params: { id: qp.certcourse_page.certcourse_id }
+        allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.course_page.course_id)
+        get :show, params: { id: qp.course_page.course_id }
 
         expect(response).to have_http_status(200)
         expect(qp).to exist_in_database

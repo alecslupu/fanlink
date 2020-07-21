@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: person_quizzes
+# Table name: courseware_person_quiz_page_answers
 #
 #  id               :bigint           not null, primary key
 #  person_id        :integer          not null
@@ -14,10 +14,11 @@
 #
 
 FactoryBot.define do
-  factory :person_quiz do
+  factory :person_quiz, class: 'Fanlink::Courseware::PersonQuizPageAnswer' do
     person_id { create(:person).id }
     quiz_page_id { create(:quiz_page).id }
     answer_id { create(:answer).id }
+    product { current_product }
     fill_in_response { Faker::Lorem.sentence }
   end
 end

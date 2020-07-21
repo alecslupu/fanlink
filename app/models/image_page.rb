@@ -2,10 +2,10 @@
 
 # == Schema Information
 #
-# Table name: image_pages
+# Table name: courseware_image_pages
 #
 #  id                 :bigint           not null, primary key
-#  certcourse_page_id :integer
+#  course_page_id     :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  image_file_name    :string
@@ -15,19 +15,12 @@
 #  product_id         :integer          not null
 #
 
-class ImagePage < ApplicationRecord
-  scope :for_product, ->(product) { where(product_id: product.id) }
+class ImagePage < Fanlink::Courseware::ImagePage
 
-  acts_as_tenant(:product)
-  belongs_to :product
-
-  belongs_to :certcourse_page, autosave: true
-  # include AttachmentSupport
-  has_one_attached :image
-
-  validates :image, attached: true,
-                    size: { less_than: 5.megabytes },
-                    content_type: { in: %w[image/jpeg image/gif image/png application/pdf] }
+  def initialize(attributes = nil)
+    ActiveSupport::Deprecation.warn("ImagePage is deprecated and may be removed from future releases, use  Fanlink::Courseware::ImagePage instead.")
+    super
+  end
 
   def image_url
     ActiveSupport::Deprecation.warn("ImagePage#image_url is deprecated")
@@ -43,7 +36,7 @@ class ImagePage < ApplicationRecord
     image.attached? ? image.blob.content_type : nil
   end
 
-  validates_uniqueness_of :certcourse_page_id
+  validates :course_page_id, uniqueness: true
 
   validate :just_me
 
@@ -58,9 +51,9 @@ class ImagePage < ApplicationRecord
   private
 
   def just_me
-    return if certcourse_page.new_record?
+    return if course_page.new_record?
 
-    target_course_page = CertcoursePage.find(certcourse_page.id)
+    target_course_page = CertcoursePage.find(course_page.id)
     child = target_course_page.child
     if child && child != self
       errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))

@@ -2,10 +2,10 @@
 
 # == Schema Information
 #
-# Table name: image_pages
+# Table name: courseware_image_pages
 #
 #  id                 :bigint           not null, primary key
-#  certcourse_page_id :integer
+#  course_page_id     :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  image_file_name    :string
@@ -16,8 +16,8 @@
 #
 
 FactoryBot.define do
-  factory :image_page do
-    certcourse_page { create(:certcourse_page) }
+  factory :image_page, class: 'Fanlink::Courseware::ImagePage' do
+    course_page { create(:certcourse_page) }
     product { current_product }
     image { fixture_file_upload('spec/fixtures/images/large.jpg', 'image/jpeg') }
   end

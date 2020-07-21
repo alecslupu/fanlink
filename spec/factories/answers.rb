@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: answers
+# Table name: courseware_quiz_page_answers
 #
 #  id           :bigint           not null, primary key
 #  quiz_page_id :integer
@@ -14,7 +14,7 @@
 #
 
 FactoryBot.define do
-  factory :answer do
+  factory :answer, class: 'Fanlink::Courseware::QuizPageAnswer' do
     quiz_page { create(:quiz_page) }
     product { current_product }
     is_correct { false }

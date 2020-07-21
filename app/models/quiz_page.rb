@@ -2,10 +2,10 @@
 
 # == Schema Information
 #
-# Table name: quiz_pages
+# Table name: courseware_quiz_pages
 #
 #  id                   :bigint           not null, primary key
-#  certcourse_page_id   :integer
+#  course_page_id       :integer
 #  is_optional          :boolean          default(FALSE)
 #  quiz_text            :string           default(""), not null
 #  wrong_answer_page_id :integer
@@ -15,13 +15,12 @@
 #  is_survey            :boolean          default(FALSE)
 #
 
-class QuizPage < ApplicationRecord
-  acts_as_tenant(:product)
-  belongs_to :product
-  belongs_to :certcourse_page, autosave: true
+class QuizPage < Fanlink::Courseware::QuizPage
 
-  has_many :answers, dependent: :destroy
-  scope :for_product, ->(product) { where(product_id: product.id) }
+  def initialize(attributes = nil)
+    ActiveSupport::Deprecation.warn("QuizPage is deprecated and may be removed from future releases, use Fanlink::Courseware::QuizPage instead.")
+    super
+  end
 
   accepts_nested_attributes_for :answers, allow_destroy: true
 
@@ -34,6 +33,7 @@ class QuizPage < ApplicationRecord
   validates :is_optional, presence: {
     message: 'You have set the quiz survey, you must choose to be optional as well'
   }, if: :is_survey?
+
   validates :answers, presence: true, length: {
     minimum: 2,
     tokenizer: lambda { |assoc| assoc.size },
@@ -61,9 +61,9 @@ class QuizPage < ApplicationRecord
   private
 
   def just_me
-    return if certcourse_page.new_record?
+    return if course_page.new_record?
 
-    target_course_page = CertcoursePage.find(certcourse_page.id)
+    target_course_page = CertcoursePage.find(course_page.id)
     child = target_course_page.child
     if child && child != self
       errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
@@ -83,7 +83,7 @@ class QuizPage < ApplicationRecord
     else
       wrong_page = CertcoursePage.where(id: wrong_answer_page_id).first
       errors.add(:wrong_answer_page_id, _('Could not find the specified Wrong page id')) if wrong_page.blank?
-      if wrong_page.present? && wrong_page.certcourse_page_order >= certcourse_page.certcourse_page_order
+      if wrong_page.present? && wrong_page.course_page_order >= course_page.course_page_order
         errors.add(:wrong_answer_page_id, _('Wrong page needs to come before this page.'))
       end
     end

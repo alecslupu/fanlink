@@ -52,17 +52,17 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         certcourses = create_list(:certcourse, 3)
         entry_certcourse = create(:certcourse, status: 'entry')
 
-        CertificateCertcourse.create(
+        Fanlink::Courseware::CertificatesCourse.create(
           certificate_id: certificate.id,
           course_id: certcourses.first.id,
           course_order: 1
         )
-        CertificateCertcourse.create(
+        Fanlink::Courseware::CertificatesCourse.create(
           certificate_id: certificate.id,
           course_id: certcourses.second.id,
           course_order: 2
         )
-        CertificateCertcourse.create(
+        Fanlink::Courseware::CertificatesCourse.create(
           certificate_id: certificate.id,
           course_id: entry_certcourse.id,
           course_order: 2
@@ -91,31 +91,31 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         certcourses = create_list(:certcourse, 3)
         entry_certcourse = create(:certcourse, status: 'entry')
 
-        CertificateCertcourse.create(certificate_id: certificate.id,
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate.id,
                                      course_id: certcourses.first.id,
                                      course_order: 1)
-        CertificateCertcourse.create(certificate_id: certificate.id,
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate.id,
                                      course_id: certcourses.second.id,
                                      course_order: 2)
-        CertificateCertcourse.create(certificate_id: certificate.id,
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate.id,
                                      course_id: entry_certcourse.id,
                                      course_order: 3)
-        CertificateCertcourse.create(certificate_id: certificate2.id,
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate2.id,
                                      course_id: certcourses.first.id,
                                      course_order: 1)
-        CertificateCertcourse.create(certificate_id: certificate2.id,
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate2.id,
                                      course_id: certcourses.second.id,
                                      course_order: 2)
-        CertificateCertcourse.create(certificate_id: certificate2.id,
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate2.id,
                                      course_id: entry_certcourse.id,
                                      course_order: 3)
-        CertificateCertcourse.create(certificate_id: certificate3.id,
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate3.id,
                                      course_id: certcourses.first.id,
                                      course_order: 1)
-        CertificateCertcourse.create(certificate_id: certificate3.id,
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate3.id,
                                      course_id: certcourses.second.id,
                                      course_order: 2)
-        CertificateCertcourse.create(certificate_id: certificate3.id,
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate3.id,
                                      course_id: entry_certcourse.id,
                                      course_order: 3)
 
@@ -138,23 +138,23 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         person1.certificates << certificate
 
         certcourse = create(:certcourse)
-        CertificateCertcourse.create(certificate_id: certificate.id, course_id: certcourse.id, course_order: 1)
-        certcourse_pages = create_list(:certcourse_page, 2, certcourse: certcourse, content_type: 'quiz')
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate.id, course_id: certcourse.id, course_order: 1)
+        certcourse_pages = create_list(:certcourse_page, 2, course: certcourse, content_type: 'quiz')
 
         quiz_page1 = create(:quiz_page, is_optional: true, is_survey: false)
 
         quiz_page2 = create(:quiz_page, is_optional: false, is_survey: false)
-        quiz_page2.update(certcourse_page_id: certcourse_pages.second.id)
+        quiz_page2.update(course_page_id: certcourse_pages.second.id)
 
-        correct_answer = Answer.find_by(quiz_page_id: quiz_page2.id, is_correct: true)
+        correct_answer = Fanlink::Courseware::QuizPageAnswer.find_by(quiz_page_id: quiz_page2.id, is_correct: true)
         correct_answer.update(description: 'Correct answer')
 
         create(:person_quiz,
-               answer: Answer.where(quiz_page_id: quiz_page2.id).second,
+               answer: Fanlink::Courseware::QuizPageAnswer.where(quiz_page_id: quiz_page2.id).second,
                quiz_page: quiz_page2,
                person: person1)
         create(:person_quiz,
-               answer: Answer.where(quiz_page_id: quiz_page2.id).third,
+               answer: Fanlink::Courseware::QuizPageAnswer.where(quiz_page_id: quiz_page2.id).third,
                quiz_page: quiz_page2,
                person: person1)
         create(:person_quiz,
@@ -172,8 +172,8 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         expect(quiz['is_optional']).to eq(quiz_page2.is_optional)
         expect(quiz['is_survey']).to eq(quiz_page2.is_survey)
         expect(quiz['quiz_text']).to eq(quiz_page2.quiz_text)
-        expect(quiz['certcourse_pages_count']).to eq(certcourse.certcourse_pages_count)
-        expect(quiz['page_order']).to eq(certcourse_pages.second.certcourse_page_order)
+        expect(quiz['certcourse_pages_count']).to eq(certcourse.course_pages_count)
+        expect(quiz['page_order']).to eq(certcourse_pages.second.course_page_order)
         expect(quiz['no_of_failed_attempts']).to eq(2)
         expect(quiz['answer_text']).to eq(correct_answer.description)
         expect(quiz['is_correct']).to eq(true)
@@ -189,9 +189,9 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         certificate = create(:certificate)
         person1.certificates << certificate
         certcourse = create(:certcourse)
-        CertificateCertcourse.create(certificate_id: certificate.id, course_id: certcourse.id, course_order: 1)
-        certcourse_pages = create(:certcourse_page, certcourse: certcourse, content_type: 'not_quiz')
-        expect(certcourse.certcourse_pages.count).to eq(1)
+        Fanlink::Courseware::CertificatesCourse.create(certificate_id: certificate.id, course_id: certcourse.id, course_order: 1)
+        certcourse_pages = create(:certcourse_page, course: certcourse, content_type: 'not_quiz')
+        expect(certcourse.course_pages.count).to eq(1)
         get :show, params: { person_id: person1.id, certificate_id: certificate.id, id: certcourse.id }
         expect(response).to be_not_found
       end

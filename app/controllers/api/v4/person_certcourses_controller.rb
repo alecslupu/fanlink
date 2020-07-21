@@ -26,7 +26,7 @@ module Api
         end
 
         if @person_certcourse.save
-          PersonCertificate.update_certification_status(@person_certcourse.course.certificate_ids, current_user.id)
+          Fanlink::Courseware::PersonCertificate.update_certification_status(@person_certcourse.course.certificate_ids, current_user.id)
           return_the @person_certcourse, handler: 'jb'
         else
           render_422(_('Something went wrong.'))
@@ -51,7 +51,7 @@ module Api
 
       def register_regress
         certcourse_pages
-          .where('certcourse_page_order > ?', last_certcourse_page.try(:certcourse_page_order).to_i).each do |cp|
+          .where('course_page_order > ?', last_certcourse_page.try(:course_page_order).to_i).each do |cp|
           next if cp.quiz?
 
           update_progress(cp, false)
@@ -59,7 +59,7 @@ module Api
       end
 
       def update_progress(cert_page, status)
-        progress = cert_page.course_page_progresses.where(person_id: current_user.id).first_or_initialize
+        progress = cert_page.person_course_page_progresses.where(person_id: current_user.id).first_or_initialize
         progress.passed = status
         progress.save!
       end
@@ -70,7 +70,11 @@ module Api
 
       def save_user_answer
         quiz_page_id = params[:quiz_page_id].presence || certcourse_page.quiz_page.id
-        PersonQuiz.create(person_id: current_user.id, quiz_page_id: quiz_page_id, answer_id: params[:answer_id])
+        Fanlink::Courseware::PersonQuizPageAnswer.create(
+          person_id: current_user.id,
+          quiz_page_id: quiz_page_id,
+          answer_id: params[:answer_id]
+        )
       end
 
       def last_step?
@@ -78,13 +82,13 @@ module Api
       end
 
       def last_certcourse_page
-        @last_certcourse_page ||= certcourse_pages.where('certcourse_page_order < ?', wrong_page_position).last
+        @last_certcourse_page ||= certcourse_pages.where('course_page_order < ?', wrong_page_position).last
       end
 
       def wrong_page_position
         @wrong_page_position ||= certcourse_pages
                                  .where(id: certcourse_page.quiz_page.wrong_answer_page_id)
-                                 .first.try(:certcourse_page_order).to_i
+                                 .first.try(:course_page_order).to_i
       end
 
       def any_answer_allowed?
@@ -92,19 +96,19 @@ module Api
       end
 
       def is_correct_answer?
-        (params[:answer_id].present? && Answer.find(params[:answer_id]).is_correct?)
+        (params[:answer_id].present? && Fanlink::Courseware::QuizPageAnswer.find(params[:answer_id]).is_correct?)
       end
 
       def certcourse
-        @certcourse ||= Certcourse.find(person_certcourses_params[:certcourse_id])
+        @certcourse ||= Fanlink::Courseware::Course.find(person_certcourses_params[:certcourse_id])
       end
 
       def certcourse_pages
-        certcourse.certcourse_pages
+        certcourse.course_pages
       end
 
       def certcourse_page
-        @certcoursepage ||= CertcoursePage.find(params[:page_id])
+        @certcoursepage ||= Fanlink::Courseware::CoursePage.find(params[:page_id])
       end
 
       def person_certcourses_params
