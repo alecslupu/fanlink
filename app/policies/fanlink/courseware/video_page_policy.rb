@@ -10,7 +10,7 @@ module Fanlink
       # end
       class Scope < Scope
         def resolve
-          super.for_product(ActsAsTenant.current_tenant).includes(certcourse_page: :certcourse)
+          super.includes(course_page: :course)
         end
       end
     end

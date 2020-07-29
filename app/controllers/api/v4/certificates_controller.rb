@@ -4,22 +4,22 @@ module Api
   module V4
     class CertificatesController < ApiController
       def create
-        @certificate = Certificate.create(certificate_params)
+        @certificate = Fanlink::Courseware::Certificate.create(certificate_params)
         return_the @certificate, handler: tpl_handler, using: :show
       end
 
       def index
-        @certificates = paginate Certificate.live.order(:certificate_order)
+        @certificates = paginate Fanlink::Courseware::Certificate.live.order(:certificate_order)
         return_the @certificates, handler: tpl_handler
       end
 
       def show
-        @certificate = Certificate.find(params[:id])
+        @certificate = Fanlink::Courseware::Certificate.find(params[:id])
         return_the @certificate, handler: tpl_handler, using: :show
       end
 
       def send_certificate
-        @person_certificate = Certificate.find(params[:id]).for_person(@current_user)
+        @person_certificate = Fanlink::Courseware::Certificate.for_person(current_user).find(params[:id])
         @current_user.send_certificate_email(@person_certificate)
       end
 

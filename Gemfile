@@ -210,9 +210,9 @@ gem "wisper-activejob"
 
 # remove the git stuff https://github.com/krisleech/wisper-activerecord/pull/30 is approved
 gem "wisper-activerecord", github: "alecslupu/wisper-activerecord"
-
-# To get video's length
-gem "streamio-ffmpeg"
+#
+# # To get video's length
+# gem ""
 
 gem 'active_storage_validations'
 gem "image_processing"

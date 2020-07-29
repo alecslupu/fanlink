@@ -10,7 +10,7 @@ module Api
         end
 
         def create
-          certificate = Certificate.find(params[:certificate_id])
+          certificate = Fanlink::Courseware::Certificate.find(params[:certificate_id])
 
           @wished_item = current_user.courseware_wishlists.create(certificate_id: certificate.id)
           if @wished_item.valid?

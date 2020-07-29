@@ -28,7 +28,7 @@
 #
 
 FactoryBot.define do
-  factory :certificate do
+  factory :certificate, class: 'Fanlink::Courseware::Certificate' do
     product { current_product }
 
     long_name { Faker::Lorem.name }

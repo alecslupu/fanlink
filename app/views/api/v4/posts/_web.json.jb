@@ -7,7 +7,7 @@ json = {
   picture_url: post.picture_optimal_url,
   audio_url: post.audio_url,
   audio_size: post.audio_file_size,
-  video_url: post.video_url,
+  video_url: AttachmentPresenter.new(post.video).url,
   video_transcoded: post.video_transcoded,
   video_thumbnail: post.video_thumbnail,
   audio_content_type: post.audio_content_type,

@@ -3,15 +3,15 @@
 module Api
   module V4
     class CertcoursesController < ApiController
-      load_up_the Certificate, from: :certificate_id
 
       def index
+        @certificate = Fanlink::Courseware::Certificate.find(params[:certificate_id])
         @certcourses = paginate @certificate.courses.live.order(:course_order)
         return_the @certcourses, handler: tpl_handler
       end
 
       def show
-        @certcourse = Certcourse.find(params[:id])
+        @certcourse = Fanlink::Courseware::Course.find(params[:id])
         return_the @certcourse, handler: tpl_handler
       end
 

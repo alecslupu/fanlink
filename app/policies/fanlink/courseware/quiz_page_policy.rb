@@ -5,7 +5,7 @@ module Fanlink
     class QuizPagePolicy < CoursewareModulePolicy
       class Scope < Scope
         def resolve
-          scope.for_product(ActsAsTenant.current_tenant).includes(:certcourse_page => :certcourse)
+          scope.includes(:course_page => :course)
         end
       end
     end

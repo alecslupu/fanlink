@@ -16,7 +16,7 @@ module Courseware
   module Wishlist
     class Wishlist < ApplicationRecord
       belongs_to :person
-      belongs_to :certificate
+      belongs_to :certificate, class_name: 'Fanlink::Courseware::Certificate'
 
       validates :certificate_id, uniqueness: { scope: %i[person_id] }
     end

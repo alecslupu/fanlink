@@ -172,7 +172,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         expect(quiz['is_optional']).to eq(quiz_page2.is_optional)
         expect(quiz['is_survey']).to eq(quiz_page2.is_survey)
         expect(quiz['quiz_text']).to eq(quiz_page2.quiz_text)
-        expect(quiz['certcourse_pages_count']).to eq(certcourse.course_pages_count)
+        expect(quiz['course_pages_count']).to eq(certcourse.course_pages_count)
         expect(quiz['page_order']).to eq(certcourse_pages.second.course_page_order)
         expect(quiz['no_of_failed_attempts']).to eq(2)
         expect(quiz['answer_text']).to eq(correct_answer.description)

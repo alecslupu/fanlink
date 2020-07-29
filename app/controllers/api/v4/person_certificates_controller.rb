@@ -3,11 +3,11 @@
 module Api
   module V4
     class PersonCertificatesController < ApiController
-      load_up_the Certificate, from: :certificate_id
       skip_before_action :require_login, :check_banned, only: [:show]
 
       def create
-        @person_certificate = current_user.person_certificates.where(certificate_id: params[:certificate_id]).first
+        @certificate = Fanlink::Courseware::Certificate.find(params[:certificate_id])
+        @person_certificate = current_user.person_certificates.where(certificate_id: @certificate.id ).first
         if @person_certificate
           if @person_certificate.full_name.blank?
             @person_certificate.update(person_certificate_params)

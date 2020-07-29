@@ -21,7 +21,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.last.id, quiz_page: qp)
 
-        allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.course_page.course_id)
+        allow(Fanlink::Courseware::Course).to receive(:find).and_return Fanlink::Courseware::Course.find(qp.course_page.course_id)
 
         get :show, params: { id: qp.course_page.course_id }
         expect(response).to have_http_status(200)
@@ -43,7 +43,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.first.id, quiz_page: qp)
 
-        allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.course_page.course_id)
+        allow(Fanlink::Courseware::Course).to receive(:find).and_return Fanlink::Courseware::Course.find(qp.course_page.course_id)
         get :show, params: { id: qp.course_page.course_id }
 
         expect(response).to have_http_status(200)

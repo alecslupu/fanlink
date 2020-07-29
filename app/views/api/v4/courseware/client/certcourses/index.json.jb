@@ -6,7 +6,7 @@ json[:certcourses] = @certcourses.map do |certcourse|
   cc = render partial: 'api/v4/certcourses/app',
               locals: { certcourse: certcourse, person: @assignee, certificate: @certificate },
               handlers: 'jb'
-  cc[:last_completed_page_order] = CertcoursePage.where(id: cc[:last_completed_page_id]).first&.course_page_order
+  cc[:last_completed_page_order] = Fanlink::Courseware::CoursePage.where(id: cc[:last_completed_page_id]).first&.course_page_order
   cc
 end
 

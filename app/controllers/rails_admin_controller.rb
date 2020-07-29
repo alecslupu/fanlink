@@ -6,6 +6,7 @@ class RailsAdminController < ApplicationController
   before_action :set_language
   set_current_tenant_through_filter
   before_action :require_login, :set_tenant, :set_api_version
+  # before_action :reload_rails_admin
 
   def not_authenticated
     # Make sure that we reference the route from the main app.
@@ -45,6 +46,22 @@ class RailsAdminController < ApplicationController
     else
       head :not_found
     end
+  end
+
+
+  def reload_rails_admin
+    models = ApplicationRecord.descendants
+    models.each do |m|
+      RailsAdmin::Config.reset_model(m)
+    end
+    RailsAdmin::Config::Actions.reset
+
+    load("#{Rails.root}/config/initializers/rails_admin.rb")
+    Dir[Rails.root.join('config/initializers/rails_admin/**/*.rb')].each { |f| load(f) }
+  end
+
+  def rails_admin_path?
+    controller_path =~ /app/ && Rails.env.development?
   end
 
   private
