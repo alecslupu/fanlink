@@ -13,8 +13,8 @@
 #
 
 class RoomMembership < ApplicationRecord
-  belongs_to :person, required: true, touch: true
-  belongs_to :room, required: true
+  belongs_to :person, optional: false, touch: true
+  belongs_to :room, optional: false
 
   validates :person_id, uniqueness: { scope: :room_id, message: _('You are already a member of this room.') }
 
@@ -32,8 +32,6 @@ class RoomMembership < ApplicationRecord
   end
 
   def check_private
-    if room.public
-      errors.add(:room_id, :check_private, message: _('Public room cannot have members.'))
-    end
+    errors.add(:room_id, :check_private, message: _('Public room cannot have members.')) if room.public
   end
 end

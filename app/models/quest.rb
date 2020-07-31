@@ -40,7 +40,7 @@ class Quest < ApplicationRecord
   # include Quest::PortalFilters
 
   # enum status: %i[ in_development in_testing published deleted ]
-  enum status: %i[disabled enabled active deleted]
+  enum status: { disabled: 0, enabled: 1, active: 2, deleted: 3 }
 
   acts_as_tenant(:product)
   belongs_to :product
@@ -53,12 +53,12 @@ class Quest < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    ActiveSupport::Deprecation.warn("Quest#picture_url is deprecated")
+    ActiveSupport::Deprecation.warn('Quest#picture_url is deprecated')
     AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    ActiveSupport::Deprecation.warn("Quest#picture_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Quest#picture_optimal_url is deprecated')
     AttachmentPresenter.new(picture).optimal_url
   end
 
@@ -94,14 +94,14 @@ class Quest < ApplicationRecord
 
   validates :starts_at, presence: { message: _('Starting date and time is required.') }
 
-  scope :in_date_range, ->(start_date, end_date) {
+  scope :in_date_range, lambda { |start_date, end_date|
                           where('quests.starts_at >= ? and quests.ends_at <= ?',
                                 start_date.beginning_of_day, end_date.end_of_day)
                         }
 
   scope :for_product, ->(product) { includes(:product).where(product: product) }
   scope :ordered, -> { includes(:quest_activities).order('quest_activities.created_at DESC') }
-  scope :in_testing, -> { where(status: [:enabled, :active]) }
+  scope :in_testing, -> { where(status: %i[enabled active]) }
   scope :running, -> { where('quests.starts_at >= ? AND quests.ends_at <= ?', Time.zone.now, Time.zone.now) }
 
   def running?

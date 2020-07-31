@@ -49,25 +49,23 @@ class Post < ApplicationRecord
   scope :posted_before_filter, ->(query) { where('posts.created_at <= ?', Time.zone.parse(query)) }
   scope :status_filter, ->(query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { sign == '>' ? after_post(created_at, id) : before_post(created_at, id) }
-  scope :after_post, ->(created_at, id) { where("posts.created_at > ? AND posts.id > ?", created_at, id) }
-  scope :before_post, ->(created_at, id) { where("posts.created_at < ? AND posts.id < ?", created_at, id) }
+  scope :after_post, ->(created_at, id) { where('posts.created_at > ? AND posts.id > ?', created_at, id) }
+  scope :before_post, ->(created_at, id) { where('posts.created_at < ? AND posts.id < ?', created_at, id) }
 
   # include Post::PortalFilters
 
   #   include Post::RealTime
 
   def delete_real_time(version = 0)
-    DeletePostJob.perform_later(self.id, version)
+    DeletePostJob.perform_later(id, version)
   end
 
   def post(version = 0)
-    PostPostJob.perform_later(self.id, version)
-    if person.followers.count > 0
-      PostPushNotificationJob.perform_now(self.id)
-    end
+    PostPostJob.perform_later(id, version)
+    PostPushNotificationJob.perform_now(id) if person.followers.count > 0
   end
   #   include Post::RealTime
-  enum status: %i[pending published deleted rejected errored]
+  enum status: { pending: 0, published: 1, deleted: 2, rejected: 3, errored: 4 }
 
   after_save :adjust_priorities
 
@@ -79,12 +77,12 @@ class Post < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    ActiveSupport::Deprecation.warn("Post#picture_url is deprecated")
+    ActiveSupport::Deprecation.warn('Post#picture_url is deprecated')
     AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    ActiveSupport::Deprecation.warn("Post#picture_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Post#picture_optimal_url is deprecated')
     AttachmentPresenter.new(picture).optimal_url
   end
   has_one_attached :audio
@@ -93,7 +91,7 @@ class Post < ApplicationRecord
                     content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
 
   def audio_url
-    ActiveSupport::Deprecation.warn("Post#audio_url is deprecated")
+    ActiveSupport::Deprecation.warn('Post#audio_url is deprecated')
     AttachmentPresenter.new(audio).url
   end
 
@@ -103,7 +101,7 @@ class Post < ApplicationRecord
             content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts video/quicktime] }
 
   def video_url
-    ActiveSupport::Deprecation.warn("Post#video_url is deprecated")
+    ActiveSupport::Deprecation.warn('Post#video_url is deprecated')
     AttachmentPresenter.new(video).url
   end
 
@@ -137,12 +135,12 @@ class Post < ApplicationRecord
 
   scope :following_and_own, ->(follower) { includes(:person).where(person: follower.following + [follower]) }
 
-  scope :in_date_range, ->(start_date, end_date) {
+  scope :in_date_range, lambda { |start_date, end_date|
     where('posts.created_at >= ? and posts.created_at <= ?',
           start_date.beginning_of_day, end_date.end_of_day)
   }
 
-  scope :promoted, -> {
+  scope :promoted, lambda {
                      left_outer_joins(:poll).where('(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true', Poll.poll_types['post'], Time.zone.now, Time.zone.now)
                    }
 
@@ -150,12 +148,12 @@ class Post < ApplicationRecord
   scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
   scope :for_category, ->(categories) { joins(:category).where('categories.name IN (?)', categories) }
   scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
-  scope :in_date_range, ->(start_date, end_date) {
+  scope :in_date_range, lambda { |start_date, end_date|
     where('posts.created_at >= ? and posts.created_at <= ?',
           start_date.beginning_of_day, end_date.end_of_day)
   }
 
-  scope :visible, -> {
+  scope :visible, lambda {
                     published.where('(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)',
                                     Time.zone.now, Time.zone.now)
                   }
@@ -172,18 +170,16 @@ class Post < ApplicationRecord
     post_comments
   end
 
-  def product
-    person.product
-  end
+  delegate :product, to: :person
 
   def cached_person
     Person.cached_find(person_id)
   end
 
   def self.cached_for_product(product)
-    Rails.cache.fetch([name, product]) {
+    Rails.cache.fetch([name, product]) do
       for_product(product)
-    }
+    end
   end
 
   #
@@ -196,9 +192,9 @@ class Post < ApplicationRecord
     #
     # We assume that the post has been deleted if we can't find it.
     #
-    raise msg.inspect if (msg['state'] != 'COMPLETED')
+    raise msg.inspect if msg['state'] != 'COMPLETED'
 
-    post = self.find_by(:id => msg['userMetadata']['post_id'].to_i)
+    post = find_by(id: msg['userMetadata']['post_id'].to_i)
     return if post.blank?
 
     if msg['userMetadata']['sizer']
@@ -228,7 +224,7 @@ class Post < ApplicationRecord
   end
 
   def reaction_breakdown
-    post_reactions.count > 0 ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
+    post_reactions.count > 0 ? PostReaction.group_reactions(self).sort_by { |reaction, _index| reaction.to_i(16) }.to_h : nil
   end
 
   def reactions
@@ -238,17 +234,17 @@ class Post < ApplicationRecord
   def reported?
     post_reports.size > 0 ? 'Yes' : 'No'
   end
-  alias :reported :reported?
+  alias reported reported?
 
   def visible?
-    status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) ? self : nil
+    status == 'published' && ((starts_at.nil? || starts_at < Time.zone.now) && (ends_at.nil? || ends_at > Time.zone.now)) ? self : nil
   end
 
   def start_listener
-    return if (!Flaws.transcoding_queue?)
+    return unless Flaws.transcoding_queue?
 
-    Rails.logger.error("Listening to #{self.video_job_id}")
-    PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(self.video_job_id)
+    Rails.logger.error("Listening to #{video_job_id}")
+    PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(video_job_id)
   end
 
   def published?
@@ -259,9 +255,9 @@ class Post < ApplicationRecord
 
   def start_transcoding
     # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
-    return if (self.video_job_id || Rails.env.test?)
+    return if video_job_id || Rails.env.test?
 
-    PostTranscoderJob.set(wait_until: 1.minutes.from_now).perform_later(self.id)
+    PostTranscoderJob.set(wait_until: 1.minute.from_now).perform_later(id)
     true
   end
 
@@ -269,7 +265,7 @@ class Post < ApplicationRecord
     by_src = ->(e) { e[:src] }
     by_m3u8 = ->(e) { e[:src].to_s.end_with?('v.m3u8') }
 
-    m3u8, the_rest = (self.video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
+    m3u8, the_rest = (video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
     m3u8 + the_rest.sort_by(&by_src)
   end
 
@@ -278,16 +274,16 @@ class Post < ApplicationRecord
   # listener use this to tell the Post that it is all finished.
   #
   def youve_been_transcoded!(preset_ids)
-    self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(self.video.key, preset_ids))
+    self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(video.key, preset_ids))
     self.video_job_id = nil
-    self.save!
+    save!
   end
 
   def adjust_priorities
     if priority > 0 && saved_change_to_attribute?(:priority)
-      same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
+      same_priority = person.posts.where.not(id: id).where(priority: priority)
       if same_priority.count > 0
-        person.posts.where.not(id: self.id).where('priority >= ?', self.priority).each do |post|
+        person.posts.where.not(id: id).where('priority >= ?', priority).find_each do |post|
           post.increment!(:priority)
         end
       end
@@ -301,6 +297,6 @@ class Post < ApplicationRecord
   end
 
   def expire_cache
-    ActionController::Base.expire_page(Rails.application.routes.url_helpers.cache_post_path(post_id: self.id, product: product.internal_name))
+    ActionController::Base.expire_page(Rails.application.routes.url_helpers.cache_post_path(post_id: id, product: product.internal_name))
   end
 end

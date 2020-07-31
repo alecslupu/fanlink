@@ -33,14 +33,13 @@ module Trivia
     validates :photo, size: { less_than: 5.megabytes },
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
-
     def photo_url
-      ActiveSupport::Deprecation.warn("Trivia::Prize#photo_url is deprecated")
+      ActiveSupport::Deprecation.warn('Trivia::Prize#photo_url is deprecated')
       AttachmentPresenter.new(photo).url
     end
 
     def photo_optimal_url
-      ActiveSupport::Deprecation.warn("Trivia::Prize#photo_optimal_url is deprecated")
+      ActiveSupport::Deprecation.warn('Trivia::Prize#photo_optimal_url is deprecated')
       AttachmentPresenter.new(photo).optimal_url
     end
 
@@ -90,12 +89,12 @@ module Trivia
       new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end
 
-    enum prize_type: %i[digital physical]
+    enum prize_type: { digital: 0, physical: 1 }
 
     def game_id
       trivia_game_id
     end
 
-    scope :visible, -> { where(status: [:published, :locked]) }
+    scope :visible, -> { where(status: %i[published locked]) }
   end
 end

@@ -17,7 +17,7 @@ class PortalNotification < ApplicationRecord
   LANGS = {
     'en' => 'English*',
     'es' => 'Spanish',
-    'ro' => 'Romanian',
+    'ro' => 'Romanian'
   }.freeze
 
   attr_accessor :trigger_admin_notification
@@ -28,9 +28,9 @@ class PortalNotification < ApplicationRecord
   }
 
   # specify languages not used for respective fields
-  IGNORE_TRANSLATION_LANGS = { body: ['un'] }
+  IGNORE_TRANSLATION_LANGS = { body: ['un'] }.freeze
 
-  enum sent_status: %i[pending sent cancelled errored]
+  enum sent_status: { pending: 0, sent: 1, cancelled: 2, errored: 3 }
 
   has_paper_trail
   translates :body, touch: true, versioning: :paper_trail
@@ -53,19 +53,19 @@ class PortalNotification < ApplicationRecord
   def push_topics
     topics = {}
     LANGS.keys.each do |language|
-      topics[language] = "#{product.internal_name}-portal_notices-#{language}" unless ignore_translation_lang?(:body, language)
+      unless ignore_translation_lang?(:body, language)
+        topics[language] = "#{product.internal_name}-portal_notices-#{language}"
+      end
     end
     topics
   end
 
   def future_send_date?
-    self.send_me_at.present? && self.send_me_at > Time.zone.now
+    send_me_at.present? && send_me_at > Time.zone.now
   end
 
   def enqueue_push
-    if pending? && future_send_date?
-      PortalNotificationPushJob.set(wait_until: self.send_me_at + 1.second).perform_later(self.id)
-    end
+    PortalNotificationPushJob.set(wait_until: send_me_at + 1.second).perform_later(id) if pending? && future_send_date?
   end
 
   private

@@ -14,16 +14,16 @@
 
 class Relationship < ApplicationRecord
   # include Relationship::RealTime
-  enum status: %i[requested friended]
+  enum status: { requested: 0, friended: 1 }
 
   #  Relationship::RealTime
 
   def friend_request_accepted_push
-    FriendRequestAcceptedPushJob.perform_later(self.id)
+    FriendRequestAcceptedPushJob.perform_later(id)
   end
 
   def friend_request_received_push
-    FriendRequestReceivedPushJob.perform_later(self.id)
+    FriendRequestReceivedPushJob.perform_later(id)
   end
   # eof Relationship::RealTime
 
@@ -37,7 +37,7 @@ class Relationship < ApplicationRecord
   validate :valid_status_transition
 
   scope :pending_to_person, ->(person) { where(status: :requested).where(requested_to: person) }
-  scope :for_people, ->(source_person, target_person) {
+  scope :for_people, lambda { |source_person, target_person|
     where(requested_to: [source_person, target_person])
       .where(requested_by: [source_person, target_person])
   }
@@ -64,7 +64,7 @@ class Relationship < ApplicationRecord
 
   def valid_status_transition
     if status_changed?
-      if status_was.to_sym == :friended && self.requested?
+      if status_was.to_sym == :friended && requested?
         errors.add(:status, :valid_status_transition, message: _('You cannot change from friended to requested.'))
       end
     end

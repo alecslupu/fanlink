@@ -29,7 +29,7 @@ class ActionType < ApplicationRecord
 
   validates :internal_name,
             presence: { message: _('Internal name is required.') },
-            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _('Internal name can only contain lowercase letters, numbers and underscores.') } },
+            format: { with: /\A[a-z_0-9]+\z/, message: ->(*) { _('Internal name can only contain lowercase letters, numbers and underscores.') } },
             length: { in: 3..26, message: _('Internal name must be between 3 and 26 characters.') },
             uniqueness: { message: _('There is already an action type with that internal name.') }
 

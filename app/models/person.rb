@@ -50,7 +50,6 @@ class Person < ApplicationRecord
   include Referral::PersonRelation
   include Fanlink::Courseware::PersonExtension
 
-
   attr_accessor :trigger_admin
 
   authenticates_with_sorcery!
@@ -62,7 +61,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum old_role: %i[normal staff admin super_admin root client client_portal marketingrole]
+  enum old_role: { normal: 0, staff: 1, admin: 2, super_admin: 3, root: 4, client: 5, client_portal: 6, marketingrole: 7 }
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -76,12 +75,12 @@ class Person < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    ActiveSupport::Deprecation.warn("Person#picture_url is deprecated")
+    ActiveSupport::Deprecation.warn('Person#picture_url is deprecated')
     AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    ActiveSupport::Deprecation.warn("Person#picture_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Person#picture_optimal_url is deprecated')
     AttachmentPresenter.new(picture).optimal_url
   end
 
@@ -111,7 +110,6 @@ class Person < ApplicationRecord
   has_many :person_poll_options
   has_many :poll_options, through: :person_poll_options, dependent: :destroy
 
-
   has_many :badge_actions, dependent: :destroy
   has_many :badge_awards
 
@@ -139,15 +137,15 @@ class Person < ApplicationRecord
   has_many :followers, through: :passive_followings, source: :follower
 
   has_many :hired_people, class_name: 'Courseware::Client::ClientToPerson', foreign_key: :client_id, dependent: :destroy
-  has_many :clients, class_name: 'Courseware::Client::ClientToPerson', foreign_key: :person_id, dependent: :destroy
+  has_many :clients, class_name: 'Courseware::Client::ClientToPerson', dependent: :destroy
 
   has_many :room_subscribers, dependent: :destroy
   has_many :subscribed_rooms, through: :room_subscribers, source: :room
 
   has_many :assigned_assignees, class_name: 'Courseware::Client::Assigned', foreign_key: :client_id, dependent: :destroy
   has_many :designated_assignees, class_name: 'Courseware::Client::Designated', foreign_key: :client_id, dependent: :destroy
-  has_many :assigned_clients, class_name: 'Courseware::Client::Assigned', foreign_key: :person_id, dependent: :destroy
-  has_many :designated_clients, class_name: 'Courseware::Client::Designated', foreign_key: :person_id, dependent: :destroy
+  has_many :assigned_clients, class_name: 'Courseware::Client::Assigned', dependent: :destroy
+  has_many :designated_clients, class_name: 'Courseware::Client::Designated', dependent: :destroy
 
   has_many :assigned_people, through: :assigned_assignees, source: :person
   has_many :designated_people, through: :designated_assignees, source: :person
@@ -166,16 +164,16 @@ class Person < ApplicationRecord
   before_validation :canonicalize_username, if: :username_changed?
   before_validation :assign_role
 
-  after_save :generate_unique_client_code, if: -> { self.role.internal_name == 'client' && ClientInfo.where(client_id: self.id).blank? }
-  before_save :check_facebookid, if: -> { self.facebookid == '' }
+  after_save :generate_unique_client_code, if: -> { role.internal_name == 'client' && ClientInfo.where(client_id: id).blank? }
+  before_save :check_facebookid, if: -> { facebookid == '' }
 
   after_commit :flush_cache
 
   scope :username_filter_courseware, ->(query) { where('people.username_canonical ilike ?', "%#{query}%") }
-  scope :username_filter, ->(query, current_user) { where('people.username_canonical ilike ? AND people.username_canonical != ?', "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
+  scope :username_filter, ->(query, current_user) { where('people.username_canonical ilike ? AND people.username_canonical != ?', "%#{canonicalize(query.to_s)}%", canonicalize(current_user.username.to_s).to_s) }
   # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
-  scope :email_filter, ->(query, current_user) { where('people.email ilike ? AND people.email != ?', "%#{query}%", "#{current_user.email}") }
-  scope :product_account_filter, ->(query, current_user) { where('people.product_account = ?', "#{query}") }
+  scope :email_filter, ->(query, current_user) { where('people.email ilike ? AND people.email != ?', "%#{query}%", current_user.email.to_s) }
+  scope :product_account_filter, ->(query, _current_user) { where('people.product_account = ?', query.to_s) }
 
   scope :requested_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_by_id)) }
   scope :received_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_to_id)) }
@@ -190,25 +188,25 @@ class Person < ApplicationRecord
   scope :has_no_posts, -> { joins('LEFT JOIN posts ON posts.person_id = people.id').where('posts.id is NULL') }
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
   scope :has_created_acc_past_24h, -> { where('created_at >= ?', Time.zone.now - 1.day) }
-  scope :has_created_acc_past_7days, -> { where('created_at >= ?', Time.zone.now - 7.day) }
+  scope :has_created_acc_past_7days, -> { where('created_at >= ?', Time.zone.now - 7.days) }
   scope :has_free_certificates_enrolled, -> { joins(:certificates).where('certificates.is_free = ?', true).group(:id) }
   scope :has_no_free_certificates_enrolled, -> { where.not(id: has_free_certificates_enrolled.select(:id)) }
   scope :has_paid_certificates, -> { joins(:person_certificates).where('person_certificates.amount_paid > 0').group(:id) }
   scope :has_no_paid_certificates, -> { where.not(id: has_paid_certificates.select(:id)) }
   scope :has_certificates_generated, -> { joins(:person_certificates).where('person_certificates.issued_certificate_pdf_file_size > 0') }
   scope :has_no_sent_messages, -> { joins('LEFT JOIN messages ON messages.person_id = people.id').where('messages.id is NULL') }
-  scope :active_48h, -> { where('last_activity_at > ?', Time.zone.now - 48.hour) }
-  scope :active_7days, -> { where('last_activity_at > ?', Time.zone.now - 7.day) }
-  scope :active_30days, -> { where('last_activity_at > ?', Time.zone.now - 30.day) }
-  scope :inactive_48h, -> { where('last_activity_at > ? AND last_activity_at < ?', Time.zone.now - 50.hour, Time.zone.now - 48.hour) }
-  scope :inactive_7days, -> { where('last_activity_at > ? AND last_activity_at < ?', Time.zone.now - 8.day, Time.zone.now - 7.day) }
-  scope :inactive_30days, -> { where('last_activity_at > ? AND last_activity_at < ?', Time.zone.now - 31.day, Time.zone.now - 30.day) }
+  scope :active_48h, -> { where('last_activity_at > ?', Time.zone.now - 48.hours) }
+  scope :active_7days, -> { where('last_activity_at > ?', Time.zone.now - 7.days) }
+  scope :active_30days, -> { where('last_activity_at > ?', Time.zone.now - 30.days) }
+  scope :inactive_48h, -> { where('last_activity_at > ? AND last_activity_at < ?', Time.zone.now - 50.hours, Time.zone.now - 48.hours) }
+  scope :inactive_7days, -> { where('last_activity_at > ? AND last_activity_at < ?', Time.zone.now - 8.days, Time.zone.now - 7.days) }
+  scope :inactive_30days, -> { where('last_activity_at > ? AND last_activity_at < ?', Time.zone.now - 31.days, Time.zone.now - 30.days) }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _('A user has already signed up with that Facebook account.') }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _('A user has already signed up with that email address.') }
   validates :username, uniqueness: { scope: :product_id, message: _('The username has already been taken.') }
 
-  validates :email, presence: { message: _('Email is required.') }, if: Proc.new { |person| person.facebookid.blank? }
+  validates :email, presence: { message: _('Email is required.') }, if: proc { |person| person.facebookid.blank? }
   validates :email, email: { message: _('Email is invalid.'), allow_nil: true }
 
   validates :username, presence: { message: _('Username is required.') }
@@ -229,14 +227,14 @@ class Person < ApplicationRecord
   validate :valid_username
   validate :read_only_username
 
-  enum gender: %i[unspecified male female]
+  enum gender: { unspecified: 0, male: 1, female: 2 }
 
   validate :valid_country_code
   validates :country_code, length: { is: 2 }, allow_blank: true
   validate :client_role_changing, on: :update
 
   def country_code=(c)
-    write_attribute :country_code, (c.nil?) ? nil : c.upcase
+    self[:country_code] = c.nil? ? nil : c.upcase
   end
 
   # validate :validate_age
@@ -265,25 +263,25 @@ class Person < ApplicationRecord
   end
 
   def jwt_token
-    ::TokenProvider.issue_token(user_id: self.id)
+    ::TokenProvider.issue_token(user_id: id)
   end
 
   def send_onboarding_email
-    PersonMailer.with(id: self.id).onboarding.deliver_later
+    PersonMailer.with(id: id).onboarding.deliver_later
   end
 
   def send_password_reset_email
-    PersonMailer.with(id: self.id).reset_password.deliver_later
+    PersonMailer.with(id: id).reset_password.deliver_later
   end
 
   def send_certificate_email(certificate_id, email)
-    certificate = Fanlink::Courseware::PersonCertificate.where(person_id: self.id, certificate_id: certificate_id).last
-    PersonMailer.with(id: self.id, person_certificate: certificate.id, email: email).send_certificate.deliver_later
+    certificate = Fanlink::Courseware::PersonCertificate.where(person_id: id, certificate_id: certificate_id).last
+    PersonMailer.with(id: id, person_certificate: certificate.id, email: email).send_certificate.deliver_later
   end
 
   def send_assignee_certificate_email(person_certificate, assignee_id, email)
     PersonMailer.with({
-                        person: self.id,
+                        person: id,
                         assignee: assignee_id,
                         person_certificate: person_certificate.id,
                         email: email
@@ -291,7 +289,7 @@ class Person < ApplicationRecord
   end
 
   def send_course_attachment_email(certcourse_page)
-    PersonMailer.with(id: self.id, certcourse_page_id: certcourse_page.id).send_downloaded_file.deliver_later
+    PersonMailer.with(id: id, certcourse_page_id: certcourse_page.id).send_downloaded_file.deliver_later
   end
 
   def self.create_from_facebook(token, username)
@@ -299,9 +297,9 @@ class Person < ApplicationRecord
     begin
       graph = Koala::Facebook::API.new(token)
       results = graph.get_object('me', fields: %w(id email picture.width(320).height(320)))
-    rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => error
+    rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => e
       Rails.logger.warn("Error contacting facebook for #{username} with token #{token}")
-      Rails.logger.warn("Message: #{error.fb_error_message}")
+      Rails.logger.warn("Message: #{e.fb_error_message}")
       return nil
     end
     Rails.logger.error(results.inspect)
@@ -319,19 +317,17 @@ class Person < ApplicationRecord
     begin
       graph = Koala::Facebook::API.new(token)
       results = graph.get_object('me', fields: [:id])
-    rescue Koala::Facebook::APIError => error
+    rescue Koala::Facebook::APIError => e
       Rails.logger.warn("Error contacting facebook for login with token #{token}")
-      Rails.logger.warn("Message: #{error.fb_error_message}")
+      Rails.logger.warn("Message: #{e.fb_error_message}")
       return nil
     end
-    if results && results['id'].present?
-      person = Person.find_by(facebookid: results['id'])
-    end
+    person = Person.find_by(facebookid: results['id']) if results && results['id'].present?
     person
   end
 
   def do_auto_follows
-    Person.where(auto_follow: true).each do |person|
+    Person.where(auto_follow: true).find_each do |person|
       follow(person)
     end
   end
@@ -403,7 +399,7 @@ class Person < ApplicationRecord
   #   The person object or `nil`.
   #
   def self.for_username(username)
-    self.find_by(username_canonical: canonicalize(username.to_s))
+    find_by(username_canonical: canonicalize(username.to_s))
   end
 
   #
@@ -454,7 +450,7 @@ class Person < ApplicationRecord
   def reset_password_to(password)
     self.password = password
     self.reset_password_token = nil
-    self.save
+    save
   end
 
   def set_password_token!
@@ -547,7 +543,7 @@ class Person < ApplicationRecord
   private
 
   def check_facebookid
-    self.facebookid = nil if self.facebookid == ''
+    self.facebookid = nil if facebookid == ''
   end
 
   def canonicalize(name)
@@ -555,11 +551,11 @@ class Person < ApplicationRecord
   end
 
   def canonicalize_username
-    if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
+    if Person.where(username_canonical: canonicalize(username), product_id: product.id).where.not(id: id).exists?
       errors.add(:username, :username_in_use, message: _('The username has already been taken.'))
       false
     else
-      self.username_canonical = canonicalize(self.username)
+      self.username_canonical = canonicalize(username)
       true
     end
   end
@@ -571,8 +567,8 @@ class Person < ApplicationRecord
   end
 
   def validate_age
-    if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
-      errors.add(:age_requirement, :age_not_met, message: _('Age requirement is not met. You must be %{age_requirement} years or older to use this app.') % { age_requirement: product.age_requirement })
+    if birthdate.present? && ((Date.today.to_s(:number).to_i - birthdate.to_date.to_s(:number).to_i) / 10_000) < product.age_requirement
+      errors.add(:age_requirement, :age_not_met, message: format(_('Age requirement is not met. You must be %{age_requirement} years or older to use this app.'), age_requirement: product.age_requirement))
     end
   end
 
@@ -583,35 +579,33 @@ class Person < ApplicationRecord
   end
 
   def normalize_email
-    self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
+    self.email = email.strip.downcase if email_changed? && email.present?
     true
   end
 
   def valid_username
-    if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
+    if !/^\w*$/.match(username) || username.length < 5 || username.length > 25
       errors.add(:username_error, 'Username must be 5 to 25 characters with no special characters or spaces')
     end
   end
 
   def read_only_username
     return if new_record?
-    return if self.trigger_admin.present?
+    return if trigger_admin.present?
 
     errors.add(:username_error, 'The username cannot be changed after creation') if username_changed?
   end
 
   def client_role_changing
-    if self.role_id_changed?
-      previous_role = Role.where(id: self.role_id_was).first
+    if role_id_changed?
+      previous_role = Role.where(id: role_id_was).first
       errors.add(:base, "You cannot change the 'client' role") if previous_role.internal_name == 'client'
     end
   end
 
   def generate_unique_client_code
     code = SecureRandom.uuid.first(7)
-    while ClientInfo.where(code: code).first.present?
-      code = SecureRandom.uuid.first(7)
-    end
-    ClientInfo.create(client_id: self.id, code: code)
+    code = SecureRandom.uuid.first(7) while ClientInfo.where(code: code).first.present?
+    ClientInfo.create(client_id: id, code: code)
   end
 end

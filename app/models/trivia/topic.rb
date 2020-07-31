@@ -59,6 +59,6 @@ module Trivia
       new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end
 
-    scope :visible, -> { where(status: [:published, :locked, :closed]) }
+    scope :visible, -> { where(status: %i[published locked closed]) }
   end
 end

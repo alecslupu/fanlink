@@ -15,10 +15,8 @@
 #
 
 class StepCompleted < ApplicationRecord
-  enum status: %i[locked unlocked completed]
+  enum status: { locked: 0, unlocked: 1, completed: 2 }
 
   belongs_to :step, touch: true
   belongs_to :person, touch: true
-
-  private
 end

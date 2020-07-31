@@ -22,8 +22,8 @@ class Poll < ApplicationRecord
   #   self.end_date = Time.zone.now + 1.month
   # end
 
-  enum poll_type: %i[post]
-  enum poll_status: %i[inactive active disabled]
+  enum poll_type: { post: 0 }
+  enum poll_status: { inactive: 0, active: 1, disabled: 2 }
 
   acts_as_tenant(:product)
   belongs_to :product
@@ -39,7 +39,7 @@ class Poll < ApplicationRecord
     message: 'Duration cannot be 0, please specify duration or end date of the poll'
   }
 
-  validates_uniqueness_of :poll_type_id, scope: :poll_type, message: 'has already been used on that Post. Check Post id'
+  validates :poll_type_id, uniqueness: { scope: :poll_type, message: 'has already been used on that Post. Check Post id' }
 
   before_validation :add_end_date
 
@@ -48,7 +48,7 @@ class Poll < ApplicationRecord
 
   accepts_nested_attributes_for :poll_options, allow_destroy: true
 
-  scope :assignable, -> {
+  scope :assignable, lambda {
                        where(poll_type_id: nil).where('end_date > ?', Time.zone.now)
                      }
 
@@ -57,15 +57,11 @@ class Poll < ApplicationRecord
   end
 
   def start_date_cannot_be_in_the_past
-    if start_date.present? && start_date < Time.zone.now
-      errors.add(:expiration_date, "poll can't start in the past")
-    end
+    errors.add(:expiration_date, "poll can't start in the past") if start_date.present? && start_date < Time.zone.now
   end
 
   def description_cannot_be_empty
-    if description.blank? || description.empty?
-      errors.add(:description_error, "description can't be empty")
-    end
+    errors.add(:description_error, "description can't be empty") if description.blank? || description.empty?
   end
 
   def was_voted(person_id)

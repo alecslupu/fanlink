@@ -11,7 +11,6 @@
 #  updated_at  :datetime         not null
 #
 
-
 module Referral
   class UserCode < ApplicationRecord
     belongs_to :person

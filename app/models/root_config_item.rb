@@ -36,7 +36,7 @@ class RootConfigItem < ConfigItem
     product = Product.find(product_id)
     ConfigItem.find_each { |ci| ConfigItem.reset_counters(ci.id, :children) }
     root = RootConfigItem.find(from_id)
-    new_root = ActsAsTenant.with_tenant(product) {
+    new_root = ActsAsTenant.with_tenant(product) do
       root.class.create!(
         item_key: root.item_key,
         item_value: root.item_value,
@@ -44,14 +44,14 @@ class RootConfigItem < ConfigItem
         item_url: root.item_url,
         item_description: root.item_description
       )
-    }
+    end
     root.children.each do |original_node|
       copy_node(original_node, new_root, product)
     end
   end
 
   def self.copy_node(original_node, new_root, product)
-    new_node = ActsAsTenant.with_tenant(product) {
+    new_node = ActsAsTenant.with_tenant(product) do
       original_node.class.create!(
         item_key: original_node.item_key,
         item_value: original_node.item_value,
@@ -59,10 +59,8 @@ class RootConfigItem < ConfigItem
         item_url: original_node.item_url,
         item_description: original_node.item_description
       )
-    }
-    new_node.move_to_child_of(new_root)
-    if original_node.children.size > 0
-      original_node.children.each { |node| copy_node(node, new_node, product) }
     end
+    new_node.move_to_child_of(new_root)
+    original_node.children.each { |node| copy_node(node, new_node, product) } if original_node.children.size > 0
   end
 end

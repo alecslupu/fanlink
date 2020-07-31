@@ -15,7 +15,7 @@
 #
 
 FactoryBot.define do
-  factory :person_certcourse, class: 'Fanlink::Courseware::PersonCourse' do
+  factory :person_course, class: 'Fanlink::Courseware::PersonCourse' do
     person { create(:person) }
     course { create(:certcourse) }
     product { current_product }

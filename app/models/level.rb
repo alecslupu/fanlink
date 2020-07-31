@@ -32,12 +32,12 @@ class Level < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    ActiveSupport::Deprecation.warn("Level#picture_url is deprecated")
+    ActiveSupport::Deprecation.warn('Level#picture_url is deprecated')
     AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    ActiveSupport::Deprecation.warn("Level#picture_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Level#picture_optimal_url is deprecated')
     AttachmentPresenter.new(picture).optimal_url
   end
 
@@ -48,7 +48,7 @@ class Level < ApplicationRecord
 
   validates :internal_name,
             presence: { message: _('Internal name is required.') },
-            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _('Internal name can only contain lowercase letters, numbers and underscores.') } },
+            format: { with: /\A[a-z_0-9]+\z/, message: ->(*) { _('Internal name can only contain lowercase letters, numbers and underscores.') } },
             length: { in: 3..26, message: _('Internal name must be between 3 and 26 characters in length.') },
             uniqueness: { scope: :product_id, message: _('There is already a level with that internal name.') }
 

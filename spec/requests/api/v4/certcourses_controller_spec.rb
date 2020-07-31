@@ -2,7 +2,7 @@
 
 require 'swagger_helper'
 
-RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v4/swagger.json' do
+RSpec.describe 'Fanlink::Courseware::V1::CoursesController', type: :request, swagger_doc: 'v4/swagger.json' do
   path '/certificates/{certificate_id}/certcourses' do
     get '' do
       security [Bearer: []]
@@ -42,7 +42,7 @@ RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v
     get '' do
       security [Bearer: []]
       let(:Authorization) { '' }
-      let(:person_certcourse) { create(:person_certcourse) }
+      let(:person_certcourse) { create(:person_course) }
       let(:id) { person_certcourse.course.id }
 
       tags 'Courseware'
@@ -52,7 +52,6 @@ RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v
       consumes 'multipart/form-data'
 
       response '200', 'HTTP/1.1 200 Ok' do
-        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person_certcourse.person.id)}" }
 
         let!(:image_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {

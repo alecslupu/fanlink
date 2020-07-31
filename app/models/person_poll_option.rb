@@ -14,7 +14,7 @@
 class PersonPollOption < ApplicationRecord
   belongs_to :poll_option, counter_cache: true
   belongs_to :person
-  validates_uniqueness_of :poll_option_id, scope: :person_id
+  validates :poll_option_id, uniqueness: { scope: :person_id }
 
   scope :for_product, ->(product) { joins(:person).where(people: { product_id: product.id }) }
 end

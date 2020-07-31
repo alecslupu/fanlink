@@ -43,10 +43,10 @@ RSpec.describe Fanlink::Courseware::PersonCoursePolicy, type: :policy do
     it 'should only return the person quiz in current product' do
       person = build(:person)
 
-      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:person_certcourse) }
+      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:person_course) }
 
       ActsAsTenant.with_tenant(person.product) do
-        post = create(:person_certcourse)
+        post = create(:person_course)
         scope = Pundit.policy_scope!(person, Fanlink::Courseware::PersonCourse)
         expect(scope.count).to eq(1)
         expect(scope).to include(post)

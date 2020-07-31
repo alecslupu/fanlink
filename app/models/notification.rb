@@ -15,7 +15,7 @@
 
 class Notification < ApplicationRecord
   def notify
-    SimpleNotificationPushJob.perform_later(self.id)
+    SimpleNotificationPushJob.perform_later(id)
   end
   acts_as_tenant(:product)
 

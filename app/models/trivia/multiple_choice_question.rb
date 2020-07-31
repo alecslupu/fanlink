@@ -21,7 +21,6 @@
 module Trivia
   class MultipleChoiceQuestion < Question
     belongs_to :available_question,
-               class_name: 'Trivia::MultipleChoiceAvailableQuestion',
-               foreign_key: :available_question_id
+               class_name: 'Trivia::MultipleChoiceAvailableQuestion'
   end
 end

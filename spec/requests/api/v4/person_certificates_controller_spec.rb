@@ -2,13 +2,13 @@
 
 require 'swagger_helper'
 
-RSpec.describe 'Api::V4::PersonCertificatesController', type: :request, swagger_doc: 'v4/swagger.json' do
+RSpec.describe 'Fanlink::Courseware::V1::PersonCertificatesController', type: :request, swagger_doc: 'v4/swagger.json' do
   path '/person_certificates/{unique_id}' do
     get 'Show the subscription information' do
       tags 'Certificates'
       produces 'application/vnd.api.v4+json'
       consumes 'application/vnd.api.v4+json'
-      parameter name: :product, in: :query,  type: :string
+      parameter name: :product, in: :query, type: :string
       parameter name: :unique_id, in: :path, type: :string
       let(:unique_id) { 'Faulty' }
       let(:product) { create(:product).internal_name }
@@ -45,7 +45,9 @@ RSpec.describe 'Api::V4::PersonCertificatesController', type: :request, swagger_
       parameter name: :"person_certificate[purchased_platform]", type: :string, in: :formData, required: false
       parameter name: :"person_certificate[receipt_id]", type: :string, in: :formData, required: false
       parameter name: :"person_certificate[full_name]", type: :string, in: :formData, required: false
+      parameter name: :product, in: :query, type: :string
 
+      let!(:product) { create(:product).internal_name }
       let(:person) { create(:person) }
       let(:certificate) { create(:certificate) }
 

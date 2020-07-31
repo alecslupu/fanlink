@@ -48,10 +48,9 @@ module Trivia
     validates :cooldown_period, numericality: { greater_than: 5 },
                                 presence: true
 
-    validates :type, inclusion: { in: %w(Trivia::SingleChoiceQuestion
-                Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
-                Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion
-              ), message: '%{value} is not a valid type' }
+    validates :type, inclusion: { in: %w[Trivia::SingleChoiceQuestion
+                                         Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
+                                         Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion], message: '%{value} is not a valid type' }
 
     validates :available_question, presence: {
       message: 'Please make sure selected question type is the compatible with available question type'
@@ -68,17 +67,17 @@ module Trivia
     end
 
     def compute_gameplay_parameters
-      self.end_date = self.start_date + self.time_limit
-      self.save!
+      self.end_date = start_date + time_limit
+      save!
     end
 
     def end_date_with_cooldown
-      self.end_date + self.cooldown_period.seconds
+      end_date + cooldown_period.seconds
     end
 
     def set_order(index)
       self.question_order = index
-      self.save
+      save
     end
 
     def copy_to_new

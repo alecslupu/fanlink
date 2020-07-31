@@ -33,23 +33,21 @@ class BadgeAward < ApplicationRecord
         create(person: badge_action.person, badge: badge)
         badge_awards << badge
       end
-      if badge_awards.empty?
-        perc = (achieved * 1.0) / badge.action_requirement
-        if perc > best_perc
-          best_perc = perc
-          badge_pending.clear
-          badge_pending[badge] = achieved
-        end
-      end
+      next unless badge_awards.empty?
+
+      perc = (achieved * 1.0) / badge.action_requirement
+      next unless perc > best_perc
+
+      best_perc = perc
+      badge_pending.clear
+      badge_pending[badge] = achieved
     end
-    (badge_awards.empty?) ? badge_pending : badge_awards
+    badge_awards.empty? ? badge_pending : badge_awards
   end
 
   private
 
   def product_match
-    if badge.product_id != person.product_id
-      errors.add(:base, :product_mismatch, message: _('Product mismatch!'))
-    end
+    errors.add(:base, :product_mismatch, message: _('Product mismatch!')) if badge.product_id != person.product_id
   end
 end

@@ -41,12 +41,12 @@ class QuestActivity < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    ActiveSupport::Deprecation.warn("Quest#picture_url is deprecated")
+    ActiveSupport::Deprecation.warn('Quest#picture_url is deprecated')
     AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    ActiveSupport::Deprecation.warn("Quest#picture_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Quest#picture_optimal_url is deprecated')
     AttachmentPresenter.new(picture).optimal_url
   end
 

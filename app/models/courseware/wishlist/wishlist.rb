@@ -11,7 +11,6 @@
 #  updated_at     :datetime         not null
 #
 
-
 module Courseware
   module Wishlist
     class Wishlist < ApplicationRecord

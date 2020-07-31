@@ -18,7 +18,7 @@ class PostReport < ApplicationRecord
   scope :status_filter, ->(query) { where(status: query.to_sym) }
   # include PostReport::PortalFilters
 
-  enum status: %i[pending no_action_needed post_hidden]
+  enum status: { pending: 0, no_action_needed: 1, post_hidden: 2 }
 
   belongs_to :post, counter_cache: true
   belongs_to :person
@@ -38,7 +38,5 @@ class PostReport < ApplicationRecord
     statuses.include?(s.to_s)
   end
 
-  def post_body
-    post.body
-  end
+  delegate :body, to: :post, prefix: true
 end

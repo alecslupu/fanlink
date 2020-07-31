@@ -15,7 +15,6 @@
 #  updated_at :datetime         not null
 #
 
-
 module Static
   class SystemEmail < ApplicationRecord
     belongs_to :product
@@ -37,8 +36,8 @@ module Static
     attr_accessor :remove_images
 
     after_save do
-      Array(remove_attachments).each { |id| attachments.find_by_id(id).try(:purge) }
-      Array(remove_images).each { |id| images.find_by_id(id).try(:purge) }
+      Array(remove_attachments).each { |id| attachments.find_by(id: id).try(:purge) }
+      Array(remove_images).each { |id| images.find_by(id: id).try(:purge) }
     end
 
     private

@@ -14,7 +14,7 @@
 #
 
 class PostCommentReport < ApplicationRecord
-  enum status: %i[pending no_action_needed comment_hidden]
+  enum status: { pending: 0, no_action_needed: 1, comment_hidden: 2 }
 
   belongs_to :person
   belongs_to :post_comment

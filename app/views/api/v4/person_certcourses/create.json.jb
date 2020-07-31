@@ -1,6 +1,0 @@
-# frozen_string_literal: true
-
-{
-  certcourse_id: @person_certcourse.course_id,
-  last_completed_page_id: @person_certcourse.last_completed_page_id
-}

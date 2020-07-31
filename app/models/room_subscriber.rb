@@ -13,7 +13,6 @@
 #  updated_at             :datetime         not null
 #
 
-
 class RoomSubscriber < ApplicationRecord
   belongs_to :room
   belongs_to :person
@@ -21,7 +20,7 @@ class RoomSubscriber < ApplicationRecord
 
   validate :check_private
 
-  validates_uniqueness_of :person_id, scope: :room_id
+  validates :person_id, uniqueness: { scope: :room_id }
 
   before_create :set_last_notification_time
 

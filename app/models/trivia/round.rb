@@ -83,7 +83,7 @@ module Trivia
       new_entry
     end
 
-    scope :visible, -> { where(status: [:published, :locked, :running, :closed]) }
+    scope :visible, -> { where(status: %i[published locked running closed]) }
 
     def compute_leaderboard
       self.class.connection.execute("select compute_trivia_round_leaderboard(#{id})") if closed?

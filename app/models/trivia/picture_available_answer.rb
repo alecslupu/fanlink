@@ -23,7 +23,7 @@ module Trivia
     scope :for_product, ->(product) { where(product_id: product.id) }
 
     has_paper_trail
-    belongs_to :question, class_name: 'Trivia::PictureAvailableQuestion', foreign_key: :question_id, optional: true
+    belongs_to :question, class_name: 'Trivia::PictureAvailableQuestion', optional: true
 
     include AASM
     enum status: {
@@ -71,12 +71,12 @@ module Trivia
                         content_type: { in: %w[image/jpeg image/gif image/png] }
 
     def picture_url
-      ActiveSupport::Deprecation.warn("Trivia::PictureAvailableAnswer#picture_url is deprecated")
+      ActiveSupport::Deprecation.warn('Trivia::PictureAvailableAnswer#picture_url is deprecated')
       AttachmentPresenter.new(picture).url
     end
 
     def picture_optimal_url
-      ActiveSupport::Deprecation.warn("Trivia::PictureAvailableAnswer#picture_optimal_url is deprecated")
+      ActiveSupport::Deprecation.warn('Trivia::PictureAvailableAnswer#picture_optimal_url is deprecated')
       AttachmentPresenter.new(picture).optimal_url
     end
   end

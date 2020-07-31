@@ -47,12 +47,12 @@ class Badge < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    ActiveSupport::Deprecation.warn("Badge#picture_url is deprecated")
+    ActiveSupport::Deprecation.warn('Badge#picture_url is deprecated')
     AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    ActiveSupport::Deprecation.warn("Badge#picture_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Badge#picture_optimal_url is deprecated')
     AttachmentPresenter.new(picture).optimal_url
   end
 
@@ -62,7 +62,7 @@ class Badge < ApplicationRecord
 
   validates :internal_name,
             presence: { message: _('Internal name is required.') },
-            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _('Internal name can only contain lowercase letters, numbers and underscores.') } },
+            format: { with: /\A[a-z_0-9]+\z/, message: ->(*) { _('Internal name can only contain lowercase letters, numbers and underscores.') } },
             length: { in: 3..26, message: _('Internal name must be between 3 and 26 characters.') },
             uniqueness: { scope: :product_id, message: _('There is already a badge with that internal name.') }
 
@@ -73,8 +73,8 @@ class Badge < ApplicationRecord
   after_update :update_reward
 
   def action_count_earned_by(person)
-    time_frame_start = (issued_from.present?) ? issued_from : Time.zone.now - 10.years
-    time_frame_end = (issued_to.present?) ? issued_to : Time.zone.now + 10.years
+    time_frame_start = issued_from.presence || Time.zone.now - (10.years)
+    time_frame_end = issued_to.presence || Time.zone.now + (10.years)
     person.badge_actions.where(action_type: action_type).where('created_at >= ?', time_frame_start).where('created_at <= ?', time_frame_end).count
   end
 
@@ -101,12 +101,12 @@ class Badge < ApplicationRecord
     )
     reward.name = name
 
-    if reward.valid? && self.valid? # check if the new reward and badge are valid
+    if reward.valid? && valid? # check if the new reward and badge are valid
       yield # saves the badge
       reward.reward_type_id = id
       reward.save
       AssignedReward.create(reward: reward, assigned: action_type, max_times: 1)
-      self.touch
+      touch
     else
       yield
     end

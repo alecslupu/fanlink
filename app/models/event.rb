@@ -33,16 +33,16 @@ class Event < ApplicationRecord
   validates :name, presence: { message: _('Name is required.') }
   validates :starts_at, presence: { message: _('Starts at is required.') }
 
-  scope :in_date_range, ->(from, to) {
+  scope :in_date_range, lambda { |from, to|
     where('events.starts_at >= ? and events.starts_at <= ?',
           from.beginning_of_day, to.end_of_day)
   }
 
   def place_info
     info = nil
-    if self.place_identifier.present?
+    if place_identifier.present?
       client = GooglePlaces::Client.new(Rails.application.secrets.google_places_key)
-      info = client.spot(self.place_identifier)
+      info = client.spot(place_identifier)
     end
     info
   rescue GooglePlaces::InvalidRequestError

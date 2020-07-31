@@ -104,17 +104,17 @@ class MarketingNotification < ApplicationRecord
 
   def run_at
     date = self.date.asctime.in_time_zone('UTC')
-    get_utc_datetime(date, self.timezone)
+    get_utc_datetime(date, timezone)
   end
 
   private
 
   def set_person_id
-    if Person.current_user.product_id == ActsAsTenant.current_tenant.id
-      self.person_id = Person.current_user.id
-    else
-      self.person_id = ActsAsTenant.current_tenant.people.where(product_account: true).first.id
-    end
+    self.person_id = if Person.current_user.product_id == ActsAsTenant.current_tenant.id
+                       Person.current_user.id
+                     else
+                       ActsAsTenant.current_tenant.people.where(product_account: true).first.id
+                     end
   end
 
   def enqueue_delayed_job
@@ -126,15 +126,15 @@ class MarketingNotification < ApplicationRecord
   end
 
   def get_utc_datetime(date, timezone)
-    case timezone[4]
-    when '-'
-      datetime = date + timezone[5..6].to_i.hour + timezone[8..9].to_i.minute
-    when '+'
-      datetime = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
-    else
-      datetime = date
-    end
+    datetime = case timezone[4]
+               when '-'
+                 date + timezone[5..6].to_i.hour + timezone[8..9].to_i.minute
+               when '+'
+                 date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
+               else
+                 date
+               end
 
-    return datetime
+    datetime
   end
 end

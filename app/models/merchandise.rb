@@ -32,12 +32,12 @@ class Merchandise < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    ActiveSupport::Deprecation.warn("Merchandise#picture_url is deprecated")
+    ActiveSupport::Deprecation.warn('Merchandise#picture_url is deprecated')
     AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    ActiveSupport::Deprecation.warn("Merchandise#picture_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Merchandise#picture_optimal_url is deprecated')
     AttachmentPresenter.new(picture).optimal_url
   end
 
@@ -53,7 +53,7 @@ class Merchandise < ApplicationRecord
 
   scope :listable, -> { where(available: true) }
 
-  # TODO Translate returned error messages
+  # TODO: Translate returned error messages
   # validates :name, presence: { message: _("Name is required.") }
   # validates :description, presence: { message: _("Description is required.") }
 
@@ -61,9 +61,9 @@ class Merchandise < ApplicationRecord
 
   def adjust_priorities
     if priority > 0 && saved_change_to_attribute?(:priority)
-      same_priority = Merchandise.where.not(id: self.id).where(priority: self.priority)
+      same_priority = Merchandise.where.not(id: id).where(priority: priority)
       if same_priority.count > 0
-        Merchandise.where.not(id: self.id).where('priority >= ?', self.priority).each do |merchandise|
+        Merchandise.where.not(id: id).where('priority >= ?', priority).find_each do |merchandise|
           merchandise.increment!(:priority)
         end
       end

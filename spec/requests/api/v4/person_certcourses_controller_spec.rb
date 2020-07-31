@@ -2,12 +2,12 @@
 
 require 'swagger_helper'
 
-RSpec.describe 'Api::V4::PersonCertcoursesController', type: :request, swagger_doc: 'v4/swagger.json' do
+RSpec.describe 'Fanlink::Courseware::V1::PersonCertcoursesController', type: :request, swagger_doc: 'v4/swagger.json' do
   path '/person_certcourses/send_email' do
     post '' do
       security [Bearer: []]
       let(:Authorization) { '' }
-      let(:person_certcourse) { create(:person_certcourse) }
+      let(:person_certcourse) { create(:person_course) }
 
       tags 'Courseware'
 
@@ -52,7 +52,7 @@ RSpec.describe 'Api::V4::PersonCertcoursesController', type: :request, swagger_d
       let(:quiz_page) { create(:quiz_page) }
       let(:answer_id) { quiz_page.answers.first.id }
       let(:page_id) { quiz_page.course_page.id }
-      let(:person_certcourse) { create(:person_certcourse, course: quiz_page.course_page.course) }
+      let(:person_certcourse) { create(:person_course, course: quiz_page.course_page.course) }
       let('person_certcourse[certcourse_id]') { quiz_page.course_page.course_id }
 
       produces 'application/vnd.api.v4+json'

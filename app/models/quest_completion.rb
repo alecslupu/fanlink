@@ -27,7 +27,7 @@ class QuestCompletion < ApplicationRecord
 
   # include QuestCompletion::PortalFilters
 
-  enum status: %i[locked unlocked completed]
+  enum status: { locked: 0, unlocked: 1, completed: 2 }
 
   belongs_to :step, touch: true
   belongs_to :person, touch: true
@@ -38,6 +38,4 @@ class QuestCompletion < ApplicationRecord
 
   # default_scope { order(created_at: :desc) }
   scope :count_activity, ->(step_id) { where(step_id: step_id).count }
-
-  private
 end

@@ -12,7 +12,7 @@
 #
 
 class Following < ApplicationRecord
-  default_scope -> { order(Arel.sql 'followings.created_at DESC, followings.id DESC') }
+  default_scope -> { order(Arel.sql('followings.created_at DESC, followings.id DESC')) }
 
   belongs_to :follower, class_name: 'Person', touch: true
   belongs_to :followed, class_name: 'Person', touch: true

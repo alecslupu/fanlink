@@ -39,8 +39,6 @@ class PollOption < ApplicationRecord
   end
 
   def description_cannot_be_empty
-    if description.blank? || description.empty?
-      errors.add(:description_error, "description can't be empty")
-    end
+    errors.add(:description_error, "description can't be empty") if description.blank? || description.empty?
   end
 end

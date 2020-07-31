@@ -44,11 +44,11 @@ class AutomatedNotification < ApplicationRecord
   private
 
   def set_person_id
-    if Person.current_user.product_id == ActsAsTenant.current_tenant.id
-      self.person_id = Person.current_user.id
-    else
-      self.person_id = ActsAsTenant.current_tenant.people.where(product_account: true).first.id
-    end
+    self.person_id = if Person.current_user.product_id == ActsAsTenant.current_tenant.id
+                       Person.current_user.id
+                     else
+                       ActsAsTenant.current_tenant.people.where(product_account: true).first.id
+                     end
   end
 
   def validate_enabled_criterion

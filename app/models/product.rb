@@ -45,12 +45,12 @@ class Product < ApplicationRecord
                    content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def logo_url
-    ActiveSupport::Deprecation.warn("Product#logo_url is deprecated")
+    ActiveSupport::Deprecation.warn('Product#logo_url is deprecated')
     AttachmentPresenter.new(logo).url
   end
 
   def logo_optimal_url
-    ActiveSupport::Deprecation.warn("Product#logo_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Product#logo_optimal_url is deprecated')
     AttachmentPresenter.new(logo).optimal_url
   end
 
@@ -58,7 +58,7 @@ class Product < ApplicationRecord
     logo.attached? ? logo.blob.byte_size : nil
   end
 
-  validates :name, length: { in: 3..60, message: _('Name must be between 3 and 60 characters.') }, uniqueness: { message: _('Product %{product_name} already exists.') % { product_name: name } }
+  validates :name, length: { in: 3..60, message: _('Name must be between 3 and 60 characters.') }, uniqueness: { message: format(_('Product %{product_name} already exists.'), product_name: name) }
 
   validates :internal_name, format: { with: /\A[a-zA-Z0-9_]+\z/, allow_blank: true, message: _('Internal name can only contain letters, numbers and underscores.') },
                             presence: { message: _('Internal name is required.') },
@@ -83,9 +83,7 @@ class Product < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
-  def people_count
-    people.count
-  end
+  delegate :count, to: :people, prefix: true
 
   def to_s
     internal_name

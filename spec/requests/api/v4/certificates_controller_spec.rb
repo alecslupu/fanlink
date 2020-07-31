@@ -2,7 +2,7 @@
 
 require 'swagger_helper'
 
-RSpec.describe 'Api::V4::CertificatesController', type: :request, swagger_doc: 'v4/swagger.json' do
+RSpec.describe 'Fanlink::Courseware::V1::CertificatesController', type: :request, swagger_doc: 'v4/swagger.json' do
   path '/certificates' do
     get '' do
       security [Bearer: []]

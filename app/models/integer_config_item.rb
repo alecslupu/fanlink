@@ -35,6 +35,6 @@ class IntegerConfigItem < ConfigItem
   private
 
   def strip_blanks
-    self.item_value = self.item_value.strip
+    self.item_value = item_value.strip
   end
 end

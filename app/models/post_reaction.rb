@@ -21,9 +21,9 @@ class PostReaction < ApplicationRecord
   validates :reaction, presence: { message: _('Reaction is required.') }
 
   def self.group_reactions(post)
-    Rails.cache.fetch([post, 'reactions']) {
+    Rails.cache.fetch([post, 'reactions']) do
       PostReaction.where(post_id: post.id).group(:reaction).size
-    }
+    end
   end
 
   private

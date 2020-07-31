@@ -15,7 +15,7 @@ json = {
   last_completed_page_id: last_person_certcourse.nil? ? nil : last_person_certcourse.last_completed_page_id,
   copyright_text: certcourse.copyright_text,
   is_started: certcourse.course_pages
-                        .joins(:person_course_page_progresses)
-                        .where(courseware_person_course_page_progresses: { person_id: person.id }).count > 0
+                .joins(:person_course_page_progresses)
+                .where(courseware_person_course_page_progresses: { person_id: person.id }).count > 0
 }
 json

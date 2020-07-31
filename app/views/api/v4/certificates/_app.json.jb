@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 person_certificate = certificate.person_certificates.for_person(user).first_or_initialize
 json = {
   id: certificate.id,
@@ -15,7 +13,7 @@ json = {
   is_issuable: certificate.certificate_issuable,
   is_completed: person_certificate.is_completed?,
   is_purchased: person_certificate.persisted?,
-  certificate_image_url: AttachmentPresenter.new(person_certificate.certificate.template_image).url,
-  issued_certificate_image_url: AttachmentPresenter.new(person_certificate.issued_certificate_image).url
+  certificate_image_url: (person_certificate.issued_certificate_image.url rescue nil),
+  issued_certificate_image_url: (person_certificate.issued_certificate_image.url rescue nil)
 }
 json

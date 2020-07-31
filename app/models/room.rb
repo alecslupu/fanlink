@@ -27,38 +27,38 @@ class Room < ApplicationRecord
 
   # old Room::RealTime
   def clear_message_counter(membership)
-    ClearMessageCounterJob.perform_later(self.id, membership.id)
+    ClearMessageCounterJob.perform_later(id, membership.id)
   end
 
   def delete_me(version = 0)
-    DeleteRoomJob.perform_later(id, version) if self.private?
+    DeleteRoomJob.perform_later(id, version) if private?
   end
 
   def post(version = 0)
-    # TODO this does not make any sense
-    PostMessageJob.perform_later(self.id, version)
+    # TODO: this does not make any sense
+    PostMessageJob.perform_later(id, version)
   end
 
   def increment_message_counters(poster_id, version = 0)
     room_memberships.each do |mem|
       mem.increment!(:message_count) unless mem.person.id == poster_id
     end
-    UpdateMessageCounterJob.perform_later(self.id, poster_id, version)
+    UpdateMessageCounterJob.perform_later(id, poster_id, version)
   end
 
   def new_room(version = 0)
-    AddRoomJob.perform_later(self.id, version) if self.private?
+    AddRoomJob.perform_later(id, version) if private?
   end
   # eof old Room::RealTime
 
   # replicated_model
 
-  enum status: %i[inactive active deleted]
+  enum status: { inactive: 0, active: 1, deleted: 2 }
 
   acts_as_tenant(:product)
   scope :for_product, ->(product) { where(rooms: { product_id: product.id }) }
 
-  belongs_to :created_by, class_name: 'Person', required: false
+  belongs_to :created_by, class_name: 'Person', optional: true
   belongs_to :product
 
   translates :description, :name, touch: true, versioning: :paper_trail
@@ -70,12 +70,12 @@ class Room < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    ActiveSupport::Deprecation.warn("Room#picture_url is deprecated")
+    ActiveSupport::Deprecation.warn('Room#picture_url is deprecated')
     AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    ActiveSupport::Deprecation.warn("Room#picture_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Room#picture_optimal_url is deprecated')
     AttachmentPresenter.new(picture).optimal_url
   end
 
@@ -97,7 +97,7 @@ class Room < ApplicationRecord
 
   validate :picture_validation
 
-  scope :privates_for_person, ->(member) {
+  scope :privates_for_person, lambda { |member|
     joins(:room_memberships)
       .where('room_memberships.person_id = ? and rooms.public = ?', member.id, false)
       .order(updated_at: :desc)

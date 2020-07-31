@@ -31,7 +31,7 @@ class Message < ApplicationRecord
   scope :id_query,     ->(query)  { where(id: query.to_i) }
   scope :body_query,   ->(query)  { where('messages.body ilike ?', "%#{query}%") }
   scope :sorted_by, lambda { |sort_option|
-    direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
+    direction = /desc$/.match?(sort_option) ? 'desc' : 'asc'
     case sort_option.to_s
     when /^created/
       order("created_at #{direction}")
@@ -53,13 +53,11 @@ class Message < ApplicationRecord
       joins(:message_reports).where.not(message_reports: { message_id: nil })
     elsif reported == 'No'
       left_outer_joins(:message_reports).where(message_reports: { message_id: nil })
-    else
-      nil
     end
   }
 
   def self.options_for_reported_status_filter
-    %w(Any Yes No)
+    %w[Any Yes No]
   end
   # include Message::FilterrificImpl
   # include Message::PortalFilters
@@ -76,8 +74,6 @@ class Message < ApplicationRecord
       joins(:message_reports).where.not(message_reports: { message_id: nil })
     elsif reported == 'No'
       joins(:message_reports).where(message_reports: { message_id: nil })
-    else
-      nil
     end
   }
   # include Message::PortalFilters
@@ -87,7 +83,7 @@ class Message < ApplicationRecord
   end
 
   def post(version = 0)
-    PostMessageJob.perform_later(self.id, version)
+    PostMessageJob.perform_later(id, version)
 
     message_mentions.each do |mention|
       MessageMentionPushJob.perform_later(mention.id)
@@ -99,7 +95,7 @@ class Message < ApplicationRecord
   end
 
   def public_room_message_push
-    if RoomSubscriber.where(room_id: room.id).where('last_notification_time < ?', DateTime.current - 2.minute).where.not(person_id: person_id).exists?
+    if RoomSubscriber.where(room_id: room.id).where('last_notification_time < ?', DateTime.current - 2.minutes).where.not(person_id: person_id).exists?
       PublicMessagePushJob.perform_later(id)
     end
   end
@@ -107,7 +103,7 @@ class Message < ApplicationRecord
 
   # replicated_model
 
-  enum status: %i[pending posted]
+  enum status: { pending: 0, posted: 1 }
 
   normalize_attributes :body
 
@@ -122,12 +118,12 @@ class Message < ApplicationRecord
                       content_type: { in: %w[image/jpeg image/gif image/png] }
 
   def picture_url
-    ActiveSupport::Deprecation.warn("Message#picture_url is deprecated")
+    ActiveSupport::Deprecation.warn('Message#picture_url is deprecated')
     AttachmentPresenter.new(picture).url
   end
 
   def picture_optimal_url
-    ActiveSupport::Deprecation.warn("Message#picture_optimal_url is deprecated")
+    ActiveSupport::Deprecation.warn('Message#picture_optimal_url is deprecated')
     AttachmentPresenter.new(picture).optimal_url
   end
 
@@ -137,7 +133,7 @@ class Message < ApplicationRecord
                     content_type: { in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts] }
 
   def audio_url
-    ActiveSupport::Deprecation.warn("Message#audio_url is deprecated")
+    ActiveSupport::Deprecation.warn('Message#audio_url is deprecated')
     AttachmentPresenter.new(audio).url
   end
 
@@ -146,31 +142,31 @@ class Message < ApplicationRecord
   has_many :room_subscribers, dependent: :nullify
   has_paper_trail
 
-  scope :for_date_range, ->(room, from, to, limit = nil) do
+  scope :for_date_range, lambda { |room, from, to, limit = nil|
     where(room: room)
       .where('created_at >= ?', from.beginning_of_day)
       .where('created_at <= ?', to.end_of_day)
       .order(created_at: :desc)
       .limit(limit)
-  end
+  }
   scope :for_product, ->(product) { joins(:room).where(rooms: { product_id: product.id }) }
   scope :pinned, ->(param) { joins(:person).where(people: { pin_messages_from: (param.downcase == 'yes') }) }
   scope :publics, -> { joins(:room).where(rooms: { public: true }) }
   scope :reported_action_needed, -> { joins(:message_reports).where(message_reports: { status: MessageReport.statuses[:pending] }) }
   scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
 
-  scope :not_reported_by_user, ->(person_id) do
+  scope :not_reported_by_user, lambda { |person_id|
     where("NOT EXISTS (
       SELECT 1 FROM message_reports
       WHERE message_reports.message_id = messages.id
       AND message_reports.person_id = ?
     )", person_id)
-  end
+  }
 
   scope :visible, -> { where(hidden: false) }
   scope :chronological, ->(sign, created_at, id) { sign == '>' ? after_message(created_at, id) : before_message(created_at, id) }
-  scope :after_message, ->(created_at, id) { where("messages.created_at > ? AND messages.id > ?", created_at, id) }
-  scope :before_message, ->(created_at, id) { where("messages.created_at < ? AND messages.id < ?", created_at, id) }
+  scope :after_message, ->(created_at, id) { where('messages.created_at > ? AND messages.id > ?', created_at, id) }
+  scope :before_message, ->(created_at, id) { where('messages.created_at < ? AND messages.id < ?', created_at, id) }
 
   scope :room_date_range, ->(from, to) { where('messages.created_at BETWEEN ? AND ?', from, to) }
 
@@ -181,7 +177,7 @@ class Message < ApplicationRecord
     super(only: %i[id body picture_id], methods: %i[create_time picture_url pinned],
           include: { message_mentions: { except: %i[message_id] },
                      person: { only: %i[ id username name designation product_account chat_banned badge_points
-                                       level do_not_message_me pin_messages_from ], methods: %i[level picture_url] } })
+                                         level do_not_message_me pin_messages_from ], methods: %i[level picture_url] } })
   end
 
   def create_time
@@ -202,17 +198,13 @@ class Message < ApplicationRecord
     person.try(:name)
   end
 
-  def product
-    room.product
-  end
+  delegate :product, to: :room
 
   def reported?
-    (message_reports.size > 0) ? 'Yes' : 'No'
+    message_reports.size > 0 ? 'Yes' : 'No'
   end
 
-  def username
-    person.username
-  end
+  delegate :username, to: :person
 
   def visible?
     !hidden
@@ -224,18 +216,18 @@ class Message < ApplicationRecord
       if version <= 3
         if body.match?(/\[([A-Za-z0-9])\|/i)
           body.gsub!(/\[m\|(.+?)\]/i, '@\1')
-          body.gsub!(/\[q\|([^\|\]]*)\]/i) { |m| "\u201C#{$1}\u201D" }
+          body.gsub!(/\[q\|([^|\]]*)\]/i) { |_m| "\u201C#{Regexp.last_match(1)}\u201D" }
         end
         if body.match?(/[^\u201C]*@\w{3,26}[^\u201D]*/i)
           mod_body = body
-          body.scanm(/[^\u201C]*(@\w{3,26})[^\u201D]*/i).each { |m|
+          body.scanm(/[^\u201C]*(@\w{3,26})[^\u201D]*/i).each do |m|
             person = Person.where(username: m[1].sub('@', '')).first
-            if person.present?
-              # self.mention_meta.push({ person_id: person.id, location: mod_body.index(m[1]), length: m[1].size })
-              mmeta << { id: MessageMention.maximum(:id) + rand(200 - 1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size }
-              mod_body = mod_body.sub(m[1], 'a' * m[1].size)
-            end
-          }
+            next if person.blank?
+
+            # self.mention_meta.push({ person_id: person.id, location: mod_body.index(m[1]), length: m[1].size })
+            mmeta << { id: MessageMention.maximum(:id) + rand(200 - 1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size }
+            mod_body = mod_body.sub(m[1], 'a' * m[1].size)
+          end
         end
         # else
         #   body.gsub!(/(@([A-Za-z0-9]+))/) { |m| m.gsub!($1, "[m|#{$2}]")}

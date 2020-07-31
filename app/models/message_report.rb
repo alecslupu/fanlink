@@ -19,7 +19,7 @@ class MessageReport < ApplicationRecord
 
   # include MessageReport::PortalFilters
 
-  enum status: %i[pending no_action_needed message_hidden]
+  enum status: { pending: 0, no_action_needed: 1, message_hidden: 2 }
 
   belongs_to :message
   belongs_to :person
@@ -27,7 +27,7 @@ class MessageReport < ApplicationRecord
   has_paper_trail
 
   validates :reason, length: { maximum: 500, message: _('Reason cannot be longer than 500 characters.') }
-  validates_inclusion_of :status, in: MessageReport.statuses.keys, message: _('%{value} is not a valid status type.')
+  validates :status, inclusion: { in: MessageReport.statuses.keys, message: _('%{value} is not a valid status type.') }
 
   normalize_attributes :reason
 

@@ -18,19 +18,21 @@ Rails.application.routes.draw do
     end
 
     # to be modified
-    resources :certificates do
-      resources :certcourses, only: [:index]
+    resources :certificates, controller: '/fanlink/courseware/v1/certificates', only: [:index, :show] do
+      resources :certcourses, controller: '/fanlink/courseware/v1/courses', only: [:index]
     end
 
-    resources :certcourses, only: [:show, :create, :destroy] do
+    resources :certcourses, controller: '/fanlink/courseware/v1/courses', only: [:show] do
       resources :certcourse_pages, only: [:send_email]
     end
-    resources :person_certificates, only: [:create] do
+
+    resources :person_certificates, controller: '/fanlink/courseware/v1/person_certificates', only: [:create] do
       collection do
-        get ':unique_id' => 'person_certificates#show'
+        get ':unique_id', action: :show
       end
     end
-    resources :person_certcourses, only: [:create, :send_email] do
+
+    resources :person_certcourses, controller: '/fanlink/courseware/v1/person_courses', only: [:create, :send_email] do
       collection do
         post :send_email
       end
@@ -41,6 +43,7 @@ Rails.application.routes.draw do
         get 'stats' => 'messages#stats'
       end
     end
+
     resources :people, except: %i[create index show update] do
       collection do
         get 'stats' => 'people#stats'

@@ -36,12 +36,12 @@ module Trivia
                         content_type: { in: %w[image/jpeg image/gif image/png] }
 
     def picture_url
-      ActiveSupport::Deprecation.warn("Trivia::Game#picture_url is deprecated")
+      ActiveSupport::Deprecation.warn('Trivia::Game#picture_url is deprecated')
       AttachmentPresenter.new(picture).url
     end
 
     def picture_optimal_url
-      ActiveSupport::Deprecation.warn("Trivia::Game#picture_optimal_url is deprecated")
+      ActiveSupport::Deprecation.warn('Trivia::Game#picture_optimal_url is deprecated')
       AttachmentPresenter.new(picture).optimal_url
     end
 
@@ -103,10 +103,10 @@ module Trivia
       end
     end
 
-    scope :enabled, -> { where(status: [:published, :locked, :running, :closed]) }
+    scope :enabled, -> { where(status: %i[published locked running closed]) }
     scope :completed, -> { where(status: [:closed]).order(end_date: :desc).where('end_date < ?', DateTime.now.to_i) }
-    scope :upcomming, -> {
-      where(status: [:published, :locked, :running])
+    scope :upcomming, lambda {
+      where(status: %i[published locked running])
         .order(:start_date)
         .where('end_date > ?', DateTime.now.to_i)
     }
@@ -114,7 +114,7 @@ module Trivia
     after_save :handle_status_changes
 
     def copy_to_new
-      new_entry = self.dup
+      new_entry = dup
       new_entry.update!(status: :draft, start_date: nil, end_date: nil)
 
       new_entry.prizes = prizes.collect(&:copy_to_new)
@@ -130,14 +130,12 @@ module Trivia
         rounds.each.map(&:compute_gameplay_parameters)
         self.start_date = rounds.first.start_date
         self.end_date = rounds.reload.last.end_date_with_cooldown
-        self.save
+        save
       end
     end
 
     def handle_status_changes
-      if saved_change_to_attribute?(:status) && published?
-        ::Trivia::GameStatus::PublishJob.perform_later(self.id)
-      end
+      ::Trivia::GameStatus::PublishJob.perform_later(id) if saved_change_to_attribute?(:status) && published?
     end
   end
 end

@@ -43,6 +43,7 @@ PATH
     fanlink-courseware (0.1.0)
       active_storage_validations
       acts_as_tenant
+      jb
       mini_magick
       paper_trail
       rails (~> 6.0.3, >= 6.0.3.2)

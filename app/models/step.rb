@@ -38,9 +38,9 @@ class Step < ApplicationRecord
 
   has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: 'Step'
 
-  has_many :step_unlocks, primary_key: :uuid, foreign_key: :step_id
+  has_many :step_unlocks, primary_key: :uuid
 
-  enum initial_status: %i[locked unlocked]
+  enum initial_status: { locked: 0, unlocked: 1 }
 
   accepts_nested_attributes_for :quest_activities
 
@@ -52,6 +52,4 @@ class Step < ApplicationRecord
   scope :get_requirement, ->(requirement) { where('step.id = ?', requirement) }
   scope :get_children, ->(step) { where('unlocks = ?', step.id) }
   scope :with_completions, ->(user) { includes(:quest_completions).where('quest_completions.person_id =?', user.id) }
-
-  private
 end
