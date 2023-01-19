@@ -186,7 +186,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.6)
+    concurrent-ruby (1.1.10)
     connection_pool (2.2.2)
     countries (3.0.0)
       i18n_data (~> 0.8.0)
@@ -273,8 +273,8 @@ GEM
     gherkin (6.0.17)
       c21e (~> 1.1.9)
       cucumber-messages (~> 2.1.2)
-    globalid (0.4.2)
-      activesupport (>= 4.2.0)
+    globalid (1.0.1)
+      activesupport (>= 5.0)
     globalize (5.3.0)
       activemodel (>= 4.2, < 6.1)
       activerecord (>= 4.2, < 6.1)
@@ -344,7 +344,7 @@ GEM
     httplog (1.3.3)
       rack (>= 1.0)
       rainbow (>= 2.0.0)
-    i18n (1.8.3)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
     ice_nine (0.11.2)
@@ -418,7 +418,7 @@ GEM
     mini_magick (4.10.1)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.14.1)
+    minitest (5.15.0)
     multi_json (1.14.1)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
@@ -727,7 +727,7 @@ GEM
     turnip (4.0.1)
       gherkin (~> 6.0.17)
       rspec (>= 3.0, < 4.0)
-    tzinfo (1.2.7)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
@@ -765,7 +765,7 @@ GEM
       activejob (>= 4.0.0)
       wisper
     wisper-rspec (1.1.0)
-    zeitwerk (2.3.0)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
